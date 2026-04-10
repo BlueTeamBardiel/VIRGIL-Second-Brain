@@ -1,12 +1,12 @@
-Deploy VIRGIL to a COCYTUS fleet machine.
+Deploy VIRGIL to a YOUR_LAB fleet machine.
 
 Target: $ARGUMENTS
 
 Steps:
-1. Resolve the target. If `$ARGUMENTS` is a short hostname (e.g. `abaddon`, `morax`), look it up in `~/.ssh/config` to confirm it's reachable. If it's a bare IP or `user@host`, use it directly.
+1. Resolve the target. If `$ARGUMENTS` is a short hostname (e.g. `your-host`, `your-host`), look it up in `~/.ssh/config` to confirm it's reachable. If it's a bare IP or `user@host`, use it directly.
 2. Run the deploy script:
    ```
-   bash ~/Documents/Cocytus/VIRGIL/scripts/deploy-machine.sh $ARGUMENTS
+   bash ~/VIRGIL/scripts/deploy-machine.sh $ARGUMENTS
    ```
    Stream and display the output as it runs.
 3. After the script completes, summarise the pass/fail report:

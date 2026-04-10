@@ -4,8 +4,8 @@
 # NIST 800-53 SC-7.
 # Run on DC01 as Domain Admin.
 
-$GPOName  = "COCYTUS-Firewall"
-$DomainDN = "DC=cocytus,DC=lab"
+$GPOName  = "LAB-Firewall"
+$DomainDN = "DC=your-lab,DC=lab"
 
 Write-Host "`nConfiguring GPO: $GPOName`n" -ForegroundColor Cyan
 

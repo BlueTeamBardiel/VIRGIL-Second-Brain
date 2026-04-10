@@ -1,11 +1,11 @@
 #!/bin/bash
-# deploy-machine.sh — Deploy VIRGIL to any machine in the COCYTUS fleet
+# deploy-machine.sh — Deploy VIRGIL to any machine in the YOUR_LAB fleet
 #
 # Usage:
 #   ./scripts/deploy-machine.sh [user@]host
 #
 # Examples:
-#   ./scripts/deploy-machine.sh abaddon
+#   ./scripts/deploy-machine.sh your-host
 #   ./scripts/deploy-machine.sh your-username@YOUR_TAILSCALE_IP
 #
 # Prerequisites on this machine:
@@ -19,12 +19,12 @@ set -euo pipefail
 TARGET="${1:-}"
 if [[ -z "$TARGET" ]]; then
     echo "Usage: $0 [user@]host"
-    echo "Example: $0 abaddon"
+    echo "Example: $0 your-host"
     echo "         $0 your-username@YOUR_TAILSCALE_IP"
     exit 1
 fi
 
-VIRGIL_REPO="git@github.com:Morpheus6669/VIRGIL.git"
+VIRGIL_REPO="git@github.com:your-username/VIRGIL.git"
 REMOTE_DIR="${REMOTE_DIR:-$HOME/VIRGIL}"
 
 # ── Collect secrets ───────────────────────────────────────────────────────────
@@ -262,7 +262,7 @@ fi
 
 # ── 9. virgil alias in ~/.bashrc ──────────────────────────────────────────────
 echo "── 9. virgil alias ─────────────────────────────"
-ALIAS_LINE="alias virgil='cd ~/Documents/Cocytus/VIRGIL && claude'"
+ALIAS_LINE="alias virgil='cd ~/VIRGIL && claude'"
 if grep -qF "$ALIAS_LINE" "$HOME/.bashrc" 2>/dev/null; then
     ok "virgil alias already in ~/.bashrc"
 else
@@ -286,7 +286,7 @@ echo "── 10. Crontab ──────────────────�
 EXISTING_CRON=$(crontab -l 2>/dev/null | grep -v \
     -e 'weekly-rollup' \
     -e 'promote\.sh' \
-    -e 'nebuchadnezzar' \
+    -e 'vault-backup' \
     -e 'ANTHROPIC_API_KEY' \
     -e 'SLACK_WEBHOOK_URL' \
     || true)
@@ -299,14 +299,14 @@ SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL:-}"
 0 1 * * 0 ${REMOTE_DIR}/hooks/weekly-rollup.sh >> ${REMOTE_DIR}/hooks/weekly-rollup.log 2>&1
 # VIRGIL — nightly promote (daily 2am)
 0 2 * * * ${REMOTE_DIR}/hooks/promote.sh >> ${REMOTE_DIR}/hooks/promote.log 2>&1
-# VIRGIL — nebuchadnezzar USB backup (daily 2:05am + Sunday 1:05am)
-5 2 * * * ${REMOTE_DIR}/hooks/nebuchadnezzar.sh >> ${REMOTE_DIR}/hooks/nebuchadnezzar.log 2>&1
-5 1 * * 0 ${REMOTE_DIR}/hooks/nebuchadnezzar.sh >> ${REMOTE_DIR}/hooks/nebuchadnezzar.log 2>&1
+# VIRGIL — vault-backup USB backup (daily 2:05am + Sunday 1:05am)
+5 2 * * * ${REMOTE_DIR}/hooks/vault-backup.sh >> ${REMOTE_DIR}/hooks/vault-backup.log 2>&1
+5 1 * * 0 ${REMOTE_DIR}/hooks/vault-backup.sh >> ${REMOTE_DIR}/hooks/vault-backup.log 2>&1
 
 ${EXISTING_CRON}
 CRON_EOF
 
-ok "Crontab registered (promote, weekly-rollup, nebuchadnezzar)"
+ok "Crontab registered (promote, weekly-rollup, vault-backup)"
 
 # ── 11. Smoke test ────────────────────────────────────────────────────────────
 echo
@@ -319,7 +319,7 @@ printf "  curl:         "; curl --version 2>/dev/null | head -1 || echo "NOT FOU
 printf "  claude:       "; command -v claude >/dev/null 2>&1 && echo "$(command -v claude)" || echo "NOT FOUND"
 printf "  promote.sh:   "; [[ -x "${REMOTE_DIR}/hooks/promote.sh" ]]       && echo "ok" || echo "MISSING"
 printf "  rollup.sh:    "; [[ -x "${REMOTE_DIR}/hooks/weekly-rollup.sh" ]]  && echo "ok" || echo "MISSING"
-printf "  nebuch.sh:    "; [[ -x "${REMOTE_DIR}/hooks/nebuchadnezzar.sh" ]] && echo "ok" || echo "MISSING"
+printf "  nebuch.sh:    "; [[ -x "${REMOTE_DIR}/hooks/vault-backup.sh" ]] && echo "ok" || echo "MISSING"
 echo
 
 # ── Final report ──────────────────────────────────────────────────────────────

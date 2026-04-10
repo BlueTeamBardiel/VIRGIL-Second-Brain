@@ -1,20 +1,20 @@
 #!/bin/bash
-# deploy-abaddon.sh — Deploy VIRGIL second brain to ABADDON
-# Run from BEHEMOTH. SSHes into ABADDON, clones VIRGIL, sets up hooks and cron.
+# deploy-abaddon.sh — Deploy VIRGIL second brain to YOUR-CONTROL-NODE
+# Run from YOUR-WORKSTATION. SSHes into YOUR-CONTROL-NODE, clones VIRGIL, sets up hooks and cron.
 #
 # Usage:
 #   ./scripts/deploy-abaddon.sh
 #
-# Prerequisites on BEHEMOTH:
+# Prerequisites on YOUR-WORKSTATION:
 #   - SSH access to your-username@YOUR_HOST_IP (or via Tailscale: YOUR_TAILSCALE_IP)
 #   - ANTHROPIC_API_KEY and SLACK_WEBHOOK_URL set in environment or prompted
-#   - GitHub deploy key or HTTPS credentials configured on ABADDON for the VIRGIL repo
+#   - GitHub deploy key or HTTPS credentials configured on YOUR-CONTROL-NODE for the VIRGIL repo
 
 set -euo pipefail
 
-ABADDON="${ABADDON:-YOUR_CONTROL_NODE_IP}"
+YOUR-CONTROL-NODE="${CONTROL_NODE:-YOUR_CONTROL_NODE_IP}"
 ABADDON_USER="${ABADDON_USER:-your-username}"
-VIRGIL_REPO="git@github.com:Morpheus6669/VIRGIL.git"
+VIRGIL_REPO="git@github.com:your-username/VIRGIL.git"
 REMOTE_DIR="${REMOTE_DIR:-$HOME/VIRGIL}"
 
 # ── Collect secrets (don't hardcode them here) ────────────────────────────────
@@ -28,7 +28,7 @@ if [[ -z "${SLACK_WEBHOOK_URL:-}" ]]; then
     echo
 fi
 
-echo "==> Deploying VIRGIL to $ABADDON_USER@$ABADDON:$REMOTE_DIR"
+echo "==> Deploying VIRGIL to $ABADDON_USER@$CONTROL_NODE:$REMOTE_DIR"
 echo "    Repo: $VIRGIL_REPO"
 echo
 
@@ -53,22 +53,22 @@ EOF
 
 set -euo pipefail
 
-echo "==> [ABADDON] Starting VIRGIL deployment"
+echo "==> [YOUR-CONTROL-NODE] Starting VIRGIL deployment"
 
 # ── 1. Ensure parent directory exists ────────────────────────────────────────
 mkdir -p "$(dirname "$REMOTE_DIR")"
 
 # ── 2. Clone or update repo ───────────────────────────────────────────────────
 if [ -d "$REMOTE_DIR/.git" ]; then
-    echo "==> [ABADDON] Repo exists — pulling latest"
+    echo "==> [YOUR-CONTROL-NODE] Repo exists — pulling latest"
     git -C "$REMOTE_DIR" pull
 else
-    echo "==> [ABADDON] Cloning $VIRGIL_REPO"
+    echo "==> [YOUR-CONTROL-NODE] Cloning $VIRGIL_REPO"
     git clone "$VIRGIL_REPO" "$REMOTE_DIR"
 fi
 
 # ── 3. Make hooks and scripts executable ─────────────────────────────────────
-echo "==> [ABADDON] Setting hook permissions"
+echo "==> [YOUR-CONTROL-NODE] Setting hook permissions"
 chmod +x "$REMOTE_DIR/hooks/"*.sh
 chmod +x "$REMOTE_DIR/scripts/"*.sh 2>/dev/null || true
 
@@ -78,10 +78,10 @@ mkdir -p "$REMOTE_DIR/weekly-summaries"
 
 # ── 5. Install Claude Code if not present ─────────────────────────────────────
 if command -v claude >/dev/null 2>&1; then
-    echo "==> [ABADDON] Claude Code already installed"
+    echo "==> [YOUR-CONTROL-NODE] Claude Code already installed"
 else
-    echo "==> [ABADDON] Installing Claude Code via npm"
-    # Use npm (available on ABADDON via Node). Avoids the install.sh | sh pattern
+    echo "==> [YOUR-CONTROL-NODE] Installing Claude Code via npm"
+    # Use npm (available on YOUR-CONTROL-NODE via Node). Avoids the install.sh | sh pattern
     # which can fail if the installer has bash-specific syntax.
     if command -v npm >/dev/null 2>&1; then
         npm install -g @anthropic-ai/claude-code
@@ -91,7 +91,7 @@ else
     fi
     export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
     if command -v claude >/dev/null 2>&1; then
-        echo "==> [ABADDON] Claude Code installed successfully"
+        echo "==> [YOUR-CONTROL-NODE] Claude Code installed successfully"
     else
         echo "WARNING: claude not in PATH. You may need: export PATH=\$HOME/.local/bin:\$PATH"
     fi
@@ -103,10 +103,10 @@ SETTINGS_FILE="$SETTINGS_DIR/settings.json"
 mkdir -p "$SETTINGS_DIR"
 
 if [ -f "$SETTINGS_FILE" ]; then
-    echo "==> [ABADDON] $SETTINGS_FILE exists — skipping (review manually)"
+    echo "==> [YOUR-CONTROL-NODE] $SETTINGS_FILE exists — skipping (review manually)"
     echo "    Hooks should reference: $REMOTE_DIR/hooks/session-{start,end}.sh"
 else
-    echo "==> [ABADDON] Writing $SETTINGS_FILE"
+    echo "==> [YOUR-CONTROL-NODE] Writing $SETTINGS_FILE"
     cat > "$SETTINGS_FILE" <<SETTINGS_EOF
 {
   "hooks": {
@@ -138,7 +138,7 @@ SETTINGS_EOF
 fi
 
 # ── 7. Register cron jobs (preserve non-VIRGIL entries) ──────────────────────
-echo "==> [ABADDON] Configuring crontab"
+echo "==> [YOUR-CONTROL-NODE] Configuring crontab"
 EXISTING=$(crontab -l 2>/dev/null | grep -v 'weekly-rollup\|promote\.sh\|ANTHROPIC_API_KEY\|SLACK_WEBHOOK_URL' || true)
 
 crontab - <<CRON_EOF
@@ -149,12 +149,12 @@ SLACK_WEBHOOK_URL="$SLACK_WEBHOOK_URL"
 ${EXISTING}
 CRON_EOF
 
-echo "==> [ABADDON] Crontab registered:"
+echo "==> [YOUR-CONTROL-NODE] Crontab registered:"
 crontab -l
 
 # ── 8. Smoke test ─────────────────────────────────────────────────────────────
 echo
-echo "==> [ABADDON] Smoke test"
+echo "==> [YOUR-CONTROL-NODE] Smoke test"
 printf "  git:          "; git --version
 printf "  python3:      "; python3 --version
 printf "  curl:         "; curl --version | head -1
@@ -164,12 +164,12 @@ printf "  rollup.sh:    "; test -x "${REMOTE_DIR}/hooks/weekly-rollup.sh"    && 
 printf "  VIRGIL dir:   "; ls "${REMOTE_DIR}" | tr '\n' ' '; echo
 
 echo
-echo "==> [ABADDON] Deployment complete."
+echo "==> [YOUR-CONTROL-NODE] Deployment complete."
 echo "    First-time setup: run 'claude' and authenticate, then test with:"
 echo "    ANTHROPIC_API_KEY=\$ANTHROPIC_API_KEY bash ${REMOTE_DIR}/hooks/promote.sh"
 
 REMOTE_SCRIPT
-} | ssh "$ABADDON_USER@$ABADDON" bash
+} | ssh "$ABADDON_USER@$CONTROL_NODE" bash
 
 echo
-echo "==> Deploy finished. ABADDON is now running VIRGIL."
+echo "==> Deploy finished. YOUR-CONTROL-NODE is now running VIRGIL."

@@ -6,7 +6,7 @@
 #
 # Examples:
 #   sync-projects.sh "LOGOS" "Built docker-status schema, portainer-launcher schema."
-#   sync-projects.sh "COCYTUS Phase 2" "Deployed Docker on XAPHAN. Portainer running."
+#   sync-projects.sh "YOUR_LAB Phase 2" "Deployed Docker on YOUR-LAB-NODE-2. Portainer running."
 #
 # What it does:
 #   1. Appends a timestamped entry to today's daily log (## External Project Sync)

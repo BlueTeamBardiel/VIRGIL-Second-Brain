@@ -109,7 +109,7 @@ while '<!-- fill in manually -->' in text:
         f"based on the session metadata below. Be factual and concise — infer from the git branch, "
         f"file counts, and any project sync entries. If nothing meaningful happened, write: "
         f"'Session opened and closed with no significant activity.'\n\n"
-        f"Apply [[wiki links]] to COCYTUS hosts, tools, and concepts (e.g. [[VIRGIL]], [[BEHEMOTH]], [[Ansible]]).\n\n"
+        f"Apply [[wiki links]] to YOUR_LAB hosts, tools, and concepts (e.g. [[VIRGIL]], [[your-workstation]], [[Ansible]]).\n\n"
         f"Session block:\n{session_block}\n\n"
     )
     if syncs:

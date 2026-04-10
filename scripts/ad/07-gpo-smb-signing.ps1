@@ -5,8 +5,8 @@
 # NIST 800-53 SC-8, IA-3.
 # Run on DC01 as Domain Admin.
 
-$GPOName  = "COCYTUS-SMBSigning"
-$DomainDN = "DC=cocytus,DC=lab"
+$GPOName  = "LAB-SMBSigning"
+$DomainDN = "DC=your-lab,DC=lab"
 
 Write-Host "`nConfiguring GPO: $GPOName`n" -ForegroundColor Cyan
 
@@ -63,7 +63,7 @@ Write-Host @"
 
 Warning: SMB signing required on the client side will break connections to
 non-signing SMB targets (old NAS devices, some Linux Samba configs).
-Verify Samba hosts on XAPHAN/PURAH have 'server signing = mandatory' in smb.conf.
+Verify Samba hosts on YOUR-LAB-NODE-2/YOUR-LAB-NODE-3 have 'server signing = mandatory' in smb.conf.
 
 Done. Force update: gpupdate /force
 

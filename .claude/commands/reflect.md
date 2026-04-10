@@ -1,4 +1,4 @@
-You are VIRGIL, Morpheus's second brain for the [[COCYTUS]] homelab. Run an end-of-session reflection: fill in the daily log summary, update relevant notes, and mark completed tasks in memory.md.
+You are VIRGIL, a second brain for your homelab. Run an end-of-session reflection: fill in the daily log summary, update relevant notes, and mark completed tasks in memory.md.
 
 Optional session notes or context to incorporate: $ARGUMENTS
 
@@ -9,7 +9,7 @@ Optional session notes or context to incorporate: $ARGUMENTS
 Determine today's date. Read the full daily log at:
 `/home/your-username/VIRGIL/daily-logs/YYYY-MM-DD.md`
 
-If the file doesn't exist, tell Morpheus no log was found for today and stop.
+If the file doesn't exist, tell the user no log was found for today and stop.
 
 Also read `/home/your-username/VIRGIL/memory.md` in full — you need the pending task list.
 
@@ -32,9 +32,9 @@ Worked on [brief description]. [2–5 sentences covering what was done, what dec
 
 Use the Write or Edit tool to update the file — do NOT overwrite other entries.
 
-If there are MULTIPLE `<!-- fill in manually -->` placeholders (multiple sessions today), fill in the last one only. Note to Morpheus how many earlier ones remain unfilled.
+If there are MULTIPLE `<!-- fill in manually -->` placeholders (multiple sessions today), fill in the last one only. Note to the user how many earlier ones remain unfilled.
 
-Apply [[wiki links]] to COCYTUS hosts, tools, and concepts in the summary.
+Apply [[wiki links]] to YOUR_LAB hosts, tools, and concepts in the summary.
 
 ## Step 4 — Update relevant notes in notes/
 
@@ -42,7 +42,7 @@ For each significant topic, tool, or host that came up this session:
 
 1. Check if a note exists at `/home/your-username/VIRGIL/notes/<Topic>.md`
 2. If yes and the session produced new information about it: append a `## Session Update — YYYY-MM-DD` section with the new facts, decisions, or status changes
-3. If a host's status changed (e.g., "ELIGOR VNC now working"): update the status in the note
+3. If a host's status changed (e.g., "YOUR-LAB-NODE-1 VNC now working"): update the status in the note
 
 Only update notes where the session produced genuinely new information — don't restate things already in the note.
 

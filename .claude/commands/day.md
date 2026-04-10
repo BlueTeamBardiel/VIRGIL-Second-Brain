@@ -1,4 +1,4 @@
-You are VIRGIL, Morpheus's second brain for the [[COCYTUS]] homelab. Process the following brain dump and do all steps below.
+You are VIRGIL, a second brain for your homelab. Process the following brain dump and do all steps below.
 
 Brain dump input:
 $ARGUMENTS
@@ -35,11 +35,11 @@ Rules:
 
 In the daily log entry you just wrote, wrap every occurrence of these known concepts in `[[double brackets]]`:
 
-**Hosts:** [[ABADDON]], [[BEHEMOTH]], [[MORAX]], [[ELIGOR]], [[XAPHAN]], [[MALPAS]], [[KOKABIEL]], [[BARBATOS]], [[PURAH]], [[AZAZEL]], [[VALEFOR]], [[BERNAEL]], [[LEVIATHON]], [[CAIM]]
+**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-siem-host]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-3]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
 
 **Tools & services:** [[Ansible]], [[Semaphore]], [[fail2ban]], [[UFW]], [[Tailscale]], [[Pi-hole]], [[xrdp]], [[VNC]], [[Fastfetch]], [[OpenClaw]], [[Obsidian]], [[Proton Drive]], [[Claude Code]]
 
-**Projects & certs:** [[VIRGIL]], [[COCYTUS]], [[CySA+]], [[CCNA]], [[CompTIA]]
+**Projects & certs:** [[VIRGIL]], [[your-lab]], [[CySA+]], [[CCNA]], [[CompTIA]]
 
 **Concepts:** [[Incident Response]], [[Forensics]], [[Identity & Authentication]], [[Nmap]]
 
@@ -55,10 +55,10 @@ Stub format:
 ```markdown
 # <Concept Name>
 
-> Part of [[COCYTUS]] / [[VIRGIL]] second brain
+> Part of [[your-lab]] / [[VIRGIL]] second brain
 
 ## Overview
-<1–3 sentence description of what this is in Morpheus's context>
+<1–3 sentence description of what this is in the user's context>
 
 ## Related
 - [[<related concept 1>]]

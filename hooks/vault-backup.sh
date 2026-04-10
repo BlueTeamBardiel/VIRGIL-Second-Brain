@@ -1,8 +1,8 @@
 #!/bin/bash
-# nebuchadnezzar.sh — COCYTUS vault backup to USB STICK
+# vault-backup.sh — YOUR_LAB vault backup to USB STICK
 #
-# Syncs /home/your-username/Documents/Cocytus/ to
-#   /media/your-username/USB STICK/COCYTUS-Backup/
+# Syncs /home/your-username/Documents/ to
+#   /media/your-username/USB STICK/LAB-Backup/
 # via rsync -av --delete.
 #
 # Schedule (crontab):
@@ -10,17 +10,17 @@
 #   5 1 * * 0   Sunday  — 5min after weekly-rollup.sh
 #
 # Exits silently if the USB drive is not mounted.
-# Logs every run to hooks/nebuchadnezzar.log.
+# Logs every run to hooks/vault-backup.log.
 # Posts Slack notification on success or drive-missing warning.
 
 set -euo pipefail
 
 VIRGIL_DIR="${VIRGIL_DIR:-$HOME/VIRGIL}"
-SOURCE="${SOURCE:-$HOME/Documents/Cocytus/}"
-DEST="/media/your-username/USB STICK/COCYTUS-Backup/"
-LOG_FILE="$VIRGIL_DIR/hooks/nebuchadnezzar.log"
+SOURCE="${SOURCE:-$HOME/Documents/}"
+DEST="/media/your-username/USB STICK/LAB-Backup/"
+LOG_FILE="$VIRGIL_DIR/hooks/vault-backup.log"
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
-LOGPREFIX="[nebuchadnezzar.sh $TIMESTAMP]"
+LOGPREFIX="[vault-backup.sh $TIMESTAMP]"
 
 # ── Logging helper ─────────────────────────────────────────────────────────────
 log() {
@@ -47,7 +47,7 @@ MOUNT_POINT="/media/your-username/USB STICK"
 if ! mountpoint -q "$MOUNT_POINT" 2>/dev/null; then
     # Silent exit — drive simply isn't plugged in, not an error worth waking anyone
     echo "$LOGPREFIX Drive not mounted at '$MOUNT_POINT'. Skipping." >> "$LOG_FILE"
-    slack_notify "VIRGIL [backup] ⚠️ USB STICK not found at '$MOUNT_POINT' — COCYTUS backup skipped ($TIMESTAMP)."
+    slack_notify "VIRGIL [backup] ⚠️ USB STICK not found at '$MOUNT_POINT' — YOUR_LAB backup skipped ($TIMESTAMP)."
     exit 0
 fi
 
@@ -65,7 +65,7 @@ RSYNC_OUTPUT=$(rsync -av --delete --stats \
     "$SOURCE" "$DEST" 2>&1) || {
     log "rsync FAILED (exit $?)."
     log "$RSYNC_OUTPUT"
-    slack_notify "VIRGIL [backup] ❌ COCYTUS backup FAILED at $TIMESTAMP. Check $LOG_FILE."
+    slack_notify "VIRGIL [backup] ❌ YOUR_LAB backup FAILED at $TIMESTAMP. Check $LOG_FILE."
     exit 1
 }
 
@@ -104,6 +104,6 @@ BYTES_SENT=$(echo "$RSYNC_OUTPUT" \
 log "Done. $FILES_TRANSFERRED file(s) transferred, $FILES_TOTAL total in vault."
 
 # ── 6. Notify Slack ────────────────────────────────────────────────────────────
-slack_notify "VIRGIL [backup] ✅ COCYTUS vault synced to USB STICK ($TIMESTAMP).
+slack_notify "VIRGIL [backup] ✅ YOUR_LAB vault synced to USB STICK ($TIMESTAMP).
 → $FILES_TRANSFERRED file(s) transferred | $FILES_TOTAL total | $BYTES_SENT sent
 → Dest: $DEST"

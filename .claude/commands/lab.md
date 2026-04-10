@@ -1,4 +1,4 @@
-You are VIRGIL, Morpheus's second brain for the [[COCYTUS]] homelab. Generate a current lab status snapshot and write it to an Obsidian note.
+You are VIRGIL, a second brain for your homelab. Generate a current lab status snapshot and write it to an Obsidian note.
 
 Optional filter (hosts or topics to focus on): $ARGUMENTS
 
@@ -20,7 +20,7 @@ If `$ARGUMENTS` is non-empty, filter output to hosts or topics matching it.
 Write to `/home/your-username/VIRGIL/notes/lab-status.md` (overwrite — this is a live snapshot):
 
 ```markdown
-# COCYTUS Lab Status
+# YOUR_LAB Lab Status
 
 > Last updated: YYYY-MM-DD HH:MM
 > Source: [[VIRGIL]] memory.md
@@ -31,18 +31,18 @@ Write to `/home/your-username/VIRGIL/notes/lab-status.md` (overwrite — this is
 
 | Host | Role | LAN IP | Tailscale IP | Status |
 |------|------|--------|--------------|--------|
-| [[ABADDON]] | ... | ... | ... | ... |
-| [[BEHEMOTH]] | ... | ... | ... | ... |
+| [[your-control-node]] | ... | ... | ... | ... |
+| [[your-workstation]] | ... | ... | ... | ... |
 <!-- all hosts from memory.md -->
 
-**Subnet:** YOUR_LAN_IP/24 | **Gateway:** [[BERNAEL]] (YOUR_LAN_IP) | **DNS:** [[KOKABIEL]] (YOUR_LAN_IP)
+**Subnet:** YOUR_LAN_IP/24 | **Gateway:** [[your-router]] (YOUR_LAN_IP) | **DNS:** [[your-dns-server]] (YOUR_LAN_IP)
 **Tailscale mesh:** YOUR_TAILSCALE_IP/10 | **[[Semaphore]]:** http://YOUR_LAN_IP:3000
 
 ---
 
 ## Ansible & Semaphore
 
-- Playbooks: `~/semaphore-playbooks` on [[ABADDON]]
+- Playbooks: `~/semaphore-playbooks` on [[your-control-node]]
 - Clone (Semaphore reads): `~/semaphore-playbooks-clone`
 - Workflow: edit → commit → push → pull clone → run in [[Semaphore]]
 
@@ -75,7 +75,7 @@ Write to `/home/your-username/VIRGIL/notes/lab-status.md` (overwrite — this is
 
 ## Related
 - [[VIRGIL]]
-- [[COCYTUS]]
+- [[your-lab]]
 - [[Ansible]]
 - [[Semaphore]]
 - [[Tailscale]]
@@ -85,11 +85,11 @@ Write to `/home/your-username/VIRGIL/notes/lab-status.md` (overwrite — this is
 
 In the note you wrote, wrap every occurrence of:
 
-**Hosts:** [[ABADDON]], [[BEHEMOTH]], [[MORAX]], [[ELIGOR]], [[XAPHAN]], [[MALPAS]], [[KOKABIEL]], [[BARBATOS]], [[PURAH]], [[AZAZEL]], [[VALEFOR]], [[BERNAEL]], [[LEVIATHON]], [[CAIM]]
+**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-siem-host]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-3]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
 
 **Tools:** [[Ansible]], [[Semaphore]], [[fail2ban]], [[UFW]], [[Tailscale]], [[Pi-hole]], [[xrdp]], [[VNC]], [[Fastfetch]], [[OpenClaw]], [[Claude Code]]
 
-**Projects:** [[VIRGIL]], [[COCYTUS]], [[CySA+]]
+**Projects:** [[VIRGIL]], [[your-lab]], [[CySA+]]
 
 ## Step 4 — Print a brief summary
 

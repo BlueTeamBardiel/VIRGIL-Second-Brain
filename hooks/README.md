@@ -2,7 +2,7 @@
 
 > [[VIRGIL]] automation hooks — Claude Code session lifecycle, nightly promotion, weekly digest, and vault backup
 
-Hooks fire automatically via [[Claude Code]] hook events (SessionStart, Stop) or cron on [[ABADDON]] and [[BEHEMOTH]]. They are the connective tissue between [[VIRGIL]]'s daily log, memory, and the broader [[COCYTUS]] vault.
+Hooks fire automatically via [[Claude Code]] hook events (SessionStart, Stop) or cron on [[your-control-node]] and [[your-workstation]]. They are the connective tissue between [[VIRGIL]]'s daily log, memory, and the broader [[your-lab]] vault.
 
 ---
 
@@ -37,11 +37,11 @@ Hooks fire automatically via [[Claude Code]] hook events (SessionStart, Stop) or
 
 ---
 
-### nebuchadnezzar.sh
+### vault-backup.sh
 **Schedule:** `5 2 * * *` (daily, 5min after promote.sh) and `5 1 * * 0` (Sunday, 5min after weekly-rollup.sh)
-**Purpose:** rsync backup of the entire [[COCYTUS]] vault (`/home/your-username/Documents/Cocytus/`) to `/media/your-username/USB STICK/COCYTUS-Backup/` with `--delete`. Exits silently if the USB drive is not mounted. Posts Slack notification on success or drive-missing warning.
-**Output:** `hooks/nebuchadnezzar.log`, Slack
-**Named after:** [[Nebuchadnezzar]] — the ship from *The Matrix*, keeper of the crew between runs
+**Purpose:** rsync backup of the entire [[your-lab]] vault (`/home/your-username/Documents/Cocytus/`) to `/media/your-username/USB STICK/LAB-Backup/` with `--delete`. Exits silently if the USB drive is not mounted. Posts Slack notification on success or drive-missing warning.
+**Output:** `hooks/vault-backup.log`, Slack
+**Named after:** [[vault-backup]] — the ship from *The Matrix*, keeper of the crew between runs
 
 ---
 
@@ -51,7 +51,7 @@ Hooks fire automatically via [[Claude Code]] hook events (SessionStart, Stop) or
 |------|-----------|
 | `promote.log` | `promote.sh` |
 | `weekly-rollup.log` | `weekly-rollup.sh` |
-| `nebuchadnezzar.log` | `nebuchadnezzar.sh` |
+| `vault-backup.log` | `vault-backup.sh` |
 
 ---
 
@@ -61,17 +61,17 @@ Hooks fire automatically via [[Claude Code]] hook events (SessionStart, Stop) or
 |------|--------|------|
 | SessionStart | `session-start.sh` | any [[Claude Code]] host |
 | Stop (per session) | `session-end.sh` | any [[Claude Code]] host |
-| Sun 01:00 | `weekly-rollup.sh` | [[ABADDON]] |
-| Sun 01:05 | `nebuchadnezzar.sh` | [[BEHEMOTH]] |
-| Daily 02:00 | `promote.sh` | [[ABADDON]] |
-| Daily 02:05 | `nebuchadnezzar.sh` | [[BEHEMOTH]] |
+| Sun 01:00 | `weekly-rollup.sh` | [[your-control-node]] |
+| Sun 01:05 | `vault-backup.sh` | [[your-workstation]] |
+| Daily 02:00 | `promote.sh` | [[your-control-node]] |
+| Daily 02:05 | `vault-backup.sh` | [[your-workstation]] |
 
 ---
 
 ## Related
 
 - [[VIRGIL]] — second brain system these hooks serve
-- [[COCYTUS]] — homelab vault backed up by nebuchadnezzar.sh
-- [[Nebuchadnezzar]] — namesake of the backup script
-- [[ABADDON]] — cron host for promote.sh and weekly-rollup.sh
-- [[BEHEMOTH]] — primary workstation, Claude Code session host
+- [[your-lab]] — homelab vault backed up by vault-backup.sh
+- [[vault-backup]] — namesake of the backup script
+- [[your-control-node]] — cron host for promote.sh and weekly-rollup.sh
+- [[your-workstation]] — primary workstation, Claude Code session host

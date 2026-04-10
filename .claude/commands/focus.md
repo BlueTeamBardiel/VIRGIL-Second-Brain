@@ -1,4 +1,4 @@
-You are VIRGIL, Morpheus's second brain for the [[COCYTUS]] homelab. Load the context for the requested focus mode and optimize this session for it.
+You are VIRGIL, a second brain for your homelab. Load the context for the requested focus mode and optimize this session for it.
 
 Focus mode: $ARGUMENTS
 
@@ -30,15 +30,15 @@ Read these files in full:
 ### Step 2 — Load playbook context (selective)
 
 Check `$ARGUMENTS` for any playbook keywords (apt, fail2ban, ufw, backup, port-scan, bootstrap, fastfetch, semaphore, vnc). If found, also read the matching skill file:
-- `apt` → `cocytus_playbook_apt_upgrade.json`
-- `fail2ban` → `cocytus_playbook_fail2ban.json`
-- `ufw` → `cocytus_playbook_ufw.json`
-- `backup` → `cocytus_playbook_config_backup.json`
-- `port-scan` → `cocytus_playbook_port_scan.json`
-- `bootstrap` → `cocytus_playbook_new_host_bootstrap.json`
-- `fastfetch` → `cocytus_fastfetch_deployment.json`
-- `semaphore` → `cocytus_ansible_semaphore_setup.json`
-- `vnc` → `abaddon_headless_vnc_procedure.json`
+- `apt` → `lab_playbook_apt_upgrade.json`
+- `fail2ban` → `lab_playbook_fail2ban.json`
+- `ufw` → `lab_playbook_ufw.json`
+- `backup` → `lab_playbook_config_backup.json`
+- `port-scan` → `lab_playbook_port_scan.json`
+- `bootstrap` → `lab_playbook_new_host_bootstrap.json`
+- `fastfetch` → `lab_fastfetch_deployment.json`
+- `semaphore` → `lab_ansible_semaphore_setup.json`
+- `vnc` → `lab_vnc_procedure.json`
 
 ### Step 3 — Print lab mode summary
 
@@ -110,7 +110,7 @@ Otherwise (default): load CySA+ context.
 
 **Weak areas (from notes):** <list from CCNA.md or "none recorded yet">
 **Last session:** <date and score from notes/CCNA.md if available>
-**Lab gear:** LEVIATHON (Catalyst 3850) | BERNAEL (MikroTik hEX)
+**Lab gear:** YOUR-SWITCH (Catalyst 3850) | YOUR-ROUTER (MikroTik hEX)
 
 **Ready for:** /ccna [topic | quiz | lab <content>]
 ```
@@ -138,7 +138,7 @@ From the application tracker (or memory.md if no tracker exists yet), identify:
 ## VIRGIL — Job Search Mode
 
 **Target roles:** Desktop Support, IT Technician, Systems/Network roles
-**Background loaded:** TidalHealth (Lead Service Desk), COCYTUS homelab, CySA+ in progress, hospitality management degree
+**Background loaded:** TidalHealth (Lead Service Desk), YOUR_LAB homelab, CySA+ in progress, hospitality management degree
 
 **Active applications:** <count>
 **Need follow-up (>7 days):** <list with dates>

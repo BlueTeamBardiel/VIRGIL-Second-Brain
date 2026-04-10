@@ -127,7 +127,7 @@ def build_digest(items_by_source: dict, date_str: str) -> str:
         return ""
 
     prompt = (
-        f"You are a security intelligence analyst. Morpheus is a sysadmin/homelab operator studying for CySA+.\n"
+        f"You are a security intelligence analyst. You are a sysadmin/homelab operator studying for your certs.\n"
         f"The following are RSS feed items from {date_str}. Synthesize them into a concise daily threat and news digest.\n\n"
         f"Structure:\n"
         f"## Daily Feed Digest — {date_str}\n\n"

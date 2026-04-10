@@ -116,8 +116,8 @@ if study_combined.strip():
     )
 
 prompt = (
-    "You are a second-brain assistant for a sysadmin/homelab operator named Morpheus. "
-    "He runs a homelab called COCYTUS, is studying for CySA+, and is job searching. "
+    "You are a second-brain assistant for a sysadmin/homelab operator. "
+    "He runs a homelab called YOUR_LAB, is studying for CySA+, and is job searching. "
     "Synthesize the following data from the past week into a concise weekly digest.\n\n"
     "Structure the output as:\n\n"
     "## Weekly Digest\n\n"

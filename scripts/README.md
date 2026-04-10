@@ -2,20 +2,20 @@
 
 > [[VIRGIL]] utility scripts — fleet deployment, vault sync, and project bridge
 
-One-shot scripts run manually from [[BEHEMOTH]]. They are not cron-scheduled — invoke when setting up a new machine, syncing project progress, or deploying [[VIRGIL]] to a new host.
+One-shot scripts run manually from [[your-workstation]]. They are not cron-scheduled — invoke when setting up a new machine, syncing project progress, or deploying [[VIRGIL]] to a new host.
 
 ---
 
 ## Scripts
 
 ### deploy-machine.sh
-**Purpose:** Deploy [[VIRGIL]] to any machine in the [[COCYTUS]] fleet. SSHes into the target, clones the VIRGIL repo, installs Python deps, sets up crontab (promote.sh + weekly-rollup.sh), writes env vars, and registers Claude Code hooks.
+**Purpose:** Deploy [[VIRGIL]] to any machine in the [[your-lab]] fleet. SSHes into the target, clones the VIRGIL repo, installs Python deps, sets up crontab (promote.sh + weekly-rollup.sh), writes env vars, and registers Claude Code hooks.
 
 ```bash
 ./scripts/deploy-machine.sh [user@]host
 
 # Examples:
-./scripts/deploy-machine.sh abaddon
+./scripts/deploy-machine.sh your-host
 ./scripts/deploy-machine.sh your-username@YOUR_TAILSCALE_IP
 ```
 
@@ -26,15 +26,15 @@ One-shot scripts run manually from [[BEHEMOTH]]. They are not cron-scheduled —
 
 ---
 
-### deploy-abaddon.sh
-**Purpose:** Dedicated deploy script for [[ABADDON]] (YOUR_LAN_IP / Tailscale YOUR_TAILSCALE_IP). Functionally similar to `deploy-machine.sh` but hardcodes [[ABADDON]]'s address and includes ABADDON-specific cron entries (rss-ingest.py at 6am, cve-ingest.py at 7am).
+### deploy-your-host.sh
+**Purpose:** Dedicated deploy script for [[your-control-node]] (YOUR_LAN_IP / Tailscale YOUR_TAILSCALE_IP). Functionally similar to `deploy-machine.sh` but hardcodes [[your-control-node]]'s address and includes YOUR-CONTROL-NODE-specific cron entries (rss-ingest.py at 6am, cve-ingest.py at 7am).
 
 ```bash
-./scripts/deploy-abaddon.sh
+./scripts/deploy-your-host.sh
 ```
 
 **Prerequisites:**
-- Run from [[BEHEMOTH]]
+- Run from [[your-workstation]]
 - SSH access to `your-username@YOUR_HOST_IP`
 - `ANTHROPIC_API_KEY` and `SLACK_WEBHOOK_URL` set or will be prompted
 
@@ -48,7 +48,7 @@ One-shot scripts run manually from [[BEHEMOTH]]. They are not cron-scheduled —
 
 # Examples:
 ./scripts/sync-projects.sh "LOGOS" "Built docker-status schema, portainer-launcher schema."
-./scripts/sync-projects.sh "COCYTUS Phase 2" "Deployed Docker on XAPHAN. Portainer running."
+./scripts/sync-projects.sh "YOUR_LAB Phase 2" "Deployed Docker on YOUR-LAB-NODE-2. Portainer running."
 ```
 
 **Use when:** Doing work in another repo or tool (e.g., [[LOGOS]], [[Semaphore]]) and want that progress reflected in VIRGIL's daily log and relevant note without a full `/reflect` session.
@@ -58,7 +58,7 @@ One-shot scripts run manually from [[BEHEMOTH]]. They are not cron-scheduled —
 ## Subdirectories
 
 ### scripts/ad/
-[[Active Directory]] hardening scripts for `cocytus.lab`. Numbered sequentially — deploy in order on [[DC01]].
+[[Active Directory]] hardening scripts for `yourdomain.local`. Numbered sequentially — deploy in order on [[DC01]].
 
 | Script | Purpose |
 |--------|---------|
@@ -77,6 +77,6 @@ One-shot scripts run manually from [[BEHEMOTH]]. They are not cron-scheduled —
 ## Related
 
 - [[VIRGIL]] — system these scripts serve
-- [[COCYTUS]] — fleet being deployed to
-- [[ABADDON]] — primary non-BEHEMOTH deployment target
+- [[your-lab]] — fleet being deployed to
+- [[your-control-node]] — primary non-YOUR-WORKSTATION deployment target
 - [[Ansible]] / [[Semaphore]] — used for fleet-wide playbook deployment (separate from these scripts)

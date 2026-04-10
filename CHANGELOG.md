@@ -28,7 +28,7 @@ Format: [Semantic Versioning](https://semver.org/) — `MAJOR.MINOR.PATCH`
 - **`hooks/promote-patch.py`** — Reads daily log, generates semantic memory updates with supersede syntax (`~~old~~ superseded → new`)
 - **`hooks/weekly-rollup.sh`** — Sunday 1am: synthesizes 7 daily logs + feed digests + study notes into structured weekly digest; appends orphan report
 - **`hooks/auto-reflect.sh`** — 11:55pm cron: fills any unfilled `<!-- fill in manually -->` session placeholders using Claude
-- **`hooks/nebuchadnezzar.sh`** — rsync vault backup to USB drive with Slack notification
+- **`hooks/vault-backup.sh`** — rsync vault backup to USB drive with Slack notification
 
 #### Memory System
 - Three-layer persistent context: `memory-working.md` (active tasks, cleared weekly), `memory-episodic.md` (session history, append-only), `memory-semantic.md` (permanent facts, supersede syntax)

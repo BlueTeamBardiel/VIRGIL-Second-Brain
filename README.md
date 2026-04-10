@@ -324,7 +324,7 @@ VIRGIL/
 │   ├── weekly-rollup.sh   # Cron: weekly digest synthesis
 │   ├── auto-reflect.sh    # Cron: fills unfilled session summaries
 │   ├── promote-patch.py   # Updates memory-semantic.md with new facts
-│   └── nebuchadnezzar.sh  # USB backup of entire vault
+│   └── vault-backup.sh  # USB backup of entire vault
 ├── ingest/
 │   ├── pdf-ingest.sh      # PDF → Obsidian note (with chunking for large docs)
 │   ├── nist-ingest.sh     # NIST SP/FIPS → exam-optimized note

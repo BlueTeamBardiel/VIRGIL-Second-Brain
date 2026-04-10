@@ -1,4 +1,4 @@
-You are VIRGIL, Morpheus's second brain. Capture the following task and file it correctly.
+You are VIRGIL, your second brain. Capture the following task and file it correctly.
 
 Task input: $ARGUMENTS
 
@@ -10,7 +10,7 @@ From the input, extract:
 - **Task description** — what needs to be done
 - **Priority** — infer from wording: "urgent"/"critical"/"blocking" → 🔴 High; "should"/"need to"/"eventually" → 🟡 Medium; "low"/"someday"/"when possible" → 🟢 Low. Default to 🟡 Medium if ambiguous.
 - **Category** — one of: Homelab, CySA+, Job Search, VIRGIL, Networking, Security, General
-- **Related hosts/tools** — any [[COCYTUS]] hosts or tools mentioned or implied
+- **Related hosts/tools** — any [[your-lab]] hosts or tools mentioned or implied
 
 ## Step 2 — Append to tasks note
 
@@ -39,13 +39,13 @@ Append the new task in this format:
 ---
 ```
 
-Apply [[wiki links]] to any COCYTUS concepts in the task:
+Apply [[wiki links]] to any YOUR_LAB concepts in the task:
 
-**Hosts:** [[ABADDON]], [[BEHEMOTH]], [[MORAX]], [[ELIGOR]], [[XAPHAN]], [[MALPAS]], [[KOKABIEL]], [[BARBATOS]], [[PURAH]], [[AZAZEL]], [[VALEFOR]], [[BERNAEL]], [[LEVIATHON]], [[CAIM]]
+**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-siem-host]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-3]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
 
 **Tools:** [[Ansible]], [[Semaphore]], [[fail2ban]], [[UFW]], [[Tailscale]], [[Pi-hole]], [[xrdp]], [[VNC]], [[Fastfetch]], [[Claude Code]]
 
-**Projects:** [[VIRGIL]], [[COCYTUS]], [[CySA+]], [[CCNA]]
+**Projects:** [[VIRGIL]], [[your-lab]], [[CySA+]], [[CCNA]]
 
 ## Step 3 — Update memory.md
 

@@ -2,7 +2,7 @@
 
 > [[VIRGIL]] knowledge ingestion pipeline — automated scripts for pulling PDFs, threat feeds, CVEs, and personal logs into Obsidian notes
 
-All scripts write to `notes/` subdirectories and optionally notify Slack. The pipeline runs automatically on [[ABADDON]] via cron; scripts can also be run manually via aliases on [[BEHEMOTH]] or ABADDON.
+All scripts write to `notes/` subdirectories and optionally notify Slack. The pipeline runs automatically on [[your-control-node]] via cron; scripts can also be run manually via aliases on [[your-workstation]] or YOUR-CONTROL-NODE.
 
 ---
 
@@ -43,7 +43,7 @@ virgil-nist ~/Downloads/nist-sp-800-53.pdf
 ---
 
 ### rss-ingest.py
-**Schedule:** `0 6 * * *` — daily at 6:00 AM on [[ABADDON]]
+**Schedule:** `0 6 * * *` — daily at 6:00 AM on [[your-control-node]]
 **Purpose:** Fetch 22 threat intel RSS feeds, filter to items from the past 24 hours, call [[Claude]] API to synthesise a structured digest (Top Stories / Homelab / [[CySA+]] / Quick Hits), write to `notes/feeds/`.
 **Output:** `notes/feeds/YYYY-MM-DD.md`, Slack
 
@@ -60,7 +60,7 @@ virgil-rss --dry-run     # fetch feeds, print item count, no API call
 ---
 
 ### cve-ingest.py
-**Schedule:** `0 7 * * *` — daily at 7:00 AM on [[ABADDON]] (`--recent` mode)
+**Schedule:** `0 7 * * *` — daily at 7:00 AM on [[your-control-node]] (`--recent` mode)
 **Purpose:** Query [[NVD]] API v2 for CVE data. Three modes: specific CVE lookup, recent CVEs by date range, or keyword search. Writes a per-CVE Obsidian note with CVSS score, description, CWE, affected products, and references.
 **Output:** `notes/cve/CVE-YYYY-NNNNN.md` (one file per CVE), Slack summary
 
@@ -95,7 +95,7 @@ If no inline notes are provided, opens `$EDITOR` for longer entries.
 
 ---
 
-## Cron Schedule (ABADDON)
+## Cron Schedule (YOUR-CONTROL-NODE)
 
 | Time | Script | Output |
 |------|--------|--------|
@@ -129,8 +129,8 @@ notes/
 ## Related
 
 - [[VIRGIL]] — second brain system this pipeline feeds
-- [[ABADDON]] — cron host for automated ingestion
-- [[BEHEMOTH]] — manual ingestion via aliases
+- [[your-control-node]] — cron host for automated ingestion
+- [[your-workstation]] — manual ingestion via aliases
 - [[Claude]] — API used for synthesis (claude-haiku-4-5-20251001)
 - [[NVD]] — CVE data source for cve-ingest.py
 - [[CySA+]] — primary study context for nist-ingest and rss digests
