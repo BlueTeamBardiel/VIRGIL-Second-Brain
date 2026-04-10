@@ -39,7 +39,7 @@ Hooks fire automatically via [[Claude Code]] hook events (SessionStart, Stop) or
 
 ### nebuchadnezzar.sh
 **Schedule:** `5 2 * * *` (daily, 5min after promote.sh) and `5 1 * * 0` (Sunday, 5min after weekly-rollup.sh)
-**Purpose:** rsync backup of the entire [[COCYTUS]] vault (`/home/your-username/Documents/Cocytus/`) to `/media/morpheus/USB STICK/COCYTUS-Backup/` with `--delete`. Exits silently if the USB drive is not mounted. Posts Slack notification on success or drive-missing warning.
+**Purpose:** rsync backup of the entire [[COCYTUS]] vault (`/home/your-username/Documents/Cocytus/`) to `/media/your-username/USB STICK/COCYTUS-Backup/` with `--delete`. Exits silently if the USB drive is not mounted. Posts Slack notification on success or drive-missing warning.
 **Output:** `hooks/nebuchadnezzar.log`, Slack
 **Named after:** [[Nebuchadnezzar]] — the ship from *The Matrix*, keeper of the crew between runs
 
