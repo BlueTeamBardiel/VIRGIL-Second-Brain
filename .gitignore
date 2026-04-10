@@ -1,0 +1,21 @@
+# Vault content — never commit personal notes
+notes/
+daily-logs/
+weekly-summaries/
+
+# Memory files (contain personal context)
+memory*.md
+*.bak-*
+
+# Secrets and local config
+.env
+settings.local.json
+
+# Log files
+*.log
+ingest/*.log
+hooks/*.log
+
+# Temporary files
+*.tmp
+*~
