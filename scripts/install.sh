@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │  VIRGIL — Second Brain Installer                                            │
-# │  https://github.com/YOUR_USERNAME/VIRGIL                                    │
+# │  https://github.com/Morpheus6669/VIRGIL                                    │
 # │                                                                             │
 # │  Quick install (interactive — keeps stdin attached to terminal):            │
-# │    bash <(curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/       │
+# │    bash <(curl -fsSL https://raw.githubusercontent.com/Morpheus6669/       │
 # │                        VIRGIL/main/scripts/install.sh)                      │
 # │                                                                             │
 # │  Download and verify before running (recommended):                          │
-# │    curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/VIRGIL/       │
+# │    curl -fsSL https://raw.githubusercontent.com/Morpheus6669/VIRGIL/       │
 # │             main/scripts/install.sh -o virgil-install.sh                    │
 # │    sha256sum virgil-install.sh   # compare at releases page                 │
 # │    bash virgil-install.sh                                                   │
@@ -22,9 +22,9 @@
 set -euo pipefail
 
 # ── Constants ─────────────────────────────────────────────────────────────────
-VIRGIL_REPO="https://github.com/YOUR_USERNAME/VIRGIL.git"
-VIRGIL_RAW="https://raw.githubusercontent.com/YOUR_USERNAME/VIRGIL/main"
-VIRGIL_RELEASES="https://github.com/YOUR_USERNAME/VIRGIL/releases"
+VIRGIL_REPO="https://github.com/Morpheus6669/VIRGIL.git"
+VIRGIL_RAW="https://raw.githubusercontent.com/Morpheus6669/VIRGIL/main"
+VIRGIL_RELEASES="https://github.com/Morpheus6669/VIRGIL/releases"
 INSTALL_LOG="/tmp/virgil-install-$$.log"
 
 # ── Colors ────────────────────────────────────────────────────────────────────
@@ -76,7 +76,7 @@ if $DOCKER_MODE; then
     echo "      -e ANTHROPIC_API_KEY=\"sk-ant-your-key\" \\"
     echo "      -e SLACK_WEBHOOK_URL=\"https://hooks.slack.com/...\" \\"
     echo "      -v \"\$(pwd)/vault\":/vault \\"
-    echo "      ghcr.io/YOUR_USERNAME/virgil:latest"
+    echo "      ghcr.io/Morpheus6669/virgil:latest"
     echo ""
     echo "  With docker-compose (recommended for persistent setups):"
     echo ""
@@ -739,7 +739,7 @@ echo ""
 echo "    4. Read GETTING-STARTED.md in your vault."
 echo ""
 echo "  Docs:    $VIRGIL_RELEASES"
-echo "  Issues:  https://github.com/YOUR_USERNAME/VIRGIL/issues"
+echo "  Issues:  https://github.com/Morpheus6669/VIRGIL/issues"
 echo ""
 
 # Clean up temp clone if we downloaded it

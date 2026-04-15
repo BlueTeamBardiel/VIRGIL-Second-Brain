@@ -1,6 +1,6 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # VIRGIL — Second Brain
-# https://github.com/YOUR_USERNAME/VIRGIL
+# https://github.com/Morpheus6669/VIRGIL
 #
 # Build:
 #   docker build -t virgil .
@@ -20,7 +20,7 @@ FROM python:3.12-slim
 
 LABEL org.opencontainers.image.title="VIRGIL"
 LABEL org.opencontainers.image.description="Second brain — threat intel, CVE ingest, knowledge management"
-LABEL org.opencontainers.image.source="https://github.com/YOUR_USERNAME/VIRGIL"
+LABEL org.opencontainers.image.source="https://github.com/Morpheus6669/VIRGIL"
 
 # ── System dependencies ───────────────────────────────────────────────────────
 RUN apt-get update && apt-get install -y --no-install-recommends \
