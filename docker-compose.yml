@@ -1,0 +1,57 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# VIRGIL — docker-compose.yml
+# https://github.com/YOUR_USERNAME/VIRGIL
+#
+# Quickstart:
+#   1. cp .env.example .env
+#   2. nano .env   # set ANTHROPIC_API_KEY (required) and SLACK_WEBHOOK_URL (optional)
+#   3. docker-compose up -d
+#   4. docker-compose exec virgil bash   # drop into interactive shell
+#
+# Run a one-shot ingest:
+#   docker-compose exec virgil python3 /virgil/ingest/rss-ingest.py
+#   docker-compose exec virgil python3 /virgil/ingest/cve-ingest.py --recent
+#
+# View logs:
+#   docker-compose logs -f virgil
+#   cat vault/logs/rss.log
+#
+# Stop:
+#   docker-compose down
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  virgil:
+    # Build from local source, or pull from registry once published:
+    #   image: ghcr.io/YOUR_USERNAME/virgil:latest
+    build: .
+    container_name: virgil
+
+    # Keep running — restart if the container exits unexpectedly.
+    # Use "no" during testing so you can inspect exit codes.
+    restart: unless-stopped
+
+    # Load API keys and config from .env (never committed to git)
+    env_file: .env
+
+    environment:
+      # VIRGIL_DIR is the mount path inside the container — do not change
+      # unless you also update the volume mount below.
+      VIRGIL_DIR: /vault
+      # Override to "security" or "networking" to restrict RSS feeds.
+      # Value in .env takes precedence over this default.
+      VIRGIL_TRACK: ${VIRGIL_TRACK:-both}
+      PYTHONUNBUFFERED: "1"
+
+    volumes:
+      # Your notes live here on the host.
+      # Change ./vault to any path you like — e.g. ~/Documents/VIRGIL:/vault
+      - ./vault:/vault
+
+    # Drop into an interactive shell as the default command.
+    # Override on the CLI: docker-compose run virgil python3 /virgil/ingest/rss-ingest.py
+    stdin_open: true
+    tty: true
+
+    # No ports exposed — VIRGIL has no web UI.
+    # If you add Obsidian Livesync or a local wiki later, expose ports here.
