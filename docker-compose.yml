@@ -1,6 +1,6 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # VIRGIL — docker-compose.yml
-# https://github.com/Morpheus6669/VIRGIL
+# https://github.com/BlueTeamBardiel/VIRGIL
 #
 # Quickstart:
 #   1. cp .env.example .env
@@ -23,7 +23,7 @@
 services:
   virgil:
     # Build from local source, or pull from registry once published:
-    #   image: ghcr.io/Morpheus6669/virgil:latest
+    #   image: ghcr.io/BlueTeamBardiel/virgil:latest
     build: .
     container_name: virgil
 
