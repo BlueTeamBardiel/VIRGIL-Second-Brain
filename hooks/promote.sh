@@ -59,7 +59,15 @@ if grep -q "^## Promoted — $TODAY" "$MEMORY_FILE" 2>/dev/null; then
     exit 0
 fi
 
-# ── 4. Require API key ────────────────────────────────────────────────────────
+# ── 4. Self-source secrets from crontab if not in environment ────────────────
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
+    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
+fi
+if [[ -z "${SLACK_WEBHOOK_URL:-}" ]]; then
+    eval "$(crontab -l 2>/dev/null | grep 'SLACK_WEBHOOK_URL' | sed 's/^/export /')"
+fi
+
+# ── 5. Require API key ────────────────────────────────────────────────────────
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
     echo "$LOGPREFIX ANTHROPIC_API_KEY is not set. Aborting." >&2
     exit 1
@@ -315,4 +323,3 @@ if [[ -f "$VIRGIL_DIR/hooks/promote-patch.py" ]] && \
         echo "$LOGPREFIX Three-layer update: $PATCH_SUMMARY"
     fi
 fi
-

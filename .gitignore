@@ -1,21 +1,40 @@
-# Vault content — never commit personal notes
-notes/
+# Private session logs — not for public repo
 daily-logs/
-weekly-summaries/
 
-# Memory files (contain personal context)
-memory*.md
-*.bak-*
+# Obsidian notes — personal subdirs and root files not for repo
+# notes/knowledge/ and notes/mitre/ ARE tracked (public educational content)
+notes/inbox/
+notes/archive/
+notes/feeds/
+notes/cve/
+notes/personal/
+notes/.wikilink-last-run
+notes/*.md
 
-# Secrets and local config
-.env
-settings.local.json
+# Cron / hook output
+hooks/promote.log
+hooks/nebuchadnezzar.log
+hooks/weekly-rollup.log
 
-# Log files
-*.log
+# Ingest run logs (scripts write these at runtime)
 ingest/*.log
-hooks/*.log
 
-# Temporary files
-*.tmp
-*~
+# API keys and secrets (catch common patterns)
+*.env
+.env
+.env.*
+*api_key*
+*api-key*
+*secret*
+*token*
+*.pem
+*.key
+
+# Claude Code local config (machine-specific)
+.claude/settings.local.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

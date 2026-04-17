@@ -9,8 +9,8 @@
 #
 # Run on DC01 as Domain Admin.
 
-$GPOName  = "LAB-LAPS"
-$DomainDN = "DC=your-lab,DC=lab"
+$GPOName  = "COCYTUS-LAPS"
+$DomainDN = "DC=cocytus,DC=lab"
 
 Write-Host "`nConfiguring Windows LAPS`n" -ForegroundColor Cyan
 
@@ -28,10 +28,10 @@ Write-Host "`n  [step 2] Setting OU permissions for LAPS self-reporting..." -For
 Set-LapsADComputerSelfPermission -Identity $DomainDN
 Write-Host "  [done]   Computers can self-update LAPS attributes" -ForegroundColor Green
 
-# Step 3 - Grant LAB-Admins the right to read LAPS passwords
-Write-Host "`n  [step 3] Granting LAB-Admins read access to LAPS passwords..." -ForegroundColor Cyan
-Set-LapsADReadPasswordPermission -Identity $DomainDN -AllowedPrincipals "LAB-Admins"
-Write-Host "  [done]   LAB-Admins can retrieve LAPS passwords via AD" -ForegroundColor Green
+# Step 3 - Grant COCYTUS-Admins the right to read LAPS passwords
+Write-Host "`n  [step 3] Granting COCYTUS-Admins read access to LAPS passwords..." -ForegroundColor Cyan
+Set-LapsADReadPasswordPermission -Identity $DomainDN -AllowedPrincipals "COCYTUS-Admins"
+Write-Host "  [done]   COCYTUS-Admins can retrieve LAPS passwords via AD" -ForegroundColor Green
 
 # Step 4 - Create GPO
 Write-Host "`n  [step 4] Creating GPO: $GPOName..." -ForegroundColor Cyan

@@ -22,6 +22,14 @@ HOSTNAME_SHORT=$(hostname -s)
 
 log() { echo "$LOGPREFIX $*" >&2; }
 
+# ── Self-source secrets from crontab if not in environment ───────────────────
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
+    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
+fi
+if [[ -z "${SLACK_WEBHOOK_URL:-}" ]]; then
+    eval "$(crontab -l 2>/dev/null | grep 'SLACK_WEBHOOK_URL' | sed 's/^/export /')"
+fi
+
 # ── Silent exits ──────────────────────────────────────────────────────────────
 [[ -f "$LOG_FILE" ]]                          || exit 0
 grep -q '<!-- fill in manually -->' "$LOG_FILE" || exit 0
@@ -109,7 +117,7 @@ while '<!-- fill in manually -->' in text:
         f"based on the session metadata below. Be factual and concise — infer from the git branch, "
         f"file counts, and any project sync entries. If nothing meaningful happened, write: "
         f"'Session opened and closed with no significant activity.'\n\n"
-        f"Apply [[wiki links]] to YOUR_LAB hosts, tools, and concepts (e.g. [[VIRGIL]], [[your-workstation]], [[Ansible]]).\n\n"
+        f"Apply [[wiki links]] to your-lab hosts, tools, and concepts (e.g. [[VIRGIL]], [[your-workstation]], [[Ansible]]).\n\n"
         f"Session block:\n{session_block}\n\n"
     )
     if syncs:

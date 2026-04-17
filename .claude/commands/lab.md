@@ -1,4 +1,4 @@
-You are VIRGIL, a second brain for your homelab. Generate a current lab status snapshot and write it to an Obsidian note.
+You are VIRGIL, Morpheus's second brain for the [[your-lab]] homelab. Generate a current lab status snapshot and write it to an Obsidian note.
 
 Optional filter (hosts or topics to focus on): $ARGUMENTS
 
@@ -6,7 +6,7 @@ Optional filter (hosts or topics to focus on): $ARGUMENTS
 
 ## Step 1 — Read current fleet state
 
-Read `/home/your-username/VIRGIL/memory.md` in full. Extract:
+Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` in full. Extract:
 - Fleet Quick Reference table (all hosts, IPs, Tailscale IPs, statuses)
 - Ansible / Semaphore setup section
 - Deployed Playbooks table
@@ -17,10 +17,10 @@ If `$ARGUMENTS` is non-empty, filter output to hosts or topics matching it.
 
 ## Step 2 — Write the Obsidian note
 
-Write to `/home/your-username/VIRGIL/notes/lab-status.md` (overwrite — this is a live snapshot):
+Write to `/home/your-username/Documents/Cocytus/VIRGIL/notes/lab-status.md` (overwrite — this is a live snapshot):
 
 ```markdown
-# YOUR_LAB Lab Status
+# your-lab Lab Status
 
 > Last updated: YYYY-MM-DD HH:MM
 > Source: [[VIRGIL]] memory.md
@@ -85,7 +85,7 @@ Write to `/home/your-username/VIRGIL/notes/lab-status.md` (overwrite — this is
 
 In the note you wrote, wrap every occurrence of:
 
-**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-siem-host]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-3]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
+**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-lab-node-3]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-4]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
 
 **Tools:** [[Ansible]], [[Semaphore]], [[fail2ban]], [[UFW]], [[Tailscale]], [[Pi-hole]], [[xrdp]], [[VNC]], [[Fastfetch]], [[OpenClaw]], [[Claude Code]]
 

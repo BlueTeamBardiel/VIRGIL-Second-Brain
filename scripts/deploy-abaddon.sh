@@ -1,9 +1,9 @@
 #!/bin/bash
-# deploy-abaddon.sh — Deploy VIRGIL second brain to YOUR-CONTROL-NODE
+# deploy-control-node.sh — Deploy VIRGIL second brain to YOUR-CONTROL-NODE
 # Run from YOUR-WORKSTATION. SSHes into YOUR-CONTROL-NODE, clones VIRGIL, sets up hooks and cron.
 #
 # Usage:
-#   ./scripts/deploy-abaddon.sh
+#   ./scripts/deploy-control-node.sh
 #
 # Prerequisites on YOUR-WORKSTATION:
 #   - SSH access to your-username@YOUR_HOST_IP (or via Tailscale: YOUR_TAILSCALE_IP)
@@ -12,8 +12,8 @@
 
 set -euo pipefail
 
-YOUR-CONTROL-NODE="${CONTROL_NODE:-YOUR_CONTROL_NODE_IP}"
-ABADDON_USER="${ABADDON_USER:-your-username}"
+CONTROL_NODE="${CONTROL_NODE:-YOUR_CONTROL_NODE_IP}"
+CONTROL_USER="${CONTROL_USER:-your-username}"
 VIRGIL_REPO="git@github.com:your-username/VIRGIL.git"
 REMOTE_DIR="${REMOTE_DIR:-$HOME/VIRGIL}"
 
@@ -28,7 +28,7 @@ if [[ -z "${SLACK_WEBHOOK_URL:-}" ]]; then
     echo
 fi
 
-echo "==> Deploying VIRGIL to $ABADDON_USER@$CONTROL_NODE:$REMOTE_DIR"
+echo "==> Deploying VIRGIL to $CONTROL_USER@$CONTROL_NODE:$REMOTE_DIR"
 echo "    Repo: $VIRGIL_REPO"
 echo
 
@@ -169,7 +169,7 @@ echo "    First-time setup: run 'claude' and authenticate, then test with:"
 echo "    ANTHROPIC_API_KEY=\$ANTHROPIC_API_KEY bash ${REMOTE_DIR}/hooks/promote.sh"
 
 REMOTE_SCRIPT
-} | ssh "$ABADDON_USER@$CONTROL_NODE" bash
+} | ssh "$CONTROL_USER@$CONTROL_NODE" bash
 
 echo
 echo "==> Deploy finished. YOUR-CONTROL-NODE is now running VIRGIL."

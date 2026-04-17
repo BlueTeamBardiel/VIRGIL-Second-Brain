@@ -26,7 +26,15 @@ slack_notify() {
         -d "$payload" || true
 }
 
-# ── 1. Require API key ────────────────────────────────────────────────────────
+# ── 1. Self-source secrets from crontab if not in environment ────────────────
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
+    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
+fi
+if [[ -z "${SLACK_WEBHOOK_URL:-}" ]]; then
+    eval "$(crontab -l 2>/dev/null | grep 'SLACK_WEBHOOK_URL' | sed 's/^/export /')"
+fi
+
+# ── 2. Require API key ────────────────────────────────────────────────────────
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
     echo "$LOGPREFIX ANTHROPIC_API_KEY is not set. Aborting." >&2
     exit 1
@@ -116,8 +124,8 @@ if study_combined.strip():
     )
 
 prompt = (
-    "You are a second-brain assistant for a sysadmin/homelab operator. "
-    "He runs a homelab called YOUR_LAB, is studying for CySA+, and is job searching. "
+    "You are a second-brain assistant for a sysadmin/homelab operator named Morpheus. "
+    "He runs a homelab called your-lab, is studying for CySA+, and is job searching. "
     "Synthesize the following data from the past week into a concise weekly digest.\n\n"
     "Structure the output as:\n\n"
     "## Weekly Digest\n\n"

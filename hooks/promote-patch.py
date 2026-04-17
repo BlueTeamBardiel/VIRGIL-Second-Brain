@@ -129,7 +129,7 @@ Produce a JSON object with these four keys:
    Return empty list if nothing changed.
 
 4. "slack_summary" (string): One-line Slack-friendly summary of what was promoted.
-   Example: "Promoted 2026-04-10: Phase 2.4 OpenVAS deployed on YOUR-LAB-NODE-2. 3 tasks completed."
+   Example: "Promoted 2026-04-10: Phase 2.4 OpenVAS deployed on your-lab-node-2. 3 tasks completed."
 
 Return ONLY valid JSON. No prose, no code fences.
 """

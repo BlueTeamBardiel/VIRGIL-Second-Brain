@@ -25,7 +25,7 @@ Write-Host @"
 ---------------------------------------------------------
 Method B - Manual (if DC01 has no internet access via NAT)
 ---------------------------------------------------------
-Run this from YOUR-WORKSTATION or YOUR-LAPTOP (which have internet), then
+Run this from BEHEMOTH or MORAX (which have internet), then
 copy the MAS folder to DC01 via VMware shared folder or RDP clipboard:
 
   1. From a machine WITH internet:

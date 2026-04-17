@@ -13,8 +13,8 @@
 # Run on DC01 as Domain Admin.
 # Requires: Application Identity service running on client machines.
 
-$GPOName  = "LAB-AppLocker"
-$DomainDN = "DC=your-lab,DC=lab"
+$GPOName  = "COCYTUS-AppLocker"
+$DomainDN = "DC=cocytus,DC=lab"
 
 Write-Host "`nConfiguring GPO: $GPOName (AUDIT MODE)`n" -ForegroundColor Cyan
 Write-Host "  *** Running in AUDIT mode - no applications will be blocked ***" -ForegroundColor Yellow
@@ -119,7 +119,7 @@ $AppLockerXML | Set-Content -Path $TempXML -Encoding UTF8
 # Note: Set-AppLockerPolicy -XMLPolicy applies to the local policy.
 # To apply to a GPO we use the GPO GUID path on SYSVOL.
 $GPOGUID    = $GPO.Id.ToString()
-$SysvolBase = "\\yourdomain.local\SYSVOL\yourdomain.local\Policies\{$GPOGUID}\Machine\Microsoft\Windows NT\AppLocker"
+$SysvolBase = "\\cocytus.lab\SYSVOL\cocytus.lab\Policies\{$GPOGUID}\Machine\Microsoft\Windows NT\AppLocker"
 
 if (-not (Test-Path $SysvolBase)) {
     New-Item -Path $SysvolBase -ItemType Directory -Force | Out-Null

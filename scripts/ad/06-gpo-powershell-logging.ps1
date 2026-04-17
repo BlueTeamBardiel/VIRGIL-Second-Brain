@@ -4,9 +4,9 @@
 # and transcription. NIST 800-53 AU-2, SI-3.
 # Run on DC01 as Domain Admin.
 
-$GPOName    = "LAB-PowerShellLogging"
-$DomainDN   = "DC=your-lab,DC=lab"
-$DomainFQDN = "yourdomain.local"
+$GPOName    = "COCYTUS-PowerShellLogging"
+$DomainDN   = "DC=cocytus,DC=lab"
+$DomainFQDN = "cocytus.lab"
 
 Write-Host "`nConfiguring GPO: $GPOName`n" -ForegroundColor Cyan
 

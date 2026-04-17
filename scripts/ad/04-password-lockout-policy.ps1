@@ -5,7 +5,7 @@
 # Also creates a Fine-Grained Password Policy for service accounts (stricter).
 # Run on DC01 as Domain Admin.
 
-$Domain = "yourdomain.local"
+$Domain = "cocytus.lab"
 
 Write-Host "`nConfiguring Default Domain Policy - NIST 800-63B alignment`n" -ForegroundColor Cyan
 
@@ -45,7 +45,7 @@ Write-Host "        Obs. window   : 30 minutes"
 
 # -- Fine-Grained Password Policy for Service Accounts -------------------------
 # Stricter: 24-char minimum, no expiry, stronger lockout
-$FGPPName = "LAB-ServiceAccounts-PSO"
+$FGPPName = "COCYTUS-ServiceAccounts-PSO"
 
 if (Get-ADFineGrainedPasswordPolicy -Filter "Name -eq '$FGPPName'" -ErrorAction SilentlyContinue) {
     Write-Host "`n  [exists] Fine-grained PSO: $FGPPName (skipping creation)" -ForegroundColor Gray
@@ -63,11 +63,11 @@ if (Get-ADFineGrainedPasswordPolicy -Filter "Name -eq '$FGPPName'" -ErrorAction 
         -LockoutDuration             (New-TimeSpan -Hours 1) `
         -LockoutObservationWindow    (New-TimeSpan -Hours 1)
 
-    # Apply to LAB-ServiceAccounts group
-    Add-ADFineGrainedPasswordPolicySubject -Identity $FGPPName -Subjects "LAB-ServiceAccounts"
+    # Apply to COCYTUS-ServiceAccounts group
+    Add-ADFineGrainedPasswordPolicySubject -Identity $FGPPName -Subjects "COCYTUS-ServiceAccounts"
 
     Write-Host "`n  [created] Fine-grained PSO: $FGPPName" -ForegroundColor Green
-    Write-Host "           Applied to: LAB-ServiceAccounts"
+    Write-Host "           Applied to: COCYTUS-ServiceAccounts"
     Write-Host "           Min length : 24 | No expiry | Lockout: 3 attempts / 1hr"
 }
 

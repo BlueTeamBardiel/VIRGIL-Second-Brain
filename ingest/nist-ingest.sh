@@ -68,7 +68,7 @@ pdf_name = sys.argv[1]
 raw_text = sys.stdin.read()
 
 prompt = (
-    f"You are a second-brain assistant for you, a sysadmin studying for CySA+.\n"
+    f"You are a second-brain assistant for Morpheus, a sysadmin studying for CySA+.\n"
     f"Convert this NIST publication PDF into a structured Obsidian note optimized for CySA+ exam relevance.\n\n"
     f"Document: {pdf_name}\n\n"
     f"Required sections:\n"

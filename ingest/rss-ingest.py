@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-rss-ingest.py — Pull security/homelab RSS feeds, filter last 24h, generate digest via Claude.
+rss-ingest.py — Pull security/homelab/SDR RSS feeds, filter last 24h, generate digest via Claude.
 Usage: rss-ingest.py [--hours N] [--dry-run]
 Output: notes/feeds/YYYY-MM-DD.md  +  Slack notification
 Deps: feedparser, requests
+Feeds: 27 (22 security/homelab + 5 SDR/RF/hardware)
 """
 
 import argparse
@@ -64,6 +65,18 @@ FEEDS = [
     # Tools / Open Source
     ("GitHub Security Lab",     "https://github.blog/category/security/feed/"),
     ("CISA Known Exploited",    "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"),
+    # SDR / RF / Hardware
+    ("RTL-SDR Blog",            "https://www.rtl-sdr.com/feed/"),
+    ("Hackaday",                "https://hackaday.com/blog/feed/"),
+    ("SDRplay News",            "https://www.sdrplay.com/news/feed/"),
+    ("Flipper Zero Blog",       "https://blog.flipper.net/rss/"),
+    ("IEEE Spectrum",           "https://spectrum.ieee.org/feeds/feed.rss"),
+    # Skipped — no valid RSS found:
+    #   f5len.org/feed/          → 404 as of 2026-04-11
+    #   radioreference.com       → returns HTML; no public RSS feed
+    #   Benn Jordan              → no RSS; find content at youtube.com/@BennJordan
+    #   flipperzero.one/blog     → 404; correct URL is blog.flipper.net
+    #   thebenji.substack.com/feed → returns HTML as of 2026-04-15
 ]
 
 
@@ -127,7 +140,7 @@ def build_digest(items_by_source: dict, date_str: str) -> str:
         return ""
 
     prompt = (
-        f"You are a security intelligence analyst. You are a sysadmin/homelab operator studying for your certs.\n"
+        f"You are a security intelligence analyst. Morpheus is a sysadmin/homelab operator studying for CySA+.\n"
         f"The following are RSS feed items from {date_str}. Synthesize them into a concise daily threat and news digest.\n\n"
         f"Structure:\n"
         f"## Daily Feed Digest — {date_str}\n\n"

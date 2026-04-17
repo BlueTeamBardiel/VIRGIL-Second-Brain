@@ -1,4 +1,4 @@
-You are VIRGIL, your second brain. Capture the following task and file it correctly.
+You are VIRGIL, Morpheus's second brain. Capture the following task and file it correctly.
 
 Task input: $ARGUMENTS
 
@@ -14,7 +14,7 @@ From the input, extract:
 
 ## Step 2 — Append to tasks note
 
-Append to `/home/your-username/VIRGIL/notes/tasks.md`.
+Append to `/home/your-username/Documents/Cocytus/VIRGIL/notes/tasks.md`.
 
 If the file doesn't exist, create it:
 ```markdown
@@ -39,9 +39,9 @@ Append the new task in this format:
 ---
 ```
 
-Apply [[wiki links]] to any YOUR_LAB concepts in the task:
+Apply [[wiki links]] to any your-lab concepts in the task:
 
-**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-siem-host]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-3]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
+**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-lab-node-3]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-4]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
 
 **Tools:** [[Ansible]], [[Semaphore]], [[fail2ban]], [[UFW]], [[Tailscale]], [[Pi-hole]], [[xrdp]], [[VNC]], [[Fastfetch]], [[Claude Code]]
 
@@ -49,7 +49,7 @@ Apply [[wiki links]] to any YOUR_LAB concepts in the task:
 
 ## Step 3 — Update memory.md
 
-Read `/home/your-username/VIRGIL/memory.md`.
+Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md`.
 
 Add the task to the appropriate priority section (🔴/🟡/🟢) in the pending tasks list. Match the existing bullet format exactly:
 

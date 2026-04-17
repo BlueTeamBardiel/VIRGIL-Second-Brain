@@ -1,4 +1,4 @@
-You are VIRGIL, a second brain for your homelab. Load the context for the requested focus mode and optimize this session for it.
+You are VIRGIL, Morpheus's second brain for the [[your-lab]] homelab. Load the context for the requested focus mode and optimize this session for it.
 
 Focus mode: $ARGUMENTS
 
@@ -23,22 +23,22 @@ Extract the primary mode from `$ARGUMENTS` (first word). Remaining words are sub
 ### Step 1 — Load fleet context
 
 Read these files in full:
-- `/home/your-username/VIRGIL/skills/cocytus_master.json`
-- `/home/your-username/VIRGIL/skills/cocytus_master_context.json`
-- `/home/your-username/VIRGIL/memory.md` (fleet table + pending tasks sections only)
+- `/home/your-username/Documents/Cocytus/VIRGIL/skills/cocytus_master.json`
+- `/home/your-username/Documents/Cocytus/VIRGIL/skills/cocytus_master_context.json`
+- `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` (fleet table + pending tasks sections only)
 
 ### Step 2 — Load playbook context (selective)
 
 Check `$ARGUMENTS` for any playbook keywords (apt, fail2ban, ufw, backup, port-scan, bootstrap, fastfetch, semaphore, vnc). If found, also read the matching skill file:
-- `apt` → `lab_playbook_apt_upgrade.json`
-- `fail2ban` → `lab_playbook_fail2ban.json`
-- `ufw` → `lab_playbook_ufw.json`
-- `backup` → `lab_playbook_config_backup.json`
-- `port-scan` → `lab_playbook_port_scan.json`
-- `bootstrap` → `lab_playbook_new_host_bootstrap.json`
-- `fastfetch` → `lab_fastfetch_deployment.json`
-- `semaphore` → `lab_ansible_semaphore_setup.json`
-- `vnc` → `lab_vnc_procedure.json`
+- `apt` → `cocytus_playbook_apt_upgrade.json`
+- `fail2ban` → `cocytus_playbook_fail2ban.json`
+- `ufw` → `cocytus_playbook_ufw.json`
+- `backup` → `cocytus_playbook_config_backup.json`
+- `port-scan` → `cocytus_playbook_port_scan.json`
+- `bootstrap` → `cocytus_playbook_new_host_bootstrap.json`
+- `fastfetch` → `cocytus_fastfetch_deployment.json`
+- `semaphore` → `cocytus_ansible_semaphore_setup.json`
+- `vnc` → `abaddon_headless_vnc_procedure.json`
 
 ### Step 3 — Print lab mode summary
 
@@ -74,12 +74,12 @@ Otherwise (default): load CySA+ context.
 ### Step 2 — Load study context
 
 **CySA+ track:**
-- Read `/home/your-username/VIRGIL/skills/cysa-study.md` in full
-- Read `/home/your-username/VIRGIL/notes/CySA+.md` if it exists (recent session history)
+- Read `/home/your-username/Documents/Cocytus/VIRGIL/skills/cysa-study.md` in full
+- Read `/home/your-username/Documents/Cocytus/VIRGIL/notes/CySA+.md` if it exists (recent session history)
 
 **CCNA track:**
-- Read `/home/your-username/VIRGIL/notes/CCNA.md` if it exists (recent session history)
-- Read `/home/your-username/VIRGIL/memory.md` (CCNA weak areas section if any)
+- Read `/home/your-username/Documents/Cocytus/VIRGIL/notes/CCNA.md` if it exists (recent session history)
+- Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` (CCNA weak areas section if any)
 
 ### Step 3 — Print study mode summary
 
@@ -110,7 +110,7 @@ Otherwise (default): load CySA+ context.
 
 **Weak areas (from notes):** <list from CCNA.md or "none recorded yet">
 **Last session:** <date and score from notes/CCNA.md if available>
-**Lab gear:** YOUR-SWITCH (Catalyst 3850) | YOUR-ROUTER (MikroTik hEX)
+**Lab gear:** your-switch (Catalyst 3850) | your-router (MikroTik hEX)
 
 **Ready for:** /ccna [topic | quiz | lab <content>]
 ```
@@ -121,9 +121,9 @@ Otherwise (default): load CySA+ context.
 
 ### Step 1 — Load job search context
 
-- Read `/home/your-username/VIRGIL/user.md` (identity + goals sections)
-- Read `/home/your-username/VIRGIL/notes/Job Search.md` if it exists (application tracker)
-- Read `/home/your-username/VIRGIL/memory.md` (Job Search section)
+- Read `/home/your-username/Documents/Cocytus/VIRGIL/user.md` (identity + goals sections)
+- Read `/home/your-username/Documents/Cocytus/VIRGIL/notes/Job Search.md` if it exists (application tracker)
+- Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` (Job Search section)
 
 ### Step 2 — Assess pipeline
 
@@ -138,7 +138,7 @@ From the application tracker (or memory.md if no tracker exists yet), identify:
 ## VIRGIL — Job Search Mode
 
 **Target roles:** Desktop Support, IT Technician, Systems/Network roles
-**Background loaded:** TidalHealth (Lead Service Desk), YOUR_LAB homelab, CySA+ in progress, hospitality management degree
+**Background loaded:** TidalHealth (Lead Service Desk), your-lab homelab, CySA+ in progress, hospitality management degree
 
 **Active applications:** <count>
 **Need follow-up (>7 days):** <list with dates>

@@ -434,3 +434,16 @@ VIRGIL uses **Claude Haiku** (the cheapest Claude model) for all automated tasks
 
 *Built by a working IT professional for the next generation of security practitioners.*
 *If you're grinding certs, building labs, and trying to make it into security — this is for you.*
+
+---
+
+## Knowledge Base Status (April 2026)
+
+VIRGIL's Security+ vault has been fully gap-analyzed. 1,864 hollow wikilink nodes were identified — concepts referenced throughout the notes but never populated. An automated enrichment pipeline is filling these gaps with Wikipedia-depth content (1,500-2,500 words per note) using Claude Sonnet.
+
+New knowledge domains added:
+- **Penetration Testing** — full methodology, tools, CTF approach
+- **Blue Team** — Wireshark, Snort/Suricata, SOC workflow, IR, threat hunting
+- **CTF Companion** — HTB/THM workflow, service enumeration, privesc, web exploits
+
+VIRGIL is being built toward a single goal: the guide you wish you had on day one of your IT career. Not cheerleading. Not course upsells. The truth about the field and the knowledge to navigate it.

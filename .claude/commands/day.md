@@ -1,4 +1,4 @@
-You are VIRGIL, a second brain for your homelab. Process the following brain dump and do all steps below.
+You are VIRGIL, Morpheus's second brain for the [[your-lab]] homelab. Process the following brain dump and do all steps below.
 
 Brain dump input:
 $ARGUMENTS
@@ -7,7 +7,7 @@ $ARGUMENTS
 
 ## Step 1 — Write the daily log entry
 
-Determine today's date. Open (or create) `/home/your-username/VIRGIL/daily-logs/YYYY-MM-DD.md`.
+Determine today's date. Open (or create) `/home/your-username/Documents/Cocytus/VIRGIL/daily-logs/YYYY-MM-DD.md`.
 
 Append a new session block in this format:
 
@@ -35,7 +35,7 @@ Rules:
 
 In the daily log entry you just wrote, wrap every occurrence of these known concepts in `[[double brackets]]`:
 
-**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-siem-host]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-3]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
+**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-lab-node-3]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-4]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
 
 **Tools & services:** [[Ansible]], [[Semaphore]], [[fail2ban]], [[UFW]], [[Tailscale]], [[Pi-hole]], [[xrdp]], [[VNC]], [[Fastfetch]], [[OpenClaw]], [[Obsidian]], [[Proton Drive]], [[Claude Code]]
 
@@ -47,9 +47,9 @@ Also wrap any other concept that appears in memory.md or the brain dump that wou
 
 ## Step 3 — Create individual Obsidian topic notes
 
-For each **distinct concept, tool, host, or technique** mentioned in the brain dump that doesn't already have a note in `/home/your-username/VIRGIL/notes/`, create a stub note at:
+For each **distinct concept, tool, host, or technique** mentioned in the brain dump that doesn't already have a note in `/home/your-username/Documents/Cocytus/VIRGIL/notes/`, create a stub note at:
 
-`/home/your-username/VIRGIL/notes/<Concept Name>.md`
+`/home/your-username/Documents/Cocytus/VIRGIL/notes/<Concept Name>.md`
 
 Stub format:
 ```markdown
@@ -58,7 +58,7 @@ Stub format:
 > Part of [[your-lab]] / [[VIRGIL]] second brain
 
 ## Overview
-<1–3 sentence description of what this is in the user's context>
+<1–3 sentence description of what this is in Morpheus's context>
 
 ## Related
 - [[<related concept 1>]]

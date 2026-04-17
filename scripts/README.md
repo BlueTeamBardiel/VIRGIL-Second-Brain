@@ -15,8 +15,8 @@ One-shot scripts run manually from [[your-workstation]]. They are not cron-sched
 ./scripts/deploy-machine.sh [user@]host
 
 # Examples:
-./scripts/deploy-machine.sh your-host
-./scripts/deploy-machine.sh your-username@YOUR_TAILSCALE_IP
+./scripts/deploy-machine.sh abaddon
+./scripts/deploy-machine.sh your-username@YOUR_HOST_IP
 ```
 
 **Prerequisites:**
@@ -26,11 +26,11 @@ One-shot scripts run manually from [[your-workstation]]. They are not cron-sched
 
 ---
 
-### deploy-your-host.sh
-**Purpose:** Dedicated deploy script for [[your-control-node]] (YOUR_LAN_IP / Tailscale YOUR_TAILSCALE_IP). Functionally similar to `deploy-machine.sh` but hardcodes [[your-control-node]]'s address and includes YOUR-CONTROL-NODE-specific cron entries (rss-ingest.py at 6am, cve-ingest.py at 7am).
+### deploy-abaddon.sh
+**Purpose:** Dedicated deploy script for [[your-control-node]] (YOUR_LAN_IP / Tailscale YOUR_TAILSCALE_IP). Functionally similar to `deploy-machine.sh` but hardcodes [[your-control-node]]'s address and includes your-control-node-specific cron entries (rss-ingest.py at 6am, cve-ingest.py at 7am).
 
 ```bash
-./scripts/deploy-your-host.sh
+./scripts/deploy-abaddon.sh
 ```
 
 **Prerequisites:**
@@ -48,7 +48,7 @@ One-shot scripts run manually from [[your-workstation]]. They are not cron-sched
 
 # Examples:
 ./scripts/sync-projects.sh "LOGOS" "Built docker-status schema, portainer-launcher schema."
-./scripts/sync-projects.sh "YOUR_LAB Phase 2" "Deployed Docker on YOUR-LAB-NODE-2. Portainer running."
+./scripts/sync-projects.sh "your-lab Phase 2" "Deployed Docker on your-lab-node-2. Portainer running."
 ```
 
 **Use when:** Doing work in another repo or tool (e.g., [[LOGOS]], [[Semaphore]]) and want that progress reflected in VIRGIL's daily log and relevant note without a full `/reflect` session.
@@ -78,5 +78,5 @@ One-shot scripts run manually from [[your-workstation]]. They are not cron-sched
 
 - [[VIRGIL]] — system these scripts serve
 - [[your-lab]] — fleet being deployed to
-- [[your-control-node]] — primary non-YOUR-WORKSTATION deployment target
+- [[your-control-node]] — primary non-your-workstation deployment target
 - [[Ansible]] / [[Semaphore]] — used for fleet-wide playbook deployment (separate from these scripts)

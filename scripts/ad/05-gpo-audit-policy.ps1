@@ -5,9 +5,9 @@
 # policy change, account management.
 # Run on DC01 as Domain Admin.
 
-$GPOName    = "LAB-AuditPolicy"
-$DomainDN   = "DC=your-lab,DC=lab"
-$DomainFQDN = "yourdomain.local"
+$GPOName    = "COCYTUS-AuditPolicy"
+$DomainDN   = "DC=cocytus,DC=lab"
+$DomainFQDN = "cocytus.lab"
 
 Write-Host "`nConfiguring GPO: $GPOName`n" -ForegroundColor Cyan
 

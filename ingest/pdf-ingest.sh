@@ -136,7 +136,7 @@ def chunk_text(text, size):
 def single_call(raw_text, pdf_name):
     log(f"Single-call mode — {len(raw_text):,} chars")
     prompt = (
-        f"You are a second-brain assistant for you, a sysadmin/homelab operator studying for your certs.\n"
+        f"You are a second-brain assistant for Morpheus, a sysadmin/homelab operator studying for CySA+ and CCNA.\n"
         f"Convert the following extracted PDF text into a clean Obsidian Markdown knowledge note.\n\n"
         f"Document: {pdf_name}\n\n"
         f"Rules:\n"
@@ -159,7 +159,7 @@ def chunked_call(raw_text, pdf_name):
     for i, chunk in enumerate(chunks, 1):
         log(f"  Chunk {i}/{total} — {len(chunk):,} chars")
         prompt = (
-            f"You are extracting structured knowledge from a technical document for you, "
+            f"You are extracting structured knowledge from a technical document for Morpheus, "
             f"a sysadmin studying for CySA+ and CCNA.\n\n"
             f"Document: \"{pdf_name}\" — Chunk {i} of {total}\n\n"
             f"Extract from this chunk:\n"
@@ -181,7 +181,7 @@ def chunked_call(raw_text, pdf_name):
     log(f"Synthesising {total} chunk summaries into final note...")
     combined = "\n\n---\n\n".join(summaries)
     synthesis_prompt = (
-        f"You are a second-brain assistant for you, a sysadmin studying for CySA+ and CCNA.\n"
+        f"You are a second-brain assistant for Morpheus, a sysadmin studying for CySA+ and CCNA.\n"
         f"The following are structured summaries extracted from {total} sequential chunks of:\n"
         f"\"{pdf_name}\"\n\n"
         f"Synthesise these into a single, well-structured Obsidian Markdown knowledge note.\n\n"

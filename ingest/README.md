@@ -2,7 +2,7 @@
 
 > [[VIRGIL]] knowledge ingestion pipeline — automated scripts for pulling PDFs, threat feeds, CVEs, and personal logs into Obsidian notes
 
-All scripts write to `notes/` subdirectories and optionally notify Slack. The pipeline runs automatically on [[your-control-node]] via cron; scripts can also be run manually via aliases on [[your-workstation]] or YOUR-CONTROL-NODE.
+All scripts write to `notes/` subdirectories and optionally notify Slack. The pipeline runs automatically on [[your-control-node]] via cron; scripts can also be run manually via aliases on [[your-workstation]] or your-control-node.
 
 ---
 
@@ -95,7 +95,7 @@ If no inline notes are provided, opens `$EDITOR` for longer entries.
 
 ---
 
-## Cron Schedule (YOUR-CONTROL-NODE)
+## Cron Schedule (your-control-node)
 
 | Time | Script | Output |
 |------|--------|--------|
