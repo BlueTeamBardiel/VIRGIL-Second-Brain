@@ -49,7 +49,7 @@ DOCKER_MODE=false
 for arg in "$@"; do
     case "$arg" in
         --fast)    FAST_MODE=true ;;
-        --dry-run) DRY_RUN=true ;;
+        --dry-run) DRY_RUN=true; FAST_MODE=true ;; # dry-run uses defaults, no tty needed
         --docker)  DOCKER_MODE=true ;;
         --help|-h)
             echo "Usage: bash install.sh [--fast] [--dry-run] [--docker]"
