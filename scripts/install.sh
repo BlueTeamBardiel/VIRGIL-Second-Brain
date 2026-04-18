@@ -338,10 +338,8 @@ if $FAST_MODE; then
     info "  Track:   Security + Networking"
     info "  Crontab: yes"
     if [[ -z "$API_KEY" ]]; then
-        echo ""
-        ask "ANTHROPIC_API_KEY not set in environment."
-        read -r -sp "  Paste your Anthropic API key (sk-ant-...): " API_KEY </dev/tty
-        echo ""
+        warn "ANTHROPIC_API_KEY not set — AI features will use local Ollama inference or be skipped"
+        warn "To enable cloud fallback: export ANTHROPIC_API_KEY=sk-ant-... before running"
     fi
 else
     # Q1: Name
