@@ -1,12 +1,16 @@
 # Getting Started with VIRGIL
 
-Welcome. This guide is for first-time Obsidian users who just cloned VIRGIL and want to understand how the vault is structured.
+VIRGIL is an Obsidian-based second brain. If you don't have Obsidian, download it free at [obsidian.md](https://obsidian.md) — it's a note-taking app that connects your notes like a wiki.
+
+Welcome. This guide is for first-time users who just installed VIRGIL and want to understand how the vault is structured.
+
+> **No API key required.** VIRGIL works fully with local inference via [Ollama](https://ollama.com) — no Anthropic account, no API costs. An Anthropic API key unlocks cloud fallback (Claude Haiku, ~$3–5/month at typical usage) but is entirely optional. See [ARCHITECTURE.md](ARCHITECTURE.md) for the full inference stack and how to configure local-only mode.
 
 ## Step 0: Open the Vault in Obsidian
 
 1. Open Obsidian
 2. Click **Open folder as vault**
-3. Navigate to your `VIRGIL_DIR` (wherever `setup.sh` put it, default: `~/Documents/VIRGIL`)
+3. Navigate to your `VIRGIL_DIR` (wherever `install.sh` put it, default: `~/VIRGIL`)
 4. Click **Open**
 
 Obsidian will index all the Markdown files. The left sidebar shows your folder structure.
@@ -96,12 +100,37 @@ virgil-triage
 - **Tags**: Click any `#tag` to see all notes with that tag
 - **Daily notes**: Not required but pairs well with VIRGIL's daily log system
 
+## Option B: Local Inference (No API Key Required)
+
+If you don't have an Anthropic API key, or prefer to keep your data fully local, VIRGIL scripts support [Ollama](https://ollama.com) as a drop-in backend.
+
+**Quick setup:**
+
+```bash
+# Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Pull a model (qwen2.5:14b is a good balance of speed and quality)
+ollama pull qwen2.5:14b
+
+# Tell VIRGIL to use Ollama instead of the Anthropic API
+echo 'VIRGIL_BACKEND=ollama' >> ~/.env
+echo 'OLLAMA_MODEL=qwen2.5:14b' >> ~/.env
+echo 'OLLAMA_URL=http://localhost:11434' >> ~/.env
+```
+
+Scripts that support Ollama will skip the `ANTHROPIC_API_KEY` check when `VIRGIL_BACKEND=ollama` is set. See [Ollama's model library](https://ollama.com/library) for available models.
+
+> **Note:** Smaller models (7B–14B) produce noticeably shorter and less structured notes than Claude Haiku. For exam-critical content (CVE notes, ATT&CK techniques), Claude Haiku is recommended if cost is manageable (~$3–5/month at typical usage).
+
 ## Troubleshooting
 
-**virgil-rss fails**: Check that `ANTHROPIC_API_KEY` is set — run `echo $ANTHROPIC_API_KEY`. If empty, re-run `setup.sh` or source your `.env` file.
+**virgil-rss fails with "no API key"**: You have two options — (1) set `ANTHROPIC_API_KEY` in your `.env` file and source it (`source ~/.env`), or (2) set `VIRGIL_BACKEND=ollama` to use local inference with no API key (see **Option B** above). If you're not sure which you want, start with Ollama.
+
+**virgil-rss fails even with a key**: Run `echo $ANTHROPIC_API_KEY` — if empty, your `.env` isn't being sourced. Add `source ~/VIRGIL/.env` to your `~/.bashrc` or re-run the installer.
 
 **Notes aren't getting wiki links**: The wikilink script runs at 11:30pm. Run it manually: `virgil-wikilink`
 
-**Triage isn't routing correctly**: Check `ingest/triage-inbox.log` for Claude's reasoning on each note.
+**Triage isn't routing correctly**: Check `ingest/triage-inbox.log` for the routing decision on each note.
 
-**Cron jobs not running**: Verify your crontab has `ANTHROPIC_API_KEY` set: `crontab -l | head -5`
+**Cron jobs not running**: Run `crontab -l` and verify the VIRGIL entries are present. If not, re-run the installer with `bash scripts/install.sh` from your cloned repo.

@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │  VIRGIL — Second Brain Installer                                            │
-# │  https://github.com/BlueTeamBardiel/VIRGIL                                    │
+# │  https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain                       │
 # │                                                                             │
 # │  Quick install (interactive — keeps stdin attached to terminal):            │
 # │    bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/    │
-# │                        VIRGIL/main/scripts/install.sh)                      │
+# │                        VIRGIL-Second-Brain/main/scripts/install.sh)         │
 # │                                                                             │
 # │  Download and verify before running (recommended):                          │
-# │    curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL/       │
-# │             main/scripts/install.sh -o virgil-install.sh                    │
+# │    curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/            │
+# │             VIRGIL-Second-Brain/main/scripts/install.sh -o virgil-install.sh│
 # │    sha256sum virgil-install.sh   # compare at releases page                 │
 # │    bash virgil-install.sh                                                   │
 # │                                                                             │
@@ -22,9 +22,9 @@
 set -euo pipefail
 
 # ── Constants ─────────────────────────────────────────────────────────────────
-VIRGIL_REPO="https://github.com/BlueTeamBardiel/VIRGIL.git"
-VIRGIL_RAW="https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL/main"
-VIRGIL_RELEASES="https://github.com/BlueTeamBardiel/VIRGIL/releases"
+VIRGIL_REPO="https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain.git"
+VIRGIL_RAW="https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main"
+VIRGIL_RELEASES="https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain/releases"
 INSTALL_LOG="/tmp/virgil-install-$$.log"
 
 # ── Colors ────────────────────────────────────────────────────────────────────
@@ -76,7 +76,7 @@ if $DOCKER_MODE; then
     echo "      -e ANTHROPIC_API_KEY=\"sk-ant-your-key\" \\"
     echo "      -e SLACK_WEBHOOK_URL=\"https://hooks.slack.com/...\" \\"
     echo "      -v \"\$(pwd)/vault\":/vault \\"
-    echo "      ghcr.io/BlueTeamBardiel/virgil:latest"
+    echo "      ghcr.io/blueteambardiel/virgil-second-brain:latest"
     echo ""
     echo "  With docker-compose (recommended for persistent setups):"
     echo ""
@@ -739,7 +739,7 @@ echo ""
 echo "    4. Read GETTING-STARTED.md in your vault."
 echo ""
 echo "  Docs:    $VIRGIL_RELEASES"
-echo "  Issues:  https://github.com/BlueTeamBardiel/VIRGIL/issues"
+echo "  Issues:  https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain/issues"
 echo ""
 
 # Clean up temp clone if we downloaded it

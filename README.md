@@ -18,6 +18,16 @@ This is not a personal failing. It is the environment.
 
 ---
 
+## Quick Install
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
+```
+
+Interactive wizard. Takes about twenty minutes. Handles vault structure, crontab, and a live CVE demo. No API key required if you run local inference — see [GETTING-STARTED.md](GETTING-STARTED.md).
+
+---
+
 ## II. The Gauntlet
 
 You apply anyway.
@@ -108,12 +118,10 @@ Full installation guide, crontab configuration, and fleet deployment instruction
 
 **Quick install:**
 ```bash
-git clone https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain.git ~/VIRGIL
-cd ~/VIRGIL
-bash scripts/setup.sh
+bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
 ```
 
-Setup takes about twenty minutes. `setup.sh` handles the vault structure, crontab entries, and a connectivity test. Everything else is in the guide.
+The installer handles vault structure, dependency checks, crontab entries, and a live connectivity test. Everything else is in [GETTING-STARTED.md](GETTING-STARTED.md).
 
 ---
 
