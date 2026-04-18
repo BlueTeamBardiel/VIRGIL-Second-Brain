@@ -278,8 +278,11 @@ if [[ ${#MISSING_SOFT[@]} -gt 0 ]]; then
                 fi
             fi
             info "Installing Python packages: ${PIP_PKGS[*]}"
-            python3 -m pip install --quiet --user "${PIP_PKGS[@]}" 2>/dev/null || \
-                pip3 install --quiet --user "${PIP_PKGS[@]}"
+            # Try normal install first; fall back to --break-system-packages for PEP 668 systems
+            # (Ubuntu 24.04+ blocks user installs without this flag on externally-managed envs)
+            if ! python3 -m pip install --quiet --user "${PIP_PKGS[@]}" 2>/dev/null; then
+                python3 -m pip install --quiet --user --break-system-packages "${PIP_PKGS[@]}"
+            fi
             ok "pip install complete"
         fi
     fi
