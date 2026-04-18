@@ -266,8 +266,20 @@ if [[ ${#MISSING_SOFT[@]} -gt 0 ]]; then
         if $DRY_RUN; then
             info "[dry-run] Would install pip packages: ${PIP_PKGS[*]}"
         else
+            # Ensure pip is available before trying to install packages
+            if ! python3 -m pip --version &>/dev/null 2>&1; then
+                info "pip not found — installing python3-pip..."
+                if [[ "$PKG_MANAGER" == "apt" ]]; then
+                    sudo apt-get install -y python3-pip -qq
+                elif [[ "$OS" == "macos" ]] && command -v brew &>/dev/null; then
+                    brew install python &>/dev/null
+                else
+                    warn "Cannot auto-install pip — install python3-pip manually, then re-run"
+                fi
+            fi
             info "Installing Python packages: ${PIP_PKGS[*]}"
-            python3 -m pip install --quiet --user "${PIP_PKGS[@]}"
+            python3 -m pip install --quiet --user "${PIP_PKGS[@]}" 2>/dev/null || \
+                pip3 install --quiet --user "${PIP_PKGS[@]}"
             ok "pip install complete"
         fi
     fi
