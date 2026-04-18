@@ -550,7 +550,7 @@ for mf in memory-working.md memory-episodic.md memory-semantic.md; do
         cat > "$VIRGIL_DIR/$mf" << MEMEOF
 # $mf
 
-_Created by VIRGIL installer on $(date '+%Y-%m-%d') — $USER_NAME_
+_Created by VIRGIL installer on $(date '+%Y-%m-%d') — ${USER_NAME}_
 
 ---
 
