@@ -6,11 +6,78 @@ Welcome. This guide is for first-time users who just installed VIRGIL and want t
 
 > **No API key required.** VIRGIL works fully with local inference via [Ollama](https://ollama.com) — no Anthropic account, no API costs. An Anthropic API key unlocks cloud fallback (Claude Haiku, ~$3–5/month at typical usage) but is entirely optional. See [ARCHITECTURE.md](ARCHITECTURE.md) for the full inference stack and how to configure local-only mode.
 
+## Windows (via WSL2)
+
+The short version: **VIRGIL's scripts and vault run inside WSL2. Obsidian and Claude Code run natively on Windows.** They connect through a network path — no file copying, no sync software.
+
+### Why WSL2?
+
+VIRGIL uses bash, Python, and cron — tools that don't run natively on Windows. WSL2 gives you a full Linux environment running alongside Windows. Obsidian reads the vault files over the WSL network path as if they were a normal local folder.
+
+### Step 1 — Enable WSL2
+
+Open PowerShell **as Administrator** and run:
+```powershell
+wsl --install
+```
+Reboot when prompted. This installs WSL2 and Ubuntu in one step. After reboot, Ubuntu will finish setting up — create a username and password when asked.
+
+### Step 2 — Install Windows-side tools
+
+These run on Windows, not inside WSL:
+- **[Obsidian](https://obsidian.md)** — the vault viewer. Free download, native Windows app.
+- **[Claude Code](https://claude.ai/code)** — requires WSL2 on Windows. The installer handles this automatically; you run it from inside the Ubuntu terminal.
+
+### Step 3 — Run the VIRGIL installer inside WSL2
+
+Open your Ubuntu terminal (search "Ubuntu" in the Start menu), then run:
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
+```
+The installer detects WSL2 and prints notes specific to your setup.
+
+### Step 4 — Connect Obsidian to the vault
+
+1. Open Obsidian on Windows → **Open folder as vault**
+2. In the folder picker, type this path directly into the address bar:
+   ```
+   \\wsl.localhost\Ubuntu\home\<your-ubuntu-username>\VIRGIL
+   ```
+   Replace `<your-ubuntu-username>` with the username you created in Step 1.
+3. Click **Open**
+
+Obsidian sees the vault as a regular local folder. Edits sync instantly — no file copying involved. If the path doesn't work, check that your Ubuntu username is correct and WSL2 is running.
+
+### Step 5 — Fix cron (WSL2 doesn't autostart it)
+
+Cron doesn't start automatically when WSL launches. Fix this once:
+```bash
+# Option A: Add to /etc/wsl.conf (starts cron every time WSL launches)
+echo -e "[boot]\ncommand=service cron start" | sudo tee -a /etc/wsl.conf
+```
+Restart WSL (`wsl --shutdown` in PowerShell, then reopen Ubuntu) to apply. Verify: `service cron status`
+
+### WSL2 Troubleshooting
+
+**Obsidian can't find the vault path:** Make sure Ubuntu is running (open a terminal, then retry in Obsidian). WSL2 only registers the network path when it's active.
+
+**`virgil-rss` works but Obsidian doesn't show new notes:** Obsidian caches the file list — press `Ctrl+Shift+I` to open the developer console, or close and reopen the vault.
+
+**Claude Code says WSL2 is required:** You're not in the WSL terminal. Close any PowerShell or CMD windows and run it from the Ubuntu terminal instead.
+
+**Line ending issues with git:** WSL2 and Windows can disagree on `\r\n` vs `\n`. Inside WSL, run:
+```bash
+git config --global core.autocrlf input
+```
+
+---
+
 ## Step 0: Open the Vault in Obsidian
 
 1. Open Obsidian
 2. Click **Open folder as vault**
 3. Navigate to your `VIRGIL_DIR` (wherever `install.sh` put it, default: `~/VIRGIL`)
+   - **Windows users:** use `\\wsl.localhost\Ubuntu\home\<username>\VIRGIL`
 4. Click **Open**
 
 Obsidian will index all the Markdown files. The left sidebar shows your folder structure.

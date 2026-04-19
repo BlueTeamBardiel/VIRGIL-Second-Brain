@@ -61,18 +61,18 @@ The three-tier LLM stack routes daily automation through local GPU inference fir
 
 | Component | Where | Cost | Purpose |
 |---|---|---|---|
-| RX 9070 XT 16GB | BEHEMOTH | ~$600 | Primary inference GPU, RDNA 4 |
-| RX 6700 XT 12GB | ABADDON | ~$250 | Backup inference GPU, RDNA 2 |
+| RX 9070 XT 16GB (or similar) | primary-host | ~$600 | Primary inference GPU, 16GB VRAM |
+| RX 6700 XT 12GB (or similar) | backup-node | ~$250 | Backup inference GPU, 12GB VRAM |
 | **Total GPU hardware** | | **~$850** | |
 
-Both machines were already in the homelab for other purposes. These costs reflect GPU-only additions. If you're buying from scratch, a used RX 6700 XT runs $180–220 and handles VIRGIL's full pipeline without issue.
+Both machines are existing homelab hardware — these costs reflect GPU-only additions. If you're buying from scratch, a used RX 6700 XT runs $180–220 and handles VIRGIL's full pipeline without issue. CPU-only inference works too, just slower.
 
 ### Ongoing electricity
 
 | Node | GPU TDP | Hours/day active | Cost/day (at $0.12/kWh) |
 |---|---|---|---|
-| BEHEMOTH | ~200W under load | ~2h inference | ~$0.048 |
-| ABADDON | ~150W under load | ~0.5h inference | ~$0.009 |
+| primary-host | ~200W under load | ~2h inference | ~$0.048 |
+| backup-node | ~150W under load | ~0.5h inference | ~$0.009 |
 | **Daily electricity** | | | **~$0.057** |
 
 Scripts complete faster locally (no network round-trip), so actual wall-clock GPU time is less than you'd expect. The nightly pipeline runs in under 15 minutes total.

@@ -61,15 +61,15 @@ VIRGIL routes inference requests through a fallback chain. Local-first: if GPU i
 └───────────────┬──────────────────────────┘
                 │
      ┌──────────▼──────────┐
-     │  Tier 1: BEHEMOTH   │  ← Primary. GPU inference via Docker ROCm.
-     │  Ollama :11434       │    RX 9070 XT (16GB VRAM, RDNA 4, gfx1201)
-     │  gpt-oss:20b         │    HSA_OVERRIDE_GFX_VERSION=12.0.1
-     └──────────┬──────────┘    33/33 layers on GPU
+     │  Tier 1: primary    │  ← Primary local node. GPU inference recommended.
+     │  Ollama :11434       │    Any AMD/NVIDIA GPU with 8GB+ VRAM
+     │  gpt-oss:20b         │    CPU fallback works if no GPU available
+     └──────────┬──────────┘
                 │ FAIL / BUSY
      ┌──────────▼──────────┐
-     │  Tier 2: ABADDON    │  ← Backup. Native ROCm.
-     │  Ollama :11434       │    RX 6700 XT (12GB VRAM, RDNA 2, gfx1032)
-     │  qwen2.5:14b         │    HSA_OVERRIDE_GFX_VERSION=10.3.0
+     │  Tier 2: backup     │  ← Optional second node. CPU or GPU.
+     │  Ollama :11434       │    Same model set as primary
+     │  qwen2.5:14b         │    Used when primary is busy or down
      └──────────┬──────────┘
                 │ FAIL
      ┌──────────▼──────────┐
@@ -79,10 +79,10 @@ VIRGIL routes inference requests through a fallback chain. Local-first: if GPU i
      └─────────────────────┘
 ```
 
-Models available on both local nodes:
-- `gpt-oss:20b` (13GB) — benchmark winner; best structured output and wikilink syntax
-- `qwen2.5:14b` (9GB) — solid; used as ABADDON primary
-- `llama3.1:8b` (4.9GB) — fast; suitable for low-stakes summaries
+Recommended models (pull via `ollama pull <model>`):
+- `gpt-oss:20b` (13GB) — best structured output and wikilink syntax; requires 16GB+ VRAM or 32GB+ RAM for CPU
+- `qwen2.5:14b` (9GB) — solid balance of quality and speed; recommended for 8–12GB VRAM GPUs
+- `llama3.1:8b` (4.9GB) — fast; suitable for low-stakes summaries on CPU-only setups
 
 ---
 
@@ -138,10 +138,10 @@ Automation scripts that take consequential actions (promoting decisions, modifyi
   │  virgil-approve.sh        │  ← Bash wrapper sourced by shell scripts
   │  virgil_approve.py        │  ← Python equivalent for .py scripts
   └──────────────┬────────────┘
-                 │  SSH → ABADDON:localhost:3001/slack/send
+                 │  SSH → control-node:localhost:3001/slack/send
                  ▼
   ┌───────────────────────────────────────┐
-  │  virgil-slack-bot (ABADDON :3001)     │
+  │  virgil-slack-bot (:3001)             │
   │  Flask API + slack_bolt SocketMode    │
   │  SQLite: ~/virgil-approvals.db        │
   └──────────┬────────────────────────────┘
@@ -164,7 +164,7 @@ Automation scripts that take consequential actions (promoting decisions, modifyi
           └─ denied   → script exits 1
 ```
 
-The bot connects outbound via WebSocket (Socket Mode) — no public HTTPS endpoint required. It runs as a systemd service on ABADDON and survives reboots.
+The bot connects outbound via WebSocket (Socket Mode) — no public HTTPS endpoint required. It runs as a systemd service and survives reboots.
 
 ---
 

@@ -150,6 +150,18 @@ case "$OS" in
     linux) ok "Linux detected (${PKG_MANAGER:-unknown package manager})" ;;
 esac
 
+if $IS_WSL; then
+    echo ""
+    echo -e "${BOLD}${CYN}  ── Windows / WSL2 ─────────────────────────────────────────${RST}"
+    info "VIRGIL scripts and vault install here, inside WSL2. ✓"
+    info "Obsidian: install on Windows (native app) — NOT inside WSL"
+    info "  open-vault path:  \\\\wsl.localhost\\Ubuntu\\home\\${USER}\\VIRGIL"
+    info "Claude Code: requires WSL2 on Windows — you are already in the right place. ✓"
+    info "Cron: add  [boot] command=service cron start  to /etc/wsl.conf"
+    info "Full WSL2 guide: see GETTING-STARTED.md → Windows (via WSL2)"
+    echo ""
+fi
+
 if [[ "$OS" == "macos" ]]; then
     if ! command -v brew &>/dev/null; then
         warn "Homebrew not found — install it from https://brew.sh then re-run this installer"

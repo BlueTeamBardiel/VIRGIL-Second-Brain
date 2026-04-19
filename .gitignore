@@ -3,8 +3,35 @@ notes/
 daily-logs/
 weekly-summaries/
 
+# Starter notes: daily-logs and memory are exceptions
+!starter-notes/daily-logs/
+!starter-notes/daily-logs/**
+!starter-notes/memory/
+!starter-notes/memory/**
+
 # Memory files (contain personal context)
 memory*.md
+!starter-notes/memory/**
+
+# Unreviewed starter-notes content (contains private refs — review before committing)
+starter-notes/knowledge/security-plus/
+starter-notes/knowledge/blueteam/
+starter-notes/knowledge/ccna/
+starter-notes/knowledge/cloud/
+starter-notes/knowledge/linux/
+starter-notes/knowledge/mitre/
+starter-notes/knowledge/osint/
+starter-notes/knowledge/splunk/
+starter-notes/knowledge/tools/
+starter-notes/knowledge/virtualization/
+starter-notes/knowledge/windows/
+starter-notes/knowledge/*/staging/
+starter-notes/inbox/
+starter-notes/mitre/
+starter-notes/flipper/
+starter-notes/service-account-credentials.md
+starter-notes/inbox/staging/
+starter-notes/mitre/staging/
 *.bak-*
 
 # Secrets and local config
