@@ -1,0 +1,122 @@
+---
+domain: "1.0 - General Security Concepts"
+section: "1.1"
+tags: [security-plus, sy0-701, domain-1, security-controls, control-management]
+---
+
+# 1.1 - Security Controls (continued)
+
+Security controls are the foundational mechanisms organizations implement to reduce risk, enforce policy compliance, and protect assets from threats. This section focuses on **managing** security controls—understanding that controls exist in multiple categories and types, that organizations customize their control frameworks based on unique needs, and that the security control landscape continuously evolves. For the SY0-701 exam, you need to grasp not just *what* controls are, but how they're organized, deployed, and adapted across different contexts and operational environments.
+
+---
+
+## Key Concepts
+
+- **Security Control Framework**: A structured approach to implementing, categorizing, and managing security measures across an organization. No single framework is universal; organizations select, combine, and adapt controls based on risk tolerance, regulatory requirements, and operational context.
+
+- **Multiple Categories & Types**: Security controls are organized along two primary dimensions:
+  - **Categories** (functional purpose): [[Preventive Controls]], [[Detective Controls]], [[Corrective Controls]], [[Compensating Controls]], [[Deterrent Controls]]
+  - **Types** (operational layer): [[Technical Controls]] (firewalls, encryption, [[IDS]]/[[IPS]]), [[Administrative Controls]] (policies, procedures, training), [[Physical Controls]] (locks, guards, CCTV)
+
+- **Control Overlap**: A single security measure may satisfy multiple control types and categories simultaneously. For example, [[MFA]] is both a **preventive** (stops unauthorized access) and **technical** control.
+
+- **Non-Inclusive Lists**: The set of available security controls is not fixed or exhaustive. Organizations continuously discover, develop, and deploy new controls as threats evolve, technology advances, and business processes change.
+
+- **Organizational Customization**: There is no one-size-fits-all security control architecture. Organizations combine controls differently based on:
+  - Industry vertical (healthcare, finance, government)
+  - Regulatory mandates ([[HIPAA]], [[PCI-DSS]], [[SOX]], [[GDPR]])
+  - Risk profile and threat landscape
+  - Budget and resource constraints
+  - Legacy system constraints
+
+- **Control Evolution**: New security controls emerge constantly as:
+  - Attackers develop novel exploitation techniques
+  - New technologies (cloud, IoT, AI) introduce new attack surfaces
+  - Regulatory bodies mandate new compliance requirements
+  - Industry best practices mature (e.g., [[Zero Trust]], [[SIEM]], [[SOAR]])
+
+- **Control Effectiveness**: Not all controls are equally effective for all organizations. Effectiveness depends on:
+  - Proper implementation and configuration
+  - Integration with other controls
+  - Staff training and awareness
+  - Regular testing, monitoring, and tuning
+
+---
+
+## How It Works (Feynman Analogy)
+
+Think of security controls like the layered defenses of a medieval castle:
+
+The castle doesn't rely on just a moat; it has walls, guards at gates, lookout towers, and escape routes. Each defense serves a different purpose—some prevent entry (**preventive**), others sound alarms when threats are detected (**detective**), and some allow defenders to respond quickly (**corrective**). A single defensive structure (like a gate) serves multiple roles: it physically blocks intruders, it gives guards a vantage point, and it can be quickly sealed if an attack occurs.
+
+**Technical parallel**: An organization doesn't rely on a single firewall. They layer [[Firewall]] rules, [[IDS]]/[[IPS]] sensors, [[VPN]] enforcement, [[TLS]] encryption, [[MFA]], and [[Active Directory]] access controls. A stolen credential might be stopped by [[MFA]] (preventive-technical), or detected by [[SIEM]] anomaly rules (detective-technical), or contained by [[VLAN]] segmentation (corrective-technical). Organizations continually add new tools like [[Wazuh]] or [[Tailscale]] as threats emerge.
+
+The key insight: **There is no universal control checklist.** Every organization customizes its defenses based on what it's protecting, who might attack it, and what resources it has.
+
+---
+
+## Exam Tips
+
+- **Expect scenario questions asking you to classify controls by *both* category AND type.** A question might show you a policy requiring password changes every 90 days and ask: "Is this preventive or detective? Technical or administrative?" (Answer: **Preventive-Administrative**). The exam tests your ability to apply controls to real situations, not just memorize definitions.
+
+- **"Multiple types/categories" is a core exam concept.** Expect questions like: "Which of the following controls can satisfy both preventive and detective functions?" Answers might include [[IDS]] (detects attacks) vs. [[IPS]] (prevents attacks), or a policy that both sets rules (preventive) and includes audit clauses (detective).
+
+- **Watch for "not inclusive" language.** The exam may present a list of controls and ask if it's complete. The correct answer is often: "No—controls vary by organization and evolve over time." Avoid answer choices that claim "these are all the controls you need."
+
+- **Understand control substitution and combinations.** The exam tests whether you know that controls can be swapped or layered. If one control fails, compensating controls must exist. Study the concept of [[Compensating Controls]] carefully—it appears frequently.
+
+- **Context matters more than naming.** A "detective" control in one context might be "corrective" in another. The exam rewards understanding *why* a control is classified, not just *what* it's called.
+
+---
+
+## Common Mistakes
+
+- **Treating control lists as exhaustive.** Many candidates memorize a fixed list of controls and assume they're complete. The exam tests whether you understand that new controls emerge constantly and organizations build custom frameworks. If a scenario describes a control you've never heard of, recognize it may still be valid.
+
+- **Confusing control type with control category.** Type (technical/administrative/physical) and category (preventive/detective/corrective) are **orthogonal dimensions**. A firewall rule is *technical-preventive*; a security policy is *administrative-preventive*. Mixing these up causes wrong answers. Always ask: "What does it *do* (category)? And *how* is it implemented (type)?"
+
+- **Assuming all organizations use the same controls.** A small homelab (like [[[YOUR-LAB]]]) won't use the same controls as a bank or hospital. The exam tests your ability to recognize that control selection is situational—driven by risk, regulations, and resources. Avoid absolute statements like "all organizations must use [[MFA]]" (they don't, though best practice suggests it).
+
+---
+
+## Real-World Application
+
+In your [[[YOUR-LAB]]] homelab, you've likely encountered this firsthand: you don't use the same controls for a test VM as you do for your Wazuh [[SIEM]] or Tailscale network gateway. You layer [[Firewall]] rules, host-based intrusion detection with [[Wazuh]], and network segmentation with [[VLAN]]s. If one control fails (e.g., a firewall rule is accidentally disabled), your compensating controls (like [[Wazuh]] alerting or [[Active Directory]] access logs) catch the breach. As your homelab grows, you'll add new controls like Pi-hole DNS filtering or rotating credentials—the framework evolves with threat landscape and operational needs. This mirrors real sysadmin work: security is not a checkbox but an adaptive, layered strategy tailored to your environment.
+
+---
+
+## Wiki Links
+
+- [[CIA Triad]] — foundational security principles controls protect
+- [[Zero Trust]] — modern control architecture philosophy
+- [[Preventive Controls]] — stop attacks before they occur
+- [[Detective Controls]] — identify attacks in progress or after occurrence
+- [[Corrective Controls]] — respond to and remediate security events
+- [[Compensating Controls]] — alternative controls when primary controls are unavailable
+- [[Deterrent Controls]] — discourage attackers through threat of consequences
+- [[Technical Controls]] — implemented via technology (firewalls, encryption, IDS/IPS)
+- [[Administrative Controls]] — implemented via policies, procedures, training
+- [[Physical Controls]] — implemented via locks, guards, environmental design
+- [[IDS]] — detects intrusions (detective-technical)
+- [[IPS]] — prevents intrusions (preventive-technical)
+- [[Firewall]] — enforces network policies (preventive-technical)
+- [[MFA]] — prevents unauthorized access even with stolen credentials (preventive-technical)
+- [[SIEM]] — detects anomalies and correlates events (detective-technical)
+- [[Wazuh]] — open-source SIEM and XDR platform for homelab/enterprise detection
+- [[Active Directory]] — administrative control for identity and access management
+- [[VLAN]] — network segmentation control (preventive-technical)
+- [[Tailscale]] — zero-trust VPN control for secure remote access
+- [[HIPAA]] — healthcare regulatory control requirement
+- [[PCI-DSS]] — payment card industry control requirement
+- [[SOX]] — financial control requirement
+- [[GDPR]] — data privacy control requirement
+- [[[YOUR-LAB]]] — your homelab infrastructure where controls are tested and applied
+
+---
+
+## Tags
+
+`domain-1` `security-plus` `sy0-701` `security-controls` `control-management` `control-types` `control-categories` `organizational-risk` `framework-design`
+
+---
+_Ingested: 2026-04-15 23:22 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

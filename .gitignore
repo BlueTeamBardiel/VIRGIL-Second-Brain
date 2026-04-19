@@ -13,23 +13,12 @@ weekly-summaries/
 memory*.md
 !starter-notes/memory/**
 
-# Unreviewed starter-notes content (contains private refs — review before committing)
-starter-notes/knowledge/security-plus/
-starter-notes/knowledge/blueteam/
-starter-notes/knowledge/ccna/
-starter-notes/knowledge/cloud/
-starter-notes/knowledge/linux/
-starter-notes/knowledge/mitre/
-starter-notes/knowledge/osint/
-starter-notes/knowledge/splunk/
-starter-notes/knowledge/tools/
-starter-notes/knowledge/virtualization/
-starter-notes/knowledge/windows/
-starter-notes/knowledge/*/staging/
-starter-notes/inbox/
-starter-notes/mitre/
-starter-notes/flipper/
+# Reviewed and scrubbed: private refs replaced — safe to commit
+# (security-plus, ccna, mitre, knowledge/* now committed after Task 0 scrub)
+
+# Still blocked: personal content and known-private files
 starter-notes/service-account-credentials.md
+starter-notes/knowledge/*/staging/
 starter-notes/inbox/staging/
 starter-notes/mitre/staging/
 *.bak-*

@@ -1,0 +1,23 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "VIRGIL Second Brain known safe patterns"
+regexes = [
+    # Explicit placeholder values
+    '''sk-ant-fake[\w\-]+''',
+    '''xoxb-fake[\w\-]+''',
+    '''YOUR[_-]?(?:API[_-]?)?KEY[_-]?HERE''',
+    '''PLACEHOLDER''',
+    '''example[\._-]key''',
+    # Security study notes — example credentials are intentional
+    '''(?i)password["\s]*[:=]["\s]*example''',
+    '''(?i)password["\s]*[:=]["\s]*changeme''',
+    # CTF / lab exercise tokens that are intentionally fake
+    '''flag\{[^}]+\}''',
+]
+
+paths = [
+    '''.claude/settings\.local\.json''',
+    '''test.*fixture''',
+]

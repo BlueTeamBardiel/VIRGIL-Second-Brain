@@ -1,0 +1,169 @@
+---
+domain: "2.0 - Threats, Vulnerabilities, and Mitigations"
+section: "2.4"
+tags: [security-plus, sy0-701, domain-2, replay-attacks, network-security, authentication]
+---
+
+# 2.4 - Replay Attacks
+
+Replay attacks occur when an attacker captures legitimate network traffic (such as authentication credentials or session tokens) and retransmits that data to impersonate a user or gain unauthorized access to a system. This threat is critical to understand because it represents a fundamental break in the confidentiality and integrity of network communications, particularly when traffic is unencrypted or when session management is poorly implemented. For the Security+ exam, you must understand how attackers capture and replay data, recognize the two main variants (**Pass the Hash** and **Session Hijacking**), and identify the mitigations that prevent these attacks.
+
+---
+
+## Key Concepts
+
+- **Replay Attack**: The act of capturing and retransmitting previously-transmitted data to fraudulently authenticate or gain access. The attacker does not need to understand or decrypt the data—only replay it.
+
+- **Not an On-Path Attack**: A common misconception is that replay attacks require real-time interception. In reality, attackers can capture traffic *once* and replay it *later*, without needing to remain in the communication stream.
+
+- **Data Capture Methods**:
+  - **Network Tap**: Physical or logical access to network hardware to mirror traffic
+  - **ARP Poisoning**: [[ARP]] spoofing to redirect traffic through attacker's machine
+  - **Malware on Victim Computer**: Resident malware captures credentials or session tokens before they're transmitted
+
+- **Pass the Hash (PtH)**: An attacker captures a user's hashed password (typically from [[Active Directory]] or [[LDAP]] authentication) and replays that hash to authenticate as that user without needing the plaintext password. Common in Windows environments where [[NTLM]] or Kerberos hashes are used.
+
+- **Session Hijacking (Sidejacking)**: An attacker intercepts and steals a valid **session ID** or **session token** (often stored in a [[Browser]] cookie) and uses it to impersonate the authenticated user. The attacker can immediately access the server as if they were the victim.
+
+- **Browser Cookies**: Small files stored on the client machine containing session data, tracking information, and personalization settings. While not inherently executable or dangerous, compromised cookies—especially those containing session IDs—become attack vectors.
+
+- **Session ID**: A unique identifier issued by the server to maintain stateful sessions across multiple HTTP requests. Often embedded in a cookie or URL parameter, it proves the user is already authenticated without requiring password re-entry.
+
+- **Privacy vs. Security**: Cookies may contain sensitive personal data (birthdate, preferences, browsing history), making them a privacy risk even if not a direct security vulnerability. Session ID theft, however, is a direct security threat.
+
+---
+
+## How It Works (Feynman Analogy)
+
+Imagine a hotel guest receives a room key card when they check in. That key card is the "session ID." If a thief steals a photo of that key card or makes a duplicate, they can walk into the room and take whatever they want—without needing to know the guest's name, password, or how they got the key in the first place. The thief just "replays" the key.
+
+In the digital world:
+1. **Alice authenticates** to a web server with her username and password (or her Windows domain credentials).
+2. The server says: "OK, you're Alice. Here's your session ID: `3B0027A38FDF37`" (sent in a cookie).
+3. **An attacker (Eve)** sits on the network and captures that session ID (via a network tap, ARP poison, or malware).
+4. Eve replays that session ID to the server, and the server says: "Welcome back, Alice!"—even though Eve is not Alice.
+
+The server never re-authenticates because it trusts the session ID. Eve never had to crack Alice's password; she just needed to steal and replay the proof that Alice was already authenticated.
+
+**Connection to reality**: In [[HTTPS]]-unencrypted environments or on poorly-secured WiFi, session cookies are visible to anyone on the network. Once captured, they're valid until they expire—which could be hours or days.
+
+---
+
+## Exam Tips
+
+- **Distinguish replay attacks from on-path attacks**: A replay attack does NOT require the attacker to be actively intercepting data in real-time. They capture once, replay later. This is fundamentally different from [[Man-in-the-Middle (MITM)]] attacks, which require active interception.
+
+- **Pass the Hash vs. Session Hijacking**: Both are replay attacks, but target different authentication artifacts:
+  - **Pass the Hash** = attacker replays a hashed password or Kerberos ticket (works against [[Windows]] systems with weak hashing)
+  - **Session Hijacking** = attacker replays a session token/cookie (works against any web application with unencrypted session storage)
+
+- **Exam question pattern**: You'll be given a scenario where an attacker captures something from the network (credentials, hash, session token) and retransmits it. Your job is to identify *what was captured*, *how it was captured*, and *what mitigation prevents it*. The answer is almost always **encryption in transit** ([[TLS]]/[[HTTPS]]), **[[MFA]]**, or **session token rotation/expiration**.
+
+- **Common misdirection**: Exam questions may say "the attacker broke the password hash" or "decrypted the session token." This is a trap—in a true replay attack, no decryption is needed. The attacker just sends the captured bytes as-is. Watch for this wording.
+
+- **Mitigation focus**: [[HTTPS]]/[[TLS]], [[VPN]], session token expiration, **nonce** (number used once) in authentication protocols, and [[MFA]] are your go-to answers for preventing replay attacks. Know which one applies in which scenario.
+
+---
+
+## Common Mistakes
+
+- **Confusing replay attacks with eavesdropping**: Students think "the attacker captured data" automatically means "the attacker can read it." Not necessarily. In a replay attack, the attacker doesn't care about *reading* the data—only about *replaying it*. This is why [[HTTPS]] prevents it (changes the data each time) but not because attackers can't eavesdrop—because the replay won't work.
+
+- **Assuming Pass the Hash requires the attacker to be in the network during authentication**: Wrong. An attacker can steal a hash from a compromised Domain Controller, a memory dump, or an old backup, then use [[Mimikatz]] or similar tools to replay it hours or days later. It's not about real-time interception.
+
+- **Underestimating session ID theft**: Students often think session IDs are "random enough" to be secure. The real issue is that once captured, a valid session ID provides *immediate, unauthenticated access*. The randomness doesn't matter if the ID is sniffed over unencrypted HTTP. The exam tests whether you know that **encryption in transit** is the primary mitigation.
+
+---
+
+## Real-World Application
+
+In Morpheus's **[YOUR-LAB] fleet**, session hijacking is a real threat on the internal network unless all management traffic (web consoles, [[Tailscale]] connections, [[Active Directory]] logins) runs over [[TLS]]/[[HTTPS]]. If a threat actor compromises a single host and uses [[Wireshark]] or [[tcpdump]] to sniff traffic, they could capture session tokens from unencrypted administrative consoles or Wazuh dashboards, then immediately escalate to lateral movement. Deploying [[VPN]] (via [[Tailscale]]), enforcing [[HTTPS]] on all web interfaces, and implementing short-lived session tokens with rotation policies mitigates this risk. Additionally, [[Wazuh]] can detect unusual session access patterns (same session ID from multiple IPs) if properly configured with behavioral analytics.
+
+---
+
+## Related Concepts & Wiki Links
+
+- **Authentication & Session Management**
+  - [[Authentication]]
+  - [[Session Management]]
+  - [[Cookies]]
+  - [[Session ID]]
+  - [[OAuth]]
+  - [[SAML]]
+  - [[Kerberos]]
+  - [[NTLM]]
+
+- **Capture & Interception Tools**
+  - [[Wireshark]]
+  - [[Tcpdump]]
+  - [[ARP Poisoning]]
+  - [[Network Tap]]
+  - [[Mimikatz]]
+  - [[Hashcat]]
+
+- **Attack Types**
+  - [[Man-in-the-Middle (MITM)]]
+  - [[Credential Theft]]
+  - [[Pass the Hash]]
+  - [[Session Hijacking]]
+  - [[Sidejacking]]
+
+- **Encryption & Protection**
+  - [[Encryption]]
+  - [[TLS]]
+  - [[HTTPS]]
+  - [[VPN]]
+  - [[Hashing]]
+  - [[Nonce]]
+
+- **Authentication Hardening**
+  - [[MFA]]
+  - [[Zero Trust]]
+  - [[PKI]]
+  - [[Certificate Pinning]]
+
+- **Network & Infrastructure**
+  - [[Active Directory]]
+  - [[LDAP]]
+  - [[DNS]]
+  - [[VLAN]]
+  - [[Firewall]]
+  - [[Tailscale]]
+
+- **Monitoring & Detection**
+  - [[SIEM]]
+  - [[Wazuh]]
+  - [[IDS]]
+  - [[IPS]]
+  - [[SOC]]
+  - [[Incident Response]]
+
+- **Malware & Tools**
+  - [[Malware]]
+  - [[Metasploit]]
+  - [[Kali Linux]]
+
+- **Standards & Frameworks**
+  - [[NIST]]
+  - [[MITRE ATT&CK]]
+  - [[CIA Triad]]
+
+---
+
+## Tags
+
+`domain-2` `security-plus` `sy0-701` `replay-attacks` `session-hijacking` `pass-the-hash` `authentication-attacks` `network-security` `credential-theft` `encryption-in-transit`
+
+---
+
+## Quick Study Checklist
+
+- [ ] Can you explain the difference between a replay attack and an on-path attack?
+- [ ] Do you understand why Pass the Hash works (and why it doesn't require real-time access)?
+- [ ] Can you walk through the Session Hijacking scenario from the diagram?
+- [ ] Do you know the primary mitigations (TLS, MFA, session expiration, nonce)?
+- [ ] Can you identify replay attack scenarios in exam questions vs. other attack types?
+- [ ] Do you understand why encryption in transit stops replay attacks (hint: the data changes)?
+
+---
+_Ingested: 2026-04-15 23:45 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

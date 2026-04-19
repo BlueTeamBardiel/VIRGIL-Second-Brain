@@ -1,7 +1,5 @@
 # VIRGIL
 
-![VIRGIL knowledge graph](assets/virgil-graph.gif)
-
 *A self-building knowledge base for people learning cybersecurity the hard way.*
 
 ![Version](https://img.shields.io/badge/version-v1.1.0-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)

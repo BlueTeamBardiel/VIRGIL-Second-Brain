@@ -1,0 +1,106 @@
+---
+domain: "4.0 - Security Operations"
+section: "4.4"
+tags: [security-plus, sy0-701, domain-4, alerting, siem, incident-response]
+---
+
+# 4.4 - Security Monitoring (continued)
+
+Security monitoring extends beyond passive log collection into **active alerting and rapid response mechanisms**. This section covers how organizations detect security events in real-time, notify the right personnel, and execute remediation actions to contain threats. For the Security+ exam, you must understand the difference between detection and response, the role of alert tuning in reducing noise, and practical remediation strategies like quarantine. This directly supports the **Security Operations** domain (28% of exam weight) and is foundational to any [[SOC]] or monitoring infrastructure.
+
+---
+
+## Key Concepts
+
+- **Real-Time Alerting**: Automated notifications triggered when security events occur, enabling detection of attacks as they happen rather than days or weeks later
+  - Examples: spike in failed authentication attempts, unusual file transfer volumes, lateral movement indicators
+  
+- **Actionable Data**: Alerts must contain sufficient context and severity classification so responders know *what* happened, *where*, and *why it matters*—not just raw log data
+
+- **Notification Methods**: Multiple channels ensure alerts reach the right team members:
+  - **SMS/Text**: Out-of-band communication for critical incidents; not dependent on network/email
+  - **Email**: Standard asynchronous notification for lower-priority alerts; allows documentation and threading
+  - **Security Console / [[SOC]] Dashboard**: Centralized visibility for analysts; typically integrated with [[SIEM]] platforms like [[Wazuh]], [[Splunk]]
+
+- **Quarantine** (Alert Response): Immediate containment action that isolates compromised or suspicious assets to prevent lateral spread and damage
+  - Examples: disabling user accounts, blocking network segments, isolating endpoints from network
+
+- **Alert Tuning**: The iterative process of calibrating detection rules to reduce false positives (benign activity triggering alerts) and false negatives (attacks going undetected)
+  - A critical balancing act—too sensitive = alert fatigue; too loose = missed threats
+  - Requires ongoing refinement based on baseline behavior and threat intelligence
+
+- **Accuracy & Confidence Levels**: Alerts should include severity/confidence scoring so responders can prioritize; tuning improves accuracy over time as the system learns organizational behavior
+
+---
+
+## How It Works (Feynman Analogy)
+
+Think of a security monitoring system like a **home security alarm with a dispatcher**:
+
+A motion sensor (detection rule) triggers an alarm when it senses movement. But if the sensor goes off every time the dog walks by, the dispatcher stops paying attention (alert fatigue). If the sensor is set too loose, a burglar walks right through undetected. The dispatcher needs to:
+1. **Know immediately** when a real threat occurs (real-time notification via phone/siren)
+2. **Understand the context** ("motion at the back window" vs. "motion in the hallway")
+3. **Take action fast** (dispatch police, lock doors = quarantine)
+4. **Adjust sensitivity** over time based on false alarms vs. missed intrusions (alert tuning)
+
+**Technically**, a [[SIEM]] system ingests logs from [[IDS]]/[[IPS]], [[Firewall]]s, and endpoints. When a rule matches (e.g., 10 failed logins in 60 seconds), it triggers an alert. If the alert is noise (domain controller sync), the rule is tuned. If it's legitimate threat activity, the [[SOC]] analyst escalates and initiates response (quarantine the user, reset credentials, run [[Forensics]]).
+
+---
+
+## Exam Tips
+
+- **Distinguish "detection" from "response"**: The exam tests whether you understand alerts are *detection*, but quarantine/remediation are *response*. Don't conflate them. Alert = "we found it." Quarantine = "we stopped it."
+
+- **Alert fatigue is a real threat**: Questions often ask about the consequences of poor alert tuning. Too many false positives = responders ignore alerts = real attacks missed. The exam rewards understanding this human factor.
+
+- **Know the notification priority matrix**: Not all alerts go to SMS. High-severity (critical infrastructure breach) → SMS/phone. Medium (suspicious login from new country) → email. Low (user accessed blocked website) → console log. Answer options often test whether you match notification method to severity.
+
+- **Tuning is ongoing, not one-time**: Watch for questions that suggest "once you tune alerts, you're done." The correct answer is that tuning is continuous as threat landscape and organizational behavior evolve.
+
+- **Quarantine as first response**: When asked "what's the foundational security response?", the answer is **quarantine**. This prevents spread. Recovery/investigation happen after containment.
+
+---
+
+## Common Mistakes
+
+- **Assuming all alerts are equally urgent**: Candidates sometimes treat all notifications the same. The exam tests understanding that context matters—a file transfer alert at 2 AM from a privileged account is more critical than a user downloading a PDF during business hours.
+
+- **Confusing "alert tuning" with "alert silencing"**: Tuning means adjusting *rules* to be more accurate. Silencing means ignoring alerts entirely. Candidates sometimes pick "silence the alert" when the correct answer is "tune the rule to reduce false positives."
+
+- **Missing the "no single notification method" concept**: Email alone isn't enough for critical alerts because network outages or email delays could prevent notification. The exam rewards understanding *multiple* channels and their trade-offs (SMS is immediate but expensive; email is scalable but slower).
+
+---
+
+## Real-World Application
+
+In **[YOUR-LAB]**, [[Wazuh]] agents on each node generate security events that feed into the central manager. When a rule triggers (e.g., suspicious [[SSH]] login, privilege escalation attempt), Wazuh can send SMS to on-call sysadmins for critical threats or email for investigation-level alerts. Alert tuning is essential—baseline legitimate activity (scheduled backups, log rotation) to avoid false positives that would distract from real [[MITRE ATT&CK]] patterns. When a genuine threat is detected, quarantine might mean blocking the compromised host via [[Tailscale]] ACL changes or disabling the [[Active Directory]] account until investigation concludes.
+
+---
+
+## Wiki Links
+
+- [[SOC]] – Security Operations Center where alerts are monitored and triaged
+- [[SIEM]] – [[Wazuh]], [[Splunk]] (platforms that aggregate logs and trigger alerts)
+- [[IDS]]/[[IPS]] – Detection and prevention systems that generate security events
+- [[Firewall]] – Generates alerts for blocked traffic/policy violations
+- [[Active Directory]] – Source of authentication events; quarantine involves disabling accounts
+- [[Tailscale]] – Network ACLs can enforce quarantine by blocking lateral movement
+- [[SOC]] – Central hub for alert management and response orchestration
+- [[Incident Response]] – Process initiated when alert confirms threat
+- [[DFIR]] – Forensics investigation that often follows quarantine
+- [[MITRE ATT&CK]] – Threat framework used to tune alerts for known attack patterns
+- [[Malware]], [[Ransomware]], [[Phishing]] – Common threats that trigger alerts
+- [[Zero Trust]] – Architecture principle that assumes alerts and quarantine are always possible
+- [[Quarantine]] – Containment action (isolate asset/account)
+- [[Alert Tuning]] – Iterative rule refinement to balance sensitivity
+- [[False Positive]] – Benign activity triggering alert (tuning goal: minimize)
+- [[False Negative]] – Attack missed by detection (tuning goal: minimize)
+
+---
+
+## Tags
+
+#domain-4 #security-plus #sy0-701 #alerting #siem #incident-response #alert-tuning #remediation
+
+---
+_Ingested: 2026-04-16 00:10 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

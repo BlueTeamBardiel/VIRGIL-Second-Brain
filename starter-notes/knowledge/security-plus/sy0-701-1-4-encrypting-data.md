@@ -1,0 +1,148 @@
+---
+domain: "1.0 - General Security Concepts"
+section: "1.4"
+tags: [security-plus, sy0-701, domain-1, encryption, data-protection, cryptography]
+---
+
+# 1.4 - Encrypting Data
+
+Encryption is the process of converting readable data into unreadable ciphertext using mathematical algorithms and cryptographic keys, rendering data useless to unauthorized parties. This section covers three critical encryption scenarios: data at rest (stored on devices), data in transit (crossing networks), and data in databases. Understanding encryption mechanisms, key management, and algorithm selection is essential for the Security+ exam, as encryption is foundational to the [[CIA Triad]] and compliance requirements across all organizational security models.
+
+---
+
+## Key Concepts
+
+### Data at Rest Encryption
+- **Definition**: Protecting data stored on physical and virtual storage devices (SSDs, hard drives, USB drives, cloud storage)
+- **Full-Disk Encryption**: Encrypts entire storage volume; examples include [[BitLocker]] (Windows), [[FileVault]] (macOS)
+- **Partition/Volume Encryption**: Encrypts specific partitions rather than entire disks
+- **File-Level Encryption**: [[EFS (Encrypting File System)]] and third-party utilities encrypt individual files or folders
+- **Database Encryption**: Protects both stored database information and transmission
+  - **Transparent Encryption**: Encrypts all database data with a single symmetric key at the database level
+  - **Record-Level/Column Encryption**: Encrypts individual database columns with separate symmetric keys for granular control
+
+### Data in Transit Encryption
+- **Definition**: Protecting data as it moves across networks
+- **HTTPS/TLS**: Application-level encryption for web browsers and web services
+- **[[VPN]] (Virtual Private Network)**: Encrypts all network traffic regardless of application
+  - **Client-Based VPN**: Uses [[SSL/TLS]] protocols for remote access
+  - **Site-to-Site VPN**: Uses [[IPsec]] to encrypt traffic between network perimeters
+- **Transport Layer Security**: Encryption happens at network or transport layer before application receives data
+
+### Encryption Algorithms
+- **Definition**: Mathematical formulas used to convert plaintext to ciphertext; both parties must use identical algorithms for successful encryption/decryption
+- **Algorithm Selection Factors**: Security level, processing speed, implementation complexity, resistance to cryptanalysis
+- **Symmetric vs. Asymmetric**: Different algorithms serve different purposes (covered in related sections)
+- **Known Algorithms**: Cryptographic processes and algorithms are generally public knowledge; security depends on key secrecy, not algorithm obscurity
+
+### Cryptographic Keys
+- **Core Principle**: The algorithm itself is typically known; the **key is the only secret**
+- **Key Secrecy**: Private keys must remain confidential—they are the sole protective mechanism for encrypted data
+- **Key Output**: Determines three critical outputs:
+  - Encrypted ciphertext
+  - Hash values (for integrity verification)
+  - Digital signatures (for authentication and non-repudiation)
+
+### Key Length and Strength
+- **Symmetric Encryption Standards**:
+  - Minimum 128-bit keys for modern symmetric encryption
+  - Key lengths continue to increase over time as computing power grows
+  - Larger keys exponentially increase brute-force attack difficulty
+  
+- **Asymmetric Encryption Standards**:
+  - Much larger than symmetric keys due to mathematical complexity
+  - Common key lengths: 2,048 bits, 3,072 bits, 4,096 bits or larger
+  - Based on factoring large prime numbers; length correlates directly to security
+
+- **Brute-Force Resistance**: Attackers must attempt every possible key combination; larger keys create exponentially longer attack timelines
+
+### Key Stretching (Key Strengthening)
+- **Problem**: Weak passwords create weak encryption keys, even if technically correct
+- **Solution**: Hash a password multiple times iteratively
+  - Hash the password → hash the result → hash again → repeat many times
+  - Each iteration adds computational burden to brute-force attempts
+- **Benefit**: Attackers must reverse each hash iteration, multiplying attack time and resource cost
+- **Common Use**: Password-based key derivation (PBKDF2, bcrypt, scrypt, Argon2)
+- **Trade-off**: Slows legitimate access slightly but dramatically increases attacker's cost
+
+---
+
+## How It Works (Feynman Analogy)
+
+**Simple Analogy**: Imagine a physical safe with a unique combination lock. The manufacturer publishes exactly how the lock mechanism works—anyone can understand the design. However, only you know the 50-digit combination. The security doesn't come from the lock design's secrecy; it comes from the combination being unknown.
+
+Encryption works identically:
+- **The Algorithm** = the published lock design (e.g., AES, RSA, ECC)
+- **The Key** = your secret combination
+- **The Ciphertext** = the locked safe with your valuables inside
+
+When you encrypt data with a key, the algorithm transforms plaintext into seemingly random ciphertext. Without the correct key, even knowing the algorithm provides no advantage—decryption is computationally infeasible. The mathematics are intentionally designed so that brute-forcing keys (trying every possibility) takes longer than the data's useful lifetime.
+
+**Key Stretching Analogy**: A weak password is like a 4-digit combination instead of 50 digits. To compensate, imagine the attacker must open the safe 1 million times using each guess (running the hashing algorithm iteratively). Suddenly, the weak combination becomes much harder to exploit, even though it's still technically weak.
+
+---
+
+## Exam Tips
+
+- **Know the Three Data States**: Exam questions often distinguish between data **at rest** (storage), **in transit** (network), and **in use** (RAM). Each requires different encryption approaches; don't confuse them.
+
+- **Algorithm vs. Key**: The exam frequently tests whether candidates understand that encryption security depends on **key secrecy, not algorithm obscurity**. Memorize: "Algorithms are public; keys are private."
+
+- **BitLocker, FileVault, EFS**: These are Windows, macOS, and Windows file-level encryption tools, respectively. Know which is which—expect questions like "Which technology encrypts individual files on Windows?"
+
+- **VPN Protocols Matter**: Distinguish between [[SSL/TLS]] VPN (client-to-site) and [[IPsec]] VPN (site-to-site). Exam may ask, "Which protocol is typically used for remote access VPNs?"
+
+- **Key Length Comparison**: Expect questions contrasting symmetric (128–256 bits) vs. asymmetric (2,048–4,096 bits) key lengths. Remember: **asymmetric keys are much longer because the math is different**, not because they're "more secure"—they're just different security models.
+
+- **Key Stretching = Brute-Force Defense**: If a question mentions "password hashing multiple times" or "PBKDF2," the answer involves making weak passwords harder to crack through computational delay.
+
+---
+
+## Common Mistakes
+
+- **Confusing Encryption with Hashing**: Encryption is reversible (with the key); hashing is one-way. The exam tests this distinction—don't say encrypted data is "hashed."
+
+- **Assuming Larger Asymmetric Keys = Proportionally More Secure**: A 4,096-bit RSA key is not 32× more secure than a 128-bit symmetric key (4,096÷128=32). They use completely different math. A 128-bit symmetric key and 2,048-bit asymmetric key provide roughly equivalent security levels due to different computational complexities.
+
+- **Overlooking Data in Transit**: Candidates often focus on storage encryption and forget that data traversing networks is equally vulnerable. VPN, HTTPS, and TLS are critical; don't skip them in threat models.
+
+- **Misunderstanding Key Stretching**: It's **not** a way to make a weak key actually strong; it's a way to make weak passwords **take exponentially longer to brute-force**. The key remains mathematically weak, but impractical to attack in human timescales.
+
+---
+
+## Real-World Application
+
+In Morpheus's [[[YOUR-LAB]]] homelab, encryption is multi-layered: [[Tailscale]] encrypts VPN traffic (data in transit) connecting remote nodes, [[Active Directory]] integrates with [[BitLocker]] for workstation disk encryption (data at rest), and [[Wazuh]] logs are encrypted in transit via TLS. Database encryption in any backend services protects sensitive configurations, while key management through either software or hardware security modules (HSMs) prevents unauthorized decryption. Sysadmins must balance security (larger keys, key stretching) against performance (symmetric encryption for speed, asymmetric for key exchange).
+
+---
+
+## Wiki Links
+
+**Core Concepts**: [[CIA Triad]] · [[Cryptography]] · [[Encryption]] · [[Symmetric Encryption]] · [[Asymmetric Encryption]] · [[Hashing]] · [[Digital Signatures]] · [[Key Management]] · [[PKI (Public Key Infrastructure)]]
+
+**At-Rest Encryption Tools**: [[BitLocker]] · [[FileVault]] · [[EFS (Encrypting File System)]] · [[Transparent Data Encryption (TDE)]]
+
+**In-Transit Encryption**: [[TLS (Transport Layer Security)]] · [[SSL (Secure Sockets Layer)]] · [[HTTPS]] · [[VPN]] · [[IPsec]] · [[VPN Protocols]]
+
+**Algorithms & Standards**: [[AES (Advanced Encryption Standard)]] · [[RSA]] · [[ECC (Elliptic Curve Cryptography)]] · [[PBKDF2]] · [[Bcrypt]] · [[Scrypt]] · [[Argon2]]
+
+**Security Concepts**: [[Brute-Force Attack]] · [[Key Stretching]] · [[Key Derivation]] · [[NIST]] Standards · [[Compliance]] (HIPAA, PCI-DSS, GDPR)
+
+**Homelab Platforms**: [[[YOUR-LAB]]] · [[Tailscale]] · [[Active Directory]] · [[Wazuh]] · [[Pi-hole]]
+
+**Related Domains**: [[Authentication]] · [[Authorization]] · [[Zero Trust]] · [[Defense in Depth]] · [[Incident Response]]
+
+---
+
+## Tags
+
+`domain-1` `security-plus` `sy0-701` `encryption` `data-at-rest` `data-in-transit` `key-management` `cryptography` `symmetric-encryption` `asymmetric-encryption` `brute-force-resistance`
+
+---
+
+**Last Updated**: [Current Date]
+**Difficulty**: Beginner–Intermediate
+**Exam Weight**: ~3–5 questions in Domain 1.0
+
+---
+_Ingested: 2026-04-15 23:27 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

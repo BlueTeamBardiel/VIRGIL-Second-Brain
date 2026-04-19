@@ -1,0 +1,25 @@
+# .gitleaksignore — false positive allowlist for VIRGIL Second Brain
+# These are security education notes with intentional credential-format examples.
+# Each line is a gitleaks fingerprint: file:rule:line
+
+# CVE PoC URL parameter — not a real credential
+starter-notes/cve/CVE-2026-37594.md:curl-auth-user:24
+
+# anonymous:anonymous FTP — standard CTF technique, not a real credential
+starter-notes/knowledge/ctf/ctf-approach.md:curl-auth-user:110
+
+# Example authentication token in Security+ study note
+starter-notes/knowledge/security-plus/Authentication Tokens.md:generic-api-key:110
+
+# Example JWT token in Security+ study note
+starter-notes/knowledge/security-plus/Authentication vs Authorization.md:generic-api-key:61
+
+# YOUR_API_TOKEN placeholder in SnipeIT example commands — explicit placeholder text
+starter-notes/knowledge/security-plus/Certificate of Destruction.md:curl-auth-header:45
+starter-notes/knowledge/security-plus/Certificate of Destruction.md:curl-auth-header:122
+
+# Example JWT in Security+ replay attack study note
+starter-notes/knowledge/security-plus/replay attack.md:jwt:86
+
+# Hash example in John the Ripper usage guide — not a credential
+starter-notes/knowledge/tools/john-the-ripper.md:generic-api-key:33

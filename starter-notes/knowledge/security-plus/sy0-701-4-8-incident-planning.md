@@ -1,0 +1,157 @@
+```yaml
+---
+domain: "4.0 - Security Operations"
+section: "4.8"
+tags: [security-plus, sy0-701, domain-4, incident-planning, exercises, simulation, threat-hunting]
+---
+```
+
+# 4.8 - Incident Planning
+
+Incident planning focuses on proactive preparation, testing, and continuous monitoring to detect and respond to security incidents before they escalate into major breaches. This section covers the frameworks and methodologies security teams use to exercise their response capabilities, analyze incidents after they occur, and actively hunt for threats in their environment. Understanding these concepts is critical for the Security+ exam because they represent the difference between reactive firefighting and strategic incident management—a core responsibility of security operations teams.
+
+---
+
+## Key Concepts
+
+- **Exercising / Drills**: Scheduled, controlled tests of incident response procedures conducted before a real event occurs
+  - Includes annual or semi-annual simulation sessions
+  - Uses well-defined rules of engagement (e.g., "don't touch production" without approval)
+  - Operates under limited timeframes to simulate real-world pressure
+  - Results must be documented and evaluated for improvement
+
+- **Tabletop Exercises**: Low-cost, discussion-based simulations where key stakeholders talk through a hypothetical disaster scenario without executing it physically
+  - Avoids the expense and disruption of full-scale drills
+  - Focuses on logistics, decision-making, and communication flow
+  - Gathers key players from incident response team, management, and technical staff
+  - Identifies gaps in procedures and clarifies roles during a crisis
+
+- **Simulation (Phishing and Security Testing)**: Active, technical exercises that test real security controls and user awareness
+  - Phishing simulations send mock malicious emails to actual user populations
+  - Measures both email filter effectiveness and human susceptibility
+  - Identifies which users require additional security awareness training
+  - Tests internal security posture in a controlled, monitored environment
+
+- **Root Cause Analysis (RCA)**: Post-incident investigation methodology to identify the ultimate cause of a security event
+  - Uses iterative "why" questioning to drill down to the fundamental cause
+  - Creates fact-backed conclusions about what happened and why
+  - Avoids tunnel vision by acknowledging multiple potential root causes
+  - Recognizes that mistakes in response are inevitable—focus shifts to how the organization responded and learned
+
+- **Threat Hunting**: Proactive, continuous search for indicators of compromise and attacker activity within your network before they cause damage
+  - Operates as a "cat and mouse" game where defenders actively seek intruders
+  - Acknowledges that attacker strategies constantly evolve (e.g., firewalls strengthen → phishing tactics improve)
+  - Works with intelligence data that is inherently reactive (can only analyze what's visible)
+  - Aims to compress the time between detection and response using automated technology and human expertise
+
+- **Rules of Engagement**: Pre-established boundaries for incident response exercises and drills
+  - Protects production systems from accidental disruption during testing
+  - Clarifies what is "in scope" for testing and what is off-limits
+  - Prevents well-intentioned testing from causing unintended damage
+
+- **Incident Response Team**: Cross-functional group responsible for detecting, analyzing, and remediating security incidents
+  - Includes technical staff, management, legal, communications, and external stakeholders depending on incident severity
+  - Roles and responsibilities should be clarified during tabletop exercises before a real crisis
+
+---
+
+## How It Works (Feynman Analogy)
+
+Imagine you're the captain of a ship. Incident planning is like running fire drills and safety equipment inspections **before** the ship catches fire.
+
+**Exercising** is like a scheduled fire drill: the crew practices abandoning ship on a calm day, following procedures, and reporting to muster stations. Everyone knows the steps, and you can evaluate if your procedures work. It's controlled, time-boxed, and the goal is to find gaps before lives are at stake.
+
+**Tabletop exercises** are like gathering the captains of several ships in a conference room and saying, "Let's talk through what happens if we lose an engine in a storm. Who calls whom? What's the order of priority?" No one actually breaks anything; you just reason through the chaos together.
+
+**Simulations** (like phishing tests) are like planting hidden safety hazards on the ship and watching if the crew notices them. You might leave a life vest slightly loose or simulate a blocked emergency exit to see if anyone catches it. This tests both your physical security and your crew's awareness.
+
+**Root cause analysis** is what happens after a real fire: forensic investigators interview the crew, examine the burned areas, and ask "why?" over and over until they realize the fire didn't start from the engine—it started because someone's electrical cord was damaged. Finding the real cause prevents the next fire.
+
+**Threat hunting** is like assigning a dedicated lookout to scan the horizon constantly, not just when storms appear on the weather radar. They're looking for subtle signs of trouble—a discolored cloud, an unusual bird pattern—that might indicate a problem before instruments detect it.
+
+---
+
+## Exam Tips
+
+- **Distinguish Exercising from Simulation**: The exam often conflates these. Remember: **exercising** = generic drills with rules of engagement; **simulation** = specific, realistic scenarios (phishing, password resets, data breaches) that test actual controls and user behavior. Simulations are more targeted and measurable.
+
+- **Know the Purpose of Each Type**: 
+  - Tabletop = identify gaps in procedures and communication cheaply
+  - Exercising = validate that procedures actually work under time pressure
+  - Simulation = test real-world security controls and user awareness
+  - This is the **progression from discussion → controlled drill → realistic test**.
+
+- **RCA is Post-Incident**: The exam may try to make it sound like RCA happens during response. No—RCA is the detailed investigation *after* the incident is contained. Look for keywords like "after the incident," "lessons learned," "what went wrong," and "why did it happen."
+
+- **Threat Hunting is Proactive, Not Reactive**: The exam may ask about the difference between threat hunting and incident response. Threat hunting actively searches for threats in your environment *before* you have evidence of a breach. Incident response reacts to a known incident. Be ready to identify which is which.
+
+- **Common Answer Trap**: Questions may present "root cause" when they mean "symptom" or "impact." A symptom is "servers were down"; the root cause might be "an unpatched vulnerability in the firewall allowed lateral movement." Read carefully for what the question actually asks.
+
+---
+
+## Common Mistakes
+
+- **Confusing Tabletop with Full Exercises**: Candidates often think tabletop exercises are the same as drills. The key distinction: tabletop is **discussion-based and doesn't require technical execution**, making it cheaper and less disruptive. If a question emphasizes "no actual systems touched" or "low cost," it's tabletop. If it mentions "testing actual controls" or "running scenarios in production," it's an exercise or simulation.
+
+- **Assuming Root Cause Analysis Happens During the Incident**: Many candidates think RCA is part of live incident response. RCA is the **post-mortem investigation** that happens after the incident is contained. During the incident, you're in triage/response mode. After you've put out the fire, you analyze why it started. Watch for timeline clues in exam questions.
+
+- **Tunnel Vision in RCA**: A common mistake is stopping at the first apparent cause. For example: "The server was hacked because the admin didn't patch it." But the real root cause might be "the patch management process was broken because no one was assigned ownership, and the admin didn't know patches were available." The exam may test whether you recognize that multiple root causes can exist and oversimplifying is dangerous.
+
+---
+
+## Real-World Application
+
+In Morpheus's [YOUR-LAB] fleet homelab, incident planning translates directly to practice: setting up [[Wazuh]] alert thresholds and then running tabletop exercises ("What if our critical VM shows 10,000 failed SSH logins in 5 minutes?") before an actual intrusion. Phishing simulations would test whether users on the [[Active Directory]] domain click suspicious [[Tailscale]] VPN invitation emails, and threat hunting might involve regularly searching [[Wazuh]] logs for unusual lateral movement patterns or privileged account usage. When a security event does occur (e.g., a suspicious [[Metasploit]] artifact in logs), the RCA process determines whether the root cause was a missing firewall rule, weak [[MFA]] enforcement, or insufficient [[SIEM]] visibility—then the lessons feed back into the next exercise cycle.
+
+---
+
+## [[Wiki Links]]
+
+- [[Incident Response]]
+- [[DFIR]] (Digital Forensics and Incident Response)
+- [[Root Cause Analysis]]
+- [[Threat Hunting]]
+- [[SOC]] (Security Operations Center)
+- [[SIEM]] (Security Information and Event Management)
+- [[Wazuh]]
+- [[Active Directory]]
+- [[Tailscale]]
+- [[Phishing]]
+- [[Malware]]
+- [[Ransomware]]
+- [[Firewall]]
+- [[MFA]] (Multi-Factor Authentication)
+- [[SSH]]
+- [[VPN]]
+- [[Metasploit]]
+- [[NIST]]
+- [[MITRE ATT&CK]]
+- [[Incident Detection]]
+- [[Containment]]
+- [[Eradication]]
+- [[Recovery]]
+- [[Lessons Learned]]
+- [[Security Awareness Training]]
+- [[Vulnerability Management]]
+- [[Patch Management]]
+- [[Log Analysis]]
+
+---
+
+## Tags
+
+#domain-4 #security-plus #sy0-701 #incident-planning #incident-response #threat-hunting #root-cause-analysis #tabletop-exercises #phishing-simulation #security-drills #post-incident-review
+
+---
+
+## Study Checklist for Morpheus
+
+- [ ] Memorize the four main incident planning methodologies and when each is used
+- [ ] Practice distinguishing between exercising, tabletop, and simulation on past exam papers
+- [ ] Understand the RCA "why" questioning technique and practice a sample scenario (e.g., "Why was the password compromised? Why weren't alerts configured? Why weren't baseline logs reviewed?")
+- [ ] Identify threat hunting as *proactive* and incident response as *reactive*
+- [ ] Review NIST SP 800-61 (Computer Security Incident Handling Guide) for formal terminology
+- [ ] Create a mock RCA report for a fictional incident in your homelab
+
+---
+_Ingested: 2026-04-16 00:21 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

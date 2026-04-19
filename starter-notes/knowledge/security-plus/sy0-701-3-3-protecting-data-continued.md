@@ -1,0 +1,136 @@
+---
+domain: "3.0 - Security Architecture"
+section: "3.3"
+tags: [security-plus, sy0-701, domain-3, data-protection, tokenization, segmentation, access-control]
+---
+
+# 3.3 - Protecting Data (continued)
+
+This section covers three critical data protection strategies: [[Tokenization]], [[Segmentation]], and [[Permission Restrictions]]. These techniques work together to reduce the blast radius of breaches, minimize attacker value from stolen data, and enforce the principle of least privilege. Understanding the distinctions between tokenization (non-mathematical placeholder replacement), encryption, and hashing is essential for the Security+ exam, as questions often test your ability to choose the right protection method for different scenarios.
+
+---
+
+## Key Concepts
+
+- **[[Tokenization]]**: Replacing sensitive data (e.g., SSN, credit card number) with a non-sensitive placeholder token that has no mathematical relationship to the original data
+  - Example: SSN `266-12-1112` → Token `691-61-8539`
+  - Common in payment processing to reduce PCI-DSS compliance burden
+  - **Not encryption or hashing** — the token and original data are unrelated
+  - Reduces computational overhead compared to encryption
+  - If an attacker captures tokens, they cannot reverse-engineer or use them to access the original data
+
+- **[[Segmentation]]** (Data Segregation): Splitting sensitive data across multiple physical or logical locations to limit the impact of a single breach
+  - Single monolithic database = single point of failure and maximum attacker payoff
+  - Distribute data across different systems, databases, or geographic locations
+  - **Principle**: More sensitive data → stronger security controls on that segment
+  - Reduces risk surface by ensuring one breach doesn't expose everything
+
+- **[[Permission Restrictions]]** / [[Access Control]]: Controlling what authenticated users can actually do within a system
+  - Goes beyond username and password (authentication) to enforce what resources users can access (authorization)
+  - Implements [[Principle of Least Privilege (PoLP)]]
+  - Two layers:
+    1. **At authentication**: Password policies, [[MFA]], factor policies
+    2. **After login**: Role-based access control ([[RBAC]]), attribute-based access control ([[ABAC]]), access control lists ([[ACL]])
+
+- **Authentication vs. Authorization Distinction**:
+  - [[Authentication]]: Proving *who you are* (username/password, [[MFA]], [[Certificate]]-based)
+  - [[Authorization]]: Defining *what you can do* (permissions, roles, group memberships)
+  - Exam trick: Questions may conflate these — always distinguish between "verifying identity" and "granting access"
+
+- **Defense in Depth**: Tokenization, segmentation, and permission restrictions work in layers
+  - Even if one layer fails, others remain in place
+  - Aligns with [[Zero Trust]] architecture principles
+
+---
+
+## How It Works (Feynman Analogy)
+
+**Tokenization**: Imagine you're a bank teller. Instead of writing a customer's actual credit card number on a receipt, you write a fake one (token). If someone steals the receipt, the number is useless—there's no way to reverse it back to the real card. Meanwhile, behind the scenes, the bank's secure vault holds the real card number and the mapping between them. This is tokenization: the token is a placeholder with no mathematical relationship to the original data.
+
+**Segmentation**: Think of a museum with a single room containing all its priceless artifacts. One break-in, and everything is gone. Instead, smart museums spread valuable items across multiple secure rooms in different buildings. A thief breaking into one room doesn't get the whole collection. Similarly, organizations should spread sensitive data (customer records, financial data, trade secrets) across separate databases and systems so one breach doesn't compromise everything.
+
+**Permission Restrictions**: You can enter a hotel lobby with just a key card (authentication), but your key card only opens your room on your floor—it won't open other guests' rooms, the safe, or the kitchen (authorization/permissions). Just proving you're a guest isn't enough; the system controls exactly what you can access. Two thieves with stolen key cards can only access what those specific cards unlock, not the entire hotel.
+
+**Connection to reality**: In practice, a [[SIEM]] like [[Wazuh]] monitors whether users are attempting to access data they shouldn't (permission violations), tokenization might protect credit card data in your payment systems, and [[Segmentation]] could mean your database servers are on a separate [[VLAN]] from workstations, and your most sensitive files are in an encrypted, air-gapped vault.
+
+---
+
+## Exam Tips
+
+- **Tokenization ≠ Encryption ≠ Hashing**: The exam will test this distinction explicitly.
+  - Tokenization: Non-reversible placeholder (no math relationship, no crypto overhead)
+  - Encryption: Mathematically reversible (with the right key), creates ciphertext
+  - Hashing: One-way function (for integrity verification, not data replacement)
+  - **Trap**: A question might describe "replacing sensitive data" and offer all three as options—only tokenization explicitly *replaces* with a non-related placeholder.
+
+- **Segmentation questions** often focus on **risk reduction and breach containment**. If a question asks "How do you minimize the impact of a breach?", segmentation is a key answer. Look for keywords: *separate locations*, *distribute*, *limit blast radius*, *single point of failure*.
+
+- **Permission Restrictions = Two-Part Answer**: Expect questions to require you to identify both the authentication method (policy at login) *and* the authorization method (access control after login). Saying "implement strong passwords" without mentioning post-login access controls is incomplete.
+
+- **[[RBAC]] vs. [[ABAC]]**: Know the difference. RBAC uses roles; ABAC uses attributes. The exam may ask which is more fine-grained (ABAC). For homelab contexts, Active Directory uses RBAC.
+
+- **Defense in Depth**: Questions often reward answers that layer multiple controls. A complete data protection strategy includes tokenization *and* segmentation *and* permission restrictions—not just one. This aligns with [[NIST]] guidance and is a preferred answer pattern on Security+.
+
+---
+
+## Common Mistakes
+
+- **Confusing Tokenization with Encryption**: Candidates often think "replace sensitive data" means encryption. Key difference: encryption is mathematically reversible; tokenization is not. If the question asks for something *irreversible* and *without crypto overhead*, that's tokenization.
+
+- **Thinking Permission Restrictions Only Means Passwords**: Students focus on authentication (passwords, [[MFA]]) and forget that authorization (what you can do *after* you log in) is equally critical. The exam tests both halves of access control.
+
+- **Underestimating the Compliance Value of Tokenization**: Candidates don't recognize that tokenization is popular in payment processing specifically because it *reduces compliance burden* (PCI-DSS). If a question mentions "reducing regulatory requirements" or "payment data," tokenization is often the intended answer. Encryption also protects data, but tokenization eliminates the need to store and manage the actual data at certain points in the pipeline.
+
+---
+
+## Real-World Application
+
+In Morpheus's [YOUR-LAB] homelab, [[Segmentation]] is achieved by placing database servers on a dedicated [[VLAN]] separate from general workstations, and sensitive backups in an encrypted, air-gapped storage system. [[Permission Restrictions]] are enforced through [[Active Directory]] group policies and [[RBAC]]—not all users can query the main database, and service accounts run with minimal privileges. [[Tokenization]] would be relevant if [YOUR-LAB] processes any payment data or PII; a third-party payment processor might return tokens instead of actual card numbers, reducing the security burden on the internal network. [[Wazuh]] monitors for unauthorized access attempts, alerting when a user tries to access a resource outside their permission scope, effectively detecting permission violations in real time.
+
+---
+
+## [[Wiki Links]]
+
+Core concepts and technologies referenced in this section:
+
+- [[Tokenization]]
+- [[Segmentation]] (Data Segregation)
+- [[Permission Restrictions]]
+- [[Access Control]]
+- [[Authentication]]
+- [[Authorization]]
+- [[Principle of Least Privilege (PoLP)]]
+- [[CIA Triad]]
+- [[Zero Trust]]
+- [[Defense in Depth]]
+
+Access control and identity management:
+- [[RBAC]] (Role-Based Access Control)
+- [[ABAC]] (Attribute-Based Access Control)
+- [[ACL]] (Access Control List)
+- [[Active Directory]]
+- [[LDAP]]
+- [[MFA]] (Multi-Factor Authentication)
+
+Monitoring and compliance:
+- [[SIEM]]
+- [[Wazuh]]
+- [[NIST]]
+- [[PCI-DSS]]
+
+Network and infrastructure:
+- [[VLAN]]
+- [[Encryption]]
+- [[Hashing]]
+
+Methodologies:
+- [[MITRE ATT&CK]]
+
+---
+
+## Tags
+
+`domain-3` `security-plus` `sy0-701` `data-protection` `tokenization` `segmentation` `access-control` `authorization` `rbac` `pci-dss`
+
+---
+_Ingested: 2026-04-15 23:59 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

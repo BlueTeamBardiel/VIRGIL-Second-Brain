@@ -1,0 +1,152 @@
+```yaml
+---
+domain: "2.0 - Threats, Vulnerabilities, and Mitigations"
+section: "2.5"
+tags: [security-plus, sy0-701, domain-2, segmentation, access-control, network-security]
+---
+```
+
+# 2.5 - Segmentation and Access Control
+
+Segmentation and access control are foundational defensive strategies that divide networks and systems into isolated zones, then restrict who and what can access each zone. This topic covers both network-level segmentation (dividing infrastructure) and access control mechanisms (enforting granular permissions), and it's critical for the Security+ exam because it represents practical implementation of the [[Zero Trust]] principle and compliance requirements like [[PCI DSS]]. Understanding how to segment networks and enforce [[Access Control Lists (ACLs)]] is essential for any security professional building defensible infrastructure.
+
+---
+
+## Key Concepts
+
+- **Network Segmentation**: Dividing a network into smaller, isolated subnets to contain lateral movement and limit blast radius of breaches.
+  - *Physical segmentation*: Separate hardware, routers, and switches controlling traffic between zones
+  - *Logical segmentation*: [[VLANs]] and routing rules on shared hardware
+  - *Virtual segmentation*: [[Virtual networks]], security groups in cloud environments, container networking
+
+- **Access Control Lists (ACLs)**: Ordered sets of rules that permit or deny traffic/access based on specific criteria.
+  - Evaluated top-to-bottom; first matching rule applies
+  - Stateless by default (firewall [[ACLs]]) or stateful (software firewalls)
+  - Can filter by: source IP, destination IP, protocol, port number, time of day, application type
+
+- **Trustee and Rights Model**: ACLs associate a subject (user, group, application, or IP) with specific permissions.
+  - *Trustee*: The entity being granted or denied access (Bob, Fred, James, or a service account)
+  - *Access rights*: The specific actions allowed (read, write, execute, connect on ports 80/443)
+  - *Resource*: The target being protected (file, directory, network range, database)
+
+- **Allow List vs. Deny List**:
+  - *Allow list (whitelist)*: Only traffic/applications explicitly permitted are allowed; everything else is blocked (most secure, more administrative overhead)
+  - *Deny list (blacklist)*: All traffic allowed except explicitly blocked items (easier to manage initially, but harder to defend)
+
+- **Application Allow/Deny Controls**: Restrict execution based on application properties.
+  - *Hash-based*: Only allow applications with specific cryptographic hashes
+  - *Certificate-based*: Permit apps digitally signed by trusted publishers
+  - *Path-based*: Restrict execution to certain directories (e.g., `C:\Program Files\`)
+  - *Network zone-based*: Applications only run when connected to specific networks (home, corporate, untrusted)
+
+- **Segmentation Drivers**:
+  - **Performance**: Isolate high-bandwidth applications (databases, backups) from general user traffic
+  - **Security**: Prevent users from directly accessing sensitive systems (e.g., database servers isolated from workstations)
+  - **Compliance**: [[PCI DSS]] mandates database isolation; [[HIPAA]] requires segmentation of PHI systems
+  - **Change Control**: Segmented networks enable safer testing and deployment with less risk to production
+
+---
+
+## How It Works (Feynman Analogy)
+
+Imagine a large office building with many departments. **Segmentation** is like installing security checkpoints and barriers: the accounting department is behind locked doors, the server room is in a separate, secured floor, and visitors can only access the lobby. **Access control lists** are like the receptionist with a clipboard: "Bob from Accounting can access the accounting floor and email servers; Fred from Sales can access the sales database but not the accounting database; James can only use the printer on Port 443."
+
+In reality, [[VLANs]] act like virtual checkpoints on shared network hardware, routing rules in [[Firewalls]] enforce the "clipboard rules," and file system [[ACLs]] on Windows/Linux define who can read, write, or execute files. An [[ACL]] evaluates conditions (Is the source IP 192.168.1.0/24? Is the destination port 80 or 443?) and either permits the traffic to pass or drops it. A misconfigured [[ACL]] can accidentally block your own traffic—just like accidentally locking yourself out of the building.
+
+---
+
+## Exam Tips
+
+- **Distinguish ACLs from Firewalls**: [[ACLs]] are rule lists (found on routers, switches, and operating systems); [[Firewalls]] are devices or software that *enforce* [[ACLs]]. The exam may ask which tool filters traffic—the answer could be "ACLs on the firewall."
+
+- **Know the Order Matters**: [[ACLs]] are *stateless* and *top-to-bottom*; the first matching rule wins. A common exam trap: "If you have ALLOW all, then DENY port 22, which rule applies?" Answer: ALLOW (it matches first). This is why deny rules typically come before allow rules, or use explicit ALLOW + implicit DENY.
+
+- **Remember Segmentation Benefits in Context**:
+  - If the question asks "How do you prevent users from accessing the database server?" → **Segmentation** (put it on a different network).
+  - If the question asks "How do you restrict Bob to read-only on files?" → **Access control** ([[ACL]] on the file system).
+
+- **Compliance Drivers**: Expect questions linking segmentation to compliance (PCI, HIPAA, etc.). Segmentation is a *preventive control*; it reduces audit scope and blast radius.
+
+- **Application Whitelisting Context**: The exam may call this *application control*, *software restriction*, or *application allow list*. It's especially relevant for preventing [[Malware]], [[Ransomware]], and unauthorized software execution. Hash and certificate methods are more secure; path-based is easier but bypassable.
+
+---
+
+## Common Mistakes
+
+- **Confusing ACL Order with Firewall Rules**: Candidates often think firewalls work like Linux `iptables` with separate INPUT/OUTPUT chains, but basic [[ACLs]] on routers are simply top-to-bottom with implicit deny at the end. Know your tool.
+
+- **Thinking Segmentation Requires Physical Separation**: Many assume you need separate hardware; in reality, [[VLANs]], virtual networks, and routing rules achieve logical segmentation on the same equipment. This is cost-effective and just as effective if configured correctly.
+
+- **Overlooking the "Lock Yourself Out" Risk**: The exam may include a scenario where a misconfigured [[ACL]] blocks legitimate traffic. A common question: "You add a firewall rule denying port 22 before allowing it; now SSH is broken. Why?" Answer: Order matters; the deny matches first. This tests both knowledge and practical troubleshooting mindset.
+
+---
+
+## Real-World Application
+
+In Morpheus's [YOUR-LAB] homelab, [[VLANs]] segment the hypervisor network (management), guest VMs (DMZ), and isolated test environments to prevent a compromised VM from accessing the management interface. [[Wazuh]] monitors cross-segment traffic anomalies, and [[Tailscale]] provides encrypted remote access only to authorized users and hosts. Active Directory [[Group Policy]] enforces application whitelisting on Windows hosts, and [[Firewall]] rules on the router implement ACLs to block direct database access from workstations—a critical compliance pattern mirrored in production SOC deployments.
+
+---
+
+## Wiki Links
+
+- [[Zero Trust]]
+- [[CIA Triad]]
+- [[VLANs]]
+- [[Virtual Networks]]
+- [[Firewall]]
+- [[ACLs]] / [[Access Control Lists]]
+- [[Stateful Firewall]]
+- [[Stateless Firewall]]
+- [[PCI DSS]]
+- [[HIPAA]]
+- [[Compliance]]
+- [[Active Directory]]
+- [[Group Policy]]
+- [[LDAP]]
+- [[PKI]]
+- [[Digital Signatures]]
+- [[Hash Functions]]
+- [[Cryptography]]
+- [[Network Segmentation]]
+- [[DMZ]]
+- [[Zero Trust Architecture]]
+- [[Lateral Movement]]
+- [[Blast Radius]]
+- [[Application Whitelisting]]
+- [[Software Restriction]]
+- [[Wazuh]]
+- [[Tailscale]]
+- [[SIEM]]
+- [[SOC]]
+- [[Ransomware]]
+- [[Malware]]
+- [[Incident Response]]
+- [[Change Control]]
+- [[NIST]]
+- [[MITRE ATT&CK]]
+
+---
+
+## Tags
+
+`domain-2` `security-plus` `sy0-701` `network-segmentation` `access-control-lists` `firewall-rules` `vlan` `compliance` `defense-in-depth`
+
+---
+
+## Study Notes
+
+**Why This Matters**: Segmentation and [[Access Control Lists]] are the *operational backbone* of [[Defense in Depth]]. They enforce the principle that users and systems should have the *minimum necessary access* to do their job—a core tenet of [[Zero Trust]]. The exam tests both conceptual understanding (why segment?) and practical implementation (how do you write an [[ACL]]?).
+
+**Memory Hooks**:
+- **SLAP**: **S**egmentation, **L**ists ([[ACLs]]), **A**uthorization, **P**rotection (framework for this section)
+- **Allow-first vs. Deny-first**: Think of airport security: you *allow* known travelers (allow list) rather than trying to *deny* every possible threat (deny list).
+- **Trustee + Rights = Access Decision**: Like a key (trustee) + lock (resource) = can you enter (rights)?
+
+---
+
+**Last Updated**: 2025 | **Confidence Level**: High | **Cross-References**: [[2.1 - Threat Modeling]], [[2.2 - Vulnerability Management]], [[3.0 - Architecture and Design]]
+
+```
+
+---
+_Ingested: 2026-04-15 23:49 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

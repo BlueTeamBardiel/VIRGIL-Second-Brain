@@ -1,0 +1,155 @@
+---
+domain: "2.0 - Threats, Vulnerabilities, and Mitigations"
+section: "2.4"
+tags: [security-plus, sy0-701, domain-2, malware, viruses, worms, fileless-attacks]
+---
+
+# 2.4 - Viruses and Worms (continued)
+
+This section explores the advanced infection mechanisms of **viruses** and **worms**, with particular emphasis on **fileless virus** techniques and the multi-stage **worm infection process**. Understanding these attack vectors is critical for the Security+ exam because they represent how modern malware evades traditional file-based detection and propagates autonomously across networks. Sysadmins must recognize these patterns to implement appropriate [[containment]], [[detection]], and [[incident response]] strategies.
+
+---
+
+## Key Concepts
+
+- **Fileless Virus (Fileless Malware):** Malicious code that resides entirely in [[memory]] and system [[registry]], never writing to disk, thereby evading traditional file-based antivirus signatures and [[HIPS]] (Host-based Intrusion Prevention Systems).
+  
+- **Worm:** Self-replicating [[malware]] that propagates independently across networks without requiring user interaction or a host file; often uses network services and [[vulnerability exploitation]] to spread.
+
+- **Virus vs. Worm Distinction:** A [[virus]] requires a host file and user execution; a [[worm]] is autonomous and spreads without user action via network propagation mechanisms.
+
+- **Backdoor Installation:** A hidden entry point installed by an initial exploit that allows attackers to return and execute further payloads (e.g., downloading and executing the worm payload).
+
+- **Vulnerability Exploitation:** Attackers identify and leverage unpatched security flaws in services, protocols ([[SMB]], [[RDP]], network services), or applications to gain initial system access.
+
+- **Autonomous Propagation:** Worms scan networks for vulnerable hosts without central command, using techniques like [[network scanning]], [[port enumeration]], and automated exploitation frameworks (cf. [[Metasploit]]).
+
+- **Multi-Stage Attack:** Modern worms often use a staged deployment: (1) Initial infection via exploit, (2) Backdoor installation, (3) Secondary payload download and execution.
+
+- **Memory-Resident Threats:** Fileless malware leverages legitimate system tools ([[PowerShell]], [[WMI]], [[COM]] objects) and living-off-the-land techniques to execute without artifact files.
+
+- **Detection Evasion:** Fileless attacks bypass signature-based detection because they don't create executable files; detection requires [[behavioral analysis]], [[SIEM]] monitoring, [[EDR]] (Endpoint Detection and Response), and [[DNS]] query inspection.
+
+---
+
+## How It Works (Feynman Analogy)
+
+### Fileless Virus
+Imagine a burglar who doesn't leave a written blueprint at your house, but instead memorizes the lock combination and verbally instructs an accomplice—the evidence is purely in conversation ([[memory]]), not on paper ([[disk]]). Similarly, a fileless virus executes malicious code directly in [[RAM]] and [[registry]], leaving no executable file that traditional antivirus can scan. It might use a legitimate tool like a word processor to launch an attack script, or hide instructions in [[Windows Registry]] entries. When you reboot, the [[memory]]-based payload disappears—but not before it has stolen data or installed persistence mechanisms.
+
+**Technical reality:** Fileless malware is delivered via documents ([[macro]]-enabled [[Office]], [[PDF]]), [[email]] links, or watering-hole attacks; it leverages [[PowerShell]], [[VBScript]], [[WMI]], or [[COM]] automation to load and execute shellcode directly into [[memory]] without writing a `.exe` or `.dll` file to disk.
+
+### Worm Infection Process
+Think of a worm as a self-mailing letter: once released, it doesn't wait for someone to open it or copy it; it automatically scans for other mailboxes ([[vulnerable hosts]]), sneaks in through an unlocked door ([[unpatched service port]]), and leaves behind a note with instructions to download and open a package ([[backdoor]] → [[secondary payload]]).
+
+**Step-by-step technical flow:**
+1. **Infected computer searches for vulnerable systems:** The worm uses [[network scanning]] (e.g., pinging, [[port scanning]]) to discover potential targets on the local network or internet.
+2. **Vulnerable computer is exploited:** The worm identifies an unpatched service ([[SMB]], [[RDP]], [[SQL Server]], [[Apache]]) and sends a crafted packet or [[payload]] to trigger a buffer overflow, code injection, or privilege escalation [[vulnerability]].
+3. **Backdoor is installed and downloads worm:** Once the initial exploit succeeds, the attacker's code installs a [[backdoor]] (e.g., a reverse shell, hidden service, or registry persistence mechanism) that downloads and executes the full worm, which then repeats the cycle on the newly compromised host.
+
+---
+
+## Exam Tips
+
+- **Distinguish Fileless from Traditional:** The exam will test whether you recognize that fileless attacks bypass file-scanning antivirus. Correct answer: "Detected via behavioral analysis and [[SIEM]] logs, not file signatures." Wrong answer: "Caught by antivirus file scanning."
+
+- **Worm vs. Virus Propagation:** Remember that worms spread **autonomously** without user action, whereas viruses require execution. If a question says "malware spreads across the network without a user opening an attachment," the answer is **worm**, not virus.
+
+- **Multi-Stage Infection Pattern:** Expect questions that describe a three-step process: (1) initial exploit, (2) backdoor installation, (3) secondary payload. Recognize this as a staged attack; understand that removing the initial infection without patching the vulnerability leaves the backdoor functional.
+
+- **Detection Technology Focus:** Fileless attacks require [[EDR]], [[behavioral analytics]], [[SIEM]], [[process monitoring]], and [[DNS]] filtering—not traditional [[antivirus]]. Exam may ask which tool is most effective against fileless malware.
+
+- **Persistence Mechanisms:** Worms and viruses often install [[registry]] keys, scheduled tasks, [[Windows Management Instrumentation]] subscribers, or [[startup folder]] entries for [[persistence]]. Know the difference between initial infection and maintaining access across reboots.
+
+---
+
+## Common Mistakes
+
+- **Confusing "Fileless" with "No Trace":** Fileless malware doesn't create disk files, but it **does** leave evidence in [[memory dumps]], [[event logs]], [[registry]] hives, [[network traffic]] ([[DNS]] queries, [[HTTP]] requests), and [[process]] relationships. Many candidates incorrectly think fileless = undetectable; the exam expects you to know it requires behavioral and log-based detection.
+
+- **Assuming All Worms Need Files:** Some candidates think all malware requires a file; the exam may test your understanding that a worm can propagate entirely through [[network]] exploitation and [[memory]]-based code injection without ever writing a file to the target disk.
+
+- **Mixing Up Backdoor vs. Worm:** A backdoor is a **persistence mechanism** (a way in); a worm is a **propagation mechanism** (a way to spread). A worm may install a backdoor, but they serve different functions. The exam will test this distinction in scenario questions.
+
+---
+
+## Real-World Application
+
+In the [YOUR-LAB] homelab, a [[Wazuh]] agent monitoring a Debian [[Linux]] server or a [[Windows]] domain machine would detect fileless attacks by analyzing [[process]] memory ([[yara]] rules), [[syscall]] traces, and [[PowerShell]] command-line arguments for obfuscation or suspicious [[COM]] invocations. If a worm were to scan the internal [[Tailscale]] network seeking [[SMB]] or [[RDP]] services, [[Active Directory]] credentials and properly configured [[firewall]] rules (segmentation, [[VLAN]] isolation, and [[least privilege]]) would limit lateral movement. Incident responders would capture [[memory dumps]] and [[network PCAP]] files (via [[tcpdump]] or [[Wireshark]]) to identify worm signatures and backdoor persistence points ([[registry]], scheduled tasks, [[systemd]] timers), informing remediation and [[vulnerability management]] patches.
+
+---
+
+## Related Concepts & Wiki Links
+
+### Malware Families & Delivery
+- [[Malware]]
+- [[Virus]]
+- [[Worm]]
+- [[Ransomware]]
+- [[Botnet]]
+- [[Trojan]]
+
+### Vulnerability & Exploitation
+- [[Vulnerability Management]]
+- [[Buffer Overflow]]
+- [[Code Injection]]
+- [[SQL Injection]]
+- [[Privilege Escalation]]
+- [[Zero-Day]]
+- [[Metasploit]]
+
+### Detection & Response Technologies
+- [[SIEM]] (Splunk, Wazuh)
+- [[EDR]] (Endpoint Detection and Response)
+- [[IDS]] / [[IPS]]
+- [[Antivirus]]
+- [[HIPS]]
+- [[Behavioral Analysis]]
+- [[Threat Intelligence]]
+- [[MITRE ATT&CK]]
+
+### System Artifacts & Persistence
+- [[Windows Registry]]
+- [[Memory]] / [[RAM]]
+- [[Process Monitoring]]
+- [[Event Logs]]
+- [[Persistence]]
+- [[Scheduled Tasks]]
+- [[Startup Folders]]
+- [[WMI]]
+- [[COM]]
+
+### Network & Scanning
+- [[Network Scanning]]
+- [[Port Scanning]]
+- [[Nmap]]
+- [[SMB]]
+- [[RDP]]
+- [[DNS]]
+- [[HTTP]] / [[HTTPS]]
+- [[Firewall]]
+- [[VLAN]]
+- [[Lateral Movement]]
+
+### Tools & Platforms
+- [[Wazuh]]
+- [[Active Directory]]
+- [[PowerShell]]
+- [[Wireshark]]
+- [[Tcpdump]]
+- [[Kali Linux]]
+
+### Incident Response & Forensics
+- [[Incident Response]]
+- [[Forensics]]
+- [[DFIR]]
+- [[Memory Dump]]
+- [[PCAP]]
+
+---
+
+## Tags
+`domain-2` `security-plus` `sy0-701` `malware` `viruses` `worms` `fileless-attacks` `backdoors` `exploitation` `propagation` `detection` `incident-response`
+
+---
+_Ingested: 2026-04-15 23:42 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_
