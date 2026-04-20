@@ -1,113 +1,218 @@
-# VIRGIL Roadmap
+# VIRGIL — Public Roadmap
 
-This document tracks what's shipped, what's planned, and where VIRGIL is headed.
-
----
-
-## v1.0.0 — Current release
-
-**Shipped April 2026.**
-
-### Ingest Pipeline
-- `rss-ingest.py` — 22 curated security/homelab feeds, daily digest via Claude Haiku
-- `cve-ingest.py` — NVD v2 API, daily CVE ingest with CVSS scoring and ATT&CK mapping
-- `pdf-ingest.sh` — PDF → Obsidian note; auto-chunked for large documents (textbooks, SPs)
-- `nist-ingest.sh` — NIST SP/FIPS wrapper with exam-oriented framing
-- `url-ingest.sh` — Fetch any URL → new note or patch existing note; MITRE ATT&CK auto-routing
-- `triage-inbox.sh` — Weekly inbox triage: routes notes to merge/keep/archive/mitre
-- `wikilink-ingest.sh` — Nightly `[[wikilink]]` injection into recently modified notes
-
-### Automation
-- `hooks/session-start.sh` — Creates daily log on session open
-- `hooks/promote.sh` — Promotes daily log facts to memory; Slack notification on completion
-- `hooks/weekly-rollup.sh` — Sunday digest from feeds, personal study, and CVE notes
-- `hooks/auto-reflect.sh` — End-of-day auto-fill for unfilled log summaries
-- `hooks/sync-public.sh` — Syncs private vault to public release repo (strips personal content)
-
-### Skills (Claude Code slash commands)
-- `/reflect` — End-of-session: summarizes log, marks completed tasks, updates notes
-- `/week` — Weekly digest from daily logs
-- `/cysa` — CySA+ interactive study session
-- `/ccna` — CCNA study session from ingested notes
-- `/research` — Structured research → Obsidian note
-- `/challenge` — Red-team critique of a proposed decision
-- `/lab` — Current lab status report
-- `/focus` — Load context for a specific task
-
-### Starter Knowledge Base
-- CCNA Vol 1 + 2 notes (chunked from textbook PDFs)
-- CySA+ domain notes with anchor links and callout blocks
-- MITRE ATT&CK technique notes (url-ingest auto-routing)
-- NIST SP notes (800-53, 800-61)
-- Security and networking concept indexes
+*Built in public. Sequenced by what real users actually need.*
 
 ---
 
-## v1.1.0 — Planned
+## What's shipped — v1.1.0
 
-### Spaced repetition quiz system
-- `quiz-ingest.sh` — Generate 5-question terminal MCQ quiz from any topic in your notes
-- Tracks per-topic scores in a simple JSON log
-- `/quiz` Claude Code skill: review weak topics, suggest what to study next based on score history
-- Integrates with `/reflect` — surfaces lowest-scoring topics in session summary
+**Install it and use it today.**
 
-### Additional feed categories
-- Threat intelligence feeds (CISA KEV, abuse.ch, OTX)
-- Networking/infrastructure (network engineering subreddits, RIPE Labs, APNIC blog)
-- Certification-specific (CompTIA community, study subreddits via RSS bridges)
-
-### Mobile capture workflow
-- `personal-ingest.sh` extensions: voice memo transcription stub, photo-to-note (OCR)
-- Shortcuts/Tasker integration guide for capturing notes from mobile to vault via SSH
-
----
-
-## v1.2.0 — Planned
-
-### Multi-machine sync improvements
-- `deploy.sh` — One-command VIRGIL deployment to a new machine (installs deps, clones vault, sets up cron, adds aliases)
-- Conflict resolution guide for Obsidian Sync + git-based backup coexistence
-- Per-machine config overlay: `settings.local.json` pattern extended for multi-host customization
-
-### Obsidian plugin integration
-- Dataview query templates for fleet status dashboards
-- Templater templates for consistent note creation (host notes, study notes, lab reports)
-- Community plugin recommendations with rationale (no required plugins — all optional)
+- One-line curl installer — Linux, macOS, Windows via WSL2
+- 900+ starter knowledge notes — Security+, CySA+, CCNA, MITRE ATT&CK,
+  347 CVEs with Feynman-style explanations
+- Automated ingest pipelines — 22 threat intel feeds daily, NVD CVE feed
+  daily, URL and PDF ingest
+- Nightly memory distillation — session logs → permanent facts and lessons
+- Local AI inference via Ollama — runs on your hardware, no API costs
+- Three-tier fallback — local GPU → backup node → Anthropic API
+- OpenWebUI frontend — browser and mobile access to your local VIRGIL
+- Slack integration — approve/deny pipeline actions from your phone
+- Pre-commit secret scanning — gitleaks on all repos
+- Post-install guided wizard — walks you through first steps after install
 
 ---
 
-## v2.0.0 — Future
+## What's next — v1.2.0
 
-### Guided setup wizard
-- Interactive `setup.sh` that walks through: API key, vault path, cron schedule, feed selection, first ingest run
-- Validates dependencies (pandoc, python3, curl) and suggests installs
-- Generates a custom `GETTING-STARTED.md` from your answers
+**Make VIRGIL actually think with your notes, not around them.**
 
-### Pre-built knowledge packs
-Structured note collections ready to drop into your vault:
+### RAG — Retrieval-Augmented Generation
+*This is the most important thing on this roadmap.*
 
-- **CySA+ Pack** — All five domains with practice questions, weak-area tracking, exam checklist
-- **CCNA Pack** — OSI/TCP-IP, subnetting, routing protocols, switching, ACLs — exam-mapped
-- **CEH Pack** — Recon, scanning, exploitation phases with tool references
-- **Homelab Foundations Pack** — Linux hardening, Docker, firewall basics, monitoring stack
+Right now VIRGIL has 900+ notes but can't query them in conversation.
+This fixes that.
 
-Knowledge packs are Markdown-only, no scripts required.
+- ChromaDB vector database running locally
+- All vault notes embedded with a local model
+- Every Feynman session, quiz, and explanation grounded in your vault
+- Ask "what do my notes say about lateral movement" — get an answer from
+  your actual notes, not the internet
+- No manual setup per chat — it just works on every query
 
-### Community feed registry
-A curated, community-maintained list of high-quality RSS feeds organized by category. Submitted via pull request (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+### The VIRGIL Session
+*One command. One ritual. Every day.*
+
+The core loop VIRGIL is built around:
+
+virgil session
+
+What it does:
+- Pulls today's CVE and threat intel digest
+- Surfaces your 3–5 weakest topics based on quiz history and session logs
+- Generates Feynman-style prompts for each weak topic
+- Writes results back into your vault
+- Gives you one clear next step
+
+If you do nothing else with VIRGIL, do this. Once a day. It compounds.
+
+### Quiz System
+- Generate a quiz on any topic from your own notes — not generic internet
+  questions
+- Tracks scores per topic
+- Surfaces lowest-scoring topics in your daily session
+- Feynman-style feedback: not just right/wrong, but "here's why you got
+  that wrong and here's the note that explains it"
+
+### Trust and Transparency
+For a cybersecurity tool, trust is not optional.
+
+- **Threat model** — what data is stored, what is transmitted, what never
+  leaves your machine
+- **Local-only mode** — disable all outbound calls, verify with a script
+- **Hardening guide** — file permissions, Docker isolation, secrets
+  handling, running VIRGIL air-gapped
+- **SBOM** — software bill of materials for every release
+- **Signed releases** — verify your install is what we shipped
 
 ---
 
-## Premium track
+## What's planned — v1.3.0
 
-Guided video courses and pre-configured knowledge packs with deeper coverage are in development.
+**Turn VIRGIL into a study partner with a memory.**
 
-**Join the mailing list** to get notified when premium content is available and to influence what gets built first.
+### Enrichment Pipeline
+- Every note in your vault gets a Feynman-style plain-English explanation
+  written by your local model
+- Staged mode — writes to staging/ first, you approve before it patches
+  the original
+- Prevents semantic drift, enables rollback
 
-> Mailing list coming soon — watch the repo or open an issue tagged `mailing-list` to register interest.
+### Interview Mode
+- Generate Q&A from your own notes
+- Simulate interviewer follow-ups
+- Score your answers against your vault — not generic answers
+- "You said X. Your notes say Y. Here's the gap."
+
+### Job Gap Analysis
+- Paste a job posting
+- VIRGIL maps requirements to your vault
+- Returns: what you know, what you're missing, what to study first
+
+### Knowledge Health Dashboard
+- Orphaned notes, stale notes, thin notes
+- Topic clusters with no connections to other clusters
+- Surfaces in Obsidian as a weekly digest note
+
+---
+
+## What's coming — v2.0.0
+
+**The platform. For people who want to go deep.**
+
+### Guided Setup Wizard
+- Interactive installer that walks through every decision
+- No more reading a README to figure out what order to do things
+- First VIRGIL Session runs automatically at the end of setup
+
+### Pre-Built Knowledge Packs
+Structured note collections ready to drop into your vault.
+Markdown-only — no scripts required.
+
+- **CySA+ Pack** — All five domains, practice questions, weak-area
+  tracking, exam checklist
+- **Security+ Pack** — All six domains, Feynman explanations, exam traps
+  flagged
+- **CCNA Pack** — OSI/TCP-IP, subnetting, routing, switching, ACLs
+- **Homelab Foundations Pack** — Linux hardening, Docker, firewall,
+  monitoring, AD basics
+- **Blue Team Pack** — SIEM, log analysis, incident response, detection
+  engineering
+
+### Community Feed Registry
+- Community-maintained list of high-quality RSS feeds by category
+- Every feed reviewed before merge
+
+---
+
+## The product track
+
+*VIRGIL will always have a free open-source core.*
+
+### Hosted tier — 2026
+For people who want VIRGIL without the hardware.
+
+- Managed inference — no GPU, no Ollama, no cron
+- Pre-loaded cert packs included
+- Vault sync across machines
+- Your notes stay yours — exportable any time
+- Pricing: join the mailing list below
+
+### Enterprise — by request
+For security teams, MSSPs, and organizations with a knowledge problem.
+
+- Air-gapped deployment — nothing leaves your network
+- Custom knowledge base with your runbooks, threat landscape, tools
+- Compliance mapping — NIST, SOC2, ISO 27001, CMMC
+- Human-in-the-loop approval gate for every AI action
+- Full audit log of every AI decision
+- SOC analyst copilot — answers from your documentation, not the internet
+- New hire onboarding — from zero to productive in days, not months
+
+*Inquiries: open an issue tagged `enterprise` on GitHub.*
+
+---
+
+## What we will not build
+
+- A cloud product that owns your data
+- A subscription to someone else's model running your notes
+- Gamification, streaks, or engagement mechanics
+- Anything that makes money by keeping you dependent
+
+---
+
+## User testing program
+
+We're looking for 10–20 people to run VIRGIL daily for 14 days and tell
+us what works, what doesn't, and what breaks.
+
+**Who we want:**
+- Studying for Sec+, CySA+, or CCNA
+- Applying to SOC, IT, or security roles
+- Frustrated with scattered notes and no system
+
+**What you do:**
+- Install VIRGIL
+- Run `virgil session` once a day
+- Answer 3 questions every 3 days: what did you use, what felt pointless,
+  what broke
+
+**What you get:**
+- Direct input into what gets built next
+- Early access to v1.2 features as they ship
+- A knowledge base that's actually useful after 14 days
+
+Open an issue tagged `user-testing` to join.
+
+---
+
+## Mailing list
+
+Early access to hosted tier, knowledge packs, and enterprise beta.
+
+Open an issue tagged `mailing-list` to register interest.
 
 ---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Feature requests and feed suggestions welcome via GitHub Issues.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+Feature requests and feed suggestions welcome via GitHub Issues.
+
+---
+
+*Last updated: April 2026*
+*Current release: v1.1.0*
+*Next milestone: v1.2.0 — RAG + VIRGIL Session*
+*Vault: 900+ notes | 3 repos | local GPU inference | one approval gate*
