@@ -97,6 +97,9 @@ notes/
 └── personal/     ← Fitness, study logs, goals (optional)
 ```
 
+> **Note on note filenames:**
+> Some automatically ingested notes may have technical filenames like `sy0-701-2-4-malicious-code.md` instead of human-readable names. This is normal — the note rename pipeline (coming in v1.2) will clean these up automatically. They work correctly in Obsidian and VIRGIL session/quiz commands despite the ugly names.
+
 ## Step 2: Enable Graph View
 
 In Obsidian, press `Ctrl+G` (or `Cmd+G` on Mac) to open the graph view. After you've ingested a few notes, you'll start to see the `[[wiki link]]` connections between them.
@@ -190,6 +193,19 @@ Scripts that support Ollama will skip the `ANTHROPIC_API_KEY` check when `VIRGIL
 
 > **Note:** Smaller models (7B–14B) produce noticeably shorter and less structured notes than Claude Haiku. For exam-critical content (CVE notes, ATT&CK techniques), Claude Haiku is recommended if cost is manageable (~$3–5/month at typical usage).
 
+> **Important for reasoning models (deepseek-r1, qwen-thinking, gpt-oss variants):**
+> These models use internal "thinking" tokens before generating output. Think of it like a person who has to work through a problem in their head before speaking — except the thinking counts against their word limit.
+>
+> Set num_predict to at least 3000 for quiz and session commands:
+> ```
+> ollama run your-model --num-predict 3000
+> ```
+> Or set it in your Modelfile:
+> ```
+> PARAMETER num_predict 3000
+> ```
+> Without this, complex questions may return empty responses because the model ran out of tokens while thinking.
+
 ## Troubleshooting
 
 **virgil-rss fails with "no API key"**: You have two options — (1) set `ANTHROPIC_API_KEY` in your `.env` file and source it (`source ~/.env`), or (2) set `VIRGIL_BACKEND=ollama` to use local inference with no API key (see **Option B** above). If you're not sure which you want, start with Ollama.
@@ -201,3 +217,52 @@ Scripts that support Ollama will skip the `ANTHROPIC_API_KEY` check when `VIRGIL
 **Triage isn't routing correctly**: Check `ingest/triage-inbox.log` for the routing decision on each note.
 
 **Cron jobs not running**: Run `crontab -l` and verify the VIRGIL entries are present. If not, re-run the installer with `bash scripts/install.sh` from your cloned repo.
+
+---
+
+## Advanced — Local RAG Setup (Optional)
+
+RAG (Retrieval-Augmented Generation) lets VIRGIL query your actual vault notes during every conversation instead of relying only on the model's training data.
+
+Think of it like this: without RAG, VIRGIL knows what it was trained on. With RAG, VIRGIL knows what YOU know — your notes, your CVEs, your lab configs.
+
+### What you need
+- ChromaDB: `pip install chromadb --break-system-packages`
+- nomic-embed-text: `ollama pull nomic-embed-text`
+- OpenWebUI running locally
+
+### Set up the embedding pipeline
+```bash
+# Run the ingest script to embed all your notes
+python3 ~/VIRGIL/ingest/chroma-ingest.py
+
+# Start the bridge that connects ChromaDB to OpenWebUI
+python3 ~/VIRGIL/ingest/chroma-owui-bridge.py --host 127.0.0.1 --port 5000
+```
+
+### Wire into OpenWebUI
+1. Install the Pipelines service:
+   ```bash
+   docker run -d --name pipelines --network host \
+     -v ~/pipelines:/app/pipelines \
+     --restart always \
+     ghcr.io/open-webui/pipelines:main
+   ```
+2. Copy the pipeline file:
+   ```bash
+   cp ~/VIRGIL/ingest/virgil_rag_pipeline.py ~/pipelines/virgil_rag.py
+   docker restart pipelines
+   ```
+3. In OpenWebUI → Admin Settings → Connections → add:
+   - URL: `http://localhost:9099`
+   - API Key: `0p3n-w3bu!`
+4. Select **VIRGIL RAG** from the model dropdown.
+
+### Make the bridge persistent
+```bash
+# Add to crontab to start on boot
+@reboot sleep 30 && python3 ~/VIRGIL/ingest/chroma-owui-bridge.py \
+  --host 127.0.0.1 --port 5000 &
+```
+
+Once set up, every query to VIRGIL RAG will automatically search your vault and inject relevant context before the model responds.
