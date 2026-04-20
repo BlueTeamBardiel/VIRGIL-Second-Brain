@@ -197,10 +197,48 @@ check_dep curl     "curl"
 check_dep git      "git"
 check_dep pandoc   "pandoc (URL/PDF ingest)" soft
 check_dep pdftotext "pdftotext/poppler (PDF ingest)" soft
-if $IS_WSL; then
-    warn "Obsidian should be installed on the Windows side, not inside WSL"
-else
-    check_dep obsidian "Obsidian" soft
+OBSIDIAN_FOUND=false
+if command -v obsidian &>/dev/null; then
+    ok "Obsidian: $(command -v obsidian)"
+    OBSIDIAN_FOUND=true
+elif [[ "$OS" == "macos" ]] && [[ -d "/Applications/Obsidian.app" ]]; then
+    ok "Obsidian: /Applications/Obsidian.app"
+    OBSIDIAN_FOUND=true
+fi
+
+if ! $OBSIDIAN_FOUND; then
+    echo ""
+    info "Obsidian is the app you use to read and navigate your VIRGIL vault."
+    info "Think of it as a browser for your notes — it connects them, shows you the"
+    info "knowledge graph, and makes search actually useful."
+    info "Download free at: https://obsidian.md"
+    echo ""
+
+    if $IS_WSL; then
+        warn "Install Obsidian on Windows (native app) — NOT inside WSL"
+    elif [[ "$OS" == "linux" ]] && ! $FAST_MODE && ! $DRY_RUN; then
+        ask "Download and install the Obsidian AppImage now? [y/N]"
+        read -r -p "  " INSTALL_OBS </dev/tty
+        if [[ "${INSTALL_OBS,,}" == "y" ]]; then
+            OBS_VER="1.7.7"
+            OBS_URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v${OBS_VER}/Obsidian-${OBS_VER}.AppImage"
+            OBS_DEST="$HOME/.local/bin/Obsidian.AppImage"
+            mkdir -p "$HOME/.local/bin"
+            info "Downloading Obsidian ${OBS_VER} AppImage..."
+            if curl -fsSL --max-time 120 -o "$OBS_DEST" "$OBS_URL"; then
+                chmod +x "$OBS_DEST"
+                ok "Installed: $OBS_DEST"
+                info "Launch with: $OBS_DEST   (or add ~/.local/bin to PATH)"
+            else
+                warn "Download failed — install manually from https://obsidian.md"
+            fi
+        else
+            info "Skipping Obsidian install — grab it later from https://obsidian.md"
+        fi
+    else
+        warn "Obsidian not found — install it from https://obsidian.md when ready"
+    fi
+    echo ""
 fi
 
 # Python version check
@@ -365,8 +403,14 @@ else
     # Q2: API key
     echo ""
     ask "Paste your Anthropic API key (get one free at console.anthropic.com):"
-    echo "  VIRGIL uses Claude Haiku for RSS digests, CVE summaries, and triage."
+    echo "  Think of this like a password that lets VIRGIL talk to Claude AI."
+    echo "  VIRGIL uses it to turn raw CVE data and news headlines into plain-English"
+    echo "  explanations you can actually learn from. Without it, notes are saved as raw"
+    echo "  data — still useful, but not enriched. You can add it later by editing"
+    echo "  ~/VIRGIL/.env"
+    echo ""
     echo "  Estimated cost: \$3–5/month at typical homelab usage."
+    echo "  Skip this if you plan to use local inference via Ollama — see GETTING-STARTED.md"
     echo ""
     if [[ -n "$API_KEY" ]]; then
         ok "ANTHROPIC_API_KEY already set in environment (${#API_KEY} chars)"
@@ -415,6 +459,8 @@ else
     VAULT_INPUT="${VAULT_INPUT:-$HOME/VIRGIL}"
     VIRGIL_DIR="${VAULT_INPUT/#\~/$HOME}"
     ok "Vault: $VIRGIL_DIR"
+    warn "Your vault lives on THIS machine only. To sync across devices you need"
+    warn "Obsidian Sync (paid) or a self-hosted solution like Syncthing."
 
     # Q5: Knowledge track
     echo ""
@@ -435,12 +481,22 @@ else
     ask "Install crontab schedules? (recommended)"
     echo "  Schedules:"
     echo "    6am daily   — RSS threat intel digest"
+    echo "                  Pulls today's threat intel headlines into your vault"
     echo "    7am daily   — CVE ingest from NVD"
+    echo "                  Grabs new vulnerabilities from the National Vulnerability Database"
     echo "    Mon 8am     — Inbox triage"
+    echo "                  Sorts and tags new notes automatically"
     echo "    11:30pm     — Wikilink injection"
+    echo "                  Connects related notes with wikilinks"
     echo "    11:55pm     — Session auto-reflect"
+    echo "                  VIRGIL summarizes what you learned today"
     echo "    1am Mon–Sat — Daily log promotion"
+    echo "                  Distills the best insights into permanent memory"
     echo "    1am Sunday  — Weekly digest"
+    echo "                  Weekly summary of everything that came in"
+    echo ""
+    echo "  You can disable any of these later with: crontab -e"
+    echo ""
     read -r -p "  Install crontab? [Y/n]: " CRON_INPUT </dev/tty
     INSTALL_CRON="${CRON_INPUT:-y}"
 fi
@@ -675,64 +731,134 @@ else
     rm -f /tmp/virgil-api-test-$$.json
 fi
 
-# ── 13. Live demo: fetch one CVE from NVD ────────────────────────────────────
-hdr "Step 12 — Live demo (CVE fetch)"
+# ── 13. Demo CVE note (dynamic HIGH/CRITICAL fetch from NVD) ─────────────────
+hdr "Step 12 — Demo CVE note"
 
-info "Fetching a recent CVE from NVD API..."
-
-CVE_JSON=$(curl -s --max-time 15 \
-    "https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=1&startIndex=0" \
-    2>/dev/null || echo "{}")
-
-CVE_ID=$(echo "$CVE_JSON" | python3 -c "
-import json,sys
-try:
-    d=json.load(sys.stdin)
-    cve=d['vulnerabilities'][0]['cve']
-    print(cve['id'])
-except:
-    print('CVE-DEMO-0001')
-" 2>/dev/null || echo "CVE-DEMO-0001")
-
-CVE_DESC=$(echo "$CVE_JSON" | python3 -c "
-import json,sys
-try:
-    d=json.load(sys.stdin)
-    cve=d['vulnerabilities'][0]['cve']
-    descs=cve.get('descriptions',[])
-    en=[x['value'] for x in descs if x['lang']=='en']
-    print((en[0] if en else 'No description')[:280])
-except:
-    print('Demo CVE — NVD fetch succeeded')
-" 2>/dev/null || echo "Demo CVE")
-
-CVE_NOTE_PATH="$VIRGIL_DIR/notes/cve/${CVE_ID}.md"
 TODAY=$(date '+%Y-%m-%d')
+DEMO_DEST_DIR="$VIRGIL_DIR/notes/cve"
+mkdir -p "$DEMO_DEST_DIR"
 
-cat > "$CVE_NOTE_PATH" << CVENOTE
----
-tags: [cve, demo]
-date: $TODAY
-source: nvd-demo
----
+info "Fetching a recent HIGH/CRITICAL CVE from NVD..."
 
-# $CVE_ID
+CVE_NOTE_PATH=$(VIRGIL_DEMO_DIR="$DEMO_DEST_DIR" VIRGIL_DEMO_TODAY="$TODAY" python3 <<'PYDEMO'
+import json, os, sys, urllib.request
+from datetime import datetime, timezone, timedelta
+from pathlib import Path
 
-> **Installed by VIRGIL demo** — $TODAY
+DEST = Path(os.environ["VIRGIL_DEMO_DIR"])
+TODAY = os.environ["VIRGIL_DEMO_TODAY"]
 
-## Description
+def fetch_latest_high_crit():
+    now = datetime.now(timezone.utc)
+    start = now - timedelta(days=7)
+    base = "https://services.nvd.nist.gov/rest/json/cves/2.0"
+    for sev in ("CRITICAL", "HIGH"):
+        qs = (
+            f"?pubStartDate={start.strftime('%Y-%m-%dT%H:%M:%S.000')}"
+            f"&pubEndDate={now.strftime('%Y-%m-%dT%H:%M:%S.000')}"
+            f"&cvssV3Severity={sev}"
+            f"&resultsPerPage=20&startIndex=0"
+        )
+        try:
+            req = urllib.request.Request(base + qs, headers={"User-Agent": "VIRGIL-installer/1.0"})
+            with urllib.request.urlopen(req, timeout=15) as r:
+                data = json.load(r)
+            vulns = data.get("vulnerabilities", [])
+            if vulns:
+                vulns.sort(key=lambda v: v["cve"].get("published", ""), reverse=True)
+                return vulns[0]["cve"]
+        except Exception:
+            continue
+    return None
 
-$CVE_DESC
+def cvss(cve):
+    metrics = cve.get("metrics", {})
+    for key in ("cvssMetricV31", "cvssMetricV30", "cvssMetricV40", "cvssMetricV2"):
+        entries = metrics.get(key, [])
+        if entries:
+            d = entries[0].get("cvssData", {})
+            return str(d.get("baseScore", "N/A")), (d.get("baseSeverity") or d.get("severity") or "N/A").upper()
+    return "N/A", "N/A"
+
+def render_dynamic(cve):
+    cid = cve.get("id", "CVE-UNKNOWN")
+    published = cve.get("published", "")[:10] or TODAY
+    score, sev = cvss(cve)
+    descs = cve.get("descriptions", [])
+    en = next((d["value"] for d in descs if d.get("lang") == "en"), "No description available.")
+    refs = [r.get("url", "") for r in cve.get("references", [])[:5] if r.get("url")]
+    refs_md = "\n".join(f"- {u}" for u in refs) if refs else "- (none listed)"
+    return cid, f"""# {cid}
+
+> **CVSS {score}** ({sev}) | Published: {published} | Demo note installed by VIRGIL
+
+## What is this?
+{en}
+
+## Why does it matter?
+This is the most recent {sev.lower()}-severity vulnerability VIRGIL could find in the National Vulnerability Database at the time of install. A {sev.lower()} CVSS rating means exploitation typically leads to serious impact — remote code execution, privilege escalation, or significant data exposure — and often requires little or no user interaction.
+
+## The attack
+Read the description above for the specific mechanism. The pattern matters more than the instance: attackers watch the NVD feed daily, weaponize new CVEs within hours, and pivot to unpatched systems before defenders read their morning coffee emails.
+
+## Defender takeaway
+Track new CVEs daily. Map them to your inventory. Patch high-impact, internet-facing systems first. VIRGIL's `virgil-cve --recent` does the tracking part; you still have to do the mapping and the patching.
 
 ## References
+{refs_md}
 
-- NVD: https://nvd.nist.gov/vuln/detail/$CVE_ID
+## Tags
+cve, demo, {sev.lower()}-severity
 
 ---
-_This note was created by the VIRGIL installer as a live demo._
-CVENOTE
+_This note was installed by VIRGIL as a live demo. Replace it with real notes as your vault grows._
+"""
 
-ok "Fetched $CVE_ID → $CVE_NOTE_PATH"
+FALLBACK_ID = "CVE-1999-0095"
+FALLBACK = """# CVE-1999-0095 — Sendmail Debug RCE
+
+> **CVSS N/A** | Published: 1999-12-30 | Demo note installed by VIRGIL
+
+## What is this?
+A mail server called Sendmail shipped with a debug mode accidentally left on. Anyone who could reach port 25 could use it to run commands as root — the most powerful user on the system.
+
+## Why does it matter?
+This is one of the first remote code execution vulnerabilities ever documented. The pattern — a debug feature left enabled in production — still causes breaches today. Same mistake, different decade.
+
+## The attack
+An attacker sends a crafted SMTP DEBUG command. The server executes it as root. Full system compromise in one packet.
+
+## Real-world impact
+Debug interfaces exposed to the internet have appeared in modern software as recently as 2022. The name changes. The mistake doesn't.
+
+## Defender takeaway
+Disable debug modes before production. Audit exposed services for developer features that were never meant to be public.
+
+## Tags
+cve, demo, rce, sendmail, historical
+
+---
+_This note was installed by VIRGIL as a live demo. Replace it with real notes as your vault grows._
+"""
+
+cve = fetch_latest_high_crit()
+if cve:
+    cid, body = render_dynamic(cve)
+else:
+    cid, body = FALLBACK_ID, FALLBACK
+
+out = DEST / f"{cid}.md"
+out.write_text(body)
+print(out)
+PYDEMO
+)
+
+if [[ -n "$CVE_NOTE_PATH" && -f "$CVE_NOTE_PATH" ]]; then
+    ok "Wrote demo note → $CVE_NOTE_PATH"
+else
+    CVE_NOTE_PATH="$DEMO_DEST_DIR/CVE-1999-0095.md"
+    warn "NVD fetch helper did not return a path — check $CVE_NOTE_PATH"
+fi
 
 # ── 14. Final summary ─────────────────────────────────────────────────────────
 echo ""
@@ -766,6 +892,94 @@ echo ""
 echo "  Docs:    $VIRGIL_RELEASES"
 echo "  Issues:  https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain/issues"
 echo ""
+
+# ── 15. Guided wizard ─────────────────────────────────────────────────────────
+if ! $FAST_MODE; then
+    while true; do
+        echo ""
+        ask "What do you want to do right now?"
+        echo "    (1) Show me my first CVE note"
+        echo "    (2) How do I open this in Obsidian?"
+        echo "    (3) Run my first RSS digest"
+        echo "    (4) I'm done — show me the quick reference"
+        echo ""
+        read -r -p "  Choice [4]: " WIZ_CHOICE </dev/tty
+        WIZ_CHOICE="${WIZ_CHOICE:-4}"
+
+        case "$WIZ_CHOICE" in
+            1)
+                echo ""
+                if [[ -f "$CVE_NOTE_PATH" ]]; then
+                    cat "$CVE_NOTE_PATH"
+                    echo ""
+                    info "This is what VIRGIL writes for every CVE it ingests."
+                    info "Add an API key or set up Ollama to get AI-enriched explanations automatically."
+                else
+                    warn "Demo note not found at $CVE_NOTE_PATH"
+                fi
+                ;;
+            2)
+                echo ""
+                info "Obsidian is a free markdown editor that treats your vault as a web of notes."
+                info "Download it at: https://obsidian.md"
+                echo ""
+                case "$OS" in
+                    macos)
+                        step "On macOS:"
+                        echo "    1. Open Obsidian"
+                        echo "    2. Click 'Open folder as vault'"
+                        echo "    3. Select: $VIRGIL_DIR"
+                        ;;
+                    wsl2)
+                        step "On Windows (with WSL2):"
+                        echo "    1. Install Obsidian on Windows (NOT inside WSL)"
+                        echo "    2. Open Obsidian → 'Open folder as vault'"
+                        echo "    3. Paste this path into the folder picker:"
+                        echo "       \\\\wsl.localhost\\Ubuntu\\home\\${USER}\\VIRGIL"
+                        echo "       (adjust the distro name if you're not on Ubuntu)"
+                        ;;
+                    linux)
+                        step "On Linux:"
+                        echo "    1. Launch Obsidian (AppImage, Flatpak, Snap, or .deb)"
+                        echo "    2. Click 'Open folder as vault'"
+                        echo "    3. Select: $VIRGIL_DIR"
+                        ;;
+                esac
+                echo ""
+                warn "Your vault lives on THIS machine only. To sync across devices you need"
+                warn "Obsidian Sync (paid) or a self-hosted solution like Syncthing."
+                ;;
+            3)
+                echo ""
+                if [[ -n "$API_KEY" ]] && grep -q '^ANTHROPIC_API_KEY=' "$ENV_FILE" 2>/dev/null; then
+                    info "Running virgil-rss (this may take 30-60 seconds)..."
+                    set -a; source "$ENV_FILE"; set +a
+                    python3 "$VIRGIL_DIR/ingest/rss-ingest.py" || warn "RSS run exited with an error — check the log"
+                else
+                    warn "You need an API key or Ollama to run the RSS digest."
+                    warn "See GETTING-STARTED.md for setup instructions."
+                fi
+                ;;
+            4|*)
+                echo ""
+                echo -e "${BOLD}${CYN}── Quick Reference ─────────────────────────────────────────${RST}"
+                echo ""
+                step "Top 5 commands:"
+                echo "    virgil-cve <CVE-ID>      Ingest a specific CVE into your vault"
+                echo "    virgil-rss               Pull today's threat intel RSS digest"
+                echo "    virgil-url <url>         Convert a web page into a note"
+                echo "    virgil-triage            Sort and tag new inbox notes"
+                echo "    virgil-wikilink          Connect related notes with [[wikilinks]]"
+                echo ""
+                step "Vault path:   $VIRGIL_DIR"
+                step "Docs:         $VIRGIL_RELEASES"
+                step "Config:       $VIRGIL_DIR/.env    (edit to change API key, Slack URL)"
+                echo ""
+                break
+                ;;
+        esac
+    done
+fi
 
 # Clean up temp clone if we downloaded it
 if [[ -d "/tmp/virgil-src-$$" ]]; then
