@@ -697,6 +697,17 @@ fi
 INGEST="$VIRGIL_DIR/ingest"
 HOOKS="$VIRGIL_DIR/hooks"
 
+# virgil-quiz depends on the RAG stack (ChromaDB query module + llm_client).
+# Only wire the alias if both files are actually present on disk — otherwise
+# the user would get a ModuleNotFoundError the first time they typed it.
+QUIZ_ALIAS=""
+if [[ -f "$INGEST/chroma-query.py" && -f "$HOOKS/llm_client.py" ]]; then
+    QUIZ_ALIAS="alias virgil-quiz='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $HOOKS/quiz.sh'"
+    info "virgil-quiz: RAG deps present — alias will be installed"
+else
+    warn "virgil-quiz not installed — RAG stack required (see GETTING-STARTED.md)"
+fi
+
 ALIAS_BLOCK="
 # ── VIRGIL aliases (added by install.sh $(date '+%Y-%m-%d')) ──────────────────
 export VIRGIL_DIR=\"$VIRGIL_DIR\"
@@ -710,6 +721,7 @@ alias virgil-wikilink='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/wikilink-ingest.
 alias virgil-orphans='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/orphan-detect.sh'
 alias virgil-workout='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/personal-ingest.sh workout'
 alias virgil-study='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/personal-ingest.sh study'
+${QUIZ_ALIAS}
 # ── end VIRGIL ────────────────────────────────────────────────────────────────"
 
 if grep -q 'VIRGIL aliases' "$SHELL_RC" 2>/dev/null; then

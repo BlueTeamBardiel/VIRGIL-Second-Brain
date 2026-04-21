@@ -13,6 +13,27 @@
 set -euo pipefail
 
 VIRGIL_DIR="${VIRGIL_DIR:-$HOME/VIRGIL}"
+
+# ── Dependency check ─────────────────────────────────────────────────────────
+# virgil-quiz needs the RAG stack: ChromaDB query module and the llm_client
+# wrapper. These ship with the v1.2 RAG feature. If either is missing, bail
+# cleanly with a pointer to the setup guide — never traceback.
+MISSING_DEPS=()
+[[ -f "$VIRGIL_DIR/ingest/chroma-query.py" ]] || MISSING_DEPS+=("ingest/chroma-query.py")
+[[ -f "$VIRGIL_DIR/hooks/llm_client.py"    ]] || MISSING_DEPS+=("hooks/llm_client.py")
+
+if (( ${#MISSING_DEPS[@]} > 0 )); then
+    cat <<EOF
+virgil-quiz requires the RAG stack (ChromaDB + llm_client).
+See GETTING-STARTED.md → Advanced — Local RAG Setup to get started.
+Once set up, run virgil-quiz again.
+
+Missing from $VIRGIL_DIR:
+$(printf '  - %s\n' "${MISSING_DEPS[@]}")
+EOF
+    exit 0
+fi
+
 DAILY_LOGS_DIR="$VIRGIL_DIR/daily-logs"
 LOGS_DIR="$VIRGIL_DIR/logs"
 SCORES_FILE="$LOGS_DIR/quiz-scores.json"
