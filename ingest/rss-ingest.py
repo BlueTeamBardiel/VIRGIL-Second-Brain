@@ -119,6 +119,25 @@ def fetch_feed(name: str, url: str, cutoff: datetime) -> list[dict]:
         return []
 
 
+def build_raw_digest(items_by_source: dict, date_str: str) -> str:
+    """Fallback digest — plain markdown with no AI synthesis."""
+    lines = [f"## Daily Feed Digest — {date_str}", "",
+             "_No API key configured — raw items only, no synthesis._", ""]
+    for source, items in items_by_source.items():
+        if not items:
+            continue
+        lines.append(f"### {source}")
+        lines.append("")
+        for item in items:
+            lines.append(f"- **{item['title']}**")
+            if item.get("summary"):
+                lines.append(f"  {item['summary'][:200]}")
+            if item.get("link"):
+                lines.append(f"  {item['link']}")
+        lines.append("")
+    return "\n".join(lines)
+
+
 def build_digest(items_by_source: dict, date_str: str) -> str:
     """Call Claude haiku to synthesize feed items into a digest."""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
@@ -220,6 +239,15 @@ def main() -> None:
     if args.dry_run:
         log("Dry run — skipping Claude call and file write.")
         return
+
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        print(f"[rss-ingest] No API key — skipping AI synthesis. Raw items saved to notes/feeds/")
+        digest = build_raw_digest(items_by_source, date_str)
+        output_file.write_text(
+            f"{digest}\n\n---\n_Generated: {now.strftime('%Y-%m-%d %H:%M UTC')} | {total_items} items from {len(FEEDS)} feeds (raw, no AI synthesis)_\n"
+        )
+        log(f"Written raw digest to {output_file}")
+        sys.exit(0)
 
     log("Calling Claude for digest synthesis")
     digest = build_digest(items_by_source, date_str)

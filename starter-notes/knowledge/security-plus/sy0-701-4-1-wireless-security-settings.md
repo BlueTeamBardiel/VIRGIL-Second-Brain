@@ -1,0 +1,126 @@
+---
+domain: "4.0 - Security Operations"
+section: "4.1"
+tags: [security-plus, sy0-701, domain-4, wireless-security, encryption, authentication]
+---
+
+# 4.1 - Wireless Security Settings
+
+Wireless networks present unique security challenges because data travels over radio frequencies accessible to anyone in range, making authentication, encryption, and integrity verification critical. This section covers the evolution from [[WPA2]] to [[WPA3]], focusing on the cryptographic weaknesses that prompted the upgrade and the mechanisms that address them. Understanding wireless security settings is essential for the Security+ exam because it tests your ability to identify vulnerabilities in PSK-based systems and recognize how modern protocols like [[SAE]] (Simultaneous Authentication of Equals) eliminate those attack vectors.
+
+---
+
+## Key Concepts
+
+- **Pre-Shared Key (PSK)**: A single password shared among all wireless users; once compromised, provides access to all network traffic encrypted with that key. This is the foundational weakness in WPA2 that WPA3 addresses.
+
+- **Four-Way Handshake**: The WPA2 authentication mechanism where a client and access point exchange four messages to derive a session key. Attackers can capture and replay these handshakes to extract the PSK hash offline, enabling brute-force attacks without real-time access to the network.
+
+- **WPA2 Vulnerabilities**:
+  - Attackers can listen passively to the four-way handshake and capture the PSK hash.
+  - Some advanced methods derive the PSK hash without even capturing the handshake.
+  - Once the hash is captured, it can be brute-forced using modern GPU processing or cloud-based tools.
+  - No forward secrecy: compromising the PSK exposes all past and future traffic.
+
+- **WPA3 (Wi-Fi Protected Access 3)**: Introduced in 2018, WPA3 replaces the four-way handshake with [[SAE]] (Dragonfly handshake), eliminating PSK hash capture and brute-force vulnerabilities. All users derive unique session keys even when using the same PSK.
+
+- **[[GCMP]] (Galois/Counter Mode Protocol)**: The encryption cipher mode in WPA3 that replaces WPA2's [[CCMP]]. GCMP provides:
+  - **Data Confidentiality**: Uses [[AES]] (Advanced Encryption Standard) for encryption.
+  - **Message Integrity Check (MIC)**: Uses [[GMAC]] (Galois Message Authentication Code) to verify data hasn't been tampered with.
+  - Stronger overall security posture than CCMP.
+
+- **[[SAE]] (Simultaneous Authentication of Equals)**: WPA3's replacement for PSK authentication:
+  - A [[Diffie-Hellman]]-derived key exchange with built-in authentication.
+  - Ensures mutual authentication between client and access point.
+  - Creates a unique session key for each client without transmitting the PSK across the network.
+  - Implements the "Dragonfly handshake" (IEEE standard).
+  - Every user gets a different session key, even if all use the same PSK.
+  - Eliminates four-way handshake capture and brute-force attacks.
+
+- **Wireless Security Pillars** (per the exam framework):
+  1. **Authentication**: Who is allowed to access the wireless network? (Username, password, [[MFA]])
+  2. **Confidentiality**: Encrypt all wireless data so only authorized users can read it.
+  3. **Integrity**: Verify received data matches the original sent data using [[MIC]].
+
+- **[[CIA Triad]] Application to Wireless**:
+  - **Confidentiality**: [[Encryption]] (GCMP/AES in WPA3)
+  - **Integrity**: [[MIC]] via [[GMAC]]
+  - **Availability**: Implicit in access control decisions
+
+---
+
+## How It Works (Feynman Analogy)
+
+**The WPA2 Problem**: Imagine a house where everyone shares a single front-door key (the PSK). To enter, visitors must complete a handshake ritual at the door—they show the key, prove they know it, and exchange a secret confirmation phrase. The problem? An eavesdropper hiding in the bushes watches this ritual repeatedly. After observing it enough times, they can predict the ritual, capture the pattern, and eventually figure out the original key. Once they have the key, they can open the door anytime and read every private conversation inside—past, present, and future.
+
+**The WPA3 Solution**: WPA3 changes the game by replacing the ritual with something called SAE (Dragonfly). Instead of everyone using the same key to prove entry, each visitor now performs a unique mathematical puzzle (Diffie-Hellman) with the doorman. Even if two visitors use the same PSK, their puzzles are completely different, and the solutions they exchange are unique. An eavesdropper can't replay the ritual because the puzzle changes every time. Even if they somehow solve one puzzle, it only unlocks that one door opening—not the entire house or any future entry.
+
+**Technical Reality**: WPA3's [[SAE]] replaces PSK hash transmission with a cryptographic key agreement where both parties must prove knowledge of the PSK through simultaneous authentication. The session key derived is unique per connection, ensuring forward secrecy and eliminating the offline brute-force attack surface that plagued WPA2.
+
+---
+
+## Exam Tips
+
+- **Know the WPA2 Attack Chain**: The exam loves testing whether you understand *how* attackers crack WPA2. The sequence is: (1) Listen to four-way handshake, (2) Capture PSK hash, (3) Brute-force hash offline using GPU/cloud tools, (4) Gain network access. Be ready to identify which step is the vulnerability.
+
+- **SAE vs. Four-Way Handshake**: The exam will ask "What does WPA3's SAE do differently?" The key answer: SAE eliminates the transmissible PSK hash entirely by using Diffie-Hellman mutual authentication. There's nothing to capture and crack. Don't confuse SAE with just "stronger encryption"—it's a *protocol change*, not just a cipher upgrade.
+
+- **GCMP is Not Just "Stronger AES"**: When the exam asks about WPA3 encryption, remember that [[GCMP]] combines AES for confidentiality AND [[GMAC]] for integrity in a single mode. WPA2 used [[CCMP]], which also had AES + authentication, but GCMP is the modern standard. You likely won't be asked to explain the cryptographic difference in detail, but know that WPA3 = GCMP and WPA2 = CCMP.
+
+- **Forward Secrecy**: WPA2 has NO forward secrecy—crack the PSK once, read all traffic. WPA3 has forward secrecy because each session uses a unique derived key. This is a high-level exam concept; expect scenario questions like "An attacker compromised the wireless PSK last month. Which protocol would have protected past traffic?" Answer: WPA3 (not WPA2).
+
+- **Real-World Configuration Context**: The exam may ask "What settings should you configure for a wireless network?" Don't just say "Enable WPA3." Answer should include: Enable WPA3, use [[SAE]], enable [[GCMP]], disable WPA2 fallback (or use WPA2/WPA3 mixed mode only if legacy devices require it), enforce strong PSKs (25+ characters), and implement [[802.1X]] for enterprise authentication if applicable.
+
+---
+
+## Common Mistakes
+
+- **Confusing SAE with Encryption**: Students often think SAE is an encryption algorithm. SAE is an *authentication and key derivation protocol*. GCMP is the encryption. WPA3 uses SAE (how you prove who you are and derive a key) + GCMP (how you encrypt data).
+
+- **Thinking WPA3 Solves Weak PSKs Entirely**: While WPA3's SAE dramatically slows brute-force attacks (it requires online attempts against the access point, not offline hash cracking), a weak PSK is still weak. The exam expects you to know WPA3 mitigates the *offline* brute-force vulnerability, not that it makes "password123" secure. Best practice: strong PSK + WPA3 + possibly [[802.1X]].
+
+- **Misunderstanding "No Handshake"**: The phrase "no four-way handshakes" in WPA3 confuses many. WPA3 still has a handshake, but it's the Dragonfly handshake (SAE), not the four-way handshake. The point is that the SAE handshake doesn't transmit a capturable PSK hash. Don't say "WPA3 has no authentication handshake"—that's wrong.
+
+---
+
+## Real-World Application
+
+In Morpheus's homelab ([[[YOUR-LAB]]] fleet), wireless security directly impacts how securely IoT devices and laptops connect to the lab network. If the lab runs WPA2 with a PSK, an attacker positioned in the building could passively capture traffic from any wireless device for later cracking—potentially exposing lab credentials or sensitive research. Upgrading to WPA3 with [[SAE]] ensures that even if someone captures packets, they can't perform offline brute-force attacks. For critical systems (like access points managing [[Wazuh]] agents or [[Active Directory]] authentication), consider adding [[802.1X]] enterprise authentication alongside WPA3 to bind access to individual user credentials rather than a shared PSK.
+
+---
+
+## [[Wiki Links]]
+
+- **Protocols & Standards**: [[WPA2]], [[WPA3]], [[802.11]], [[802.1X]], [[SAE]], [[Dragonfly]], [[Diffie-Hellman]], [[IEEE]]
+- **Encryption & Integrity**: [[GCMP]], [[CCMP]], [[AES]], [[GMAC]], [[MIC]], [[Encryption]], [[Confidentiality]]
+- **Authentication**: [[PSK]], [[Four-Way Handshake]], [[MFA]], [[Authentication]], [[Authorization]]
+- **Security Concepts**: [[CIA Triad]], [[Forward Secrecy]], [[Brute Force]], [[Attack Vector]]
+- **Related Homelab Tools**: [[Wazuh]], [[Active Directory]], [[LDAP]], [[802.1X]], [[Tailscale]]
+- **Exam Domains**: [[Domain 4.0 - Security Operations]], [[NIST]], [[CompTIA Security+]]
+- **Attack Methods**: [[Rainbow Table]], [[Offline Attack]], [[Replay Attack]], [[Passive Eavesdropping]]
+
+---
+
+## Tags
+
+#domain-4 #security-plus #sy0-701 #wireless-security #encryption #authentication #psk #wpa3 #wpa2 #sae #gcmp #network-security
+
+---
+
+## Summary Table
+
+| Aspect | WPA2 | WPA3 |
+|--------|------|------|
+| **Key Exchange** | Four-way handshake (transmits PSK hash) | SAE/Dragonfly (Diffie-Hellman, no PSK hash) |
+| **Encryption** | CCMP (AES) | GCMP (AES + GMAC) |
+| **Offline Brute-Force** | Vulnerable (hash can be cracked offline) | Resistant (no hash transmitted; online attempts required) |
+| **Forward Secrecy** | None (PSK compromise = all traffic exposed) | Yes (unique session keys per connection) |
+| **Mutual Authentication** | Implicit | Explicit (SAE) |
+| **Deployment** | Widespread (older devices supported) | Growing (newer devices required; legacy support via mixed mode) |
+
+---
+
+**Last Updated**: 2024 | **For**: CompTIA Security+ SY0-701 | **Status**: Complete & Exam-Ready
+
+---
+_Ingested: 2026-04-16 00:05 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

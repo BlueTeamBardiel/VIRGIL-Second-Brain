@@ -1,270 +1,118 @@
-# VIRGIL — Automated Second Brain for Security Learners
+# VIRGIL
 
-> *You're studying for CySA+. You have 47 browser tabs open, three half-finished note apps, and a growing anxiety that you're learning nothing that sticks.*
->
-> *VIRGIL is the fix.*
+*A self-building knowledge base for people learning cybersecurity the hard way.*
 
-VIRGIL is the second brain I built while transitioning from service desk to security. It's automated, AI-powered, and free. Clone it, adapt it, make it yours.
+![Version](https://img.shields.io/badge/version-v1.1.0-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
 
----
-
-## See it in 30 seconds
+**VIRGIL is an Obsidian vault + automation system** that ingests threat intel, CVEs, and study material daily — and uses local or cloud AI to turn it into a knowledge graph you actually remember.
 
 ```bash
-# Ingest any security article into your vault
-virgil-url https://attack.mitre.org/techniques/T1059/
+bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
 ```
 
-VIRGIL fetches the page, strips the noise, asks Claude to summarize it in your voice, links it to related notes, and saves it to your vault. That's it. That's the product.
+No API key required. Runs on your own hardware via [Ollama](https://ollama.com). Twenty-minute setup.
+
+![VIRGIL knowledge graph](assets/virgil-graph.gif)
 
 ---
 
-## What it does
+## I. Who This Is For
 
-- **Daily threat intel** — pulls 22 RSS feeds at 6am, Claude synthesizes into a structured digest
-- **CVE tracking** — NVD API v2 daily pull, structured notes with CVSS scores and ATT&CK mappings
-- **PDF ingestion** — one command converts any SANS paper, NIST doc, or textbook into a linked note
-- **URL capture** — `virgil-url <url>` saves any article, routes ATT&CK pages to `notes/mitre/` automatically
-- **Inbox triage** — Claude routes your rough notes to the right place every Monday
-- **Three-layer memory** — working (active tasks), episodic (history), semantic (permanent facts)
-- **Session logging** — Claude Code hooks capture every session automatically
-- **Weekly digest** — Sunday synthesis of the week's logs, feeds, and study sessions
+You're studying for a cert. Or building a homelab. Or trying to absorb threat intel that drops faster than you can process it.
+
+The advice online is everywhere and contradictory. Every roadmap has an affiliate link. The subreddit post with 3,000 upvotes was written by someone hired in a completely different market. You're studying in the gaps between applications, and nothing is sticking — because there's no system holding it together.
+
+That's a structural problem, not a personal one. VIRGIL is what fixes it.
+
+Built during exactly this grind — not by someone who packaged lessons into a course after making it — but live, under pressure, while studying for CySA+, running a homelab, and navigating a tough job market. You don't have to build it from scratch. Use what's here.
 
 ---
 
-## Quick Start
+## II. The Grind
 
-**Get an Anthropic API key.** Free tier works. [console.anthropic.com](https://console.anthropic.com)
+Job hunting in IT is slow. You apply, wait, hear nothing. Apply again. The advice says keep going — and it's right, even when it's not helpful.
 
-**Install Obsidian.** Your notes live locally — not in any cloud you don't control. [obsidian.md](https://obsidian.md)
+The structural problem isn't willpower. It's that there's nothing connecting your work. You study for a week, take a break, come back and half of it is gone. You apply to a dozen jobs, get one response, then forget what you studied while you were prepping for a different role. Knowledge evaporates because nothing is holding it.
 
-**Clone and run setup:**
+VIRGIL is what holds it. Your session notes feed into a nightly AI distillation. Your CVE ingest connects to ATT&CK techniques which connect to NIST controls which connect to the lab config where you saw it live. The graph compounds. You don't start from zero every time you sit down.
 
+---
+
+## III. The Impostor
+
+Everyone in this field feels it — the sense that everyone else understood something you didn't quite catch. That feeling doesn't mean you're wrong for being here. It means you're being honest about what you don't know yet. The people who never feel it are the ones you should worry about.
+
+What actually builds confidence: pattern recognition through repetition and review. Not a different personality type. Not more hours of video content. Repetition, feedback, and a system that shows you what you know and what you don't.
+
+VIRGIL handles the system part.
+
+---
+
+## IV. VIRGIL
+
+*Nel mezzo del cammin di nostra vita — midway through the journey of our life, I came to myself in a dark wood, for the straight way was lost.*
+
+Dante wrote that in 1308. Virgil — the Roman poet — was sent to guide him through what came next. Not to skip it. Not to make it comfortable. To make it survivable. To show him the structure of what he was walking through so he could stop being afraid of the wrong things.
+
+This project is named for him. The field is the dark wood. VIRGIL is the guide.
+
+---
+
+## V. What VIRGIL Actually Is
+
+An Obsidian-based knowledge system built for people learning cybersecurity and IT without a map.
+
+- **Daily session logs** — capture what you actually did, not what you planned to do
+- **Memory system** — nightly AI distillation of logs into permanent facts and lessons; work accumulates instead of evaporating
+- **Automated ingestion** — 22+ threat intel feeds every morning, NVD CVE feed daily
+- **Study tools** — Feynman-style sessions for CySA+, CCNA, Security+; they push back and find the gaps
+- **Local AI inference** — runs on your hardware via Ollama, with cloud fallback when needed
+
+After six months of real use: not 500 disconnected files, but a knowledge graph — CVEs linked to ATT&CK techniques linked to NIST controls linked to the lab config where you saw it in practice.
+
+Technical setup and full configuration: [`GETTING-STARTED.md`](GETTING-STARTED.md)
+
+---
+
+## VI. What VIRGIL Does for You
+
+Guides you. Teaches you. Pushes back when you're wrong.
+
+If you're explaining a concept incorrectly, it says so. If you think you've mastered something and there's a gap, it asks the follow-up question that exposes it. Teaching method is Feynman-style: if you can't explain it in plain English to someone who's never heard of it, you don't understand it yet.
+
+It tracks what you know and what you don't. Links your notes. Shows you the shape of what you've built over time.
+
+It does not congratulate you for showing up. The work is the work. VIRGIL is how you make it compound.
+
+---
+
+## Get Started
+
+**What you need:**
+- Linux, macOS, or Windows (via WSL2)
+- Python 3.9+
+- [Obsidian](https://obsidian.md) (free)
+- Anthropic API key — optional (local inference via Ollama works without one)
+
+**Quick install:**
 ```bash
-git clone https://github.com/your-username/VIRGIL.git ~/VIRGIL
-cd ~/VIRGIL
-cp .env.example .env
-# Edit .env — set ANTHROPIC_API_KEY at minimum
-
-# Install dependencies
-pip install -r requirements.txt
-sudo apt install pandoc poppler-utils  # or: brew install pandoc poppler
-
-# Create vault structure
-mkdir -p ~/VIRGIL/notes/{inbox,mitre,cve,feeds,knowledge,personal}
-mkdir -p ~/VIRGIL/{daily-logs,weekly-summaries}
-
-# Make scripts executable
-chmod +x hooks/*.sh ingest/*.sh scripts/*.sh
+bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
 ```
 
-**Add to crontab** (`crontab -e`):
-
-```cron
-ANTHROPIC_API_KEY="your-key-here"
-
-0 6 * * *    VIRGIL_DIR=$HOME/VIRGIL python3 $HOME/VIRGIL/ingest/rss-ingest.py
-0 7 * * *    VIRGIL_DIR=$HOME/VIRGIL python3 $HOME/VIRGIL/ingest/cve-ingest.py --recent
-0 8 * * 1    VIRGIL_DIR=$HOME/VIRGIL bash $HOME/VIRGIL/ingest/triage-inbox.sh
-30 23 * * *  VIRGIL_DIR=$HOME/VIRGIL bash $HOME/VIRGIL/ingest/wikilink-ingest.sh
-55 23 * * *  VIRGIL_DIR=$HOME/VIRGIL bash $HOME/VIRGIL/hooks/auto-reflect.sh
-0 1 * * 1-6  VIRGIL_DIR=$HOME/VIRGIL bash $HOME/VIRGIL/hooks/promote.sh
-0 1 * * 0    VIRGIL_DIR=$HOME/VIRGIL bash $HOME/VIRGIL/hooks/weekly-rollup.sh
-```
-
-Open your vault in Obsidian. Your first digest arrives at 6am.
+The installer handles vault structure, dependency checks, crontab, and a live CVE demo. Full guide: [GETTING-STARTED.md](GETTING-STARTED.md)
 
 ---
 
-## What you'll build
+*"I have come to lead you to the other shore; into eternal darkness; into fire and into ice."*
+*— Virgil, Inferno Canto III*
 
-By running VIRGIL for 30 days, you'll have automated a real threat intel pipeline. That's not resume padding — it's actual experience:
-
-```
-• Automated security intelligence pipeline: 22 feeds via RSS/API, synthesized by Claude
-  (Python, bash, REST APIs, cron scheduling)
-
-• Three-layer knowledge management system: Obsidian + Claude for persistent context
-  across sessions (working/episodic/semantic memory architecture)
-
-• MITRE ATT&CK integration: automated technique ingestion and cross-linking
-
-• CVE tracking pipeline: NVD v2 API, CVSS scores, ATT&CK technique mappings
-
-• Chunked PDF processing: multi-pass summarization → synthesis for large documents
-
-• Daily/weekly synthesis automation with Slack notifications
-```
-
-These are things you built, that work, that you can demo.
+The path is real. It is not comfortable, and it does not get easier. You get more capable — which is a different thing.
 
 ---
 
-## Architecture
+## Security
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    EXTERNAL SOURCES                         │
-│  RSS Feeds (22)  │  URLs  │  PDFs  │  NVD CVE API  │  NIST │
-└────────┬─────────┴────┬───┴───┬────┴───────┬────────┴───┬──┘
-         │              │       │             │             │
-         ▼              ▼       ▼             ▼             ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    INGEST LAYER                             │
-│  rss-ingest.py  url-ingest.sh  pdf-ingest.sh  cve-ingest.py│
-│  nist-ingest.sh  personal-ingest.sh  wikilink-ingest.sh    │
-└─────────────────────────┬───────────────────────────────────┘
-                          │
-                          ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  OBSIDIAN VAULT                             │
-│  notes/inbox/   notes/mitre/   notes/cve/                  │
-│  notes/feeds/   notes/knowledge/   notes/personal/          │
-└──────────┬──────────────────────────────────────────────────┘
-           │
-           ▼
-┌─────────────────────────────────────────────────────────────┐
-│               CLAUDE AI SYNTHESIS LAYER                     │
-│  triage-inbox.sh  →  routes notes to correct category       │
-│  promote.sh       →  extracts tasks and decisions from logs │
-│  promote-patch.py →  updates permanent knowledge base       │
-│  weekly-rollup.sh →  synthesizes 7 days into weekly digest  │
-│  auto-reflect.sh  →  fills session summaries automatically  │
-└──────────┬──────────────────────────────────────────────────┘
-           │
-           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                 THREE-LAYER MEMORY SYSTEM                   │
-│  memory-working.md   ← active tasks, cleared weekly         │
-│  memory-episodic.md  ← session history, completed work      │
-│  memory-semantic.md  ← permanent facts, decisions, lessons  │
-└─────────────────────────────────────────────────────────────┘
-           │
-           ▼
-┌─────────────────────────────────────────────────────────────┐
-│              CLAUDE CODE SLASH COMMANDS                     │
-│  /reflect  /week  /day  /lab  /cysa  /ccna  /challenge      │
-│  /deploy   /focus  /research  /job  /sync  /task            │
-└─────────────────────────────────────────────────────────────┘
-```
+A four-source independent audit was completed April 2026 (Claude Sonnet 4.6, Gemini 1.5 Pro, Claude Haiku 4.5, Claude Opus 4.6). Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
 
----
+Fixed in this release: sanitization leaks, Python dependency pinning, url-ingest.sh URL validation with SSRF protection, eval+crontab pattern replaced with safe secret loading.
 
-## The 22 Default RSS Feeds
-
-Curated for security learners and homelab builders. Add more in `ingest/rss-ingest.py`.
-
-| Feed | Why |
-|------|-----|
-| The Hacker News | High-signal daily security news |
-| Krebs on Security | Best investigative cybercrime journalism |
-| Bleeping Computer | Fast ransomware/malware coverage |
-| Schneier on Security | Security policy + cryptography |
-| CISA Advisories | Official US advisories — these appear on exams |
-| SANS ISC | Daily diary from working incident handlers |
-| Google Project Zero | Cutting-edge vulnerability research |
-| CISA Known Exploited | Vulns being actively exploited right now |
-| r/netsec | Practitioner community — papers, tools, CTF writeups |
-| r/blueteamsec | Blue team techniques, detection engineering |
-| r/homelab | Lab builds, networking, virtualization |
-| r/sysadmin | Real-world IT ops, tooling |
-| Wired Security | Long-form security journalism |
-| Ars Technica Security | Technical depth on security stories |
-| GitHub Security Lab | Open source vulnerability research |
-| Dark Reading | Enterprise security ops, SOC perspective |
-| SecurityWeek | Vulnerability and threat research |
-| Threatpost | Vulnerability and threat research |
-| Malwarebytes Labs | Malware analysis, endpoint defense |
-| Troy Hunt | Data breach research, HaveIBeenPwned |
-| RTL-SDR Blog | Software-defined radio and RF security |
-| Hackaday | Hardware hacking, embedded security |
-
----
-
-## Environment Variables
-
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `ANTHROPIC_API_KEY` | Yes | — | Claude API key |
-| `VIRGIL_DIR` | No | `$HOME/VIRGIL` | Vault root path |
-| `SOURCE` | No | `$HOME/Documents/` | USB backup source |
-| `DEST` | No | `/media/your-username/VIRGIL-Backup/` | USB backup destination |
-| `SLACK_WEBHOOK_URL` | No | — | Slack notifications (all calls silent if unset) |
-
----
-
-## Cost
-
-VIRGIL uses Claude Haiku for all automated tasks. Typical monthly cost: **$2–8**.
-
-| Task | Frequency | Cost |
-|------|-----------|------|
-| RSS digest | Daily | ~$0.01 |
-| CVE ingest (10–20 CVEs) | Daily | ~$0.01 |
-| Weekly rollup | Weekly | ~$0.02 |
-| PDF ingest (book-length) | On demand | ~$0.05–0.15 |
-
-Set a [usage limit](https://console.anthropic.com) if you want a hard cap.
-
----
-
-## Directory Structure
-
-```
-VIRGIL/
-├── .claude/commands/      # Claude Code slash commands
-├── hooks/                 # Cron-driven automation
-│   ├── session-start.sh   # Creates daily log on session open
-│   ├── session-end.sh     # Appends entry on session close
-│   ├── promote.sh         # Daily log → memory update
-│   ├── weekly-rollup.sh   # Weekly digest synthesis
-│   ├── auto-reflect.sh    # Fills unfilled session summaries
-│   ├── promote-patch.py   # Updates memory-semantic.md
-│   └── nebuchadnezzar.sh  # USB backup
-├── ingest/
-│   ├── rss-ingest.py      # 22 feeds → daily digest
-│   ├── cve-ingest.py      # NVD API → CVE notes
-│   ├── url-ingest.sh      # URL → inbox or existing note
-│   ├── pdf-ingest.sh      # PDF → Obsidian note
-│   ├── nist-ingest.sh     # NIST SP/FIPS → exam note
-│   ├── triage-inbox.sh    # inbox/ → correct category
-│   ├── wikilink-ingest.sh # Inject [[wikilinks]] nightly
-│   └── personal-ingest.sh # Workout/study/nutrition logs
-├── scripts/
-│   ├── deploy-machine.sh  # Deploy VIRGIL to remote host
-│   ├── sync-projects.sh   # Sync vault across machines
-│   └── ad/                # Active Directory hardening scripts
-├── notes/                 # YOUR VAULT — gitignored
-├── daily-logs/            # Session logs — gitignored
-├── weekly-summaries/      # Weekly digests — gitignored
-├── memory-working.md      # Active tasks — gitignored
-├── memory-episodic.md     # Session history — gitignored
-├── memory-semantic.md     # Permanent facts — gitignored
-├── .env                   # Your secrets — gitignored
-├── .env.example           # Template
-└── requirements.txt       # Pinned Python dependencies
-```
-
----
-
-## The Philosophy
-
-VIRGIL is named for Virgil in Dante's Inferno — the guide through difficult territory.
-
-IT is difficult territory. The field moves fast, the documentation is often terrible, and the gap between "certified" and "actually knows what they're doing" is enormous.
-
-VIRGIL doesn't teach you. It builds a second brain that compounds what you already learn — connecting the CVE you read Tuesday to the ATT&CK technique you studied Thursday to the lab config you built Saturday. After six months you don't have 500 disconnected notes. You have a knowledge graph.
-
-That's the whole idea.
-
----
-
-## Audit & Security
-
-A four-source independent audit was completed April 2026 (Claude Sonnet, Gemini 1.5 Pro, Claude Haiku, Claude Opus). Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
-
-Known issues addressed in this release: sanitization leaks, dependency pinning, URL validation with SSRF protection.
-
----
-
-*If you're grinding certs, building labs, and trying to make it into security — this is for you.*

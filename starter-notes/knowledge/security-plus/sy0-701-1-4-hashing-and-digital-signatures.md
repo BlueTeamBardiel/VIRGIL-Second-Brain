@@ -1,0 +1,151 @@
+```yaml
+---
+domain: "1.0 - General Security Concepts"
+section: "1.4"
+tags: [security-plus, sy0-701, domain-1, hashing, digital-signatures, cryptography]
+---
+```
+
+# 1.4 - Hashing and Digital Signatures
+
+## Summary
+
+Hashing and digital signatures are foundational cryptographic mechanisms that provide data integrity, authentication, and non-repudiation in modern security systems. This section covers how [[Hashing]] creates fixed-size fingerprints of data, why [[Salt]] prevents rainbow table attacks, and how [[Digital Signatures]] prove message authenticity and origin without requiring full encryption. Understanding these concepts is critical for the Security+ exam, as they underpin password storage, file verification, code signing, and non-repudiation in [[PKI]] systems.
+
+---
+
+## Key Concepts
+
+- **[[Hashing]]**: A one-way cryptographic function that converts input of any size into a fixed-length string (message digest or fingerprint). The same input always produces the same hash; different inputs should produce different hashes.
+
+- **One-Way Function**: Hashes are computationally infeasible to reverse. You cannot recover the original message from a hash digest—this is a fundamental property that makes hashing suitable for password storage and confidentiality.
+
+- **Message Digest / Checksum**: Terms used interchangeably with "hash." Represents the unique signature of data; any modification to the original data produces a completely different hash.
+
+- **[[Collision]]**: Occurs when two different inputs produce the same hash output. A cryptographic hash function should have collision resistance; collisions are a serious flaw. **MD5 had collision vulnerabilities discovered in 1996—do not use MD5 for security-critical applications.**
+
+- **[[Integrity]]**: Hashing verifies that data has not been altered. Compare a downloaded file's hash with the published hash to confirm authenticity and that no corruption or tampering occurred.
+
+- **[[Salt]]**: Random data added to a password before hashing. Each user receives a unique salt value, which is typically stored alongside the hashed password in a database.
+
+- **Salted Hash Advantages**:
+  - Prevents [[Rainbow Tables]] from working (attackers would need to pre-compute hashes for every possible salt value—computationally prohibitive).
+  - Same password produces different hashes for different users.
+  - Slows brute-force attacks significantly (though does not eliminate them entirely).
+
+- **[[Digital Signatures]]**: Cryptographic proof that a message originated from a specific sender and has not been altered. Created using a sender's [[Private Key]] and verified using the sender's [[Public Key]].
+
+- **Digital Signature Properties** (the "Holy Trinity"):
+  - **Authentication**: Proves the message came from the claimed sender (they possess the private key).
+  - **Integrity**: Any modification to the message invalidates the signature.
+  - **Non-Repudiation**: The sender cannot deny creating the signature (only they have the private key).
+
+- **Signing Process**: The sender uses their [[Private Key]] to sign a message. The message itself is **not encrypted**—only signed for authentication and integrity.
+
+- **Verification Process**: Anyone with the sender's [[Public Key]] can verify the signature. If the message is altered in any way, verification fails.
+
+---
+
+## How It Works (Feynman Analogy)
+
+### Hashing: The Tamper-Evident Seal
+
+Imagine you send a friend a box of cookies and want to prove they arrived unopened. Instead of keeping a copy of every cookie, you write down a single, unique "fingerprint" based on the exact contents of the box. The fingerprint is so specific that even if someone swaps one cookie or adds a crumb, the fingerprint changes completely.
+
+**Connection to reality**: A hash function is like that fingerprint. Whether your input is a 1 MB file or a 1 GB ISO, the hash output is always the same fixed size (e.g., 256 bits for SHA-256). You can't reverse-engineer the cookies from the fingerprint, just as you can't recover a password from its hash. To verify integrity, you recalculate the hash and compare—if they match, nothing changed.
+
+### Salt: Making Fingerprints Unique
+
+Now imagine your friend knows your fingerprint method and has a huge book with fingerprints of *every possible box of cookies*. They could intercept a box, look it up in their book, and replace it with an identical one. That's a rainbow table attack.
+
+**Solution with salt**: Before hashing, you first add a pinch of a *unique, random spice* (salt) to each box. Now even if your friend has the fingerprint book, they'd need an infinite book with every spice combination—impossible. Plus, your friend gets a different spice packet, so even if they know what cookies are in *their* box, the fingerprint is completely different from yours.
+
+**Connection to reality**: Salt is random data mixed into passwords before hashing. Each user's salt is unique and stored in the database. Rainbow tables pre-compute hashes without salt—they're useless against salted passwords. Attackers must brute-force each user's password individually.
+
+### Digital Signatures: The Unforgeable Autograph
+
+Imagine you sign a contract with a pen that only you have—a pen that creates ink patterns so complex and unique that nobody else can replicate them, even if they see the contract. Anyone can look at the signature and confirm it came from you (they know what your signature looks like), and if someone edits the contract, the signature becomes invalid because the ink pattern no longer matches.
+
+**Connection to reality**: A digital signature works similarly. You sign a message with your [[Private Key]] (your unforgeable pen). The recipient verifies the signature using your [[Public Key]] (they see what your "signature" looks like). If the message is altered even by one bit, the signature verification fails. Only you can create the signature—non-repudiation.
+
+---
+
+## Exam Tips
+
+- **MD5 is deprecated**: The exam explicitly states MD5 has collision vulnerabilities (discovered 1996). You will see MD5 in wrong answers; know that it should never be used for security-critical hashing. Modern alternatives: [[SHA-256]], [[SHA-3]], bcrypt.
+
+- **Hashing ≠ Encryption**: A common trap. Hashing is one-way and fixed-output; encryption is reversible. A hashed password cannot be decrypted back to plaintext (by design). Encryption can. These are fundamentally different tools.
+
+- **Salt location matters**: Salt is **stored with the password hash** in the database—it's not secret. The security of salt comes from its randomness and uniqueness, not secrecy. Rainbow tables fail because attackers would need to pre-compute hashes for every user's unique salt.
+
+- **Digital Signature signing uses the Private Key**: Candidates often reverse this. You sign with your [[Private Key]] (proving you created it), and others verify with your [[Public Key]]. Remember: "Sign with Secret, Verify with Public."
+
+- **Integrity vs. Confidentiality**: Hashing provides **integrity** (detects tampering) but **not confidentiality** (message is still readable). Digital signatures provide authentication, integrity, and non-repudiation—but **not confidentiality** unless the message is also encrypted separately.
+
+- **Non-repudiation requires digital signatures**: You cannot achieve non-repudiation with symmetric encryption alone. Only asymmetric (public-key) cryptography with digital signatures can prove the sender cannot deny their actions.
+
+---
+
+## Common Mistakes
+
+1. **Confusing hashing with encryption**: Hashing is one-way; encryption is reversible. Candidates often think a hashed password can be decrypted—it cannot. This is why hashing is used for password storage; even administrators cannot recover a user's password from the hash.
+
+2. **Thinking salt is secret**: Salt is random and unique, but it's stored in plaintext alongside the hash. The security comes from its randomness and uniqueness, not secrecy. Rainbow tables fail because each user has a different salt; attackers can't use pre-computed tables. Candidates sometimes think salt is a "secret key"—it's not.
+
+3. **Reversing the digital signature keys**: A common error is saying "verify with the private key" or "sign with the public key." Remember the principle: **only the private key holder can sign** (authentication), and **anyone with the public key can verify**. This is core to [[PKI]] and will appear on the exam.
+
+---
+
+## Real-World Application
+
+In Morpheus's [[[YOUR-LAB]]] homelab, hashing is used every day: storing user credentials in [[Active Directory]] with salted hashes, verifying the integrity of ISO downloads before spinning up new VMs, and ensuring syslog data in [[Wazuh]] hasn't been tampered with. Digital signatures are critical for code signing in deployments, signing [[TLS]] certificates in the internal [[PKI]], and ensuring that [[Incident Response]] artifacts and forensic evidence cannot be denied as originating from a specific system or administrator. Understanding these mechanisms is essential for building a trustworthy, auditable homelab and for real-world sysadmin work in organizations with compliance requirements (SOX, HIPAA, etc.).
+
+---
+
+## Wiki Links
+
+- [[CIA Triad]] — Confidentiality, Integrity, Availability; hashing and signatures support Integrity and Authentication.
+- [[Hashing]] — One-way cryptographic function producing fixed-size digest.
+- [[Collision]] — When two different inputs produce the same hash; a critical flaw.
+- [[MD5]] — Deprecated hashing algorithm with collision vulnerabilities; do not use.
+- [[SHA-256]] / [[SHA-3]] — Modern, secure hashing algorithms.
+- [[Salt]] — Random data added to passwords before hashing to prevent rainbow table attacks.
+- [[Rainbow Tables]] — Pre-computed hash tables; defeated by salt.
+- [[Digital Signatures]] — Cryptographic proof of origin, integrity, and non-repudiation using asymmetric cryptography.
+- [[Private Key]] — Secret key used to create/sign digital signatures; only the owner has this.
+- [[Public Key]] — Shared key used to verify digital signatures; anyone can access this.
+- [[PKI]] — Public Key Infrastructure; the framework supporting digital signatures and certificates.
+- [[Authentication]] — Proving identity; digital signatures provide this.
+- [[Non-Repudiation]] — Sender cannot deny creating a message; achieved through digital signatures.
+- [[Integrity]] — Assurance data has not been altered; provided by hashing and digital signatures.
+- [[Encryption]] — Reversible transformation for confidentiality; different from hashing.
+- [[Active Directory]] — Windows directory service that stores salted password hashes.
+- [[TLS]] — Transport Layer Security; relies on digital certificates (signed public keys).
+- [[Wazuh]] — Security Information and Event Management (SIEM) for log integrity and forensics.
+- [[Incident Response]] — Digital signatures and hashes provide non-repudiation for evidence.
+- [[Cryptography]] — Parent concept encompassing hashing, encryption, and digital signatures.
+- [[NIST]] — Sets standards for approved cryptographic algorithms.
+
+---
+
+## Tags
+
+`domain-1` `security-plus` `sy0-701` `hashing` `digital-signatures` `cryptography` `password-security` `integrity` `authentication` `non-repudiation`
+
+---
+
+## Study Checklist for SY0-701 Exam (Section 1.4)
+
+- [ ] Define hashing and explain why it's one-way.
+- [ ] Explain the difference between hashing and encryption.
+- [ ] Know why MD5 should never be used (collision vulnerabilities).
+- [ ] Understand what salt is and why it defeats rainbow tables.
+- [ ] Explain how salted hashes prevent brute-force attacks.
+- [ ] Define digital signatures and their three properties (authentication, integrity, non-repudiation).
+- [ ] Know which key signs (private) and which verifies (public).
+- [ ] Understand that digital signatures do not encrypt the message.
+- [ ] Practice identifying scenarios where hashing vs. digital signatures vs. encryption is appropriate.
+- [ ] Review [[NIST]] recommendations for approved hash algorithms.
+
+---
+_Ingested: 2026-04-15 23:29 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

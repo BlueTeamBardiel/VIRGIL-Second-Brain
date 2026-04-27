@@ -1,0 +1,160 @@
+```yaml
+---
+domain: "1.0 - General Security Concepts"
+section: "1.4"
+tags: [security-plus, sy0-701, domain-1, certificates, pki, digital-signatures, trust]
+---
+```
+
+# 1.4 - Certificates
+
+Certificates are the cornerstone of establishing trust in digital systems by binding a public key to identity information through digital signatures. This section covers the structure of digital certificates, how Certificate Authorities (CAs) issue and manage them, and the various certificate types used in modern infrastructure. Understanding certificates is critical for the Security+ exam because they appear across authentication, encryption, secure web communication, and enterprise trust models.
+
+---
+
+## Key Concepts
+
+- **Digital Certificate**: A data structure that binds a public key with identity details and is signed by a trusted authority to establish authenticity and trust.
+
+- **X.509**: The standard format for digital certificates, defining the structure and fields contained within all modern certificates.
+
+- **Certificate Authority (CA)**: A trusted third party that validates certificate requests, digitally signs certificates, and maintains the trust chain.
+
+- **Root of Trust**: The foundational, inherently trusted component (hardware, software, firmware, HSM, or CA) from which all other trust relationships derive.
+
+- **Certificate Signing Request (CSR)**: A formal request containing a public key and identity information, submitted to a CA for validation and signing.
+
+- **Public Key Infrastructure (PKI)**: The entire system of policies, processes, and technologies that enable creation, distribution, and revocation of certificates.
+
+- **Web of Trust**: An alternative trust model where multiple users/entities sign each other's certificates instead of relying on a central CA.
+
+- **Self-Signed Certificate**: A certificate signed by its own private key rather than a CA; establishes trust only within closed environments.
+
+- **Private Certificate Authority**: An internal, organization-owned CA used to sign certificates for internal use without relying on public CAs.
+
+- **Certificate Revocation List (CRL)**: A maintained list of revoked certificate serial numbers published by the CA.
+
+- **Subject Alternative Name (SAN)**: An X.509 extension that allows a single certificate to secure multiple domains or hostnames.
+
+- **Wildcard Certificate**: A certificate with a wildcard domain (e.g., `*.example.com`) that applies to all subdomains within that domain.
+
+- **Certificate Details**: Serial number, version, signature algorithm, issuer name, certificate holder name, public key, extensions, validity period, and digital signature.
+
+- **Hardware Security Module (HSM)**: A physical device that securely stores and manages root keys and serves as a root of trust.
+
+- **Secure Enclave**: A hardware-isolated trusted execution environment used as a root of trust.
+
+---
+
+## How It Works (Feynman Analogy)
+
+**The Real-World Parallel:**
+Imagine you receive an important letter claiming to be from your bank. How do you know it's really from them? You check if the envelope bears an official bank seal authenticated by a government office you already trust. If the government office verifies the seal is genuine, you trust the letter.
+
+**The Technical Reality:**
+A digital certificate works exactly the same way. When you visit a website (say, `https://bank.com`), the server presents a certificate claiming to be from that bank. But how do you know it's real? The certificate is digitally signed by a Certificate Authority—a trusted third party your browser already knows about (built into your OS). Your browser verifies the CA's signature on the certificate using the CA's public key (which you inherently trust). If the signature is valid, you trust that the certificate—and therefore the server—is authentic. The CA has essentially vouched for the bank's identity by signing the certificate.
+
+In internal networks, an organization might become its own "bank" by creating a private CA that signs certificates for internal servers. Devices on the network are configured to trust this internal CA, so any certificate it signs is automatically trusted—no need to purchase trust from a public CA.
+
+---
+
+## Exam Tips
+
+- **Distinguish between CA roles**: Public CAs (like DigiCert, Let's Encrypt) are trusted by browsers by default; private CAs require manual installation of the CA certificate on client devices.
+
+- **CSR vs. Certificate**: A CSR is a *request* containing the public key; a *certificate* is what you get back after the CA validates and signs it. The exam often tests whether you understand this workflow.
+
+- **Self-signed vs. Private CA**: A self-signed cert is signed by its own private key (no external validation). A private CA issues certificates signed by an internal authority. Both are used internally, but a private CA can issue multiple certs with centralized management.
+
+- **CRL and Revocation**: Know that CRLs are maintained by CAs and contain revoked certificate serial numbers. The Heartbleed vulnerability (CVE-2014-0160) is a classic exam example of why mass revocation might occur.
+
+- **Wildcard and SAN**: Wildcard certificates (`*.example.com`) are convenient but less granular; SANs offer more flexibility by listing multiple specific domains in one certificate. The exam may ask which is more appropriate for different scenarios.
+
+- **Root of Trust Foundation**: Remember that *everything* in IT security ultimately depends on a root of trust. The exam tests whether you understand that trust must start somewhere and cannot be created from nothing.
+
+---
+
+## Common Mistakes
+
+- **Confusing self-signed with private CA certs**: Candidates often think self-signed certificates are "issued by the organization." In reality, self-signed certs are signed by their own private key. A *private CA* is what an organization builds in-house to issue properly signed (but internal-only) certificates.
+
+- **Thinking CRLs are real-time**: While CRLs are updated, they are not truly real-time; there is always a window of time where a revoked certificate might still be considered valid if a client hasn't fetched the latest CRL. This is why [[OCSP]] (Online Certificate Status Protocol) is preferred for real-time checking.
+
+- **Overlooking the CSR workflow**: Test takers sometimes skip the CSR step mentally and assume a certificate magically appears. The exam tests knowledge of the complete flow: create key pair → generate CSR → submit to CA → CA validates → CA signs → receive certificate.
+
+---
+
+## Real-World Application
+
+In the [YOUR-LAB] fleet, every internal service (Wazuh dashboards, Tailscale control plane, homelab VPN endpoints) needs encrypted communication. Rather than purchasing expensive certificates from a public CA for internal-only services, Morpheus would deploy a private CA using [[Active Directory]] Certificate Services or OpenCA. Each homelab device would be configured to trust this internal CA, allowing seamless HTTPS communication across the fleet without browser warnings. This approach scales efficiently for medium-to-large labs where dozens of services need certificates.
+
+---
+
+## [[Wiki Links]]
+
+- [[CIA Triad]]
+- [[Encryption]]
+- [[Digital Signatures]]
+- [[Public Key Infrastructure]] (PKI)
+- [[Certificate Authority]] (CA)
+- [[Root of Trust]]
+- [[Hardware Security Module]] (HSM)
+- [[Secure Enclave]]
+- [[TLS]]
+- [[HTTPS]]
+- [[X.509]]
+- [[Certificate Signing Request]] (CSR)
+- [[Certificate Revocation List]] (CRL)
+- [[OCSP]]
+- [[Subject Alternative Name]] (SAN)
+- [[Wildcard Certificate]]
+- [[Web of Trust]]
+- [[Active Directory]] Certificate Services
+- [[OpenCA]]
+- [[Windows Certificate Services]]
+- [[OpenSSL]]
+- [[Heartbleed]] (CVE-2014-0160)
+- [[Authentication]]
+- [[Trust Model]]
+- [[Asymmetric Cryptography]]
+- [[Public Key]]
+- [[Private Key]]
+- [[Hashing]]
+- [[Digital Identity]]
+- [[Tailscale]]
+- [[Wazuh]]
+- [[[YOUR-LAB]]]
+- [[Zero Trust]]
+
+---
+
+## Tags
+
+`domain-1` `security-plus` `sy0-701` `certificates` `pki` `certificate-authorities` `digital-signatures` `trust-models` `x509` `revocation`
+
+---
+
+## Study Notes
+
+**Why This Matters for CompTIA Security+:**
+Certificates are tested across multiple exam domains because they are fundamental to modern security. They enable [[TLS]]/[[HTTPS]], facilitate [[PKI]], support [[Authentication]] and non-repudiation, and are critical in [[Zero Trust]] architectures. You'll see certificate questions in the context of web security, enterprise identity, and incident response (e.g., "What do you do when a certificate is compromised?" → Update the CRL).
+
+**Key Question Types:**
+1. "Which CA type would an organization use for internal services?" → Private CA
+2. "What happens after a certificate is compromised?" → Add to CRL
+3. "How do you support multiple domains with one certificate?" → SAN or wildcard
+4. "What is the first step in obtaining a certificate from a public CA?" → Generate a CSR
+
+**Memory Aids:**
+- **CSR = Request**; **Certificate = Response**
+- **Self-signed = No external validation**; **Private CA = Internal validation authority**
+- **CRL = Revocation list**; **OCSP = Real-time checking**
+- **Root of Trust = Foundation of everything**
+
+---
+
+**Last Updated:** [Current Session]
+**Confidence Level:** Core exam topic (high priority)
+
+---
+_Ingested: 2026-04-15 23:30 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

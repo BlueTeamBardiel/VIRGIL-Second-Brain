@@ -1,40 +1,37 @@
-# Private session logs — not for public repo
+# Vault content — never commit personal notes
+notes/
 daily-logs/
+weekly-summaries/
 
-# Obsidian notes — personal subdirs and root files not for repo
-# notes/knowledge/ and notes/mitre/ ARE tracked (public educational content)
-notes/inbox/
-notes/archive/
-notes/feeds/
-notes/cve/
-notes/personal/
-notes/.wikilink-last-run
-notes/*.md
+# Starter notes: daily-logs and memory are exceptions
+!starter-notes/daily-logs/
+!starter-notes/daily-logs/**
+!starter-notes/memory/
+!starter-notes/memory/**
 
-# Cron / hook output
-hooks/promote.log
-hooks/nebuchadnezzar.log
-hooks/weekly-rollup.log
+# Memory files (contain personal context)
+memory*.md
+!starter-notes/memory/**
 
-# Ingest run logs (scripts write these at runtime)
-ingest/*.log
+# Reviewed and scrubbed: private refs replaced — safe to commit
+# (security-plus, ccna, mitre, knowledge/* now committed after Task 0 scrub)
 
-# API keys and secrets (catch common patterns)
-*.env
+# Still blocked: personal content and known-private files
+starter-notes/service-account-credentials.md
+starter-notes/knowledge/*/staging/
+starter-notes/inbox/staging/
+starter-notes/mitre/staging/
+*.bak-*
+
+# Secrets and local config
 .env
-.env.*
-*api_key*
-*api-key*
-*secret*
-*token*
-*.pem
-*.key
+settings.local.json
 
-# Claude Code local config (machine-specific)
-.claude/settings.local.json
+# Log files
+*.log
+ingest/*.log
+hooks/*.log
 
-# OS / editor noise
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
+# Temporary files
+*.tmp
+*~

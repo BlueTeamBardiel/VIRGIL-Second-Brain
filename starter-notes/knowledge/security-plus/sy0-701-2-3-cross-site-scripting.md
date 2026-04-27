@@ -1,0 +1,102 @@
+---
+domain: "2.0 - Threats, Vulnerabilities, and Mitigations"
+section: "2.3"
+tags: [security-plus, sy0-701, domain-2, xss, web-vulnerabilities, injection-attacks]
+---
+
+# 2.3 - Cross-site Scripting
+
+Cross-site Scripting (XSS) is one of the most prevalent web application vulnerabilities, exploiting the trust users place in websites by injecting malicious scripts into web pages. XSS attacks leverage browser security flaws to execute arbitrary code in a victim's browser context, potentially stealing credentials, session tokens, cookies, and sensitive data without the user's knowledge. Understanding XSS attack vectors—both reflected and persistent—and their mitigation strategies is critical for the Security+ exam, as web application security represents a significant portion of the threat landscape.
+
+## Key Concepts
+
+- **Cross-site Scripting (XSS)**: A web vulnerability that allows attackers to inject malicious scripts (typically [[JavaScript]]) into web pages viewed by other users
+  - Distinct from [[Cascading Style Sheets|CSS]] (Cascading Style Sheets), a common point of confusion
+  - Named "cross-site" due to historical browser security flaws that allowed information sharing between sites
+
+- **Reflected (Non-Persistent) XSS**:
+  - Malicious script is embedded in a URL or user input (e.g., search box)
+  - Script executes immediately in the victim's browser when they click a malicious link
+  - Does not persist on the server; requires the attacker to distribute the malicious link
+  - Commonly delivered via phishing emails or social engineering
+  - Script runs as if it came from the legitimate server, inheriting the site's trust
+
+- **Stored (Persistent) XSS**:
+  - Attacker posts malicious payload directly to a web application (e.g., social media post, forum comment)
+  - Payload is stored on the server and served to all users who access that page
+  - Affects all users indiscriminately, without targeting specific individuals
+  - More dangerous than reflected XSS due to broader impact
+  - Creates a self-propagating attack vector (especially on social networks)
+
+- **Attack Mechanism**:
+  - Exploits user trust in a website
+  - Steals sensitive data: credentials, session IDs, authentication tokens, cookies
+  - Executes arbitrary actions on behalf of the victim
+  - JavaScript is the most common vector, but other scripting languages may be used
+
+- **Session Hijacking via XSS**:
+  - Attacker captures session tokens or cookies via malicious script
+  - Uses stolen tokens to impersonate the victim
+  - May gain unauthorized access to accounts and perform actions (e.g., transfer funds, modify account settings)
+
+- **Propagation in Social Networks**:
+  - Persistent XSS on social media spreads exponentially
+  - Each user who views the malicious post can have it automatically posted to their profile
+  - Creates viral attack chains across the user base
+
+## How It Works (Feynman Analogy)
+
+Imagine a trusted bank allows customers to write notes in the lobby—anyone can see them. A clever thief writes a note that says, "Give me your account number!" in handwriting that looks like it came from the bank itself. When customers see it, they trust it and comply. Now multiply this: the thief tricks the bank's system into permanently posting this fake note so every customer sees it, and many unknowingly spread it further.
+
+**Technical Reality**: XSS works similarly. A web application accepts user input without validating or sanitizing it. An attacker injects a `<script>` tag containing malicious code. When the browser renders the page, it executes the script as trusted code from that domain, giving it access to cookies, session tokens, and the ability to perform actions on behalf of the user. The attacker doesn't need direct system access—they weaponize the user's own browser and the site's trust relationship.
+
+## Exam Tips
+
+- **Distinguish XSS from [[SQL Injection]]**: XSS targets the browser/client-side execution, while SQL injection targets backend databases. Both are injection attacks but operate at different layers.
+
+- **Reflected vs. Persistent is heavily tested**: Know that reflected XSS requires user interaction (clicking a link), while persistent XSS affects all users automatically. Exam questions often ask which type applies in a given scenario.
+
+- **Token/Cookie Theft is the primary impact**: XSS is dangerous because it steals session identifiers. When answering "what can an attacker do with XSS," think: steal tokens, hijack sessions, perform actions as the victim, harvest credentials.
+
+- **Input validation and output encoding are the key defenses**: The exam tests whether you know *how* to prevent XSS. Valid answers include input validation (whitelist safe characters), output encoding (convert special characters), and disabling JavaScript (limited protection).
+
+- **Real-world context matters**: The Subaru case study in the exam materials shows how XSS + non-expiring tokens = full account compromise. Remember this for scenario-based questions.
+
+## Common Mistakes
+
+- **Confusing XSS with [[Cross-Site Request Forgery|CSRF]]**: Both are client-side attacks, but CSRF tricks a user into making unwanted requests, while XSS injects malicious code. XSS is more powerful because it can steal tokens; CSRF exploits existing trust.
+
+- **Thinking input validation alone is sufficient**: Candidates often choose "validate input" as the only defense. The exam expects you to understand that both **input validation** (what you accept) and **output encoding** (how you display it) are necessary.
+
+- **Underestimating persistent XSS impact**: Some candidates think reflected XSS is more dangerous. In reality, persistent XSS is worse because it affects all users without requiring social engineering per victim. Social networks amplify this significantly.
+
+## Real-World Application
+
+In a homelab environment like [YOUR-LAB], XSS vulnerabilities in custom web applications (monitoring dashboards, documentation wikis, or internal tools) could allow an attacker to steal [[Tailscale]] credentials or [[Active Directory]] session tokens if not properly defended. As a sysadmin, you should validate all user inputs in any web-facing services, ensure proper [[Content Security Policy]] (CSP) headers are set, and monitor web application logs (via [[Wazuh]] or similar [[SIEM]]) for signs of XSS attempts or unusual script execution patterns.
+
+## [[Wiki Links]]
+
+- **Attack Types**: [[XSS]], [[SQL Injection]], [[Cross-Site Request Forgery|CSRF]], [[Injection Attacks]], [[Phishing]]
+- **Web Security**: [[JavaScript]], [[Cascading Style Sheets|CSS]], [[Content Security Policy|CSP]], [[Input Validation]], [[Output Encoding]], [[HTML Sanitization]]
+- **Authentication & Sessions**: [[Session Hijacking]], [[Authentication]], [[Authorization]], [[Cookies]], [[Tokens]], [[OAuth]], [[SAML]]
+- **Tools & Monitoring**: [[Wazuh]], [[SIEM]], [[Splunk]], [[Kali Linux]], [[Metasploit]], [[Wireshark]], [[Burp Suite]]
+- **Infrastructure (Homelab Context)**: [[Tailscale]], [[Active Directory]], [[LDAP]], [[VPN]], [[Firewall]], [[IDS]], [[IPS]]
+- **Frameworks & Standards**: [[NIST]], [[MITRE ATT&CK]], [[OWASP Top 10]]
+- **Incident Response**: [[Incident Response]], [[Forensics]], [[DFIR]], [[Threat Hunting]]
+
+## Tags
+
+#domain-2 #security-plus #sy0-701 #xss #web-vulnerabilities #injection-attacks #client-side-attacks #session-hijacking
+
+---
+
+**Study Notes:**
+
+**Why XSS is Tested**: Web applications are ubiquitous in enterprise environments. The Security+ exam emphasizes that sysadmins and security professionals must understand client-side vulnerabilities because they're commonly exploited in real attacks. XSS is listed in the [[OWASP Top 10]] and is heavily leveraged in [[Phishing]] campaigns and targeted attacks.
+
+**Exam Strategy**: When you see a question about "malicious code in a user input field that executes in someone else's browser," that's XSS. If it asks about *defending* a web application, think: validate input, encode output, update browsers, disable scripts (on the user's end). If it's about the business impact, think: credential theft, account hijacking, data exfiltration.
+
+**Memorization Aid**: "**Reflected** = Link (Reflected in URL) | **Persistent** = Post (Persists on server)"
+
+---
+_Ingested: 2026-04-15 23:36 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

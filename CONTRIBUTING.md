@@ -1,133 +1,131 @@
 # Contributing to VIRGIL
 
-VIRGIL is a personal second-brain system. Contributions that add ingest capabilities, improve existing scripts, or expand the starter knowledge base are welcome.
+VIRGIL is open source. Contributions that improve knowledge notes, fix scripts, add ingest capabilities, or expand the starter vault are welcome — including from people who have never contributed to an open source project before.
 
 ---
 
-## How to contribute
+## First time contributing to open source?
 
-1. Fork the repo
-2. Create a branch: `git checkout -b feat/your-feature`
-3. Make your changes (see patterns below)
-4. Test locally — run the script against a real vault, confirm output files are correct
-5. Submit a PR with a clear description of what it does and why
+Here's the whole process in six steps:
+
+1. **Fork** — click Fork at the top-right of the GitHub page. This creates your own copy.
+2. **Clone** — `git clone https://github.com/YOUR-USERNAME/VIRGIL-Second-Brain.git`
+3. **Branch** — `git checkout -b feat/what-youre-adding`
+4. **Edit** — make your change
+5. **Commit** — `git commit -m "brief description of what and why"`
+6. **PR** — push to your fork, then open a Pull Request on the main repo
+
+If you get stuck, open an issue and ask. The bar for questions is low.
 
 ---
 
-## Adding RSS feeds
+## Good first contributions
 
-Feeds are defined in `ingest/rss-ingest.py` as a Python list near the top of the file.
+These are scoped to be achievable in under an hour without knowing the whole codebase:
+
+**Fix a note:**
+Find a knowledge note in `starter-notes/` that has an error, a missing explanation, or a concept that isn't grounded in a real-world example. Fix it. The standard is: could someone who has never heard of this concept understand it after reading this note?
+
+Files to look for:
+- Short notes with no "Why does this matter?" section
+- Notes that define terms without explaining what breaks when the concept fails
+- Exam concept notes missing the trap question (what the test is likely to ask)
+
+**Add a CVE note:**
+Pick a recent high-profile CVE from [NVD](https://nvd.nist.gov) and write a note for it in `starter-notes/cve/`. See the existing CVE notes for the format. Every CVE note should answer: what does this vulnerability actually do, who does it affect, what's the real-world impact, and what's the fix.
+
+**Improve an explanation:**
+Find any note where the explanation uses jargon without a plain-English definition. Rewrite the opening sentence using an analogy before the technical definition. See the Feynman template below.
+
+**Add a useful RSS feed:**
+Add a high-signal security or networking feed to `ingest/rss-ingest.py`. Verify the URL resolves. Check for duplicates first. Explain in the PR why this feed is worth including.
+
+---
+
+## How to write a knowledge note (Feynman template)
+
+Every note in the knowledge base follows this structure:
+
+```markdown
+# [Concept Name]
+
+[One sentence, plain English. No jargon. If you need a technical term, define it immediately.]
+
+---
+
+## How it works
+
+[Mechanism, step by step. Lead with an analogy before the technical definition.]
+
+Example: "Think of it like a bouncer checking IDs at the door — except the bouncer has been told to trust anyone who knows the secret password, and the password is written on the wall."
+
+## Why it matters
+
+[Real-world consequence. What breaks if this fails? What attack does this enable? What does it cost someone?]
+
+## How it's tested (Security+/CySA+)
+
+[The specific way an exam will ask about this. Common traps — closely named concepts, subtle distinctions, trick phrasing.]
+
+## Tags
+
+#security-plus #cysa-plus #[relevant-category]
+```
+
+The test for any explanation: can you describe this concept to a smart friend who works in a different field? If you need them to already know IT terminology to understand your explanation, the explanation isn't finished.
+
+---
+
+## How to report a bug in the install script
+
+1. Run the installer with verbose output: `bash -x scripts/install.sh 2>&1 | tee /tmp/virgil-install-debug.log`
+2. Open an issue on GitHub and include:
+   - Your OS and version (`uname -a`, `lsb_release -a`)
+   - The full error output from the log file
+   - Which step failed (the installer prints step numbers)
+   - Whether you have an Anthropic API key configured (yes/no — don't paste the key)
+
+Issues tagged [`bug: install`](https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain/issues?q=label%3A%22bug%3A+install%22) track reported installer failures.
+
+---
+
+## Adding an RSS feed
+
+Feeds live in `ingest/rss-ingest.py` as a Python list near the top:
 
 ```python
 FEEDS = [
     ("Category Name", "https://example.com/feed.rss"),
-    ...
 ]
 ```
 
-Guidelines:
-- Group by category: Security News, CVE/Vulnerability, Homelab/Tooling, CySA+ Relevant, CCNA/Networking
-- Prefer Atom or RSS 2.0 feeds — check that the feed URL actually resolves before submitting
-- No paywalled feeds, no feeds that require authentication
-- Check for existing overlap before adding a near-duplicate source
-
-The script calls Claude Haiku to synthesize the daily digest — feeds with low signal-to-noise (marketing blogs, vendor press releases) will dilute the summary. Be selective.
+Guidelines: group by category, verify the URL resolves, avoid paywalled or auth-required feeds, no marketing blogs, check for near-duplicates before adding.
 
 ---
 
-## Adding a new ingest script
+## Adding an ingest script
 
 Follow the pattern in `ingest/url-ingest.sh`:
-
-**Required:**
-- Self-source `ANTHROPIC_API_KEY` from crontab at the top:
-  ```bash
-  if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-      eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
-  fi
-  [[ -n "${ANTHROPIC_API_KEY:-}" ]] || { echo "ERROR: ANTHROPIC_API_KEY not set." >&2; exit 1; }
-  ```
 - `set -euo pipefail` at the top
+- Use `llm-client.sh` (bash) or `llm_client.py` (Python) for all AI calls — never call the Anthropic API directly
 - Write output to `notes/<category>/<slug>.md`
-- Log to a file in `ingest/` with a consistent prefix: `[script-name YYYY-MM-DD HH:MM]`
-- Python API calls: use `urllib.request` only — no `requests` library dependency
-
-**Conventions:**
-- Obsidian Markdown output: `[[wiki links]]` for tools, protocols, hosts, concepts
-- Add a frontmatter `---` block or `## Tags` section at the bottom
-- Include an ingestion timestamp: `_Ingested: YYYY-MM-DD HH:MM | Source: ..._`
-
-**Add an alias** in the script's header comment and document it in `GETTING-STARTED.md`.
+- Log to `ingest/` with a consistent prefix: `[script-name YYYY-MM-DD HH:MM]`
 
 ---
 
-## Adding a Claude Code skill
+## Submitting a PR
 
-Skills live in `.claude/commands/` and are invoked as `/skill-name` in Claude Code sessions.
-
-Follow the pattern in `skills/challenge.md` (or any existing skill file):
-
-```markdown
-You are VIRGIL, Morpheus's second brain. [Role description].
-
-$ARGUMENTS
-
----
-
-## Step 1 — ...
-
-## Step 2 — ...
-```
-
-Guidelines:
-- Start with a clear role statement
-- Use `$ARGUMENTS` to pass user input through
-- Break behavior into numbered steps
-- Reference concrete file paths — don't say "read the config", say `Read memory-working.md`
-- Keep it tight — Claude reads the whole file on every invocation
-
-If your skill makes assumptions about vault structure (specific directories, specific note names), document them clearly at the top.
-
----
-
-## Submitting improvements via PR
-
-Keep PRs focused. One logical change per PR.
-
-PR description should answer:
+Keep PRs focused. One logical change per PR. In the description, answer:
 - What does this change do?
-- What did you test it against? (OS, vault structure, API response)
-- Does it add new dependencies? If yes, why is that acceptable?
-
-If you're fixing a bug, include the error output or behavior that prompted the fix.
+- What did you test it against? (OS, with/without API key)
+- Does it add new dependencies?
 
 ---
 
 ## Code style
 
-**Bash:**
-- `set -euo pipefail` always
-- Self-source `ANTHROPIC_API_KEY` from crontab (never hardcode, never require env to be pre-set)
-- Quote all variables: `"$VAR"` not `$VAR`
-- Use `mktemp` for temp files, clean up with `trap "rm -f $_TMP" EXIT`
-- Prefer `printf` over `echo` for formatted output
+**Bash:** `set -euo pipefail` always. Quote all variables. Use `mktemp` for temp files. AI calls go through `llm-client.sh`.
 
-**Python (embedded or standalone):**
-- `urllib.request` and `urllib.error` only — no `requests`, no `httpx`
-- `json`, `os`, `sys`, `pathlib` from stdlib only
-- No third-party dependencies whatsoever — this runs on minimal lab machines
-- Strip Claude's markdown code fences before parsing JSON responses (Claude sometimes wraps output in ```json)
+**Python:** AI calls via `from llm_client import ask`. Prefer stdlib. Strip LLM markdown code fences before parsing JSON.
 
-**Markdown output:**
-- `[[wiki links]]` for all tools, protocols, hosts, concepts
-- Consistent heading structure: `#` title, `##` sections, `###` subsections
-- Tags at the bottom in a `## Tags` section
-
----
-
-## What's not in scope
-
-- GUI tools or web UIs — VIRGIL is terminal-first
-- Cloud-specific integrations (AWS, GCP, Azure) — this is a homelab system
-- Features that require a running Obsidian instance — output is plain Markdown files
-- Anything that phones home or sends data to third parties beyond the Anthropic API
+**Markdown:** `[[wiki links]]` for tools, protocols, and concepts. Consistent heading structure. Tags at the bottom.
