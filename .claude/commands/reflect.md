@@ -7,11 +7,11 @@ Optional session notes or context to incorporate: $ARGUMENTS
 ## Step 1 — Read today's session context
 
 Determine today's date. Read the full daily log at:
-`/home/your-username/Documents/Cocytus/VIRGIL/daily-logs/YYYY-MM-DD.md`
+`$HOME/VIRGIL/daily-logs/YYYY-MM-DD.md`
 
 If the file doesn't exist, tell Morpheus no log was found for today and stop.
 
-Also read `/home/your-username/Documents/Cocytus/VIRGIL/memory-working.md` in full — you need the pending task list.
+Also read `$HOME/VIRGIL/memory-working.md` in full — you need the pending task list.
 
 ## Step 2 — Synthesize what happened this session
 
@@ -40,7 +40,7 @@ Apply [[wiki links]] to your-lab hosts, tools, and concepts in the summary.
 
 For each significant topic, tool, or host that came up this session:
 
-1. Check if a note exists at `/home/your-username/Documents/Cocytus/VIRGIL/notes/<Topic>.md`
+1. Check if a note exists at `$HOME/VIRGIL/notes/<Topic>.md`
 2. If yes and the session produced new information about it: append a `## Session Update — YYYY-MM-DD` section with the new facts, decisions, or status changes
 3. If a host's status changed (e.g., "your-lab-node-1 VNC now working"): update the status in the note
 

@@ -20,7 +20,7 @@ If either is empty after trimming, print the usage format and stop.
 ## Step 2 — Append to today's daily log
 
 Determine today's date (YYYY-MM-DD). Read the daily log at:
-`/home/your-username/Documents/Cocytus/VIRGIL/daily-logs/YYYY-MM-DD.md`
+`$HOME/VIRGIL/daily-logs/YYYY-MM-DD.md`
 
 If the file doesn't exist, create it with header `# Daily Log — YYYY-MM-DD`.
 
@@ -38,7 +38,7 @@ Use the Edit or Write tool to update the file without overwriting existing conte
 
 ## Step 3 — Find and update the project note
 
-Search `/home/your-username/Documents/Cocytus/VIRGIL/notes/` for a note matching PROJECT:
+Search `$HOME/VIRGIL/notes/` for a note matching PROJECT:
 1. Exact filename match: `notes/<PROJECT>.md` (case-insensitive, spaces→hyphens)
 2. Partial match: any `.md` where the filename contains PROJECT as a substring
 3. Content match: any `.md` where the first 10 lines mention PROJECT
@@ -57,7 +57,7 @@ If no note is found, tell Morpheus which filename to create (`notes/<PROJECT>.md
 
 ## Step 4 — Check memory.md for related tasks
 
-Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` in full.
+Read `$HOME/VIRGIL/memory.md` in full.
 
 Search all `- [ ]` lines (pending tasks) across all priority sections for any that mention PROJECT or keywords from PROJECT (case-insensitive).
 

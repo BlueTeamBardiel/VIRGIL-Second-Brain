@@ -21,8 +21,8 @@ Parse `|` as the field delimiter when present. If fields are space-separated wit
 ## Step 1 — Load context (all modes)
 
 Read these before doing anything:
-- `/home/your-username/Documents/Cocytus/VIRGIL/user.md` — background, experience, goals
-- `/home/your-username/Documents/Cocytus/VIRGIL/notes/Job Search.md` — application tracker
+- `$HOME/VIRGIL/user.md` — background, experience, goals
+- `$HOME/VIRGIL/notes/Job Search.md` — application tracker
 
 If `notes/Job Search.md` does not exist, create it:
 
@@ -114,7 +114,7 @@ Sincerely,
 Morpheus
 ```
 
-Write the draft to `/home/your-username/Documents/Cocytus/VIRGIL/notes/Cover Letter — <Company> <Role>.md`.
+Write the draft to `$HOME/VIRGIL/notes/Cover Letter — <Company> <Role>.md`.
 
 Log it to the **Cover Letters Drafted** table in `notes/Job Search.md`.
 

@@ -1,0 +1,9 @@
+# VIRGIL Second Brain — Python dependencies
+# Pinned for security. Run: pip install -r requirements.txt
+# Last updated: 2026-04-27
+
+# RSS feed parsing — used by ingest/rss-ingest.py
+feedparser>=6.0.0,<7.0.0
+
+# HTTP requests — used by ingest/rss-ingest.py and ingest/cve-ingest.py
+requests>=2.31.0,<3.0.0

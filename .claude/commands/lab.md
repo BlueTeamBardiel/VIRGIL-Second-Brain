@@ -6,7 +6,7 @@ Optional filter (hosts or topics to focus on): $ARGUMENTS
 
 ## Step 1 — Read current fleet state
 
-Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` in full. Extract:
+Read `$HOME/VIRGIL/memory.md` in full. Extract:
 - Fleet Quick Reference table (all hosts, IPs, Tailscale IPs, statuses)
 - Ansible / Semaphore setup section
 - Deployed Playbooks table
@@ -17,7 +17,7 @@ If `$ARGUMENTS` is non-empty, filter output to hosts or topics matching it.
 
 ## Step 2 — Write the Obsidian note
 
-Write to `/home/your-username/Documents/Cocytus/VIRGIL/notes/lab-status.md` (overwrite — this is a live snapshot):
+Write to `$HOME/VIRGIL/notes/lab-status.md` (overwrite — this is a live snapshot):
 
 ```markdown
 # your-lab Lab Status

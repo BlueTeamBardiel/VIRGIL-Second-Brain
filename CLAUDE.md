@@ -6,7 +6,7 @@
 - @memory-semantic.md — permanent facts: fleet, certs, architecture, key decisions
 
 ## Key Paths
-- Vault: ~/Documents/Cocytus/VIRGIL/
+- Vault: ~/VIRGIL/
 - Ingest scripts: ingest/
 - Hooks: hooks/
 - Notes: notes/

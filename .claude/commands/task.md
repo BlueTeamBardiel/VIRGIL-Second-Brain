@@ -14,7 +14,7 @@ From the input, extract:
 
 ## Step 2 — Append to tasks note
 
-Append to `/home/your-username/Documents/Cocytus/VIRGIL/notes/tasks.md`.
+Append to `$HOME/VIRGIL/notes/tasks.md`.
 
 If the file doesn't exist, create it:
 ```markdown
@@ -49,7 +49,7 @@ Apply [[wiki links]] to any your-lab concepts in the task:
 
 ## Step 3 — Update memory.md
 
-Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md`.
+Read `$HOME/VIRGIL/memory.md`.
 
 Add the task to the appropriate priority section (🔴/🟡/🟢) in the pending tasks list. Match the existing bullet format exactly:
 

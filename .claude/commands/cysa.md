@@ -7,8 +7,8 @@ Optional focus override (e.g., "Identity", "IR", "Nmap"): $ARGUMENTS
 ## Step 1 — Load context
 
 Read both of these files in full before generating any questions:
-- `/home/your-username/Documents/Cocytus/VIRGIL/skills/cysa-study.md` — weak areas, question rules, session log
-- `/home/your-username/Documents/Cocytus/VIRGIL/notes/CySA+.md` — if it exists, check what was covered recently to avoid repeating
+- `$HOME/VIRGIL/skills/cysa-study.md` — weak areas, question rules, session log
+- `$HOME/VIRGIL/notes/CySA+.md` — if it exists, check what was covered recently to avoid repeating
 
 ## Step 2 — Determine topic distribution
 
@@ -63,7 +63,7 @@ Print a session summary:
 
 ## Step 5 — Log to Obsidian
 
-Append the session summary to `/home/your-username/Documents/Cocytus/VIRGIL/notes/CySA+.md`.
+Append the session summary to `$HOME/VIRGIL/notes/CySA+.md`.
 
 If the file doesn't exist, create it:
 
@@ -95,7 +95,7 @@ Then append:
 
 ## Step 6 — Update the session log in the skill file
 
-Append a new row to the session log table in `/home/your-username/Documents/Cocytus/VIRGIL/skills/cysa-study.md`:
+Append a new row to the session log table in `$HOME/VIRGIL/skills/cysa-study.md`:
 
 ```
 | YYYY-MM-DD | <topics covered> | <score>/10 | <one-line note> |

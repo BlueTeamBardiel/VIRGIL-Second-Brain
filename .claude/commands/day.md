@@ -7,7 +7,7 @@ $ARGUMENTS
 
 ## Step 1 — Write the daily log entry
 
-Determine today's date. Open (or create) `/home/your-username/Documents/Cocytus/VIRGIL/daily-logs/YYYY-MM-DD.md`.
+Determine today's date. Open (or create) `$HOME/VIRGIL/daily-logs/YYYY-MM-DD.md`.
 
 Append a new session block in this format:
 
@@ -47,9 +47,9 @@ Also wrap any other concept that appears in memory.md or the brain dump that wou
 
 ## Step 3 — Create individual Obsidian topic notes
 
-For each **distinct concept, tool, host, or technique** mentioned in the brain dump that doesn't already have a note in `/home/your-username/Documents/Cocytus/VIRGIL/notes/`, create a stub note at:
+For each **distinct concept, tool, host, or technique** mentioned in the brain dump that doesn't already have a note in `$HOME/VIRGIL/notes/`, create a stub note at:
 
-`/home/your-username/Documents/Cocytus/VIRGIL/notes/<Concept Name>.md`
+`$HOME/VIRGIL/notes/<Concept Name>.md`
 
 Stub format:
 ```markdown

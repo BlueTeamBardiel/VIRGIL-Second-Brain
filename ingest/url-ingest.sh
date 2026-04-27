@@ -37,9 +37,51 @@ fi
 URL="$1"
 TOPIC_HINT="${2:-}"
 
+# ── URL validation ────────────────────────────────────────────────────────────
+# Block non-HTTP(S) schemes — prevents file://, ftp://, ssrf vectors
+if [[ ! "$URL" =~ ^https?:// ]]; then
+    echo "[url-ingest] ERROR: Only http:// and https:// URLs are supported." >&2
+    echo "[url-ingest] Received: $URL" >&2
+    exit 1
+fi
+
+# Block private/local IP ranges — prevents SSRF to internal services
+HOSTNAME=$(python3 -c "
+from urllib.parse import urlparse
+import sys
+print(urlparse(sys.argv[1]).hostname or '')
+" "$URL" 2>/dev/null)
+
+if python3 -c "
+import ipaddress, sys
+try:
+    ip = ipaddress.ip_address(sys.argv[1])
+    if ip.is_private or ip.is_loopback or ip.is_link_local:
+        sys.exit(1)
+except ValueError:
+    pass  # hostname, not IP — allow
+sys.exit(0)
+" "$HOSTNAME" 2>/dev/null; then
+    : # IP is public or it's a hostname — continue
+else
+    echo "[url-ingest] ERROR: Private/loopback IP addresses are not allowed." >&2
+    exit 1
+fi
+
+# Blocklist — add domains that should never be ingested
+BLOCKLIST=("localhost" "127.0.0.1" "0.0.0.0" "metadata.google.internal" \
+           "169.254.169.254" "::1")
+for blocked in "${BLOCKLIST[@]}"; do
+    if [[ "${HOSTNAME,,}" == "$blocked" ]]; then
+        echo "[url-ingest] ERROR: Blocked hostname: $HOSTNAME" >&2
+        exit 1
+    fi
+done
+
 # ── Prereqs ───────────────────────────────────────────────────────────────────
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
+    ANTHROPIC_API_KEY=$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | cut -d'"' -f2 | head -1)
+    [[ -n "$ANTHROPIC_API_KEY" ]] && export ANTHROPIC_API_KEY
 fi
 [[ -n "${ANTHROPIC_API_KEY:-}" ]] || die "ANTHROPIC_API_KEY is not set."
 command -v pandoc &>/dev/null || die "pandoc not found. Install: sudo apt install pandoc"

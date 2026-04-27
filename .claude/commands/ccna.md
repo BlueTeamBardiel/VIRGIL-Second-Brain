@@ -24,9 +24,9 @@ Then execute ONLY the steps for that mode.
 ### Step 1 — Gather context
 
 Read these files before generating anything:
-- `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` — check for any CCNA mentions, your-switch/your-router context
-- `/home/your-username/Documents/Cocytus/VIRGIL/skills/cysa-study.md` — check for networking crossover (access control, scanning, IR)
-- `/home/your-username/Documents/Cocytus/VIRGIL/notes/<Topic>.md` — if this file already exists, READ IT FIRST
+- `$HOME/VIRGIL/memory.md` — check for any CCNA mentions, your-switch/your-router context
+- `$HOME/VIRGIL/skills/cysa-study.md` — check for networking crossover (access control, scanning, IR)
+- `$HOME/VIRGIL/notes/<Topic>.md` — if this file already exists, READ IT FIRST
 
 Check `notes/` for any existing note matching the topic name (case-insensitive, partial match OK).
 
@@ -206,8 +206,8 @@ Print: file written, concepts identified, topic notes flagged for manual cross-l
 ### Step 1 — Load context
 
 Read:
-- `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` — check CCNA weak areas if any are noted
-- `/home/your-username/Documents/Cocytus/VIRGIL/notes/CCNA.md` — if it exists, check recent session log to avoid repeating the same questions
+- `$HOME/VIRGIL/memory.md` — check CCNA weak areas if any are noted
+- `$HOME/VIRGIL/notes/CCNA.md` — if it exists, check recent session log to avoid repeating the same questions
 
 ### Step 2 — Determine topic distribution
 

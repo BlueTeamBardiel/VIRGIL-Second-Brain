@@ -262,7 +262,7 @@ fi
 
 # ── 9. virgil alias in ~/.bashrc ──────────────────────────────────────────────
 echo "── 9. virgil alias ─────────────────────────────"
-ALIAS_LINE="alias virgil='cd ~/Documents/Cocytus/VIRGIL && claude'"
+ALIAS_LINE="alias virgil='cd ${VIRGIL_DIR:-$HOME/VIRGIL} && claude'"
 if grep -qF "$ALIAS_LINE" "$HOME/.bashrc" 2>/dev/null; then
     ok "virgil alias already in ~/.bashrc"
 else

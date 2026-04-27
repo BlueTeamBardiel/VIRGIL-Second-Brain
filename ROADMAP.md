@@ -4,6 +4,26 @@ This document tracks what's shipped, what's planned, and where VIRGIL is headed.
 
 ---
 
+## Audit Status — April 2026
+Four-source independent audit completed 2026-04-27.
+Sources: Claude Sonnet 4.6 | Gemini 1.5 Pro | Claude Haiku 4.5 | Claude Opus 4.6
+Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
+
+**Fixed this release:**
+- Sanitization leak (private lab name in public scripts)
+- Python dependency pinning
+- url-ingest.sh URL validation + SSRF protection
+- README rewritten — story-first, 2-minute QuickStart
+
+**Top pending items from audit:**
+- curl|bash → checksum-verified installer
+- virgil status command
+- Starter knowledge base (50-100 notes)
+- Spaced repetition (highest ROI feature)
+- Mobile capture bridge
+
+---
+
 ## v1.0.0 — Current release
 
 **Shipped April 2026.**
@@ -111,3 +131,18 @@ Guided video courses and pre-configured knowledge packs with deeper coverage are
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Feature requests and feed suggestions welcome via GitHub Issues.
+
+---
+
+## External Audit Findings — April 2026
+See [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md) for full report.
+
+Key verdict from Claude Opus 4.6:
+"The work itself is impressive. The Bash and Python are competent,
+the architecture is coherent, and the security-domain focus is a
+real differentiator. You've built something that actually works."
+
+Positioning recommendation:
+"VIRGIL is the second brain I built while transitioning from service
+desk to security. It's automated, AI-powered, and free. Clone it,
+adapt it, make it yours."

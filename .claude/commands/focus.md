@@ -23,9 +23,9 @@ Extract the primary mode from `$ARGUMENTS` (first word). Remaining words are sub
 ### Step 1 — Load fleet context
 
 Read these files in full:
-- `/home/your-username/Documents/Cocytus/VIRGIL/skills/cocytus_master.json`
-- `/home/your-username/Documents/Cocytus/VIRGIL/skills/cocytus_master_context.json`
-- `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` (fleet table + pending tasks sections only)
+- `$HOME/VIRGIL/skills/cocytus_master.json`
+- `$HOME/VIRGIL/skills/cocytus_master_context.json`
+- `$HOME/VIRGIL/memory.md` (fleet table + pending tasks sections only)
 
 ### Step 2 — Load playbook context (selective)
 
@@ -74,12 +74,12 @@ Otherwise (default): load CySA+ context.
 ### Step 2 — Load study context
 
 **CySA+ track:**
-- Read `/home/your-username/Documents/Cocytus/VIRGIL/skills/cysa-study.md` in full
-- Read `/home/your-username/Documents/Cocytus/VIRGIL/notes/CySA+.md` if it exists (recent session history)
+- Read `$HOME/VIRGIL/skills/cysa-study.md` in full
+- Read `$HOME/VIRGIL/notes/CySA+.md` if it exists (recent session history)
 
 **CCNA track:**
-- Read `/home/your-username/Documents/Cocytus/VIRGIL/notes/CCNA.md` if it exists (recent session history)
-- Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` (CCNA weak areas section if any)
+- Read `$HOME/VIRGIL/notes/CCNA.md` if it exists (recent session history)
+- Read `$HOME/VIRGIL/memory.md` (CCNA weak areas section if any)
 
 ### Step 3 — Print study mode summary
 
@@ -121,9 +121,9 @@ Otherwise (default): load CySA+ context.
 
 ### Step 1 — Load job search context
 
-- Read `/home/your-username/Documents/Cocytus/VIRGIL/user.md` (identity + goals sections)
-- Read `/home/your-username/Documents/Cocytus/VIRGIL/notes/Job Search.md` if it exists (application tracker)
-- Read `/home/your-username/Documents/Cocytus/VIRGIL/memory.md` (Job Search section)
+- Read `$HOME/VIRGIL/user.md` (identity + goals sections)
+- Read `$HOME/VIRGIL/notes/Job Search.md` if it exists (application tracker)
+- Read `$HOME/VIRGIL/memory.md` (Job Search section)
 
 ### Step 2 — Assess pipeline
 

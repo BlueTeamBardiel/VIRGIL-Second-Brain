@@ -19,7 +19,7 @@ If the topic is a tool or technology Morpheus is likely to use in your-lab (e.g.
 
 ## Step 3 — Write the Obsidian note
 
-Write to `/home/your-username/Documents/Cocytus/VIRGIL/notes/Research - <Topic>.md`:
+Write to `$HOME/VIRGIL/notes/Research - <Topic>.md`:
 
 ```markdown
 # <Topic>
