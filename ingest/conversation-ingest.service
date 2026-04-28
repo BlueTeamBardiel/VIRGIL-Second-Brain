@@ -1,0 +1,14 @@
+[Unit]
+Description=VIRGIL Conversation Ingest Service
+After=network.target
+
+[Service]
+Type=simple
+User=your-username
+WorkingDirectory=/home/your-username/Documents/Cocytus/VIRGIL
+ExecStart=/usr/bin/python3 /home/your-username/Documents/Cocytus/VIRGIL/ingest/conversation-ingest.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
