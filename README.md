@@ -37,13 +37,65 @@ After install:
 4. Type `/virgil-quiz "topic"` to quiz yourself on any topic
 5. Type `/handoff` when ending a session to save context
 
-## Screenshots
+## What it looks like
 
-> Screenshots coming soon. See the [demo GIF](docs/demo.gif) for
-> a walkthrough of the study session flow.
+### Study session (type `/cysa` in Claude Code)
+```
+VIRGIL Session — 2026-04-29
+Weakest topics: Kerberoasting, Lateral Movement, SIEM Architecture
 
-*Obsidian vault with 5,000+ knowledge notes | OpenWebUI chat
-interface | Terminal study sessions*
+Topic 1: Kerberoasting
+─────────────────────────────────────────────────────
+Analogy: Imagine a bouncer who hands out wristbands (tickets)
+to prove you're allowed in. Kerberoasting is when an attacker
+steals those wristband templates and forges their own offline,
+without ever needing to talk to the bouncer again.
+
+In a real attack: attacker requests a Kerberos service ticket
+for any SPN, extracts the ticket, and cracks it offline with
+hashcat to recover the service account password.
+
+Q: What makes a service account vulnerable to Kerberoasting?
+   A) It uses NTLM authentication
+   B) Its password hash is embedded in the Kerberos ticket
+   C) It has local admin rights
+   D) It uses LDAP for authentication
+
+Your answer: _
+```
+
+### Vault health check (run `virgil-review`)
+```
+══════════════════════════════════════════
+  VIRGIL Review Session — 2026-04-29
+══════════════════════════════════════════
+  Due today (3 topics):
+  1. kerberoasting      last: 2/5  overdue: 8 days
+  2. lateral movement   last: 3/5  overdue: 3 days
+  3. SIEM Architecture  last: 4/5  due: today
+
+  Coming up:
+  4. SQL Injection       due in: 2 days
+  5. Active Directory    due in: 5 days
+══════════════════════════════════════════
+Quiz the top overdue topic now? (y/N):
+```
+
+### System status (runs at every session start)
+```
+══════════════════════════════════════════
+  VIRGIL Status — 2026-04-29 09:00
+══════════════════════════════════════════
+  Bridge (ChromaDB):     ✅ running — 7868 chunks
+  Ollama:                ✅ running — gpt-oss:20b
+  OpenWebUI:             ✅ running (port 3000)
+  Conversation ingest:   ✅ running (port 5002)
+  Promote.sh:            ✅ ran today
+  Vault:                 ✅ 5030 notes
+  Ghost-fill:            ✅ complete (4664/4664)
+  Health check:          ✅ today
+══════════════════════════════════════════
+```
 
 ---
 

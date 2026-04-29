@@ -253,6 +253,25 @@ adapt it, make it yours."
 
 ---
 
+## Roadmap — v1.4.0
+
+**Theme: Knowledge Quality**
+
+- [ ] Naming convention standardization — Title Case with acronym
+      preservation across all 5,000+ notes
+- [ ] Semantic deduplication — fuzzy title matching finds duplicate
+      notes, merge tool with human approval
+- [ ] Contradiction detection — find two notes that disagree,
+      flag for human review
+- [ ] /secplus exam simulator — full 90-question timed mock exam
+      drawn from vault content
+- [ ] /aplus exam simulator — full mock exam for Core 1 and Core 2
+- [ ] Demo video — 2-minute walkthrough of install → first study
+      session
+- [ ] Discord community launch after 10 confirmed public installs
+
+---
+
 *Last updated: April 2026*
 *Current version: v1.3.0 tagged | Repo visibility: public*
 *Next milestone: v1.4.0 — naming conventions, README rewrite, secret scanning*
