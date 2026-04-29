@@ -13,27 +13,6 @@
 set -euo pipefail
 
 VIRGIL_DIR="${VIRGIL_DIR:-$HOME/VIRGIL}"
-
-# ── Dependency check ─────────────────────────────────────────────────────────
-# virgil-quiz needs the RAG stack: ChromaDB query module and the llm_client
-# wrapper. These ship with the v1.2 RAG feature. If either is missing, bail
-# cleanly with a pointer to the setup guide — never traceback.
-MISSING_DEPS=()
-[[ -f "$VIRGIL_DIR/ingest/chroma-query.py" ]] || MISSING_DEPS+=("ingest/chroma-query.py")
-[[ -f "$VIRGIL_DIR/hooks/llm_client.py"    ]] || MISSING_DEPS+=("hooks/llm_client.py")
-
-if (( ${#MISSING_DEPS[@]} > 0 )); then
-    cat <<EOF
-virgil-quiz requires the RAG stack (ChromaDB + llm_client).
-See GETTING-STARTED.md → Advanced — Local RAG Setup to get started.
-Once set up, run virgil-quiz again.
-
-Missing from $VIRGIL_DIR:
-$(printf '  - %s\n' "${MISSING_DEPS[@]}")
-EOF
-    exit 0
-fi
-
 DAILY_LOGS_DIR="$VIRGIL_DIR/daily-logs"
 LOGS_DIR="$VIRGIL_DIR/logs"
 SCORES_FILE="$LOGS_DIR/quiz-scores.json"
@@ -44,8 +23,16 @@ mkdir -p "$LOGS_DIR" "$DAILY_LOGS_DIR"
 [[ -f "$SCORES_FILE" ]] || echo '{}' > "$SCORES_FILE"
 [[ -f "$LOG_FILE" ]] || printf '# VIRGIL Daily Log — %s\n\n---\n\n' "$TODAY" > "$LOG_FILE"
 
+# ── Source secrets from .env (primary) with crontab fallback ─────────────
+VIRGIL_ENV="${HOME}/.config/virgil/.env"
+if [[ -f "$VIRGIL_ENV" ]]; then
+    # shellcheck source=/dev/null
+    set -a; source "$VIRGIL_ENV"; set +a
+fi
+# Crontab fallback — only runs if .env missing or variable still unset
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /' || true)"
+    ANTHROPIC_API_KEY=$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | cut -d'"' -f2 | head -1)
+    [[ -n "$ANTHROPIC_API_KEY" ]] && export ANTHROPIC_API_KEY
 fi
 
 TOPIC_ARG="${1:-}"
@@ -261,6 +248,19 @@ entry["score"] = correct
 entry["out_of"] = total_q
 entry["last_tested"] = TODAY
 entry["attempts"] = int(entry.get("attempts", 0)) + 1
+
+# SM-2 spaced repetition interval
+from datetime import date as _date, timedelta as _td
+_ratio = correct / total_q if total_q > 0 else 0
+_prev  = float(entry.get("interval_days", 1))
+if _ratio >= 0.8:
+    _interval = max(1.0, _prev * 2.5)
+elif _ratio >= 0.6:
+    _interval = max(1.0, _prev * 1.5)
+else:
+    _interval = 1.0
+entry["interval_days"] = round(_interval, 1)
+entry["next_review"]   = (_date.fromisoformat(TODAY) + _td(days=int(_interval))).isoformat()
 scores[topic] = entry
 
 SCORES_FILE.write_text(json.dumps(scores, indent=2, sort_keys=True))

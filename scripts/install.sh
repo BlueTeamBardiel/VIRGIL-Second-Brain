@@ -676,8 +676,15 @@ done
 hdr "Step 8 — Starter notes"
 
 if [[ -d "$INSTALL_SRC/starter-notes" ]]; then
-    cp -rn "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
-    ok "Starter notes copied to vault"
+    NOTE_COUNT=$(find "$VIRGIL_DIR/notes" -name "*.md" 2>/dev/null | wc -l)
+    if [[ "$NOTE_COUNT" -lt 10 ]]; then
+        info "Seeding starter notes..."
+        cp -r "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/"
+        ok "Starter notes seeded (vault was empty)"
+    else
+        cp -rn "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
+        ok "Starter notes copied to vault (skipped existing files)"
+    fi
 fi
 if [[ -f "$INSTALL_SRC/GETTING-STARTED.md" ]]; then
     cp "$INSTALL_SRC/GETTING-STARTED.md" "$VIRGIL_DIR/"
