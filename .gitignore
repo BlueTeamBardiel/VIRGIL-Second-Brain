@@ -1,5 +1,12 @@
 # Vault content — never commit personal notes
-notes/
+# notes/knowledge/ is the sanitized public knowledge base; allow it explicitly
+notes/cve/
+notes/personal/
+notes/feeds/
+notes/daily-logs/
+notes/mitre/
+notes/reports/
+notes/guides/
 daily-logs/
 weekly-summaries/
 
