@@ -22,9 +22,11 @@
 set -euo pipefail
 
 # ── Constants ─────────────────────────────────────────────────────────────────
+VIRGIL_VERSION="1.3.0"
 VIRGIL_REPO="https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain.git"
 VIRGIL_RAW="https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main"
 VIRGIL_RELEASES="https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain/releases"
+VIRGIL_CHECKSUM_URL="https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/checksums.sha256"
 INSTALL_LOG="/tmp/virgil-install-$$.log"
 
 # ── Colors ────────────────────────────────────────────────────────────────────
@@ -40,6 +42,26 @@ ask()   { echo -e "${BOLD}${YEL}  ?${RST}  $*"; }
 step()  { echo -e "  ${BOLD}$*${RST}"; }
 
 die() { err "$*"; exit 1; }
+
+verify_checksums() {
+  if ! command -v sha256sum &>/dev/null; then
+    warn "sha256sum not available — skipping checksum verification"
+    return 0
+  fi
+  info "Verifying installer checksums..."
+  if curl -fsSL "$VIRGIL_CHECKSUM_URL" -o /tmp/virgil-checksums.sha256 2>/dev/null; then
+    cd "$(dirname "$0")"
+    if sha256sum --check /tmp/virgil-checksums.sha256 --quiet 2>/dev/null; then
+      ok "Checksums verified"
+    else
+      warn "Checksum mismatch detected — installer may be modified"
+      warn "Continuing anyway — verify manually if concerned"
+    fi
+    rm -f /tmp/virgil-checksums.sha256
+  else
+    warn "Could not fetch checksums — skipping verification"
+  fi
+}
 
 # ── Flag parsing ──────────────────────────────────────────────────────────────
 FAST_MODE=false
@@ -361,6 +383,8 @@ if [[ ${#MISSING_SOFT[@]} -gt 0 ]]; then
         for m in "${NON_PIP[@]}"; do echo "    • $m"; done
     fi
 fi
+
+verify_checksums
 
 # ── Determine install source ──────────────────────────────────────────────────
 # If BASH_SOURCE is set and points to a real file, we're running from a local clone.

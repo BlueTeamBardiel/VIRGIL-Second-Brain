@@ -1,0 +1,14 @@
+[Unit]
+Description=VIRGIL Telegram Capture Bot
+After=network.target
+
+[Service]
+Type=simple
+User=your-username
+WorkingDirectory=/home/your-username/Documents/Cocytus/VIRGIL
+ExecStart=/usr/bin/python3 /home/your-username/Documents/Cocytus/VIRGIL/ingest/telegram-bot.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
