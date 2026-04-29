@@ -24,13 +24,13 @@ Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
 
 ---
 
-## What's shipped — v1.1.0
+## What's shipped — v1.3.0
 
 **Install it and use it today.**
 
 - One-line curl installer — Linux, macOS, Windows via WSL2
-- 900+ starter knowledge notes — Security+, CySA+, CCNA, MITRE ATT&CK,
-  347 CVEs with Feynman-style explanations
+- 5,000+ starter knowledge notes — Security+, CySA+, CCNA, MITRE ATT&CK,
+  350+ CVEs with Feynman-style explanations
 - Automated ingest pipelines — 22 threat intel feeds daily, NVD CVE feed
   daily, URL and PDF ingest
 - Nightly memory distillation — session logs → permanent facts and lessons
@@ -40,6 +40,14 @@ Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
 - Slack integration — approve/deny pipeline actions from your phone
 - Pre-commit secret scanning — gitleaks on all repos
 - Post-install guided wizard — walks you through first steps after install
+- ✅ /secplus slash command — SY0-701 domain-mapped study session:
+  - Pulls weak Security+ topics from quiz-scores.json
+  - Feynman prompts per domain
+  - Ships in .claude/commands/secplus.md
+- ✅ /aplus slash command — Core 1/Core 2 domain-mapped study session:
+  - Pulls weak A+ topics from quiz-scores.json
+  - Feynman prompts per domain
+  - Ships in .claude/commands/aplus.md
 
 ---
 
@@ -246,6 +254,6 @@ adapt it, make it yours."
 ---
 
 *Last updated: April 2026*
-*Current release: v1.1.0*
-*Next milestone: v1.2.0 — RAG + VIRGIL Session*
-*Vault: 900+ notes | 3 repos | local GPU inference | one approval gate*
+*Current version: v1.3.0 tagged | Repo visibility: public*
+*Next milestone: v1.4.0 — naming conventions, README rewrite, secret scanning*
+*Vault: 5,000+ notes | 3 repos | local GPU inference | one approval gate*

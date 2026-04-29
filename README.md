@@ -1,54 +1,84 @@
-# VIRGIL
+# VIRGIL — AI-Powered Second Brain for Cybersecurity Learners
 
-*A self-building knowledge base for people learning cybersecurity the hard way.*
+> Your personal knowledge base that studies with you, not for you.
+> Local. Private. Free.
 
-![Version](https://img.shields.io/badge/version-v1.1.0-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
+![Version](https://img.shields.io/badge/version-v1.3.0-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
 
-**VIRGIL is an Obsidian vault + automation system** that ingests threat intel, CVEs, and study material daily — and uses local or cloud AI to turn it into a knowledge graph you actually remember.
+## What it does
+
+VIRGIL ingests threat intel daily, lets you quiz yourself on weak topics, tracks what you know and what you don't, and compounds knowledge automatically over time. Runs on your own hardware via [Ollama](https://ollama.com). No subscription. No data leaving your machine.
+
+## What you get on day one
+
+- **5,000+ knowledge notes** — Security+, CySA+, CCNA, MITRE ATT&CK, 350+ CVEs with Feynman explanations
+- **Daily threat intel** — 22 RSS feeds + NVD CVE pipeline, automated every morning
+- **Study commands** — `/cysa`, `/ccna`, `/secplus`, `/aplus` — domain-mapped Feynman sessions
+- **Spaced repetition** — `virgil-review` surfaces what's due based on your quiz scores
+- **Conversation capture** — save any Claude.ai session to your vault in one click
+
+## Install
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
 ```
 
-No API key required. Runs on your own hardware via [Ollama](https://ollama.com). Twenty-minute setup.
+**Requires:** Linux / macOS / WSL2 · [Ollama](https://ollama.com) · [Obsidian](https://obsidian.md) · [Claude Code](https://claude.ai/code)
+
+No API key required. Twenty-minute setup.
+
+## Quick start
+
+After install:
+
+1. Open Obsidian → point it at `~/VIRGIL/notes`
+2. Run `claude` in `~/VIRGIL` — VIRGIL introduces itself
+3. Type `/cysa` or `/secplus` to start a study session
+4. Type `/virgil-quiz "topic"` to quiz yourself on any topic
+5. Type `/handoff` when ending a session to save context
+
+## Screenshots
+
+> Screenshots coming soon. See the [demo GIF](docs/demo.gif) for
+> a walkthrough of the study session flow.
+
+*Obsidian vault with 5,000+ knowledge notes | OpenWebUI chat
+interface | Terminal study sessions*
+
+---
+
+## How it works
 
 ![VIRGIL knowledge graph](assets/virgil-graph.gif)
 
----
+**VIRGIL is an Obsidian vault + automation system.**
 
-## I. Who This Is For
+The core loop:
 
-You're studying for a cert. Or building a homelab. Or trying to absorb threat intel that drops faster than you can process it.
+1. **Ingest** — threat intel feeds, CVEs, ATT&CK techniques arrive every morning
+2. **Connect** — wikilink script runs nightly, linking CVEs → ATT&CK → NIST controls
+3. **Study** — Feynman-style sessions push back, find gaps, and record what you got wrong
+4. **Distill** — session logs → permanent memory facts via nightly AI distillation
+5. **Repeat** — quiz scores surface weak topics; the system knows what to drill
 
-The advice online is everywhere and contradictory. Every roadmap has an affiliate link. The subreddit post with 3,000 upvotes was written by someone hired in a completely different market. You're studying in the gaps between applications, and nothing is sticking — because there's no system holding it together.
+After six months of real use: not 500 disconnected files, but a knowledge graph — CVEs linked to ATT&CK techniques linked to NIST controls linked to the lab config where you saw it in practice.
 
-That's a structural problem, not a personal one. VIRGIL is what fixes it.
+### Architecture
 
-Built during exactly this grind — not by someone who packaged lessons into a course after making it — but live, under pressure, while studying for CySA+, running a homelab, and navigating a tough job market. You don't have to build it from scratch. Use what's here.
+| Layer | What it does |
+|-------|-------------|
+| Obsidian vault | Markdown notes, graph view, search |
+| Claude Code | AI sessions, study commands, memory |
+| Ingest pipelines | RSS, CVE, URL, PDF → notes |
+| Ollama | Local inference, no API costs |
+| ChromaDB (optional) | Vector search over your vault |
+| OpenWebUI (optional) | Browser and mobile access |
 
----
-
-## II. The Grind
-
-Job hunting in IT is slow. You apply, wait, hear nothing. Apply again. The advice says keep going — and it's right, even when it's not helpful.
-
-The structural problem isn't willpower. It's that there's nothing connecting your work. You study for a week, take a break, come back and half of it is gone. You apply to a dozen jobs, get one response, then forget what you studied while you were prepping for a different role. Knowledge evaporates because nothing is holding it.
-
-VIRGIL is what holds it. Your session notes feed into a nightly AI distillation. Your CVE ingest connects to ATT&CK techniques which connect to NIST controls which connect to the lab config where you saw it live. The graph compounds. You don't start from zero every time you sit down.
-
----
-
-## III. The Impostor
-
-Everyone in this field feels it — the sense that everyone else understood something you didn't quite catch. That feeling doesn't mean you're wrong for being here. It means you're being honest about what you don't know yet. The people who never feel it are the ones you should worry about.
-
-What actually builds confidence: pattern recognition through repetition and review. Not a different personality type. Not more hours of video content. Repetition, feedback, and a system that shows you what you know and what you don't.
-
-VIRGIL handles the system part.
+Full details: [`ARCHITECTURE.md`](ARCHITECTURE.md)
 
 ---
 
-## IV. VIRGIL
+## Philosophy
 
 *Nel mezzo del cammin di nostra vita — midway through the journey of our life, I came to myself in a dark wood, for the straight way was lost.*
 
@@ -58,55 +88,15 @@ This project is named for him. The field is the dark wood. VIRGIL is the guide.
 
 ---
 
-## V. What VIRGIL Actually Is
+You're studying for a cert. Or building a homelab. Or trying to absorb threat intel that drops faster than you can process it.
 
-An Obsidian-based knowledge system built for people learning cybersecurity and IT without a map.
+The advice online is everywhere and contradictory. Every roadmap has an affiliate link. You're studying in the gaps between applications, and nothing is sticking — because there's no system holding it together.
 
-- **Daily session logs** — capture what you actually did, not what you planned to do
-- **Memory system** — nightly AI distillation of logs into permanent facts and lessons; work accumulates instead of evaporating
-- **Automated ingestion** — 22+ threat intel feeds every morning, NVD CVE feed daily
-- **Study tools** — Feynman-style sessions for CySA+, CCNA, Security+; they push back and find the gaps
-- **Local AI inference** — runs on your hardware via Ollama, with cloud fallback when needed
+That's a structural problem, not a personal one. VIRGIL is what fixes it.
 
-After six months of real use: not 500 disconnected files, but a knowledge graph — CVEs linked to ATT&CK techniques linked to NIST controls linked to the lab config where you saw it in practice.
+Built during exactly this grind — not by someone who packaged lessons into a course after making it — but live, under pressure, while studying for CySA+, running a homelab, and navigating a tough job market. You don't have to build it from scratch. Use what's here.
 
-Technical setup and full configuration: [`GETTING-STARTED.md`](GETTING-STARTED.md)
-
----
-
-## VI. What VIRGIL Does for You
-
-Guides you. Teaches you. Pushes back when you're wrong.
-
-If you're explaining a concept incorrectly, it says so. If you think you've mastered something and there's a gap, it asks the follow-up question that exposes it. Teaching method is Feynman-style: if you can't explain it in plain English to someone who's never heard of it, you don't understand it yet.
-
-It tracks what you know and what you don't. Links your notes. Shows you the shape of what you've built over time.
-
-It does not congratulate you for showing up. The work is the work. VIRGIL is how you make it compound.
-
----
-
-## Get Started
-
-**What you need:**
-- Linux, macOS, or Windows (via WSL2)
-- Python 3.9+
-- [Obsidian](https://obsidian.md) (free)
-- Anthropic API key — optional (local inference via Ollama works without one)
-
-**Quick install:**
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
-```
-
-The installer handles vault structure, dependency checks, crontab, and a live CVE demo. Full guide: [GETTING-STARTED.md](GETTING-STARTED.md)
-
----
-
-*"I have come to lead you to the other shore; into eternal darkness; into fire and into ice."*
-*— Virgil, Inferno Canto III*
-
-The path is real. It is not comfortable, and it does not get easier. You get more capable — which is a different thing.
+VIRGIL does not congratulate you for showing up. The work is the work. VIRGIL is how you make it compound.
 
 ---
 
@@ -116,3 +106,9 @@ A four-source independent audit was completed April 2026 (Claude Sonnet 4.6, Gem
 
 Fixed in this release: sanitization leaks, Python dependency pinning, url-ingest.sh URL validation with SSRF protection, eval+crontab pattern replaced with safe secret loading.
 
+---
+
+*"I have come to lead you to the other shore; into eternal darkness; into fire and into ice."*
+*— Virgil, Inferno Canto III*
+
+The path is real. It is not comfortable, and it does not get easier. You get more capable — which is a different thing.
