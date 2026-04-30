@@ -266,6 +266,6 @@ openssl genrsa -aes256 -out ca.key 4096
 
 # Generate CA self-signed certificate (10 year validity)
 openssl req -new -x509 -days 3650 -key ca.key -out ca.crt \
-  -subj "/C=US/ST=Lab/O=COCYTUS Lab CA/CN=COCYTUS Root CA"
+  -subj "/C=US/ST=Lab/O=YOUR-LAB Lab CA/CN=YOUR-LAB Root CA"
 
 # Step 2: Generate

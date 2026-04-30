@@ -9,7 +9,7 @@
 - Self‑hosted, free, SQLite or MySQL backend
 - Runs as a systemd service on the control node
 
-## COCYTUS Setup
+## YOUR-LAB Setup
 - Runs on [[YOUR_JUMP_SERVER]] at <http://LAB_IP:3000>
 - Version: 2.17.31
 - Backend: SQLite
@@ -48,7 +48,7 @@ cd ~/semaphore-playbooks-clone && git pull
 
 ## Inventory Setup
 
-- **Name:** COCYTUS
+- **Name:** YOUR-LAB
 - **Type:** Static
 - **SSH Key:** YOUR-USERNAME-ssh (ed25519)
 - **Sudo Credentials:** MUST be set to **None**
@@ -117,7 +117,7 @@ Failed to lock apt for exclusive operation: Permission denied
 ```
 
 Sudo Credentials is set in the inventory. Fix:
-- Edit COCYTUS inventory → clear Sudo Credentials → set to **None**
+- Edit YOUR-LAB inventory → clear Sudo Credentials → set to **None**
 
 ### GPG error on YOUR_WORKSTATION
 
@@ -145,7 +145,7 @@ UNREACHABLE — Connection timed out
 
 SQLite database was reset. Playbooks are still in `~/semaphore-playbooks/` — recreate templates in UI with:
 
-- Inventory: COCYTUS
+- Inventory: YOUR-LAB
 - Repository: Local (`/home/your-username/semaphore-playbooks-clone`)
 - SSH Key: YOUR-USERNAME-ssh
 - Sudo: None
@@ -198,10 +198,10 @@ These failures manifest as silent misconfigurations, untracked changes, and, in 
 
 ---
 
-## [Ansible] [YOUR_JUMP_SERVER] [COCYTUS] [Fleet Automation] [UFW] [fail2ban] [Active Directory]
+## [Ansible] [YOUR_JUMP_SERVER] [YOUR-LAB] [Fleet Automation] [UFW] [fail2ban] [Active Directory]
 
 <!-- preserved: [[Active Directory]] -->
-<!-- preserved: [[COCYTUS]] -->
+<!-- preserved: [[YOUR-LAB]] -->
 <!-- preserved: [[Fleet Automation]] -->
 <!-- preserved: [[UFW]] -->
 <!-- preserved: [[fail2ban]] -->

@@ -73,7 +73,7 @@ Think of [[encryption]] like a safe deposit box. You put your valuables (plainte
 
 [[Masking]] is like a redaction pen on a document: you still have the full document in your filing cabinet, but when you photocopy it for someone, you black out sensitive parts. The underlying data isn't destroyed—just hidden from that person's view.
 
-**Technical reality:** In a homelab like Morpheus's [[[YOUR-LAB]]] fleet, you'd use [[encryption]] (via [[TLS]] on [[Tailscale]]) to protect data in transit, [[hashing]] to store [[Active Directory]] password hashes securely, [[obfuscation]] to protect proprietary monitoring rules in [[Wazuh]], and [[masking]] in [[SIEM]] dashboards so junior analysts don't see full database credentials.
+**Technical reality:** In a homelab like your [[[YOUR-LAB]]] fleet, you'd use [[encryption]] (via [[TLS]] on [[Tailscale]]) to protect data in transit, [[hashing]] to store [[Active Directory]] password hashes securely, [[obfuscation]] to protect proprietary monitoring rules in [[Wazuh]], and [[masking]] in [[SIEM]] dashboards so junior analysts don't see full database credentials.
 
 ---
 
@@ -107,7 +107,7 @@ Think of [[encryption]] like a safe deposit box. You put your valuables (plainte
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] fleet, data protection manifests as:
+In your [[[YOUR-LAB]]] fleet, data protection manifests as:
 - **[[Tailscale]] VPN with [[TLS]] 1.3** encrypts all inter-node traffic, protecting against network sniffing
 - **[[Wazuh]] SIEM** uses [[hashing]] to verify log integrity and store passwords securely; [[masking]] rules hide API keys and credentials from junior analyst dashboards
 - **[[Active Directory]] password hashing** (NTLM or Kerberos) ensures passwords are never stored in plaintext

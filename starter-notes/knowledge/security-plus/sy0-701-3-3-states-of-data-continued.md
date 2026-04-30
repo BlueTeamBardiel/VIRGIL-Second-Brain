@@ -85,7 +85,7 @@ The exam tests whether you understand this **legal-technical boundary**: data so
 
 ## Real-World Application
 
-In Morpheus's homelab ([[[YOUR-LAB]]] fleet), if the lab serves EU-based users or processes EU citizen data (e.g., via [[Wazuh]] monitoring logs), those logs must be stored in an EU-compliant region. Using [[Tailscale]] and [[Active Directory]], Morpheus could implement geolocation-based access rules: permit full administrative access when admins are on-site, but restrict sensitive operations when VPN access originates from outside the country. This mirrors production [[SOC]] practices where [[SIEM]] data (like [[Splunk]] or [[Wazuh]] indices) is geo-restricted to meet regulatory requirements.
+In your homelab ([[[YOUR-LAB]]] fleet), if the lab serves EU-based users or processes EU citizen data (e.g., via [[Wazuh]] monitoring logs), those logs must be stored in an EU-compliant region. Using [[Tailscale]] and [[Active Directory]], you could implement geolocation-based access rules: permit full administrative access when admins are on-site, but restrict sensitive operations when VPN access originates from outside the country. This mirrors production [[SOC]] practices where [[SIEM]] data (like [[Splunk]] or [[Wazuh]] indices) is geo-restricted to meet regulatory requirements.
 
 ---
 

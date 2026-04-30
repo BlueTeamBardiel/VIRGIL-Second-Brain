@@ -8,7 +8,7 @@ tags: [security-plus, sy0-701, domain-5, compliance, regulatory-framework, legal
 
 # 5.1 - Security Considerations
 
-Security considerations encompass the regulatory, legal, industry-specific, and geographical factors that shape an organization's security posture and compliance obligations. This section is critical for the Security+ exam because it tests whether candidates understand that security is not purely technical—it's deeply rooted in business, legal, and operational contexts. Morpheus must design homelab security policies that account for these broader considerations, even at small scale.
+Security considerations encompass the regulatory, legal, industry-specific, and geographical factors that shape an organization's security posture and compliance obligations. This section is critical for the Security+ exam because it tests whether candidates understand that security is not purely technical—it's deeply rooted in business, legal, and operational contexts. you must design homelab security policies that account for these broader considerations, even at small scale.
 
 ---
 
@@ -52,7 +52,7 @@ Think of security considerations as the **rulebook for a sports league**. Just a
 - A **security team** is like the franchise's compliance officer—they must know all the rules, enforce them, keep records, and report violations.
 
 **The Technical Reality:**
-In practice, Morpheus might set up a [[Wazuh]] monitoring system to automatically capture audit logs for compliance. If his homelab processes health data, he must encrypt it per [[HIPAA]], isolate it on specific [[VLAN]]s, and document access. If he operates across U.S. states or internationally, he must track where data lives, ensure it doesn't cross forbidden borders, and maintain breach notification procedures. The security architecture must be built *around* these legal and regulatory constraints, not bolted on after the fact.
+In practice, you might set up a [[Wazuh]] monitoring system to automatically capture audit logs for compliance. If your homelab processes health data, you must encrypt it per [[HIPAA]], isolate it on specific [[VLAN]]s, and document access. If you operate across U.S. states or internationally, you must track where data lives, ensure it doesn't cross forbidden borders, and maintain breach notification procedures. The security architecture must be built *around* these legal and regulatory constraints, not bolted on after the fact.
 
 ---
 
@@ -82,7 +82,7 @@ In practice, Morpheus might set up a [[Wazuh]] monitoring system to automaticall
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, security considerations directly impact design decisions. If he plans to process any healthcare data, every [[Active Directory]] access log, every [[Wazuh]] alert, and every encryption key must meet [[HIPAA]] standards. Similarly, if his lab operates across state lines or internationally, he must document data flow paths to prove compliance with regional data residency laws. Even for a personal lab, understanding these frameworks prepares him to scale security architecture professionally and recognize when regulatory compliance—not just technical controls—drives architectural choices.
+In your [YOUR-LAB] homelab, security considerations directly impact design decisions. If he plans to process any healthcare data, every [[Active Directory]] access log, every [[Wazuh]] alert, and every encryption key must meet [[HIPAA]] standards. Similarly, if his lab operates across state lines or internationally, he must document data flow paths to prove compliance with regional data residency laws. Even for a personal lab, understanding these frameworks prepares him to scale security architecture professionally and recognize when regulatory compliance—not just technical controls—drives architectural choices.
 
 ---
 

@@ -86,7 +86,7 @@ In internal networks, an organization might become its own "bank" by creating a 
 
 ## Real-World Application
 
-In the [YOUR-LAB] fleet, every internal service (Wazuh dashboards, Tailscale control plane, homelab VPN endpoints) needs encrypted communication. Rather than purchasing expensive certificates from a public CA for internal-only services, Morpheus would deploy a private CA using [[Active Directory]] Certificate Services or OpenCA. Each homelab device would be configured to trust this internal CA, allowing seamless HTTPS communication across the fleet without browser warnings. This approach scales efficiently for medium-to-large labs where dozens of services need certificates.
+In the [YOUR-LAB] fleet, every internal service (Wazuh dashboards, Tailscale control plane, homelab VPN endpoints) needs encrypted communication. Rather than purchasing expensive certificates from a public CA for internal-only services, you would deploy a private CA using [[Active Directory]] Certificate Services or OpenCA. Each homelab device would be configured to trust this internal CA, allowing seamless HTTPS communication across the fleet without browser warnings. This approach scales efficiently for medium-to-large labs where dozens of services need certificates.
 
 ---
 

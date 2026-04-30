@@ -46,7 +46,7 @@ The integration solves the problem of “enumeration‑to‑exploitation frictio
 - **Human Error**: Relying on automated imports may give a false sense of completeness; an attacker could miss non‑standard ports or hidden services, allowing an adversary to remain undetected.
 
 ## Lab Relevance
-- **Homelab Setup** (COCYTUS context)  
+- **Homelab Setup** (YOUR-LAB context)  
   1. Spin up a Kali Linux VM.  
   2. Deploy a target VM (e.g., Windows 10 or a Linux distro) with a few open services (SSH, HTTP).  
   3. Run Nmap against the target:  

@@ -1,7 +1,7 @@
-# COCYTUS Phase 2
+# YOUR-LAB Phase 2
 
 ## What it is
-Like a burglar who has already picked the lock and is now quietly memorizing the floor plan before stealing anything, COCYTUS Phase 2 is the **post-exploitation reconnaissance and persistence establishment stage** within the COCYTUS attack framework — a structured intrusion methodology where the attacker, having achieved initial access, focuses on lateral movement mapping, credential harvesting, and implanting durable backdoors before executing the primary mission objective.
+Like a burglar who has already picked the lock and is now quietly memorizing the floor plan before stealing anything, YOUR-LAB Phase 2 is the **post-exploitation reconnaissance and persistence establishment stage** within the YOUR-LAB attack framework — a structured intrusion methodology where the attacker, having achieved initial access, focuses on lateral movement mapping, credential harvesting, and implanting durable backdoors before executing the primary mission objective.
 
 ## Why it matters
 In the 2020s-era APT campaigns targeting defense contractors, adversaries following similar phased intrusion models used this "quiet expansion" window — sometimes lasting weeks — to identify domain controllers and harvest Kerberos tickets via AS-REP roasting before any data exfiltration triggered alerts. Defenders who monitor only for initial compromise or final exfiltration miss the Phase 2 window entirely, which is precisely where dwell time becomes catastrophically expensive.

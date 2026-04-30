@@ -76,7 +76,7 @@ Now here's the magic: Alice takes Bob's color and mixes it with her private ingr
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, when a node running [[Wazuh]] agent authenticates to the manager server over [[TLS]], an [[ECDH]] key exchange occurs in the [[TLS]] handshake. The agent and manager independently derive a symmetric key using their respective certificates' public keys and private keys, then switch to [[AES-256-GCM]] for encrypted communication of logs and security events. Similarly, [[Tailscale]] uses [[ECDH]] for VPN tunnel establishment, ensuring that even if the Tailscale coordination servers are compromised, the peer-to-peer symmetric keys remain secure due to [[Perfect Forward Secrecy]].
+In your [[[YOUR-LAB]]] homelab, when a node running [[Wazuh]] agent authenticates to the manager server over [[TLS]], an [[ECDH]] key exchange occurs in the [[TLS]] handshake. The agent and manager independently derive a symmetric key using their respective certificates' public keys and private keys, then switch to [[AES-256-GCM]] for encrypted communication of logs and security events. Similarly, [[Tailscale]] uses [[ECDH]] for VPN tunnel establishment, ensuring that even if the Tailscale coordination servers are compromised, the peer-to-peer symmetric keys remain secure due to [[Perfect Forward Secrecy]].
 
 ---
 

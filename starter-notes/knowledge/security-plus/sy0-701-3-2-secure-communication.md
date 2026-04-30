@@ -91,7 +91,7 @@ Your original data (the letter) gets encrypted (locked in the first box). That e
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, a [[Tailscale]] mesh network (which uses [[WireGuard]] tunneling, similar in concept to a modern [[VPN]]) provides secure, on-demand access to lab resources across geographic locations without needing a central [[VPN Concentrator]]. For production environments integrating [[Active Directory]] and [[Wazuh]] SIEM, site-to-site [[IPSec]] would bridge on-premises infrastructure to cloud-based security monitoring, while [[SSL]]/[[TLS]] would allow remote sysadmins secure browser-based access. Understanding these distinctions helps design cost-effective, scalable security architectures that balance convenience (browser-based access) with robustness (always-on encrypted links).
+In your [[[YOUR-LAB]]] homelab, a [[Tailscale]] mesh network (which uses [[WireGuard]] tunneling, similar in concept to a modern [[VPN]]) provides secure, on-demand access to lab resources across geographic locations without needing a central [[VPN Concentrator]]. For production environments integrating [[Active Directory]] and [[Wazuh]] SIEM, site-to-site [[IPSec]] would bridge on-premises infrastructure to cloud-based security monitoring, while [[SSL]]/[[TLS]] would allow remote sysadmins secure browser-based access. Understanding these distinctions helps design cost-effective, scalable security architectures that balance convenience (browser-based access) with robustness (always-on encrypted links).
 
 ---
 

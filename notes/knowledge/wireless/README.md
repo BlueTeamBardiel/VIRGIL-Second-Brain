@@ -80,8 +80,8 @@ Deploy a rogue AP with the same SSID (and optionally same BSSID) as a legitimate
 - **airbase-ng:** Basic evil twin creation
 - **Bettercap:** MITM framework, works with evil twin for credential capture
 
-### CAIM in COCYTUS
-[[CAIM]] (WiFi Pineapple MK7) is used for authorized wireless testing in the COCYTUS lab:
+### CAIM in YOUR-LAB
+[[CAIM]] (WiFi Pineapple MK7) is used for authorized wireless testing in the YOUR-LAB lab:
 - PineAP: broadcast hundreds of SSIDs to attract probing devices
 - Deauth: force clients off legitimate APs
 - Evil twin: capture captive portal creds

@@ -30,7 +30,8 @@ if [[ ! -f "$PDF_PATH" ]]; then
 fi
 
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
+    # shellcheck source=/dev/null
+    set -a; source "$VIRGIL_DIR/.env" 2>/dev/null || true; set +a
 fi
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
     log "ERROR: ANTHROPIC_API_KEY is not set."

@@ -112,7 +112,7 @@ Real impact: Session hijacking, credential theft, keyloggers, crypto mining
 - Unnecessary ports/services open
 - Missing security headers (CSP, HSTS, X-Frame-Options)
 
-**COCYTUS Relevance:** Every new web service deployed ([[Portainer]], [[Grafana]], [[Semaphore]]) must have:
+**YOUR-LAB Relevance:** Every new web service deployed ([[Portainer]], [[Grafana]], [[Semaphore]]) must have:
 - Default credentials changed immediately
 - Service only exposed on appropriate interface
 - Access controlled by [[UFW]] or [[Tailscale]] ACLs
@@ -133,7 +133,7 @@ Real impact: Session hijacking, credential theft, keyloggers, crypto mining
 
 **Prevention:**
 - Dependency scanning in CI/CD (Dependabot, Snyk, OWASP Dependency-Check)
-- Regular patching (this is why COCYTUS runs [[Semaphore]] apt-upgrade.yml Mon/Thu)
+- Regular patching (this is why YOUR-LAB runs [[Semaphore]] apt-upgrade.yml Mon/Thu)
 - Software Bill of Materials (SBOM) for your own software
 
 ---
@@ -189,7 +189,7 @@ Real impact: Session hijacking, credential theft, keyloggers, crypto mining
 - Logs not monitored in real-time
 - Logs stored on the same system being attacked (attacker deletes them)
 
-**COCYTUS:** This is why [[Wazuh]] is deployed — agents ship logs to central manager on [[LAB_HOST]], attackers can't delete forwarded logs.
+**YOUR-LAB:** This is why [[Wazuh]] is deployed — agents ship logs to central manager on [[LAB_HOST]], attackers can't delete forwarded logs.
 
 **Prevention:** Centralized logging ([[Splunk]], Elastic, [[Wazuh]]), alerting on suspicious patterns, log integrity (WORM storage)
 

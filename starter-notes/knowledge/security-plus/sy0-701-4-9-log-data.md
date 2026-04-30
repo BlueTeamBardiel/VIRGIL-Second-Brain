@@ -83,7 +83,7 @@ A single camera catching suspicious behavior is useful, but when you *correlate*
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, [[Wazuh]] (an open-source [[SIEM]]) aggregates logs from all fleet nodes, pfSense firewalls, [[Active Directory]], Tailscale VPN, and any deployed applications. When an attacker attempts to brute-force an [[Active Directory]] account, the OS security log generates failed authentication events; simultaneously, the firewall logs the repeated connection attempts; and Wazuh correlates these events, triggering an alert. Without log correlation, the sysadmin might miss the attack buried in millions of log entries. This is why understanding log data and [[SIEM]] correlation is critical for real-world security operations—it's the difference between reactive incident response and proactive threat detection.
+In your [YOUR-LAB] homelab, [[Wazuh]] (an open-source [[SIEM]]) aggregates logs from all fleet nodes, pfSense firewalls, [[Active Directory]], Tailscale VPN, and any deployed applications. When an attacker attempts to brute-force an [[Active Directory]] account, the OS security log generates failed authentication events; simultaneously, the firewall logs the repeated connection attempts; and Wazuh correlates these events, triggering an alert. Without log correlation, the sysadmin might miss the attack buried in millions of log entries. This is why understanding log data and [[SIEM]] correlation is critical for real-world security operations—it's the difference between reactive incident response and proactive threat detection.
 
 ---
 

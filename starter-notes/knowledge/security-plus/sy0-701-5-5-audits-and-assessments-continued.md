@@ -76,7 +76,7 @@ The **examination** is the active, boots-on-the-ground investigation. The **asse
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, an external audit would evaluate whether the [[Wazuh]] [[SIEM]], [[Active Directory]] access controls, and [[Tailscale]] [[VPN]] configurations comply with security frameworks like [[ISO 27001]] or [[NIST]] CSF. If [YOUR-LAB] operated in a regulated environment (e.g., healthcare, finance), a third-party auditor might conduct a hands-on examination: reviewing [[Wazuh]] logs for failed authentication attempts, verifying that [[MFA]] is enforced on all [[Active Directory]] accounts, and testing whether incident response procedures are documented and functional. The auditor would then compile recommendations—"Implement automated log retention; conduct quarterly disaster recovery drills"—that Morpheus would track and remediate in a formal audit response plan.
+In your [YOUR-LAB] homelab, an external audit would evaluate whether the [[Wazuh]] [[SIEM]], [[Active Directory]] access controls, and [[Tailscale]] [[VPN]] configurations comply with security frameworks like [[ISO 27001]] or [[NIST]] CSF. If [YOUR-LAB] operated in a regulated environment (e.g., healthcare, finance), a third-party auditor might conduct a hands-on examination: reviewing [[Wazuh]] logs for failed authentication attempts, verifying that [[MFA]] is enforced on all [[Active Directory]] accounts, and testing whether incident response procedures are documented and functional. The auditor would then compile recommendations—"Implement automated log retention; conduct quarterly disaster recovery drills"—that you would track and remediate in a formal audit response plan.
 
 ---
 

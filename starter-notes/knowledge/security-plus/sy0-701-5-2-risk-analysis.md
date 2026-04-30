@@ -153,7 +153,7 @@ Both approaches inform decisions, but quantitative gives you the *numbers* to de
 
 ## Real-World Application
 
-In Morpheus's homelab ([[[YOUR-LAB]]] fleet), risk analysis informs security investments: a [[Wazuh]] deployment reduces ARO for undetected intrusions; calculating ALE for a potential [[ransomware]] incident (AV = data stored, EF = 0.9 if backups fail, ARO = 0.1) justifies the cost of immutable backups and [[Active Directory]] hardening. Similarly, a sysadmin evaluating [[Tailscale]] adoption might quantify the ALE of a VPN compromise (loss of remote access, reputational damage) against the cost of the tool—quantitative risk analysis bridges business and security.
+In your homelab ([[[YOUR-LAB]]] fleet), risk analysis informs security investments: a [[Wazuh]] deployment reduces ARO for undetected intrusions; calculating ALE for a potential [[ransomware]] incident (AV = data stored, EF = 0.9 if backups fail, ARO = 0.1) justifies the cost of immutable backups and [[Active Directory]] hardening. Similarly, a sysadmin evaluating [[Tailscale]] adoption might quantify the ALE of a VPN compromise (loss of remote access, reputational damage) against the cost of the tool—quantitative risk analysis bridges business and security.
 
 ---
 

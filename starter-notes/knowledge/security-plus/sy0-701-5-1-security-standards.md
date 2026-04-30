@@ -86,7 +86,7 @@ Everyone in the organization knows exactly what's required, compliance can be au
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab environment, security standards translate directly to documented configurations: an [[Active Directory]] password policy enforcing 14-character minimum with complexity, [[Wazuh]] log ingestion rules defining which access attempts require escalation, [[Tailscale]] network policies restricting remote access by role, and full-disk [[encryption]] standards for all virtual machines. When onboarding a new lab node or offboarding a compromised one, having written standards (not ad-hoc decisions) ensures consistency, auditability, and rapid incident response—exactly what a SOC or sysadmin team needs in production environments.
+In your [YOUR-LAB] homelab environment, security standards translate directly to documented configurations: an [[Active Directory]] password policy enforcing 14-character minimum with complexity, [[Wazuh]] log ingestion rules defining which access attempts require escalation, [[Tailscale]] network policies restricting remote access by role, and full-disk [[encryption]] standards for all virtual machines. When onboarding a new lab node or offboarding a compromised one, having written standards (not ad-hoc decisions) ensures consistency, auditability, and rapid incident response—exactly what a SOC or sysadmin team needs in production environments.
 
 ## [[Wiki Links]]
 

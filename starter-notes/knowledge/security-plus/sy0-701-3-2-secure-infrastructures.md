@@ -116,7 +116,7 @@ The key insight: **No single technology secures infrastructure. It's the combina
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab environment, this translates to:
+In your [[[YOUR-LAB]]] homelab environment, this translates to:
 
 - **Device Placement**: [[Firewall|Firewalls]] (e.g., pfSense) separate the external network from internal resources, with [[Wazuh|Wazuh agents]] deployed on key systems to monitor zone boundaries.
 - **Security Zones**: [[Active Directory|AD domain controllers]], [[DNS|DNS servers]], and databases reside in protected internal zones; external services (Tailscale exit nodes, web frontends) are confined to screened zones.

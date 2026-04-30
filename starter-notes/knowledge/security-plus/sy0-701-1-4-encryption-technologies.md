@@ -130,7 +130,7 @@ This layered approach implements [[zero-trust]] principles: every key is segrega
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab environment, understanding these technologies is critical for production readiness:
+In your [[[YOUR-LAB]]] homelab environment, understanding these technologies is critical for production readiness:
 
 - **Endpoint Protection**: Every [YOUR-LAB] node with TPM 2.0 can enable [[BitLocker]] or LUKS encryption at rest, protecting lab VMs if physical drives are accessed. The TPM stores the volume master key, preventing cold-boot attacks.
 

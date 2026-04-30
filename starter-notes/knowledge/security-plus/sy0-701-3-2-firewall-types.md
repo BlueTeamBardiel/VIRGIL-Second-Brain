@@ -84,7 +84,7 @@ The firewall's job is to **allow good traffic through** (authorized employees go
 
 ## Real-World Application
 
-In **[YOUR-LAB]**, Morpheus likely runs both network-based firewalls (pfSense or OPNsense) at the network perimeter to control ingress/egress traffic, and host-based firewalls (Windows Defender, firewalld) on each system. When integrating [[Wazuh]] for threat detection or [[Tailscale]] for secure remote access, understanding firewall types is critical—Tailscale creates encrypted tunnels that bypass traditional port-based filtering, requiring NGFW awareness and application-layer rules. Similarly, when segmenting [[Active Directory]] domains or protecting sensitive lab data, proper firewall policies (both inbound and outbound) prevent lateral movement and data exfiltration.
+In **[YOUR-LAB]**, you likely runs both network-based firewalls (pfSense or OPNsense) at the network perimeter to control ingress/egress traffic, and host-based firewalls (Windows Defender, firewalld) on each system. When integrating [[Wazuh]] for threat detection or [[Tailscale]] for secure remote access, understanding firewall types is critical—Tailscale creates encrypted tunnels that bypass traditional port-based filtering, requiring NGFW awareness and application-layer rules. Similarly, when segmenting [[Active Directory]] domains or protecting sensitive lab data, proper firewall policies (both inbound and outbound) prevent lateral movement and data exfiltration.
 
 ---
 

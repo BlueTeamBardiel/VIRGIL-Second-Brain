@@ -74,7 +74,7 @@ XSS works similarly: the attacker tricks the **trusted website** (the coffee sho
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab environment, XSS awareness applies to custom web dashboards, Wazuh web interface interactions, and Pi-hole admin panels. If [YOUR-LAB] runs any internally developed web tools or exposes web-based management interfaces (especially over Tailscale), input from users (logs, configuration names, custom rules) must be output-encoded to prevent a compromised internal user or attacker with internal access from injecting malicious scripts. For incident response with Wazuh, analysts need to recognize XSS attack signatures in HTTP logs and browser-based payloads in network traffic captures.
+In your [YOUR-LAB] homelab environment, XSS awareness applies to custom web dashboards, Wazuh web interface interactions, and Pi-hole admin panels. If [YOUR-LAB] runs any internally developed web tools or exposes web-based management interfaces (especially over Tailscale), input from users (logs, configuration names, custom rules) must be output-encoded to prevent a compromised internal user or attacker with internal access from injecting malicious scripts. For incident response with Wazuh, analysts need to recognize XSS attack signatures in HTTP logs and browser-based payloads in network traffic captures.
 
 ---
 

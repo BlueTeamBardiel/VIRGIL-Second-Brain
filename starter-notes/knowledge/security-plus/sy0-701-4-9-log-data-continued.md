@@ -84,7 +84,7 @@ Imagine you run a busy retail store with security cameras and checkout registers
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, **Wazuh** serves as the central [[SIEM]]: it generates automated reports on agent health, failed authentication attempts (critical for monitoring the [[Active Directory]] domain), and policy violations. The Wazuh dashboard provides real-time visibility into fleet status across multiple nodes. When an anomaly is detected, Morpheus can pivot to **packet captures** (using tools like [[Wireshark]] on the [[Tailscale]] VPN interface or native tcpdump) to forensically examine traffic flows and validate security controls. This three-layer approach—automated reports for compliance, dashboards for situational awareness, and packet captures for forensics—mirrors enterprise [[SOC]] architecture and is essential for homelab security maturity.
+In your [[[YOUR-LAB]]] homelab, **Wazuh** serves as the central [[SIEM]]: it generates automated reports on agent health, failed authentication attempts (critical for monitoring the [[Active Directory]] domain), and policy violations. The Wazuh dashboard provides real-time visibility into fleet status across multiple nodes. When an anomaly is detected, you can pivot to **packet captures** (using tools like [[Wireshark]] on the [[Tailscale]] VPN interface or native tcpdump) to forensically examine traffic flows and validate security controls. This three-layer approach—automated reports for compliance, dashboards for situational awareness, and packet captures for forensics—mirrors enterprise [[SOC]] architecture and is essential for homelab security maturity.
 
 ---
 

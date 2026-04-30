@@ -89,7 +89,7 @@ Asset management follows the exact same lifecycle. Organizations must formally r
 
 ## Real-World Application
 
-In Morpheus's **[YOUR-LAB] homelab**, asset management is critical for security operations. Every device in the fleet (Proxmox hosts, VMs, network gear, Tailscale nodes) must be inventoried and tracked; when testing lab equipment or decommissioning older systems, data must be sanitized to prevent sensitive lab data or credentials from leaking. A [[Wazuh]] [[SIEM]] deployment benefits immensely from accurate asset tagging—correlating log events to specific hosts requires knowing exactly what assets exist and their configurations. Similarly, Active Directory user ownership assignments enable incident response; when a breach occurs, asset tracking reveals immediately which machines a compromised user accessed.
+In your **[YOUR-LAB] homelab**, asset management is critical for security operations. Every device in the fleet (Proxmox hosts, VMs, network gear, Tailscale nodes) must be inventoried and tracked; when testing lab equipment or decommissioning older systems, data must be sanitized to prevent sensitive lab data or credentials from leaking. A [[Wazuh]] [[SIEM]] deployment benefits immensely from accurate asset tagging—correlating log events to specific hosts requires knowing exactly what assets exist and their configurations. Similarly, Active Directory user ownership assignments enable incident response; when a breach occurs, asset tracking reveals immediately which machines a compromised user accessed.
 
 ---
 
@@ -122,7 +122,7 @@ In Morpheus's **[YOUR-LAB] homelab**, asset management is critical for security 
 - [[Wazuh]] (asset correlation in log analysis)
 - [[Tailscale]] (network asset inventory)
 - [[Proxmox]] (VM/host asset tracking)
-- [[[YOUR-LAB]]] (Morpheus's homelab infrastructure)
+- [[[YOUR-LAB]]] (your homelab infrastructure)
 
 ---
 

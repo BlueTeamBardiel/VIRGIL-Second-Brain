@@ -55,7 +55,8 @@ OUTPUT_DIR="$KNOWLEDGE_DIR/$SUBDIR"
 
 # ── Prereqs ───────────────────────────────────────────────────────────────────
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
+    # shellcheck source=/dev/null
+    set -a; source "$VIRGIL_DIR/.env" 2>/dev/null || true; set +a
 fi
 [[ -n "${ANTHROPIC_API_KEY:-}" ]] || die "ANTHROPIC_API_KEY is not set."
 command -v pdftotext &>/dev/null   || die "pdftotext not found. Install poppler-utils."

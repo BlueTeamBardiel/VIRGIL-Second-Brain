@@ -113,7 +113,7 @@ A web server is designed to serve only files in `/var/www/html/` (public website
 
 ## Real-World Application
 
-**For Morpheus's [YOUR-LAB] Homelab**: Privilege escalation vulnerabilities are critical in lab environments where you run [[Active Directory]], domain controllers, and multiple user accounts. A privilege escalation flaw in a [[Windows Server]] instance could allow a compromised low-privilege account to become Domain Admin, compromising the entire lab. [[Wazuh]] should monitor for suspicious privilege escalation attempts (e.g., unusual process creation with elevated tokens). CSRF is less relevant in internal lab testing but critical when publishing any internal web applications—use anti-forgery tokens in any custom tooling. Directory traversal is a frequent finding in lab web apps; always sanitize file path inputs and use allowlists of permitted directories.
+**For your [YOUR-LAB] Homelab**: Privilege escalation vulnerabilities are critical in lab environments where you run [[Active Directory]], domain controllers, and multiple user accounts. A privilege escalation flaw in a [[Windows Server]] instance could allow a compromised low-privilege account to become Domain Admin, compromising the entire lab. [[Wazuh]] should monitor for suspicious privilege escalation attempts (e.g., unusual process creation with elevated tokens). CSRF is less relevant in internal lab testing but critical when publishing any internal web applications—use anti-forgery tokens in any custom tooling. Directory traversal is a frequent finding in lab web apps; always sanitize file path inputs and use allowlists of permitted directories.
 
 ---
 

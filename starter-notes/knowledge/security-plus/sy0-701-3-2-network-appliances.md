@@ -90,7 +90,7 @@ Think of a proxy like a personal assistant who handles all your mail and phone c
 
 ## Real-World Application
 
-In Morpheus's **[YOUR-LAB] homelab**, a [[jump server]] could be deployed as a hardened Linux system (e.g., Ubuntu 22.04 LTS with SSH key-only authentication, auditd logging, and fail2ban) that gates access to the core infrastructure—ensuring all connections to [[Active Directory]], [[Wazuh]] manager, and critical VMs are authenticated and logged. A **forward proxy** (using [[Pi-hole]] or squid) can provide DNS-based filtering and HTTP/HTTPS content inspection, preventing lab systems from reaching known malicious domains and reducing exposure to malware. Together, these appliances embody [[Zero Trust]] principles: verify every access, monitor everything, and assume breach.
+In your **[YOUR-LAB] homelab**, a [[jump server]] could be deployed as a hardened Linux system (e.g., Ubuntu 22.04 LTS with SSH key-only authentication, auditd logging, and fail2ban) that gates access to the core infrastructure—ensuring all connections to [[Active Directory]], [[Wazuh]] manager, and critical VMs are authenticated and logged. A **forward proxy** (using [[Pi-hole]] or squid) can provide DNS-based filtering and HTTP/HTTPS content inspection, preventing lab systems from reaching known malicious domains and reducing exposure to malware. Together, these appliances embody [[Zero Trust]] principles: verify every access, monitor everything, and assume breach.
 
 ---
 

@@ -85,7 +85,7 @@ Imagine you want to mail a secret love letter to someone, but you're worried a n
 
 ## Real-World Application
 
-In Morpheus's **[YOUR-LAB] homelab**, obfuscation techniques appear in several contexts:
+In your **[YOUR-LAB] homelab**, obfuscation techniques appear in several contexts:
 
 - **[[Tokenization]] in payment processing**: If the lab includes a payment or billing system, tokenized credit card data ensures that even if a database is breached, the actual card numbers are protected (compliance with PCI DSS).
 

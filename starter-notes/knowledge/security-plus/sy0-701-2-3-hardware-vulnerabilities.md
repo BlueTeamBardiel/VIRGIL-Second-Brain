@@ -74,7 +74,7 @@ Once a device reaches EOL (end-of-life) or especially EOSL (end-of-service-life)
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab environment, hardware vulnerabilities are a practical concern: older network appliances, Raspberry Pi-based services ([[Pi-hole]]), wireless access points, and any IoT devices connected to the [[Tailscale]] mesh network represent potential entry points. While Morpheus has strong monitoring via [[Wazuh]] and network segmentation via [[VLAN]]s, any legacy or unsupported hardware should be isolated to a restricted network segment and monitored closely. A compromised IoT device could potentially pivot to the [[Active Directory]] domain or breach the VPN tunnel, making firmware and hardware EOL status critical factors in homelab architecture decisions.
+In your [YOUR-LAB] homelab environment, hardware vulnerabilities are a practical concern: older network appliances, Raspberry Pi-based services ([[Pi-hole]]), wireless access points, and any IoT devices connected to the [[Tailscale]] mesh network represent potential entry points. While you have strong monitoring via [[Wazuh]] and network segmentation via [[VLAN]]s, any legacy or unsupported hardware should be isolated to a restricted network segment and monitored closely. A compromised IoT device could potentially pivot to the [[Active Directory]] domain or breach the VPN tunnel, making firmware and hardware EOL status critical factors in homelab architecture decisions.
 
 ---
 

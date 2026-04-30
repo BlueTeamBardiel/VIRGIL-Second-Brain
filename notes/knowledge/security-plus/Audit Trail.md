@@ -123,7 +123,7 @@ A well-structured audit log entry contains at minimum:
 Event ID: 4663
 Time: 2024-11-15T14:32:07.441Z
 Subject:
-  Security ID: COCYTUS\jsmith
+  Security ID: YOUR-LAB\jsmith
   Account Name: jsmith
   Logon ID: 0x3E7F2
 Object:

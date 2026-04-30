@@ -78,7 +78,7 @@ Think of your network as a castle:
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, hardening techniques manifest as:
+In your [[[YOUR-LAB]]] homelab, hardening techniques manifest as:
 
 - **[[Wazuh]]** agent (EDR-like) deployed on all systems to detect intrusions via behavioral analysis and rule-based detection
 - **Host-based firewall** enabled on Windows systems (Windows Defender Firewall) and Linux hosts, configured to allow only required services

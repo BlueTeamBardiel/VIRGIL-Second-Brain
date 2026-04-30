@@ -80,8 +80,8 @@ done
 
 # ── Prereqs ───────────────────────────────────────────────────────────────────
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    ANTHROPIC_API_KEY=$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | cut -d'"' -f2 | head -1)
-    [[ -n "$ANTHROPIC_API_KEY" ]] && export ANTHROPIC_API_KEY
+    # shellcheck source=/dev/null
+    set -a; source "$VIRGIL_DIR/.env" 2>/dev/null || true; set +a
 fi
 [[ -n "${ANTHROPIC_API_KEY:-}" ]] || die "ANTHROPIC_API_KEY is not set."
 command -v pandoc &>/dev/null || die "pandoc not found. Install: sudo apt install pandoc"

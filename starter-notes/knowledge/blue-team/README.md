@@ -240,7 +240,7 @@ Security Architect / CISO
 | GIAC GREM | L3 advanced | Malware reverse engineering |
 | OSCP | Red → Purple | Offensive skills for better defensive understanding |
 
-**Morpheus's current position:** Transitioning from help desk to SOC L1/L2. [[CySA+]] is exactly the right cert.
+**your current position:** Transitioning from help desk to SOC L1/L2. [[CySA+]] is exactly the right cert.
 
 ### The Help Desk Advantage
 Help desk people know what normal looks like. They know the weird ticket patterns, the problem users, the janky systems that break every quarter. That institutional knowledge is gold in a SOC — you know what to investigate and what to dismiss.

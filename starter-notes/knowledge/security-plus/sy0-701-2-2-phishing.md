@@ -78,7 +78,7 @@ The attacker may register a lookalike domain (typosquatting), craft an email wit
 
 ## Real-World Application
 
-In Morpheus's homelab environment, phishing awareness is critical because email-based attacks often serve as the initial entry point for broader infrastructure compromises. A [[Wazuh]] SIEM can be configured to monitor for suspicious email patterns, user authentication failures, and credential-stuffing attempts that follow phishing campaigns. Additionally, implementing [[MFA]] and conditional access policies in [[Active Directory]] mitigates the damage if user credentials are harvested via phishing. As a sysadmin, Morpheus should also run regular security awareness training and simulate phishing attacks to test user behavior—many organizations use third-party tools to send fake phishing emails and measure click rates, helping identify users who need additional training.
+In your homelab environment, phishing awareness is critical because email-based attacks often serve as the initial entry point for broader infrastructure compromises. A [[Wazuh]] SIEM can be configured to monitor for suspicious email patterns, user authentication failures, and credential-stuffing attempts that follow phishing campaigns. Additionally, implementing [[MFA]] and conditional access policies in [[Active Directory]] mitigates the damage if user credentials are harvested via phishing. As a sysadmin, you should also run regular security awareness training and simulate phishing attacks to test user behavior—many organizations use third-party tools to send fake phishing emails and measure click rates, helping identify users who need additional training.
 
 ---
 

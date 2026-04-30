@@ -82,7 +82,7 @@ Imagine a restaurant chain with one kitchen in a flood-prone area. If a hurrican
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] fleet homelab, resiliency principles apply directly: redundant [[Wazuh]] nodes across different physical machines, [[Tailscale]] for geographic access and failover routing, and [[Active Directory]] replication across multiple domain controllers ensures that a single hardware failure or site outage doesn't break authentication. For a production [[SOC]] or managed service provider, implementing warm sites in geographically dispersed regions, running both Linux and Windows infrastructure to avoid OS-specific exploits, and documenting manual alert-triage procedures (in case the SIEM itself fails) are all critical resiliency measures tested on Security+.
+In your [[[YOUR-LAB]]] fleet homelab, resiliency principles apply directly: redundant [[Wazuh]] nodes across different physical machines, [[Tailscale]] for geographic access and failover routing, and [[Active Directory]] replication across multiple domain controllers ensures that a single hardware failure or site outage doesn't break authentication. For a production [[SOC]] or managed service provider, implementing warm sites in geographically dispersed regions, running both Linux and Windows infrastructure to avoid OS-specific exploits, and documenting manual alert-triage procedures (in case the SIEM itself fails) are all critical resiliency measures tested on Security+.
 
 ---
 
@@ -108,7 +108,7 @@ In Morpheus's [[[YOUR-LAB]]] fleet homelab, resiliency principles apply directly
 - [[Active Directory]] – identity resilience through replication
 - [[Tailscale]] – resilient access and failover
 - [[Wazuh]] – distributed monitoring and alerting
-- [[[YOUR-LAB]]] – Morpheus's homelab fleet
+- [[[YOUR-LAB]]] – your homelab fleet
 - [[SOC]] – Security Operations Center
 - [[SIEM]] – monitoring platform with failover needs
 - [[Linux]] – platform diversity target

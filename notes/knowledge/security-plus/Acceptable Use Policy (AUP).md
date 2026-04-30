@@ -266,4 +266,4 @@ ssh user@<your-lab-ip>
 Create a Markdown file in your homelab documentation:
 
 ```markdown
-# COCYTUS Homelab Acceptable Use Policy
+# YOUR-LAB Homelab Acceptable Use Policy

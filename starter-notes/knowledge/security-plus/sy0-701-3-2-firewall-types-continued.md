@@ -119,7 +119,7 @@ Imagine a nightclub with three levels of security:
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] fleet, an **NGFW** (e.g., Fortinet FortiGate, Palo Alto Networks) would inspect encrypted traffic (using TLS inspection) to identify when a user tries to access unapproved applications like YouTube or Slack, even if they're tunneled over HTTPS. A **WAF** would sit in front of web applications running on the homelab (e.g., Wazuh dashboard, Grafana) to reject requests with malformed input or SQL injection attempts. A **UTM** might be overkill for a lab, but a smaller environment could use one as a cost-effective single point of entry.
+In your [YOUR-LAB] fleet, an **NGFW** (e.g., Fortinet FortiGate, Palo Alto Networks) would inspect encrypted traffic (using TLS inspection) to identify when a user tries to access unapproved applications like YouTube or Slack, even if they're tunneled over HTTPS. A **WAF** would sit in front of web applications running on the homelab (e.g., Wazuh dashboard, Grafana) to reject requests with malformed input or SQL injection attempts. A **UTM** might be overkill for a lab, but a smaller environment could use one as a cost-effective single point of entry.
 
 ---
 

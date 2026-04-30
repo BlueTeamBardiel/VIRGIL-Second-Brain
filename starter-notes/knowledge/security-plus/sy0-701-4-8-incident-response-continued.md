@@ -86,7 +86,7 @@ Think of incident recovery like repairing a broken-into house after a burglary:
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, when a compromised [[Active Directory]] account or malware detection occurs in [[Wazuh]], the incident response process mirrors this framework: after containing the threat, Morpheus would eradicate (disable the account, remove malware via forensic snapshots, patch the vulnerability), recover (restore from clean backup snapshots, rebuild VMs if needed, tighten [[Tailscale]] access policies), and then hold a lessons-learned session with lab documentation to improve detection rules and response runbooks. This becomes a repeatable cycle that strengthens the security posture of the entire homelab infrastructure and informs similar decisions across production systems.
+In your [[[YOUR-LAB]]] homelab, when a compromised [[Active Directory]] account or malware detection occurs in [[Wazuh]], the incident response process mirrors this framework: after containing the threat, you would eradicate (disable the account, remove malware via forensic snapshots, patch the vulnerability), recover (restore from clean backup snapshots, rebuild VMs if needed, tighten [[Tailscale]] access policies), and then hold a lessons-learned session with lab documentation to improve detection rules and response runbooks. This becomes a repeatable cycle that strengthens the security posture of the entire homelab infrastructure and informs similar decisions across production systems.
 
 ---
 

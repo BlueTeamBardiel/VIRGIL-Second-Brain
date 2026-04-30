@@ -157,7 +157,7 @@ Triple extortion adds: contact your customers/patients directly to pressure paym
 - **1** offsite (or air-gapped)
 - **+1 bonus:** offline / immutable copy that ransomware can't reach (tape, cloud with object lock, Veeam with immutable repository)
 
-In COCYTUS: `config-backup.yml` runs Mon/Thu via [[Semaphore]]. This is the beginning, not the end.
+In YOUR-LAB: `config-backup.yml` runs Mon/Thu via [[Semaphore]]. This is the beginning, not the end.
 
 ### Network Segmentation
 Blast radius reduction. If workstations can't reach backup servers directly, ransomware can't kill your backups. If servers are segmented by function, lateral movement is harder.
@@ -170,7 +170,7 @@ Blast radius reduction. If workstations can't reach backup servers directly, ran
 - Suspicious PowerShell patterns
 
 ### Patch Management
-EternalBlue was patched before WannaCry. Citrix CVEs were known before Colonial. **Patch fast, patch everything.** COCYTUS automated patching via `apt-upgrade.yml` (Mon/Thu) addresses this for Linux fleet.
+EternalBlue was patched before WannaCry. Citrix CVEs were known before Colonial. **Patch fast, patch everything.** YOUR-LAB automated patching via `apt-upgrade.yml` (Mon/Thu) addresses this for Linux fleet.
 
 ### Disable SMBv1
 ```powershell

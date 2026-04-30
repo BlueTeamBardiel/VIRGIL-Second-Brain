@@ -103,7 +103,7 @@ DNS attacks represent a critical threat vector in modern networks, as they explo
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, [[DNS]] security directly impacts threat detection and lab isolation. Deploying [[Pi-hole]] as a local [[DNS]] sinkhole enables filtering malicious domains, and integrating it with [[Wazuh]] creates alerting for suspicious [[DNS]] queries (typosquatting, C2 exfiltration patterns). For lab Active Directory environments, monitoring [[DNS]] poisoning attempts via [[Wazuh]] log ingestion helps simulate real sysadmin incident response. Additionally, understanding domain hijacking risks informs security policies for production domain registration—treating registrar email accounts with MFA and separate credentials as critical security assets, much like protecting [[Active Directory]] admins.
+In your [YOUR-LAB] homelab, [[DNS]] security directly impacts threat detection and lab isolation. Deploying [[Pi-hole]] as a local [[DNS]] sinkhole enables filtering malicious domains, and integrating it with [[Wazuh]] creates alerting for suspicious [[DNS]] queries (typosquatting, C2 exfiltration patterns). For lab Active Directory environments, monitoring [[DNS]] poisoning attempts via [[Wazuh]] log ingestion helps simulate real sysadmin incident response. Additionally, understanding domain hijacking risks informs security policies for production domain registration—treating registrar email accounts with MFA and separate credentials as critical security assets, much like protecting [[Active Directory]] admins.
 
 ---
 

@@ -83,7 +83,7 @@ In IT: A change might be patching a firewall, upgrading Active Directory, or dep
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, change management is critical when updating core infrastructure like [[Active Directory]], [[Wazuh]], or [[Tailscale]]. For example, before patching a domain controller, you'd scope the change (which DCs? which services?), ensure a secondary DC is ready, document the current state in version control, execute during a maintenance window, test that dependent services ([[LDAP]], [[Kerberos]], authentication) still work, and roll back to a known-good snapshot if issues emerge. This same discipline applies to firewall rule changes, SIEM configuration updates, or OS patches across the fleet—sloppy changes introduce security gaps and operational chaos.
+In your [YOUR-LAB] homelab, change management is critical when updating core infrastructure like [[Active Directory]], [[Wazuh]], or [[Tailscale]]. For example, before patching a domain controller, you'd scope the change (which DCs? which services?), ensure a secondary DC is ready, document the current state in version control, execute during a maintenance window, test that dependent services ([[LDAP]], [[Kerberos]], authentication) still work, and roll back to a known-good snapshot if issues emerge. This same discipline applies to firewall rule changes, SIEM configuration updates, or OS patches across the fleet—sloppy changes introduce security gaps and operational chaos.
 
 ---
 

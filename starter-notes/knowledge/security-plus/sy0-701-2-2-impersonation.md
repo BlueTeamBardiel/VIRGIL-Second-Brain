@@ -89,7 +89,7 @@ The genius is that impersonation **bypasses all technical defenses** because the
 
 ## Real-World Application
 
-In Morpheus's homelab ([YOUR-LAB]), impersonation attacks pose a direct threat during [[Incident Response]] and [[DFIR]] scenarios. An attacker might call claiming to be from the Tailscale support team ("We detected unusual login patterns on your account") to trick Morpheus into revealing API keys or account credentials. Similarly, in an Active Directory environment, an attacker might impersonate a domain admin via email or phone to trick a junior sysadmin into adding a rogue user to a privileged group or modifying group policies. The defense involves implementing a verification protocol: any out-of-band request for credentials or access must be verified through an independently-sourced contact number (not one provided by the "caller"), and all administrative changes should require dual approval or ticketing system records. [[Wazuh]] and [[SIEM]] tools can monitor for suspicious authentication patterns (rapid password resets, unusual login times, privilege escalation) that might indicate an impersonation attack has succeeded.
+In your homelab ([YOUR-LAB]), impersonation attacks pose a direct threat during [[Incident Response]] and [[DFIR]] scenarios. An attacker might call claiming to be from the Tailscale support team ("We detected unusual login patterns on your account") to trick you into revealing API keys or account credentials. Similarly, in an Active Directory environment, an attacker might impersonate a domain admin via email or phone to trick a junior sysadmin into adding a rogue user to a privileged group or modifying group policies. The defense involves implementing a verification protocol: any out-of-band request for credentials or access must be verified through an independently-sourced contact number (not one provided by the "caller"), and all administrative changes should require dual approval or ticketing system records. [[Wazuh]] and [[SIEM]] tools can monitor for suspicious authentication patterns (rapid password resets, unusual login times, privilege escalation) that might indicate an impersonation attack has succeeded.
 
 ---
 
@@ -136,7 +136,7 @@ In Morpheus's homelab ([YOUR-LAB]), impersonation attacks pose a direct threat d
 
 **Homelab Context:**
 - [[Tailscale]]
-- [[[YOUR-LAB] (Morpheus's Fleet)]]
+- [[[YOUR-LAB] (your Fleet)]]
 - [[Active Directory]]
 
 ---

@@ -84,7 +84,7 @@ Imagine a popular restaurant that decides to guarantee they're always open. They
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, resiliency might mean running [[Active Directory]] and [[Wazuh]] on a cluster of VMs with automatic failover, load-balancing client connections across multiple domain controllers, and maintaining a warm recovery site (another lab or cloud instance) with regular [[Wazuh]] config replication. For a small homelab, a cold site might be a backup drive with system images and documentation to rebuild if the primary lab hardware fails. As a sysadmin, understanding these tradeoffs helps you architect production systems that balance availability requirements against budget—knowing when a hot site is justified versus when a documented recovery procedure and cold site backup are sufficient.
+In your [YOUR-LAB] homelab, resiliency might mean running [[Active Directory]] and [[Wazuh]] on a cluster of VMs with automatic failover, load-balancing client connections across multiple domain controllers, and maintaining a warm recovery site (another lab or cloud instance) with regular [[Wazuh]] config replication. For a small homelab, a cold site might be a backup drive with system images and documentation to rebuild if the primary lab hardware fails. As a sysadmin, understanding these tradeoffs helps you architect production systems that balance availability requirements against budget—knowing when a hot site is justified versus when a documented recovery procedure and cold site backup are sufficient.
 
 ---
 

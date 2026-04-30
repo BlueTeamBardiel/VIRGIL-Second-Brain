@@ -35,7 +35,7 @@ You don't need to buy anything. If you have a PC with 16GB+ RAM and a modern CPU
 - **Metasploitable / VulnHub VMs:** Intentionally vulnerable machines for practice.
 
 ### RAM minimums
-- AD lab (DC + 1 client): 8GB (tight), 16GB (comfortable), 32GB (ideal for full COCYTUS-style setup)
+- AD lab (DC + 1 client): 8GB (tight), 16GB (comfortable), 32GB (ideal for full YOUR-LAB-style setup)
 - Each Windows VM: 2-4GB. Each Linux VM: 512MB–2GB.
 
 ---
@@ -58,7 +58,7 @@ Used mini PCs are the best value in homelab hardware. Businesses refresh hardwar
 - Street price: $60–120
 
 **Lenovo ThinkCentre M720q/M920q**
-- Popular in COCYTUS-style setups, well-supported by Linux
+- Popular in YOUR-LAB-style setups, well-supported by Linux
 - Comparable specs to EliteDesk/OptiPlex
 - Street price: $50–90
 
@@ -132,7 +132,7 @@ Employers assume you can reset passwords. AD at a sysadmin level is rarer. Build
 ### SIEM (valuable for SOC roles)
 - **Splunk Free tier**: 500MB/day ingest, full enterprise feature set — perfect for a lab
 - **Elastic Stack (ELK)**: Free, excellent visualization, requires more setup than Splunk
-- **[[Wazuh]]**: Open source SIEM + EDR that integrates with Elastic — what COCYTUS uses
+- **[[Wazuh]]**: Open source SIEM + EDR that integrates with Elastic — what YOUR-LAB uses
 - Ship Windows Event Logs, Linux auth.log, and firewall logs into it. Practice writing detection queries.
 
 ### IDS/IPS

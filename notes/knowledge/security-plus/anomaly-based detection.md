@@ -231,7 +231,7 @@ A: UEBA / anomaly-based detection
 
 ## Lab / Hands-On
 
-### Lab 1: Zeek Behavioral Baseline on the COCYTUS Network
+### Lab 1: Zeek Behavioral Baseline on the YOUR-LAB Network
 
 Deploy Zeek on a Linux monitoring host in your homelab to capture network behavior:
 

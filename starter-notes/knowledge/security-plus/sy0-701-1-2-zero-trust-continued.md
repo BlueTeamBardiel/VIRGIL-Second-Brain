@@ -68,7 +68,7 @@ In zero-trust systems, every access request triggers evaluation by a [[Policy En
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] fleet, security zones can be applied to separate homelab segments: untrusted guest Wi-Fi, trusted internal lab network, and highly sensitive zones (storage, [[Wazuh]] server, [[Active Directory]]). A zero-trust policy might enforce that any request from the guest zone to the AD zone must pass through [[MFA]] and [[Threat Detection]], while internal-to-internal traffic is logged but pre-approved. The [[Policy Administrator]] role maps to centralized policy management (via [[Wazuh]] or [[Tailscale]] access controls), and the [[Policy Enforcement Point]] is the [[Firewall]], [[VPN]] endpoint ([[Tailscale]]), or [[VLAN]] boundary.
+In your [[[YOUR-LAB]]] fleet, security zones can be applied to separate homelab segments: untrusted guest Wi-Fi, trusted internal lab network, and highly sensitive zones (storage, [[Wazuh]] server, [[Active Directory]]). A zero-trust policy might enforce that any request from the guest zone to the AD zone must pass through [[MFA]] and [[Threat Detection]], while internal-to-internal traffic is logged but pre-approved. The [[Policy Administrator]] role maps to centralized policy management (via [[Wazuh]] or [[Tailscale]] access controls), and the [[Policy Enforcement Point]] is the [[Firewall]], [[VPN]] endpoint ([[Tailscale]]), or [[VLAN]] boundary.
 
 ---
 

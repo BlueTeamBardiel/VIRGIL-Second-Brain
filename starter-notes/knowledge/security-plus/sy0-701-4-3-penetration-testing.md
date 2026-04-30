@@ -86,7 +86,7 @@ Imagine you hired a professional burglar to test your home's security. They woul
 
 ## Real-World Application
 
-In Morpheus's homelab ([YOUR-LAB] fleet), a periodic internal penetration test might target the [[Active Directory]] domain, [[Wazuh]] sensors, or [[Tailscale]] VPN infrastructure to confirm that hardening measures actually prevent lateral movement and privilege escalation. For example, an authorized internal pentest could attempt to pivot from a compromised node to the management network, validating network segmentation and [[VLAN]] isolation. Results inform security operations and validation of defense-in-depth strategies.
+In your homelab ([YOUR-LAB] fleet), a periodic internal penetration test might target the [[Active Directory]] domain, [[Wazuh]] sensors, or [[Tailscale]] VPN infrastructure to confirm that hardening measures actually prevent lateral movement and privilege escalation. For example, an authorized internal pentest could attempt to pivot from a compromised node to the management network, validating network segmentation and [[VLAN]] isolation. Results inform security operations and validation of defense-in-depth strategies.
 
 ---
 

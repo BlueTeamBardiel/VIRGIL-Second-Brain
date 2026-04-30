@@ -229,7 +229,7 @@ openssl genrsa -aes256 -out private/root-ca.key.pem 4096
 openssl req -key private/root-ca.key.pem -new -x509 -days 7300 \
   -sha256 -extensions v3_ca \
   -out certs/root-ca.cert.pem \
-  -subj "/C=US/ST=Lab/O=COCYTUS Lab Root CA/CN=COCYTUS Root CA"
+  -subj "/C=US/ST=Lab/O=YOUR-LAB Lab Root CA/CN=YOUR-LAB Root CA"
 
 # Verify root CA
 openssl x509 -in certs/root-ca.cert.pem -noout -text | grep -E "Subject:|Issuer:|CA:"
@@ -241,7 +241,7 @@ openssl genrsa -aes256 -out private/intermediate.key.pem 4096
 # Create CSR for intermediate CA
 openssl req -key private/intermediate.key.pem -new -sha256 \
   -out intermediate.csr.pem \
-  -subj "/C=US/ST=Lab/O=COCYTUS Lab/CN=COCYTUS Intermediate CA"
+  -subj "/C=US/ST=Lab/O=YOUR-LAB Lab/CN=YOUR-LAB Intermediate CA"
 
 # Sign the intermediate CSR with the root CA (valid 10 years)
 cd ~/pki/root-ca

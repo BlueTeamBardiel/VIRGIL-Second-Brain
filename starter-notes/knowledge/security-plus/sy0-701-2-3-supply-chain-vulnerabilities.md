@@ -68,7 +68,7 @@ In cybersecurity, the supply chain works the same way. An organization might hav
 
 ## Real-World Application
 
-In the [YOUR-LAB] homelab environment, supply chain risk manifests when trusting external tools and services: if Morpheus pulls updates from [[Wazuh]], [[Pi-hole]], or operating system repositories without verification, a compromise at the source could propagate through the entire fleet. Similarly, relying on [[Tailscale]] for remote access or [[Active Directory]] for authentication means trusting those vendors' security posture. Real-world sysadmins must implement vendor assessment (Is Wazuh regularly patched? Does Tailscale pass security audits?), network segmentation (can a compromised Pi-hole instance spread laterally?), and [[Monitoring]] (are unexpected updates or configuration changes logged?) to mitigate third-party risk.
+In the [YOUR-LAB] homelab environment, supply chain risk manifests when trusting external tools and services: if you pulls updates from [[Wazuh]], [[Pi-hole]], or operating system repositories without verification, a compromise at the source could propagate through the entire fleet. Similarly, relying on [[Tailscale]] for remote access or [[Active Directory]] for authentication means trusting those vendors' security posture. Real-world sysadmins must implement vendor assessment (Is Wazuh regularly patched? Does Tailscale pass security audits?), network segmentation (can a compromised Pi-hole instance spread laterally?), and [[Monitoring]] (are unexpected updates or configuration changes logged?) to mitigate third-party risk.
 
 ---
 

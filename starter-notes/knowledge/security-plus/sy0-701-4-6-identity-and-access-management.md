@@ -90,7 +90,7 @@ The technical reality mirrors this: [[Active Directory]], [[LDAP]], or cloud IAM
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, IAM principles apply across multiple layers: [[Active Directory]] serves as the identity provider for Windows systems and can integrate with Linux systems via [[LDAP]]. [[Tailscale]] acts as an access control layer, restricting which remote systems can connect to the homelab infrastructure. The [[Wazuh]] SIEM monitors authentication events and tracks access to critical systems, providing identity governance and audit trails. When adding a new lab user or removing access after an experiment, proper provisioning/de-provisioning prevents orphaned accounts that could be exploited. Similarly, in production environments, integrating [[SAML]] or [[OAuth]] with centralized IAM platforms ensures contractors and third parties receive appropriate just-in-time access without permanent credentials.
+In your [YOUR-LAB] homelab, IAM principles apply across multiple layers: [[Active Directory]] serves as the identity provider for Windows systems and can integrate with Linux systems via [[LDAP]]. [[Tailscale]] acts as an access control layer, restricting which remote systems can connect to the homelab infrastructure. The [[Wazuh]] SIEM monitors authentication events and tracks access to critical systems, providing identity governance and audit trails. When adding a new lab user or removing access after an experiment, proper provisioning/de-provisioning prevents orphaned accounts that could be exploited. Similarly, in production environments, integrating [[SAML]] or [[OAuth]] with centralized IAM platforms ensures contractors and third parties receive appropriate just-in-time access without permanent credentials.
 
 ---
 

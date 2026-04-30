@@ -74,7 +74,7 @@ Imagine you run a restaurant and want to know if your team can handle a kitchen 
 
 ## Real-World Application
 
-In Morpheus's homelab ([YOUR-LAB] fleet), recovery testing is critical: running annual tabletop exercises to discuss how the [[Wazuh]] SIEM would detect an intrusion across the [[Tailscale]] mesh network validates incident response procedures without risking the lab. Monthly phishing simulations to his users test both [[Email Filtering|email gateway filters]] and user awareness. Quarterly failover tests of the primary [[Active Directory]] domain controller to the secondary replica ensure that authentication continues uninterrupted if the primary fails—a non-negotiable requirement for any production environment. For a sysadmin, recovery testing transforms a theoretical BCP/DRP from a dusty document into a living, validated procedure.
+In your homelab ([YOUR-LAB] fleet), recovery testing is critical: running annual tabletop exercises to discuss how the [[Wazuh]] SIEM would detect an intrusion across the [[Tailscale]] mesh network validates incident response procedures without risking the lab. Monthly phishing simulations to his users test both [[Email Filtering|email gateway filters]] and user awareness. Quarterly failover tests of the primary [[Active Directory]] domain controller to the secondary replica ensure that authentication continues uninterrupted if the primary fails—a non-negotiable requirement for any production environment. For a sysadmin, recovery testing transforms a theoretical BCP/DRP from a dusty document into a living, validated procedure.
 
 ---
 

@@ -81,7 +81,7 @@ The power of these attacks lies in **exploiting trust and cognitive biases** rat
 
 ## Real-World Application
 
-In Morpheus's homelab and SOC operations, misinformation and brand impersonation attacks are detected through **endpoint monitoring** (agent logs on workstations) and **network monitoring** (malware callbacks, suspicious DNS queries to typosquatted domains). [[Wazuh]] SIEM can alert on:
+In your homelab and SOC operations, misinformation and brand impersonation attacks are detected through **endpoint monitoring** (agent logs on workstations) and **network monitoring** (malware callbacks, suspicious DNS queries to typosquatted domains). [[Wazuh]] SIEM can alert on:
 - Suspicious file downloads matching known malware signatures
 - Outbound connections to known C2 (command-and-control) servers
 - Credential submission events to non-corporate authentication endpoints

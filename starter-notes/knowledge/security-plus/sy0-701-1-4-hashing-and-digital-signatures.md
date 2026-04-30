@@ -98,7 +98,7 @@ Imagine you sign a contract with a pen that only you have—a pen that creates i
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, hashing is used every day: storing user credentials in [[Active Directory]] with salted hashes, verifying the integrity of ISO downloads before spinning up new VMs, and ensuring syslog data in [[Wazuh]] hasn't been tampered with. Digital signatures are critical for code signing in deployments, signing [[TLS]] certificates in the internal [[PKI]], and ensuring that [[Incident Response]] artifacts and forensic evidence cannot be denied as originating from a specific system or administrator. Understanding these mechanisms is essential for building a trustworthy, auditable homelab and for real-world sysadmin work in organizations with compliance requirements (SOX, HIPAA, etc.).
+In your [[[YOUR-LAB]]] homelab, hashing is used every day: storing user credentials in [[Active Directory]] with salted hashes, verifying the integrity of ISO downloads before spinning up new VMs, and ensuring syslog data in [[Wazuh]] hasn't been tampered with. Digital signatures are critical for code signing in deployments, signing [[TLS]] certificates in the internal [[PKI]], and ensuring that [[Incident Response]] artifacts and forensic evidence cannot be denied as originating from a specific system or administrator. Understanding these mechanisms is essential for building a trustworthy, auditable homelab and for real-world sysadmin work in organizations with compliance requirements (SOX, HIPAA, etc.).
 
 ---
 

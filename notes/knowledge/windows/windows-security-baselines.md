@@ -35,7 +35,7 @@ Back when Windows shipped, administrators had to hunt through 3,000+ Group Polic
 | **Simulate Failure** | Disable `User Account Control` setting manually, then run audit. | Observe audit flagging the deviation; understand impact on security. |
 | **Rollback** | `Restore-GPO –Name "Baseline - Windows 10 Home"` | Ensure the machine reverts to baseline state without lingering custom changes. |
 
-**Tip:** Use a COCYTUS container image with the baseline package pre‑loaded to iterate quickly—import, audit, tweak, repeat.
+**Tip:** Use a YOUR-LAB container image with the baseline package pre‑loaded to iterate quickly—import, audit, tweak, repeat.
 
 ## What are Security Baselines?
 

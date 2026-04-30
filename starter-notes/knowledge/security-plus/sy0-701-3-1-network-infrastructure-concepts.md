@@ -118,7 +118,7 @@ Think of a traditional network switch as a restaurant where a single chef (the d
 
 ## Real-World Application
 
-In Morpheus's homelab ([YOUR-LAB] fleet), you'd use [[VLAN]]s to segment VMs by function (e.g., one VLAN for database servers running in [[Active Directory]], another for web app tier), with a security gateway (pfSense or equivalent) acting as the Layer 3 router between them. Your [[Wazuh]] SIEM would monitor traffic crossing that Layer 3 boundary for anomalies. For multi-tenant lab scenarios or production, physical segmentation (separate physical switches and firewall appliances per tenant) ensures no cross-contamination. Modern homelab operators increasingly adopt [[SDN]] concepts—using Proxmox or KVM with Open vSwitch to programmatically create and manage virtual networks, similar to how cloud providers (AWS, Azure) implement their infrastructure.
+In your homelab ([YOUR-LAB] fleet), you'd use [[VLAN]]s to segment VMs by function (e.g., one VLAN for database servers running in [[Active Directory]], another for web app tier), with a security gateway (pfSense or equivalent) acting as the Layer 3 router between them. Your [[Wazuh]] SIEM would monitor traffic crossing that Layer 3 boundary for anomalies. For multi-tenant lab scenarios or production, physical segmentation (separate physical switches and firewall appliances per tenant) ensures no cross-contamination. Modern homelab operators increasingly adopt [[SDN]] concepts—using Proxmox or KVM with Open vSwitch to programmatically create and manage virtual networks, similar to how cloud providers (AWS, Azure) implement their infrastructure.
 
 ---
 

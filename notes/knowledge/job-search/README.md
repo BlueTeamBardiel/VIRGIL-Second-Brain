@@ -107,7 +107,7 @@ Do not bury your homelab under hobbies. Present it as a project with real delive
 
 ```
 PERSONAL PROJECTS
-COCYTUS Homelab | Lead Architect & Administrator | 2024–Present
+YOUR-LAB Homelab | Lead Architect & Administrator | 2024–Present
 • Deployed 10-node mixed OS network running Active Directory, Docker containers, 
   and automated configuration management via Ansible/Semaphore
 • Implemented Wazuh SIEM with fleet-wide agent deployment; active monitoring of 

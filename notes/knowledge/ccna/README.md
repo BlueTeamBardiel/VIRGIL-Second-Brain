@@ -110,7 +110,7 @@ Ch 1 → 2 → 3 → 4 → 5 → 7 → 6 → 8 → 9 → 10 → 11 → 12 → 22
 Vol1: 9 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 23 → 24
 Vol2: 1 → 4 → 5 → 9 → 11 → 12 → 13 → 14 → 18 → 19 → 20 → 22 → 23
 
-**COCYTUS lab context:** [[YOUR_SWITCH]] (Cisco 3850), [[YOUR_ROUTER]] (MikroTik), [[YOUR_JUMP_SERVER]] (Ansible/Semaphore)
+**YOUR-LAB lab context:** [[YOUR_SWITCH]] (Cisco 3850), [[YOUR_ROUTER]] (MikroTik), [[YOUR_JUMP_SERVER]] (Ansible/Semaphore)
 
 *Source: Acing the CCNA Exam, Volumes 1 & 2 — Jeremy McDowell, Manning 2024*
 

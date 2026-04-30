@@ -78,7 +78,7 @@ Every month, the hotel's security team discovers these flaws (vulnerabilities) a
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab with [[Active Directory]], [[Wazuh]] monitoring, and [[Tailscale]] remote access, OS vulnerabilities directly impact security. A single unpatched Windows Server running [[Active Directory]] could allow an attacker to escalate privileges and compromise the entire domain. Morpheus needs to implement automated patching schedules (e.g., Group Policy-driven updates in AD), test patches in a lab VM before domain-wide deployment, monitor patch compliance with [[Wazuh]], and maintain backups before each patch cycle. For Linux systems, this means tracking distro release cycles and using configuration management tools (Ansible, Terraform) to test patches before production rollout.
+In your [YOUR-LAB] homelab with [[Active Directory]], [[Wazuh]] monitoring, and [[Tailscale]] remote access, OS vulnerabilities directly impact security. A single unpatched Windows Server running [[Active Directory]] could allow an attacker to escalate privileges and compromise the entire domain. you need to implement automated patching schedules (e.g., Group Policy-driven updates in AD), test patches in a lab VM before domain-wide deployment, monitor patch compliance with [[Wazuh]], and maintain backups before each patch cycle. For Linux systems, this means tracking distro release cycles and using configuration management tools (Ansible, Terraform) to test patches before production rollout.
 
 ---
 

@@ -1151,7 +1151,7 @@ D) Data inventory
 **END OF C62–C73**
 *Study these domains: 1.0 (General Security Concepts), 2.0 (Threats, Vulnerabilities, and Mitigations), 3.0 (Implementation), 4.0 (Security Operations), and 5.0 (Governance, Risk, and Compliance)*
 
-# VIRGIL: Morpheus CompTIA Security+ (SY0-701) Study Guide
+# VIRGIL: Your CompTIA Security+ (SY0-701) Study Guide
 ## Practice Exam C — Questions C74–C85
 
 ---

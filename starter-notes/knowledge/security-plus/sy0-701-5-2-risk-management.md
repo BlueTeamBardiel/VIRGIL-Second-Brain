@@ -73,7 +73,7 @@ Risk management is the systematic process of identifying, analyzing, and respond
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab environment, risk management is critical: continuous assessment occurs during change control (deploying new VMs, configuring [[Tailscale]] nodes, updating [[Active Directory]] policies), while recurring assessments might happen quarterly to evaluate [[Wazuh]] alerting effectiveness, credential rotation practices, and network segmentation. A new threat published to [[MITRE ATT&CK]] might trigger an ad hoc assessment: "Are we vulnerable to this attack?" An actual sysadmin managing production infrastructure must formalize risk assessments around infrastructure changes, ensure [[PCI DSS]] compliance if handling payment data, and integrate risk review into the change management pipeline so that no security-impacting modification bypasses risk analysis.
+In your [YOUR-LAB] homelab environment, risk management is critical: continuous assessment occurs during change control (deploying new VMs, configuring [[Tailscale]] nodes, updating [[Active Directory]] policies), while recurring assessments might happen quarterly to evaluate [[Wazuh]] alerting effectiveness, credential rotation practices, and network segmentation. A new threat published to [[MITRE ATT&CK]] might trigger an ad hoc assessment: "Are we vulnerable to this attack?" An actual sysadmin managing production infrastructure must formalize risk assessments around infrastructure changes, ensure [[PCI DSS]] compliance if handling payment data, and integrate risk review into the change management pipeline so that no security-impacting modification bypasses risk analysis.
 
 ---
 
@@ -103,7 +103,7 @@ In Morpheus's [YOUR-LAB] homelab environment, risk management is critical: conti
 - [[Wazuh]] (monitoring and detection supports ongoing risk understanding)
 - [[Active Directory]] (access control is a key risk factor)
 - [[Tailscale]] (network architecture affects risk posture)
-- [[[YOUR-LAB]]] (Morpheus's homelab—practical application environment)
+- [[[YOUR-LAB]]] (your homelab—practical application environment)
 
 ---
 

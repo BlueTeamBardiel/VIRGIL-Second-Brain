@@ -664,7 +664,7 @@ hdr "Step 5 — Installing scripts"
 
 SCRIPTS_DEST="$VIRGIL_DIR/scripts"
 
-for subdir in ingest hooks skills; do
+for subdir in ingest hooks skills .claude; do
     if [[ -d "$INSTALL_SRC/$subdir" ]]; then
         cp -r "$INSTALL_SRC/$subdir" "$VIRGIL_DIR/"
         find "$VIRGIL_DIR/$subdir" -name "*.sh" -o -name "*.py" | xargs chmod +x 2>/dev/null || true
@@ -817,15 +817,15 @@ hdr "Step 10 — Crontab"
 if [[ "${INSTALL_CRON,,}" == "y" ]]; then
     if command -v crontab &>/dev/null; then
         EXISTING_CRON=$(crontab -l 2>/dev/null | \
-            grep -v 'virgil\|VIRGIL\|ANTHROPIC_API_KEY\|SLACK_WEBHOOK_URL\|rss-ingest\|cve-ingest\|triage-inbox\|wikilink-ingest\|auto-reflect\|promote\.sh\|weekly-rollup' \
+            grep -v 'virgil\|VIRGIL\|ANTHROPIC_API_KEY\|SLACK_WEBHOOK_URL\|BASH_ENV.*VIRGIL\|rss-ingest\|cve-ingest\|triage-inbox\|wikilink-ingest\|auto-reflect\|promote\.sh\|weekly-rollup' \
             || true)
 
         {
             echo "$EXISTING_CRON"
             echo ""
             echo "# ── VIRGIL (installed $(date '+%Y-%m-%d')) ────────────────────────────────────"
-            [[ -n "$API_KEY" ]]   && echo "ANTHROPIC_API_KEY=\"$API_KEY\""
-            [[ -n "$SLACK_URL" ]] && echo "SLACK_WEBHOOK_URL=\"$SLACK_URL\""
+            echo "# Load secrets from vault env file (never embedded here)"
+            echo "BASH_ENV=\"$VIRGIL_DIR/.env\""
             echo "VIRGIL_DIR=\"$VIRGIL_DIR\""
             echo "0  6 * * *   python3 $INGEST/rss-ingest.py    >> $VIRGIL_DIR/logs/rss.log    2>&1"
             echo "0  7 * * *   python3 $INGEST/cve-ingest.py --recent >> $VIRGIL_DIR/logs/cve.log 2>&1"

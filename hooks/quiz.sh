@@ -29,10 +29,9 @@ if [[ -f "$VIRGIL_ENV" ]]; then
     # shellcheck source=/dev/null
     set -a; source "$VIRGIL_ENV"; set +a
 fi
-# Crontab fallback — only runs if .env missing or variable still unset
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    ANTHROPIC_API_KEY=$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | cut -d'"' -f2 | head -1)
-    [[ -n "$ANTHROPIC_API_KEY" ]] && export ANTHROPIC_API_KEY
+    # shellcheck source=/dev/null
+    set -a; source "$VIRGIL_DIR/.env" 2>/dev/null || true; set +a
 fi
 
 TOPIC_ARG="${1:-}"

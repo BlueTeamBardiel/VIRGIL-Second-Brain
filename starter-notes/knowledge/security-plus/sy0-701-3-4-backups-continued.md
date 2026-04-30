@@ -74,7 +74,7 @@ Backups are a critical component of [[Security Architecture]] and business conti
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, snapshots are critical for rapid VM recovery—if a security tool or service breaks, reverting a snapshot takes seconds. [[Replication]] across multiple nodes ensures critical services (like [[Wazuh]], [[Active Directory]], or [[Pi-hole]]) stay available even if one host fails. [[Journaling]] at the filesystem level (ext4, XFS, BTRFS) protects against data corruption during unexpected power events in the lab. Most importantly, Morpheus must periodically run disaster recovery drills—actually breaking a critical service and restoring from snapshot/backup—to confirm the strategy works before a real emergency.
+In your [[[YOUR-LAB]]] homelab, snapshots are critical for rapid VM recovery—if a security tool or service breaks, reverting a snapshot takes seconds. [[Replication]] across multiple nodes ensures critical services (like [[Wazuh]], [[Active Directory]], or [[Pi-hole]]) stay available even if one host fails. [[Journaling]] at the filesystem level (ext4, XFS, BTRFS) protects against data corruption during unexpected power events in the lab. Most importantly, you must periodically run disaster recovery drills—actually breaking a critical service and restoring from snapshot/backup—to confirm the strategy works before a real emergency.
 
 ---
 

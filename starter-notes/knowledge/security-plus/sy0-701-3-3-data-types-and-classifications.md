@@ -73,7 +73,7 @@ Imagine a hospital as an organization. Different information requires different 
 
 ## Real-World Application
 
-In **Morpheus's [YOUR-LAB] fleet**, a mix of systems (Active Directory, Wazuh SIEM, Tailscale VPN, Pi-hole DNS) handles data with different classifications:
+In **your [YOUR-LAB] fleet**, a mix of systems (Active Directory, Wazuh SIEM, Tailscale VPN, Pi-hole DNS) handles data with different classifications:
 
 - **Confidential/Restricted**: Active Directory stores employee credentials and group memberships—classified as Confidential, requiring [[MFA]], encryption in transit (LDAPS), and audit logging via [[Wazuh]].
 - **Sensitive**: Wazuh log data may contain [[PII]] (usernames, IP addresses) and security events—classified as Sensitive, requiring restricted [[VPN]] access via [[Tailscale]] and retention policies.

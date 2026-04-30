@@ -129,7 +129,7 @@ The [[Cloud Responsibility Matrix]] codifies this division. You must know: for t
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] fleet homelab, if you were to extend beyond on-premises into a hybrid model (e.g., running some workloads on [[AWS]] while maintaining local Proxmox clusters), you'd immediately face these challenges:
+In your [[[YOUR-LAB]]] fleet homelab, if you were to extend beyond on-premises into a hybrid model (e.g., running some workloads on [[AWS]] while maintaining local Proxmox clusters), you'd immediately face these challenges:
 
 - Your local [[Active Directory]] domain wouldn't automatically trust cloud workloads; you'd need [[SAML]] or [[OAuth]] federation
 - Your local [[Wazuh]] agent deployment works differently in cloud environments; cloud providers provide their own logging

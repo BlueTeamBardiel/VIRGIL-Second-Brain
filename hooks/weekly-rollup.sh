@@ -26,12 +26,10 @@ slack_notify() {
         -d "$payload" || true
 }
 
-# ── 1. Self-source secrets from crontab if not in environment ────────────────
-if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
-fi
-if [[ -z "${SLACK_WEBHOOK_URL:-}" ]]; then
-    eval "$(crontab -l 2>/dev/null | grep 'SLACK_WEBHOOK_URL' | sed 's/^/export /')"
+# ── 1. Load secrets from vault .env ──────────────────────────────────────────
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]] || [[ -z "${SLACK_WEBHOOK_URL:-}" ]]; then
+    # shellcheck source=/dev/null
+    set -a; source "$VIRGIL_DIR/.env" 2>/dev/null || true; set +a
 fi
 
 # ── 2. Require API key ────────────────────────────────────────────────────────

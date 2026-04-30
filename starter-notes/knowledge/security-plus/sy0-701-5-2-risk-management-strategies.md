@@ -95,7 +95,7 @@ In cybersecurity, the stakes are data breaches, compliance violations, and downt
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab environment with [[Wazuh]], [[Tailscale]], and [[Active Directory]], risk management strategies are in constant play:
+In your [[[YOUR-LAB]]] homelab environment with [[Wazuh]], [[Tailscale]], and [[Active Directory]], risk management strategies are in constant play:
 
 - **Mitigate**: Deploy [[Wazuh]] for real-time threat detection and log analysis to reduce intrusion risk
 - **Transfer**: Use [[Tailscale]] to outsource VPN security and reduce perimeter attack surface

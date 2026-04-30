@@ -49,7 +49,7 @@ openssl req -new -key server.key -out server.csr
 
 # Generate a CSR non-interactively with Subject Alternative Names (SANs)
 openssl req -new -key server.key -out server.csr \
-  -subj "/C=US/ST=Virginia/L=McLean/O=COCYTUS Lab/CN=lab.cocytus.local" \
+  -subj "/C=US/ST=Virginia/L=McLean/O=YOUR-LAB Lab/CN=lab.cocytus.local" \
   -addext "subjectAltName=DNS:lab.cocytus.local,DNS:www.lab.cocytus.local,IP:10.0.0.10"
 
 # Inspect a CSR before submission
@@ -64,7 +64,7 @@ A **self-signed CA** (for lab/internal use) or commercial CA signs the CSR, prod
 # Create a self-signed root CA certificate (10-year validity)
 openssl req -x509 -newkey rsa:4096 -keyout ca.key -out ca.crt \
   -days 3650 -nodes \
-  -subj "/C=US/O=COCYTUS Internal CA/CN=COCYTUS Root CA"
+  -subj "/C=US/O=YOUR-LAB Internal CA/CN=YOUR-LAB Root CA"
 
 # Sign a CSR with your CA (issue a 1-year certificate)
 openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key \

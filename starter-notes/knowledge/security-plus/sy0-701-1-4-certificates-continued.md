@@ -68,7 +68,7 @@ Imagine applying for a passport. You fill out an application form, provide ident
 
 ## Real-World Application
 
-In Morpheus's homelab ([[[YOUR-LAB]]] fleet), when provisioning a new [[Active Directory]] domain controller or [[Wazuh]] manager requiring TLS certificates, you would generate a CSR on that server, submit it to an internal or external [[Certificate Authority]], and wait for the CA to validate and sign the certificate. If running a production-grade HTTPS service (e.g., a reverse proxy or web API), implementing OCSP stapling reduces dependency on external CA infrastructure and improves connection establishment speed—critical for high-availability systems. Understanding CSR workflows is essential for certificate automation (e.g., [[Let's Encrypt]], [[Certbot]]) and troubleshooting certificate validation failures in sysadmin operations.
+In your homelab ([[[YOUR-LAB]]] fleet), when provisioning a new [[Active Directory]] domain controller or [[Wazuh]] manager requiring TLS certificates, you would generate a CSR on that server, submit it to an internal or external [[Certificate Authority]], and wait for the CA to validate and sign the certificate. If running a production-grade HTTPS service (e.g., a reverse proxy or web API), implementing OCSP stapling reduces dependency on external CA infrastructure and improves connection establishment speed—critical for high-availability systems. Understanding CSR workflows is essential for certificate automation (e.g., [[Let's Encrypt]], [[Certbot]]) and troubleshooting certificate validation failures in sysadmin operations.
 
 ---
 

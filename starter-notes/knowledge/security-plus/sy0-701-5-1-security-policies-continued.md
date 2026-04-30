@@ -92,7 +92,7 @@ Airlines don't change engines on a whim during a flight. They follow strict chan
 
 ## Real-World Application
 
-For Morpheus and the [[[YOUR-LAB]]] fleet, this section directly applies to operational security discipline. When a Wazuh alert fires, the incident response team (you, your compliance officer, your technical staff, and potentially your user community) must follow a structured process—not panic-driven ad hoc actions. Change management is equally critical: before pushing a firewall rule update via Tailscale, patching Active Directory, or upgrading Pi-hole DNS settings, a formal change procedure should be followed (documented change request, testing plan, fallback procedure, communication to stakeholders). In a homelab setting, this might seem overkill, but practicing [[NIST]] SP 800-61 and change discipline in your lab directly translates to professional competence and exam success.
+For you and the [[[YOUR-LAB]]] fleet, this section directly applies to operational security discipline. When a Wazuh alert fires, the incident response team (you, your compliance officer, your technical staff, and potentially your user community) must follow a structured process—not panic-driven ad hoc actions. Change management is equally critical: before pushing a firewall rule update via Tailscale, patching Active Directory, or upgrading Pi-hole DNS settings, a formal change procedure should be followed (documented change request, testing plan, fallback procedure, communication to stakeholders). In a homelab setting, this might seem overkill, but practicing [[NIST]] SP 800-61 and change discipline in your lab directly translates to professional competence and exam success.
 
 ---
 

@@ -27,9 +27,10 @@ MODEL="claude-haiku-4-5-20251001"
 log() { echo "$LOGPREFIX $*" | tee -a "$LOGFILE"; }
 die() { log "ERROR: $*"; exit 1; }
 
-# ── Self-source API key from crontab if not set in environment ────────────────
+# ── Load API key from vault .env if not set in environment ───────────────────
 if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-    eval "$(crontab -l 2>/dev/null | grep 'ANTHROPIC_API_KEY' | sed 's/^/export /')"
+    # shellcheck source=/dev/null
+    set -a; source "$VIRGIL_DIR/.env" 2>/dev/null || true; set +a
 fi
 [[ -n "${ANTHROPIC_API_KEY:-}" ]] || die "ANTHROPIC_API_KEY is not set."
 

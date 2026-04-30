@@ -99,7 +99,7 @@ An **open proxy** is like a telephone booth in the middle of a public square tha
 
 ## Real-World Application
 
-In Morpheus's **[YOUR-LAB] fleet**, a **forward proxy** would be deployed on the internal network to monitor and control all outbound HTTP/HTTPS traffic from workstations—integrating with [[Wazuh]] to log suspicious destinations and block known-malicious domains. A **reverse proxy** (potentially [[Nginx]] or HAProxy) would sit in front of any public-facing services, terminating SSL/TLS connections, performing WAF filtering, and distributing traffic across multiple backend instances. This architecture aligns with **[[Zero Trust]]** principles: all traffic is inspected, not implicitly trusted, and logged to the [[SIEM]].
+In your **[YOUR-LAB] fleet**, a **forward proxy** would be deployed on the internal network to monitor and control all outbound HTTP/HTTPS traffic from workstations—integrating with [[Wazuh]] to log suspicious destinations and block known-malicious domains. A **reverse proxy** (potentially [[Nginx]] or HAProxy) would sit in front of any public-facing services, terminating SSL/TLS connections, performing WAF filtering, and distributing traffic across multiple backend instances. This architecture aligns with **[[Zero Trust]]** principles: all traffic is inspected, not implicitly trusted, and logged to the [[SIEM]].
 
 ---
 

@@ -39,8 +39,8 @@ if [[ -f "$VIRGIL_ENV" ]]; then
     set -a; source "$VIRGIL_ENV"; set +a
 fi
 if [[ -z "${SLACK_WEBHOOK_URL:-}" ]]; then
-    SLACK_WEBHOOK_URL=$(crontab -l 2>/dev/null | grep 'SLACK_WEBHOOK_URL' | cut -d'"' -f2 | head -1)
-    [[ -n "$SLACK_WEBHOOK_URL" ]] && export SLACK_WEBHOOK_URL
+    # shellcheck source=/dev/null
+    set -a; source "$VIRGIL_DIR/.env" 2>/dev/null || true; set +a
 fi
 
 # ── Slack helper ───────────────────────────────────────────────────────────────

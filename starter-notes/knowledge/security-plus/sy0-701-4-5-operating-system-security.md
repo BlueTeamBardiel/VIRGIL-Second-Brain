@@ -85,7 +85,7 @@ In a small organization (local accounts), each building has its own security des
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, [[Active Directory]] could be deployed on a Windows Server VM to centralize user authentication and machine management across the fleet—critical for managing multiple hypervisors, VMs, and lab infrastructure with consistent access policies. [[Group Policy]] would enforce security baselines (e.g., enforce TLS 1.2, disable legacy protocols, require Windows Defender definitions) across all domain-joined Windows systems without manual per-machine configuration. For Linux nodes in the lab, [[SELinux]] or AppArmor would restrict what containerized services or compromised applications can access, containing blast radius during security testing or breach simulations. Combined with [[Wazuh]] for monitoring and [[Tailscale]] for secure network access, OS-level security controls form the foundation of defense-in-depth.
+In your [YOUR-LAB] homelab, [[Active Directory]] could be deployed on a Windows Server VM to centralize user authentication and machine management across the fleet—critical for managing multiple hypervisors, VMs, and lab infrastructure with consistent access policies. [[Group Policy]] would enforce security baselines (e.g., enforce TLS 1.2, disable legacy protocols, require Windows Defender definitions) across all domain-joined Windows systems without manual per-machine configuration. For Linux nodes in the lab, [[SELinux]] or AppArmor would restrict what containerized services or compromised applications can access, containing blast radius during security testing or breach simulations. Combined with [[Wazuh]] for monitoring and [[Tailscale]] for secure network access, OS-level security controls form the foundation of defense-in-depth.
 
 ---
 
@@ -101,7 +101,7 @@ In Morpheus's [YOUR-LAB] homelab, [[Active Directory]] could be deployed on a Wi
 - [[Least Privilege]] — Security principle of granting minimum necessary permissions
 - [[AppArmor]] — Alternative to SELinux for Linux mandatory access control
 - [[Active Directory Domain Services (AD DS)]] — The directory service component of Windows Server
-- [[[YOUR-LAB]]] — Morpheus's homelab fleet
+- [[[YOUR-LAB]]] — your homelab fleet
 - [[Wazuh]] — SIEM and security monitoring platform
 - [[Tailscale]] — Zero-trust VPN for secure network access
 - [[Windows Server]] — Server OS typically running Active Directory

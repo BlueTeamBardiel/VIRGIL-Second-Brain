@@ -112,7 +112,7 @@ When you encrypt data with a key, the algorithm transforms plaintext into seemin
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, encryption is multi-layered: [[Tailscale]] encrypts VPN traffic (data in transit) connecting remote nodes, [[Active Directory]] integrates with [[BitLocker]] for workstation disk encryption (data at rest), and [[Wazuh]] logs are encrypted in transit via TLS. Database encryption in any backend services protects sensitive configurations, while key management through either software or hardware security modules (HSMs) prevents unauthorized decryption. Sysadmins must balance security (larger keys, key stretching) against performance (symmetric encryption for speed, asymmetric for key exchange).
+In your [[[YOUR-LAB]]] homelab, encryption is multi-layered: [[Tailscale]] encrypts VPN traffic (data in transit) connecting remote nodes, [[Active Directory]] integrates with [[BitLocker]] for workstation disk encryption (data at rest), and [[Wazuh]] logs are encrypted in transit via TLS. Database encryption in any backend services protects sensitive configurations, while key management through either software or hardware security modules (HSMs) prevents unauthorized decryption. Sysadmins must balance security (larger keys, key stretching) against performance (symmetric encryption for speed, asymmetric for key exchange).
 
 ---
 

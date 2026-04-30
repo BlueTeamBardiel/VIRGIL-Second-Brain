@@ -64,7 +64,7 @@ In an organization, the principle is identical—but instead of a house, you're 
 
 ## Real-World Application
 
-In Morpheus's homelab environment ([[[YOUR-LAB] fleet]]), a gap analysis would assess current monitoring capabilities with [[Wazuh]], network segmentation via [[Tailscale]], identity management with [[Active Directory]], and compare them against [[NIST]] Cybersecurity Framework or [[ISO 27001]] objectives. For example: "Current state: Wazuh collects logs from 5 systems; Desired state: Full endpoint detection and response with threat hunting capability." The gap might be: "Need EDR agents on 20 additional systems, analyst training, and automated response playbooks—estimated 8 weeks, $15K."
+In your homelab environment ([[[YOUR-LAB] fleet]]), a gap analysis would assess current monitoring capabilities with [[Wazuh]], network segmentation via [[Tailscale]], identity management with [[Active Directory]], and compare them against [[NIST]] Cybersecurity Framework or [[ISO 27001]] objectives. For example: "Current state: Wazuh collects logs from 5 systems; Desired state: Full endpoint detection and response with threat hunting capability." The gap might be: "Need EDR agents on 20 additional systems, analyst training, and automated response playbooks—estimated 8 weeks, $15K."
 
 In real sysadmin work, gap analysis is the formal document that justifies budget requests to management. It's how you prove you need that new SIEM, extra security staff, or network redesign.
 
@@ -85,7 +85,7 @@ In real sysadmin work, gap analysis is the formal document that justifies budget
 - [[Wazuh]] - Open-source threat detection and response platform
 - [[Active Directory]] - Microsoft's identity and access management system
 - [[Tailscale]] - Zero Trust VPN for secure networking
-- [[[YOUR-LAB]]] - Morpheus's homelab infrastructure
+- [[[YOUR-LAB]]] - your homelab infrastructure
 - [[GRC]] - Governance, Risk, and Compliance
 - [[MITRE ATT&CK]] - Adversary tactics and techniques framework (useful for gap analysis threat modeling)
 - [[Security Posture]] - Overall security health of an organization

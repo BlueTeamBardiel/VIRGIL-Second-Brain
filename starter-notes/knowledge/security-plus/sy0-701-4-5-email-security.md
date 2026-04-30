@@ -66,7 +66,7 @@ In reality, [[Mail Gateway|mail gateways]] perform these checks automatically ag
 
 ## Real-World Application
 
-In Morpheus's homelab, a mail gateway (whether [[Postfix]], Exchange, or cloud-based) would check incoming email against SPF, DKIM, and DMARC records before forwarding to [[Active Directory]]-integrated mailboxes. If Morpheus runs his own domain (e.g., `cocytus.local`), configuring SPF and DMARC [[DNS]] records prevents external attackers from impersonating internal users in phishing attacks—critical for [[Incident Response]] and reducing the attack surface visible to the [[MITRE ATT&CK]] techniques used in email-based initial access. [[Wazuh]] would log failed authentication attempts, helping detect compromised credentials or [[Malware]] spreading via email spoofing.
+In your homelab, a mail gateway (whether [[Postfix]], Exchange, or cloud-based) would check incoming email against SPF, DKIM, and DMARC records before forwarding to [[Active Directory]]-integrated mailboxes. If you run his own domain (e.g., `cocytus.local`), configuring SPF and DMARC [[DNS]] records prevents external attackers from impersonating internal users in phishing attacks—critical for [[Incident Response]] and reducing the attack surface visible to the [[MITRE ATT&CK]] techniques used in email-based initial access. [[Wazuh]] would log failed authentication attempts, helping detect compromised credentials or [[Malware]] spreading via email spoofing.
 
 ## [[Wiki Links]]
 

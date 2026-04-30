@@ -85,7 +85,7 @@ Wireless networks present unique security challenges because data travels over r
 
 ## Real-World Application
 
-In Morpheus's homelab ([[[YOUR-LAB]]] fleet), wireless security directly impacts how securely IoT devices and laptops connect to the lab network. If the lab runs WPA2 with a PSK, an attacker positioned in the building could passively capture traffic from any wireless device for later cracking—potentially exposing lab credentials or sensitive research. Upgrading to WPA3 with [[SAE]] ensures that even if someone captures packets, they can't perform offline brute-force attacks. For critical systems (like access points managing [[Wazuh]] agents or [[Active Directory]] authentication), consider adding [[802.1X]] enterprise authentication alongside WPA3 to bind access to individual user credentials rather than a shared PSK.
+In your homelab ([[[YOUR-LAB]]] fleet), wireless security directly impacts how securely IoT devices and laptops connect to the lab network. If the lab runs WPA2 with a PSK, an attacker positioned in the building could passively capture traffic from any wireless device for later cracking—potentially exposing lab credentials or sensitive research. Upgrading to WPA3 with [[SAE]] ensures that even if someone captures packets, they can't perform offline brute-force attacks. For critical systems (like access points managing [[Wazuh]] agents or [[Active Directory]] authentication), consider adding [[802.1X]] enterprise authentication alongside WPA3 to bind access to individual user credentials rather than a shared PSK.
 
 ---
 

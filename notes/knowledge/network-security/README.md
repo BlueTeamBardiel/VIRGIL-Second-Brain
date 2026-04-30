@@ -15,7 +15,7 @@
 - **North-South (perimeter):** Internet-facing — catches inbound attacks, C2 callbacks, exfiltration
 - **East-West (lateral):** Between VLANs/segments — catches lateral movement *after* perimeter bypass
 - **At choke points:** Not everywhere — focus on where traffic *must* flow
-- **[[COCYTUS]] placement:** [[LAB_HOST]] is the designated network IDS/forensic logging host — see Phase 2.5
+- **[[YOUR-LAB]] placement:** [[LAB_HOST]] is the designated network IDS/forensic logging host — see Phase 2.5
 
 ---
 
@@ -53,7 +53,7 @@ Zeek is different — it doesn't do signatures, it logs everything about every c
 ### Stateful Inspection (Layer 3/4 + state)
 - Tracks TCP connection state (SYN/SYN-ACK/ACK)
 - Only allows return traffic for established connections
-- Examples: [[UFW]] on COCYTUS fleet hosts, most hardware firewalls
+- Examples: [[UFW]] on YOUR-LAB fleet hosts, most hardware firewalls
 - Weakness: Still no application visibility
 
 ### Next-Generation Firewall (NGFW, Layer 7)
@@ -79,8 +79,8 @@ On a flat /24, any compromise = access to every device. Ransomware spreads via S
 
 ### VLANs
 Layer 2 segmentation. Separate broadcast domains. Traffic between VLANs requires a router/L3 switch.
-- [[YOUR_SWITCH]] (Cisco 3850) is the COCYTUS inter-VLAN routing device
-- Current COCYTUS is mostly flat (LAB_IP/24) — segmentation is a future hardening goal
+- [[YOUR_SWITCH]] (Cisco 3850) is the YOUR-LAB inter-VLAN routing device
+- Current YOUR-LAB is mostly flat (LAB_IP/24) — segmentation is a future hardening goal
 
 ### DMZ (Demilitarized Zone)
 Public-facing servers in a network segment that has no direct access to internal network.
@@ -90,7 +90,7 @@ Public-facing servers in a network segment that has no direct access to internal
 ### Microsegmentation
 East-west firewall policies between individual workloads. Zero trust networking at the host level.
 - Implemented via host-based firewalls ([[UFW]]) + zero-trust software-defined networking
-- Tailscale ACLs provide a form of microsegmentation for COCYTUS fleet — even on LAN, you can lock down inter-host traffic
+- Tailscale ACLs provide a form of microsegmentation for YOUR-LAB fleet — even on LAN, you can lock down inter-host traffic
 
 ---
 
@@ -111,8 +111,8 @@ The perimeter is dead. VPN gives LAN access, then lateral movement is trivial. Z
 - Network: microsegmentation, network access control, [[Tailscale]] ACLs
 - Application: WAF, mTLS between services, zero-trust application proxies
 
-### [[Tailscale]] as Zero Trust for COCYTUS
-Tailscale implements zero trust at the network layer for COCYTUS fleet:
+### [[Tailscale]] as Zero Trust for YOUR-LAB
+Tailscale implements zero trust at the network layer for YOUR-LAB fleet:
 - Identity-based access (Tailscale auth = identity)
 - ACL policies control which host can reach which service
 - No VPN split tunnel — Tailscale provides specific service access, not LAN broadcast
@@ -149,7 +149,7 @@ Tailscale implements zero trust at the network layer for COCYTUS fleet:
 ## Wireless Security
 
 See [[Wireless Security]] for full reference.
-**Quick:** WPA3 > WPA2-Enterprise > WPA2-Personal. [[CAIM]] (WiFi Pineapple) used for wireless lab testing in COCYTUS.
+**Quick:** WPA3 > WPA2-Enterprise > WPA2-Personal. [[CAIM]] (WiFi Pineapple) used for wireless lab testing in YOUR-LAB.
 
 ---
 

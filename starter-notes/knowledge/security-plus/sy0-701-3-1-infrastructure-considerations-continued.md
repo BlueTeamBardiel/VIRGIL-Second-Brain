@@ -68,7 +68,7 @@ Imagine building a restaurant. You could rent a small, cheap space with basic eq
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, these concepts manifest constantly: balancing the cost of a secondary [[Active Directory]] domain controller against recovery time, deciding whether to patch every system immediately or stage updates, ensuring [[Wazuh]] logging scales when the lab grows from 5 to 50 VMs, and planning [[Tailscale]] VPN responsiveness across geographically distributed nodes. A real sysadmin must justify a $5,000 UPS or backup generator by showing RTO/RPO requirements; the Security+ exam tests whether you can articulate these trade-offs professionally.
+In your [[[YOUR-LAB]]] homelab, these concepts manifest constantly: balancing the cost of a secondary [[Active Directory]] domain controller against recovery time, deciding whether to patch every system immediately or stage updates, ensuring [[Wazuh]] logging scales when the lab grows from 5 to 50 VMs, and planning [[Tailscale]] VPN responsiveness across geographically distributed nodes. A real sysadmin must justify a $5,000 UPS or backup generator by showing RTO/RPO requirements; the Security+ exam tests whether you can articulate these trade-offs professionally.
 
 ---
 
@@ -92,7 +92,7 @@ In Morpheus's [[[YOUR-LAB]]] homelab, these concepts manifest constantly: balanc
 - [[IPS (Intrusion Prevention System)]] — Active defense
 - [[Network Segmentation]] — Isolation of non-patchable assets
 - [[Air-gapping]] — Physical isolation technique
-- [[[YOUR-LAB]]] — Morpheus's homelab fleet
+- [[[YOUR-LAB]]] — your homelab fleet
 - [[Incident Response]] — Process requiring good recovery capability
 - [[NIST]] — Standards for infrastructure design
 

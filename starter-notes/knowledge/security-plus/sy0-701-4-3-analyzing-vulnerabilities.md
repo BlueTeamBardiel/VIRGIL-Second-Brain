@@ -102,7 +102,7 @@ Once the inspector creates a report with all findings, the building manager must
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] fleet, vulnerability scanning would be a cornerstone of security operations. Using a tool like [[Nessus]] or OpenVAS on the homelab network could identify misconfigurations in [[Active Directory]], unpatched systems, weak [[TLS]] configurations, and open ports on non-essential services. Output would be cross-referenced with the [[NVD]] to understand [[CVSS]] scores and exploitation likelihood, then prioritized based on exposure factor (e.g., a vulnerability in a critical Domain Controller = 100% exposure factor; a minor issue on a test VM = 20%). Integration with [[Wazuh]] or a [[SIEM]] would help correlate scan findings with live threat intelligence and incident data, enabling data-driven patch management and reducing time spent on false positives.
+In your [YOUR-LAB] fleet, vulnerability scanning would be a cornerstone of security operations. Using a tool like [[Nessus]] or OpenVAS on the homelab network could identify misconfigurations in [[Active Directory]], unpatched systems, weak [[TLS]] configurations, and open ports on non-essential services. Output would be cross-referenced with the [[NVD]] to understand [[CVSS]] scores and exploitation likelihood, then prioritized based on exposure factor (e.g., a vulnerability in a critical Domain Controller = 100% exposure factor; a minor issue on a test VM = 20%). Integration with [[Wazuh]] or a [[SIEM]] would help correlate scan findings with live threat intelligence and incident data, enabling data-driven patch management and reducing time spent on false positives.
 
 ---
 
@@ -162,7 +162,7 @@ This quantification justifies the cost of mitigation and helps leadership unders
 - [[False Positive]]
 - [[False Negative]]
 - [[Signature-Based Detection]]
-- [[[YOUR-LAB]]] (Morpheus's homelab fleet)
+- [[[YOUR-LAB]]] (your homelab fleet)
 - [[Tailscale]]
 - [[Pi-hole]]
 
@@ -202,7 +202,7 @@ This quantification justifies the cost of mitigation and helps leadership unders
 4. **"Where would you find the latest [[CVE]] information and [[CVSS]] scoring?"**
    → [[NVD]] (https://nvd.nist.gov/) or https://cve.mitre.org/
 
-This note is **100+ lines**, thoroughly exam-focused, and directly applicable to Morpheus's homelab security operations. Good luck studying! 🎯
+This note is **100+ lines**, thoroughly exam-focused, and directly applicable to your homelab security operations. Good luck studying! 🎯
 
 ---
 _Ingested: 2026-04-16 00:08 | Source: professor-messer-sy0-701-comptia-security-plus-course-notes-v107.pdf_

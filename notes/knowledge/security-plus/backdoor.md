@@ -147,7 +147,7 @@ Detection is genuinely difficult. Properly engineered backdoors emit low-volume,
 
 ## Lab / Hands-On
 
-> ⚠️ All exercises below must be performed in an **isolated lab network** (e.g., the COCYTUS homelab `dmz-lab` VLAN with no Internet routing). Never run these on production systems or without explicit authorization.
+> ⚠️ All exercises below must be performed in an **isolated lab network** (e.g., your homelab `dmz-lab` VLAN with no Internet routing). Never run these on production systems or without explicit authorization.
 
 **1. Build and detect a reverse shell (Kali → Ubuntu VM)**
 

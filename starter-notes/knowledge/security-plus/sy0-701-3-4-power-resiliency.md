@@ -85,7 +85,7 @@ Think of your home's water supply during a city outage: normally, water flows fr
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, a [[UPS]] protecting the core switch and [[Active Directory]] domain controller ensures that network authentication and VLAN segregation remain available during power events—critical for [[Zero Trust]] and [[Wazuh]] monitoring continuity. A larger setup might use a generator to sustain the entire lab during extended outages, allowing for continued [[Incident Response]] training without data loss on the DFIR appliances. Without power resiliency, a simple brownout could trigger false alerts in [[Wazuh]], corrupt logs, or cause desynchronization in [[Tailscale]] peer connections.
+In your [YOUR-LAB] homelab, a [[UPS]] protecting the core switch and [[Active Directory]] domain controller ensures that network authentication and VLAN segregation remain available during power events—critical for [[Zero Trust]] and [[Wazuh]] monitoring continuity. A larger setup might use a generator to sustain the entire lab during extended outages, allowing for continued [[Incident Response]] training without data loss on the DFIR appliances. Without power resiliency, a simple brownout could trigger false alerts in [[Wazuh]], corrupt logs, or cause desynchronization in [[Tailscale]] peer connections.
 
 ---
 

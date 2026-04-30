@@ -150,11 +150,11 @@ This section covers the architectural decisions and trade-offs between on-premis
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, these concepts are directly applicable:
+In your [[[YOUR-LAB]]] homelab, these concepts are directly applicable:
 
 - **Virtualization** powers the entire lab—each security tool ([[Wazuh]], [[Pi-hole]], domain controllers) runs as isolated VMs, allowing fast snapshots for testing and recovery without rebuilding physical infrastructure.
 
-- **Centralization via Wazuh** mirrors the exam's emphasis on centralized logging and alerting. Morpheus correlates alerts across decentralized lab systems (local VMs, [[Tailscale]] remote nodes, cloud instances) from a single dashboard, simulating enterprise [[SIEM]] practices.
+- **Centralization via Wazuh** mirrors the exam's emphasis on centralized logging and alerting. you correlate alerts across decentralized lab systems (local VMs, [[Tailscale]] remote nodes, cloud instances) from a single dashboard, simulating enterprise [[SIEM]] practices.
 
 - **[[IoT]] in the lab** (smart home devices, temperature sensors, network cameras) must be isolated on separate [[VLANs]] and monitored by [[Wazuh]] agents to detect anomalies—a hands-on example of the "isolate and monitor" principle.
 

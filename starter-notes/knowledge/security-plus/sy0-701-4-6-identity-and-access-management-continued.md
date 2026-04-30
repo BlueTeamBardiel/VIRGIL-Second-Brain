@@ -68,7 +68,7 @@ Now imagine that the apartment complex wants to allow guests from partner hotels
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab environment, [[LDAP]] is critical for managing [[Active Directory]] across the fleet—when a new VM or container needs user authentication, it queries the directory tree to pull group memberships and permissions. Implementing [[Federation]] would allow Morpheus to grant access to partner organizations (e.g., contractors running security tests) without creating separate accounts; establishing trust relationships and using [[SAML]] or [[OAuth]] would enable those third parties to authenticate with their own credentials. [[Wazuh]] security monitoring benefits from understanding these IAM flows—detecting anomalous authentication patterns, unauthorized federation access, or token abuse requires knowledge of how these protocols operate under normal conditions.
+In your [YOUR-LAB] homelab environment, [[LDAP]] is critical for managing [[Active Directory]] across the fleet—when a new VM or container needs user authentication, it queries the directory tree to pull group memberships and permissions. Implementing [[Federation]] would allow you to grant access to partner organizations (e.g., contractors running security tests) without creating separate accounts; establishing trust relationships and using [[SAML]] or [[OAuth]] would enable those third parties to authenticate with their own credentials. [[Wazuh]] security monitoring benefits from understanding these IAM flows—detecting anomalous authentication patterns, unauthorized federation access, or token abuse requires knowledge of how these protocols operate under normal conditions.
 
 ---
 
@@ -88,7 +88,7 @@ In Morpheus's [YOUR-LAB] homelab environment, [[LDAP]] is critical for managing 
 - [[IAM]] — Identity and Access Management
 - [[Directory Service]] — Centralized user/resource database
 - [[Wazuh]] — Security monitoring (relevant to IAM anomaly detection)
-- [[[YOUR-LAB]]] — Morpheus's homelab fleet
+- [[[YOUR-LAB]]] — your homelab fleet
 - [[CompTIA Security+]] — SY0-701 certification exam
 - [[NIST]] — Standards body (context for IAM frameworks)
 

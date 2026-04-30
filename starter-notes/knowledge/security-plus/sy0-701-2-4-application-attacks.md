@@ -122,7 +122,7 @@ Imagine a security guard who checks that you're carrying a valid badge, but does
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] fleet, injection attacks are monitored via [[Wazuh]] log correlation—if a web server logs unusual [[SQL Injection|SQL syntax]] errors or repeated failed queries, Wazuh alerts trigger. Buffer overflow protection relies on [[Active Directory]] domain policy enforcement (DEP/ASLR enabled across all systems), and replay attack risk is minimized by enforcing [[TLS]] encryption on all [[Tailscale]] VPN tunnels and internal services. A compromised [[[YOUR-LAB]]] node running malware could theoretically capture network traffic, making replay attacks a real threat if legacy unencrypted protocols ([[LDAP]] without [[StartTLS]], etc.) are exposed.
+In your [[[YOUR-LAB]]] fleet, injection attacks are monitored via [[Wazuh]] log correlation—if a web server logs unusual [[SQL Injection|SQL syntax]] errors or repeated failed queries, Wazuh alerts trigger. Buffer overflow protection relies on [[Active Directory]] domain policy enforcement (DEP/ASLR enabled across all systems), and replay attack risk is minimized by enforcing [[TLS]] encryption on all [[Tailscale]] VPN tunnels and internal services. A compromised [[[YOUR-LAB]]] node running malware could theoretically capture network traffic, making replay attacks a real threat if legacy unencrypted protocols ([[LDAP]] without [[StartTLS]], etc.) are exposed.
 
 ---
 

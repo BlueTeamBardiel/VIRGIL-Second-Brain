@@ -83,9 +83,9 @@ The attacker doesn't need sophisticated exploits; they exploit negligence. This 
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab environment, misconfiguration vulnerabilities are a primary concern:
+In your [[[YOUR-LAB]]] homelab environment, misconfiguration vulnerabilities are a primary concern:
 
-- **IoT & Network Devices**: Switches, routers, and smart devices often ship with default credentials. Morpheus should audit all devices, change default passwords, disable unnecessary services, and restrict management access via [[Firewall]] rules and [[VPN]] (e.g., [[Tailscale]]) tunneling.
+- **IoT & Network Devices**: Switches, routers, and smart devices often ship with default credentials. you should audit all devices, change default passwords, disable unnecessary services, and restrict management access via [[Firewall]] rules and [[VPN]] (e.g., [[Tailscale]]) tunneling.
 
 - **Protocol Hardening**: Any remote administration tools (e.g., device management, console access) should use [[SSH]] or encrypted tunnels, never [[Telnet]]. This applies to any [[Active Directory]] domain controllers, workstations, or service accounts managed over the network.
 

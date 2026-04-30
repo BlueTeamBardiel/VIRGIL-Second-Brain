@@ -135,9 +135,9 @@ Without clear agreements, disputes arise, security incidents go unresolved, and 
 
 ## Real-World Application
 
-In Morpheus's homelab environment, these agreements directly apply:
+In your homelab environment, these agreements directly apply:
 - **MSA with cloud providers** (AWS, Azure) defines overall service terms, while individual **SOWs govern specific infrastructure projects** (e.g., [[Wazuh]] deployment, [[Tailscale]] VPN setup)
-- **SLAs with ISP** guarantee uptime for the [[[YOUR-LAB] fleet]] systems; if not met, Morpheus can escalate or request compensation
+- **SLAs with ISP** guarantee uptime for the [[[YOUR-LAB] fleet]] systems; if not met, you can escalate or request compensation
 - **NDAs protect proprietary security testing methodologies** when hiring external consultants for penetration testing or security assessments
 - **BPA framework applies if partnering with other security professionals** to establish a managed security service (MSS) for community homelab operators
 - **MOUs facilitate quick collaboration** with open-source projects (e.g., contributing to Wazuh or Pi-hole) before formal code contribution agreements

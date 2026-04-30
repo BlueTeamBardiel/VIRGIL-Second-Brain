@@ -99,7 +99,7 @@ Imagine a bank that only watches individual tellers (endpoints). One teller appe
 
 ## Real-World Application
 
-In Morpheus's **[YOUR-LAB] homelab**, XDR principles are mirrored through [[Wazuh]] (agent-based monitoring on endpoints) correlating with [[Tailscale]] network telemetry and [[Active Directory]] logs. If a compromised endpoint attempts lateral movement to a sensitive Active Directory service account, Wazuh's correlation engine can detect the pattern across endpoint, network, and identity logs—simulating XDR behavior in a small lab. UBA concepts apply directly: Morpheus can establish baselines for normal AD user login patterns (e.g., sysadmin always logs in from office IPs during business hours) and alert on geographic impossibilities or off-hours access, catching credential compromise early.
+In your **[YOUR-LAB] homelab**, XDR principles are mirrored through [[Wazuh]] (agent-based monitoring on endpoints) correlating with [[Tailscale]] network telemetry and [[Active Directory]] logs. If a compromised endpoint attempts lateral movement to a sensitive Active Directory service account, Wazuh's correlation engine can detect the pattern across endpoint, network, and identity logs—simulating XDR behavior in a small lab. UBA concepts apply directly: you can establish baselines for normal AD user login patterns (e.g., sysadmin always logs in from office IPs during business hours) and alert on geographic impossibilities or off-hours access, catching credential compromise early.
 
 ---
 

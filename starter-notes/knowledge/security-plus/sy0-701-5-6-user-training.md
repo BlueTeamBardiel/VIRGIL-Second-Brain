@@ -83,7 +83,7 @@ Now imagine some guards are contractors hired for special events—they still ne
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab environment, user training would extend to anyone with [[Active Directory]] credentials, SSH access to lab servers, or ability to deploy containers. Just as an organization trains users on not plugging in unknown USB devices, Morpheus would document and enforce security policies for lab users—for example, requiring strong passphrases for [[Tailscale]] VPN access, awareness of [[Wazuh]] alerting for suspicious file modifications (insider threat detection), and understanding why [[Pi-hole]] DNS filtering rules shouldn't be disabled. In a real SOC using [[Splunk]] or [[Wazuh]], analysts must receive training on recognizing [[MITRE ATT&CK]] techniques and understanding [[incident response]] procedures before their first shift.
+In your [YOUR-LAB] homelab environment, user training would extend to anyone with [[Active Directory]] credentials, SSH access to lab servers, or ability to deploy containers. Just as an organization trains users on not plugging in unknown USB devices, you would document and enforce security policies for lab users—for example, requiring strong passphrases for [[Tailscale]] VPN access, awareness of [[Wazuh]] alerting for suspicious file modifications (insider threat detection), and understanding why [[Pi-hole]] DNS filtering rules shouldn't be disabled. In a real SOC using [[Splunk]] or [[Wazuh]], analysts must receive training on recognizing [[MITRE ATT&CK]] techniques and understanding [[incident response]] procedures before their first shift.
 
 ---
 

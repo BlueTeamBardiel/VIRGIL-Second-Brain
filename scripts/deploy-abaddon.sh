@@ -139,11 +139,12 @@ fi
 
 # ── 7. Register cron jobs (preserve non-VIRGIL entries) ──────────────────────
 echo "==> [YOUR-CONTROL-NODE] Configuring crontab"
-EXISTING=$(crontab -l 2>/dev/null | grep -v 'weekly-rollup\|promote\.sh\|ANTHROPIC_API_KEY\|SLACK_WEBHOOK_URL' || true)
+EXISTING=$(crontab -l 2>/dev/null | grep -v 'weekly-rollup\|promote\.sh\|ANTHROPIC_API_KEY\|SLACK_WEBHOOK_URL\|BASH_ENV.*VIRGIL' || true)
 
 crontab - <<CRON_EOF
-ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY"
-SLACK_WEBHOOK_URL="$SLACK_WEBHOOK_URL"
+# Load secrets from vault .env (never embedded here)
+BASH_ENV="${REMOTE_DIR}/.env"
+VIRGIL_DIR="${REMOTE_DIR}"
 0 1 * * 0 ${REMOTE_DIR}/hooks/weekly-rollup.sh >> ${REMOTE_DIR}/hooks/weekly-rollup.log 2>&1
 0 2 * * * ${REMOTE_DIR}/hooks/promote.sh >> ${REMOTE_DIR}/hooks/promote.log 2>&1
 ${EXISTING}

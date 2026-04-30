@@ -80,7 +80,7 @@ Imagine a small restaurant with one cashier. A denial of service attack is like 
 
 ## Real-World Application
 
-In Morpheus's homelab ([YOUR-LAB] fleet), a [[Wazuh]] SIEM would detect unusual traffic spikes or repeated connection attempts that might indicate a DoS attack. A [[Pi-hole]] DNS sinkhole could be misconfigured to accidentally create a layer of amplification if DNS queries aren't rate-limited. Understanding reflection/amplification is critical for ISP-level defenders and cloud security teams; in a homelab context, Morpheus should know how to configure [[firewall]] rules to rate-limit ICMP and DNS responses, use [[Tailscale]] to segment traffic away from public DoS risk, and monitor [[Active Directory]] authentication attempts (a SYN flood can mask credential attacks during the chaos).
+In your homelab ([YOUR-LAB] fleet), a [[Wazuh]] SIEM would detect unusual traffic spikes or repeated connection attempts that might indicate a DoS attack. A [[Pi-hole]] DNS sinkhole could be misconfigured to accidentally create a layer of amplification if DNS queries aren't rate-limited. Understanding reflection/amplification is critical for ISP-level defenders and cloud security teams; in a homelab context, you should know how to configure [[firewall]] rules to rate-limit ICMP and DNS responses, use [[Tailscale]] to segment traffic away from public DoS risk, and monitor [[Active Directory]] authentication attempts (a SYN flood can mask credential attacks during the chaos).
 
 ---
 

@@ -241,9 +241,9 @@ cd ~/pki
 openssl genrsa -out ca/ca.key 4096
 openssl req -new -x509 -days 1825 -key ca/ca.key \
   -out ca/ca.crt \
-  -subj "/C=US/ST=Lab/O=COCYTUS-Lab/CN=COCYTUS Root CA"
+  -subj "/C=US/ST=Lab/O=YOUR-LAB-Lab/CN=YOUR-LAB Root CA"
 
 # 2. Create server certificate
 openssl genrsa -out server/server.key 2048
 openssl req -new -key server/server.key -out server/server.csr \
-  -subj "/C=US/O=COCYTUS-Lab/CN=server.lab.local
+  -subj "/C=US/O=YOUR-LAB-Lab/CN=server.lab.local

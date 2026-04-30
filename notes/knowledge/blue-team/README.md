@@ -193,7 +193,7 @@ rule Mimikatz_Strings {
 Centralizes logs, correlates events, generates alerts.
 - **[[Splunk]]:** Most widely deployed enterprise SIEM. SPL is the query language.
 - **Elastic/Kibana:** Open source alternative. ECS (Elastic Common Schema) for normalization.
-- **[[Wazuh]]:** OSS SIEM + XDR. COCYTUS uses Wazuh 4.14.1 on [[LAB_HOST]].
+- **[[Wazuh]]:** OSS SIEM + XDR. YOUR-LAB uses Wazuh 4.14.1 on [[LAB_HOST]].
 - **Microsoft Sentinel:** Cloud-native SIEM for Azure environments.
 
 ### EDR (Endpoint Detection and Response)
@@ -240,7 +240,7 @@ Security Architect / CISO
 | GIAC GREM | L3 advanced | Malware reverse engineering |
 | OSCP | Red → Purple | Offensive skills for better defensive understanding |
 
-**Morpheus's current position:** Transitioning from help desk to SOC L1/L2. [[CySA+]] is exactly the right cert.
+**your current position:** Transitioning from help desk to SOC L1/L2. [[CySA+]] is exactly the right cert.
 
 ### The Help Desk Advantage
 Help desk people know what normal looks like. They know the weird ticket patterns, the problem users, the janky systems that break every quarter. That institutional knowledge is gold in a SOC — you know what to investigate and what to dismiss.

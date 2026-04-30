@@ -47,7 +47,7 @@ The subscriber creates a **Certificate Signing Request (CSR)**, a standardized f
 ```bash
 # Generate a CSR with Subject Alternative Names
 openssl req -new -key server.key -out server.csr \
-  -subj "/C=US/ST=Virginia/L=Arlington/O=COCYTUS Lab/CN=lab.cocytus.local" \
+  -subj "/C=US/ST=Virginia/L=Arlington/O=YOUR-LAB Lab/CN=lab.cocytus.local" \
   -addext "subjectAltName=DNS:lab.cocytus.local,DNS:www.lab.cocytus.local"
 
 # Inspect the CSR

@@ -84,7 +84,7 @@ Each character in a password adds exponential entropy. An 8-character password w
 
 ## Real-World Application
 
-In Morpheus's homelab, [[Active Directory]] enforces password policies at the domain level (complexity, minimum length, expiration, history) for all user accounts and service principals. For administrative accounts and PAM scenarios, Morpheus would implement a centralized password manager or vault (e.g., HashiCorp Vault, CyberArk) to rotate credentials automatically, audit access, and ensure no plaintext passwords are logged in [[Wazuh]] or syslog. For external access, tools like [[Tailscale]] can leverage [[OAuth]] or [[SAML]] (passwordless federation) instead of local password stores, reducing the attack surface. This multi-layered approach—policy enforcement, encrypted storage, and passwordless federation—mirrors enterprise security operations and directly aligns with Security+ expectations.
+In your homelab, [[Active Directory]] enforces password policies at the domain level (complexity, minimum length, expiration, history) for all user accounts and service principals. For administrative accounts and PAM scenarios, you would implement a centralized password manager or vault (e.g., HashiCorp Vault, CyberArk) to rotate credentials automatically, audit access, and ensure no plaintext passwords are logged in [[Wazuh]] or syslog. For external access, tools like [[Tailscale]] can leverage [[OAuth]] or [[SAML]] (passwordless federation) instead of local password stores, reducing the attack surface. This multi-layered approach—policy enforcement, encrypted storage, and passwordless federation—mirrors enterprise security operations and directly aligns with Security+ expectations.
 
 ---
 

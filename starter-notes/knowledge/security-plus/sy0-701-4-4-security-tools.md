@@ -76,7 +76,7 @@ Imagine a large hospital with many different diagnostic machines (X-ray, MRI, CT
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, [[SCAP]] standards would ensure that compliance scans across mixed [[Linux]] and [[Windows]] systems in [[Active Directory]] all report in the same format, enabling automated remediation via automation tools. [[SIEM]] (like [[Wazuh]] already deployed) becomes the nerve center — collecting logs from [[Tailscale]] VPN connections, [[Pi-hole]] DNS queries, [[Active Directory]] authentication events, and [[IDS]]/[[IPS]] alerts, then correlating them to detect lateral movement or privilege escalation attempts. Agent-based monitoring via [[Wazuh]] agents provides continuous visibility on critical fleet nodes, while agentless checks can quickly audit temporary lab systems or contractor machines without requiring persistent agent maintenance.
+In your [[[YOUR-LAB]]] homelab, [[SCAP]] standards would ensure that compliance scans across mixed [[Linux]] and [[Windows]] systems in [[Active Directory]] all report in the same format, enabling automated remediation via automation tools. [[SIEM]] (like [[Wazuh]] already deployed) becomes the nerve center — collecting logs from [[Tailscale]] VPN connections, [[Pi-hole]] DNS queries, [[Active Directory]] authentication events, and [[IDS]]/[[IPS]] alerts, then correlating them to detect lateral movement or privilege escalation attempts. Agent-based monitoring via [[Wazuh]] agents provides continuous visibility on critical fleet nodes, while agentless checks can quickly audit temporary lab systems or contractor machines without requiring persistent agent maintenance.
 
 ---
 

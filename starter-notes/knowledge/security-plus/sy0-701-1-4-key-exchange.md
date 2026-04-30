@@ -79,7 +79,7 @@ Your friend sends you an **open padlock** (public key) through the mail. You wri
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, every time a node connects via [[Tailscale]] or establishes a [[TLS]] connection to the [[Wazuh]] manager, key exchange happens automatically. [[Tailscale]] uses [[WireGuard]] (which employs Noise protocol key exchange), and the Wazuh agent-to-manager link uses [[TLS]]. Both use ephemeral session keys—if you capture one month's traffic, compromising that key doesn't expose next month's traffic. This is why modern sysadmins don't manually exchange keys via phone; the cryptographic handshake happens in-band, protected by [[asymmetric encryption]].
+In your [[[YOUR-LAB]]] homelab, every time a node connects via [[Tailscale]] or establishes a [[TLS]] connection to the [[Wazuh]] manager, key exchange happens automatically. [[Tailscale]] uses [[WireGuard]] (which employs Noise protocol key exchange), and the Wazuh agent-to-manager link uses [[TLS]]. Both use ephemeral session keys—if you capture one month's traffic, compromising that key doesn't expose next month's traffic. This is why modern sysadmins don't manually exchange keys via phone; the cryptographic handshake happens in-band, protected by [[asymmetric encryption]].
 
 ---
 

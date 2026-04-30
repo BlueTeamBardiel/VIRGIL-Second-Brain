@@ -101,7 +101,7 @@ Imagine you're the captain of a ship. Incident planning is like running fire dri
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] fleet homelab, incident planning translates directly to practice: setting up [[Wazuh]] alert thresholds and then running tabletop exercises ("What if our critical VM shows 10,000 failed SSH logins in 5 minutes?") before an actual intrusion. Phishing simulations would test whether users on the [[Active Directory]] domain click suspicious [[Tailscale]] VPN invitation emails, and threat hunting might involve regularly searching [[Wazuh]] logs for unusual lateral movement patterns or privileged account usage. When a security event does occur (e.g., a suspicious [[Metasploit]] artifact in logs), the RCA process determines whether the root cause was a missing firewall rule, weak [[MFA]] enforcement, or insufficient [[SIEM]] visibility—then the lessons feed back into the next exercise cycle.
+In your [YOUR-LAB] fleet homelab, incident planning translates directly to practice: setting up [[Wazuh]] alert thresholds and then running tabletop exercises ("What if our critical VM shows 10,000 failed SSH logins in 5 minutes?") before an actual intrusion. Phishing simulations would test whether users on the [[Active Directory]] domain click suspicious [[Tailscale]] VPN invitation emails, and threat hunting might involve regularly searching [[Wazuh]] logs for unusual lateral movement patterns or privileged account usage. When a security event does occur (e.g., a suspicious [[Metasploit]] artifact in logs), the RCA process determines whether the root cause was a missing firewall rule, weak [[MFA]] enforcement, or insufficient [[SIEM]] visibility—then the lessons feed back into the next exercise cycle.
 
 ---
 

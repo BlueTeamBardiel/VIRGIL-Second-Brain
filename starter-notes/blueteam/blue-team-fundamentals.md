@@ -149,7 +149,7 @@ alert tcp any any -> $HOME_NET 21 (msg:"FTP Login Attempt"; content:"USER"; noca
 | `rev` | Rule revision | `rev:1` |
 | `classtype` | Alert classification | `classtype:attempted-recon` |
 
-### Running Suricata in COCYTUS
+### Running Suricata in YOUR-LAB
 
 ```bash
 # Install

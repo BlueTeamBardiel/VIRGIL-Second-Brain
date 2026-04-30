@@ -86,7 +86,7 @@ Imagine a bank vault where only the branch manager has the combination, and she 
 
 ## Real-World Application
 
-In Morpheus's homelab, JIT + password vaulting would be implemented via [[Active Directory]] with a PAM solution (e.g., Delinea Secret Server or open-source alternatives like HashiCorp Vault) to manage [YOUR-LAB] fleet credentials. When Morpheus needs to perform maintenance on critical systems, instead of logging in with a stored domain admin account, he would request elevated access through the PAM system, receive a temporary token, and perform the task while all actions are logged to [[Wazuh]]. This approach dramatically reduces the risk of credential theft from his workstation and provides forensic evidence for any suspicious access attempts—critical in a homelab used for security research and testing.
+In your homelab, JIT + password vaulting would be implemented via [[Active Directory]] with a PAM solution (e.g., Delinea Secret Server or open-source alternatives like HashiCorp Vault) to manage [YOUR-LAB] fleet credentials. When you need to perform maintenance on critical systems, instead of logging in with a stored domain admin account, he would request elevated access through the PAM system, receive a temporary token, and perform the task while all actions are logged to [[Wazuh]]. This approach dramatically reduces the risk of credential theft from his workstation and provides forensic evidence for any suspicious access attempts—critical in a homelab used for security research and testing.
 
 ---
 

@@ -95,7 +95,7 @@ Imagine a public library with a librarian at the entrance. Before letting patron
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab or production SOC, web filtering could be deployed as a [[Pi-hole]]-style [[DNS]] sinkhole (transparent filtering), a dedicated [[forward proxy]] appliance for the LAN, or agent-based filtering on [[Active Directory]]-managed Windows endpoints. For example, a malware analysis lab might use category-based blocking to prevent accidental exfiltration while allowing controlled outbound research; a SOC might log all "suspicious" categories (Hacking, Malware) with an Allow-and-Alert rule for forensic investigation. Understanding when to filter vs. when to log-and-monitor is key to operationalizing web filtering in real security architectures, especially alongside [[Wazuh]] and [[SIEM]] platforms for alerting.
+In your [[[YOUR-LAB]]] homelab or production SOC, web filtering could be deployed as a [[Pi-hole]]-style [[DNS]] sinkhole (transparent filtering), a dedicated [[forward proxy]] appliance for the LAN, or agent-based filtering on [[Active Directory]]-managed Windows endpoints. For example, a malware analysis lab might use category-based blocking to prevent accidental exfiltration while allowing controlled outbound research; a SOC might log all "suspicious" categories (Hacking, Malware) with an Allow-and-Alert rule for forensic investigation. Understanding when to filter vs. when to log-and-monitor is key to operationalizing web filtering in real security architectures, especially alongside [[Wazuh]] and [[SIEM]] platforms for alerting.
 
 ---
 
@@ -117,7 +117,7 @@ In Morpheus's [[[YOUR-LAB]]] homelab or production SOC, web filtering could be d
 - [[Wazuh]]
 - [[Pi-hole]]
 - [[Active Directory]]
-- [[[YOUR-LAB]]] (Morpheus's homelab)
+- [[[YOUR-LAB]]] (your homelab)
 - [[Incident Response]]
 - [[Logging and Monitoring]]
 - [[Defense in Depth]]

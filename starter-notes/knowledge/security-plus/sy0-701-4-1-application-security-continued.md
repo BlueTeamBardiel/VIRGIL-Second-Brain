@@ -91,7 +91,7 @@ Imagine you're running a restaurant franchise:
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, application security monitoring is implemented via [[Wazuh]] agents deployed on each endpoint, monitoring for suspicious application behavior (failed login spikes, unusual file access, SQL injection attempts in logs). Code signing would apply when deploying custom internal tools across the fleet—Morpheus would use his own CA to sign scripts, ensuring no one modifies them in transit. Sandboxing is relevant for testing potentially malicious artifacts in isolated [[VirtualBox]] VMs before introducing them to the network. Together, these controls provide layered defense: SAST catches bugs during development of custom tools, code signing validates legitimacy during deployment, sandboxing isolates untested applications, and [[Wazuh]]/[[SIEM]] monitoring detects exploitation attempts.
+In your [[[YOUR-LAB]]] homelab, application security monitoring is implemented via [[Wazuh]] agents deployed on each endpoint, monitoring for suspicious application behavior (failed login spikes, unusual file access, SQL injection attempts in logs). Code signing would apply when deploying custom internal tools across the fleet—you would use his own CA to sign scripts, ensuring no one modifies them in transit. Sandboxing is relevant for testing potentially malicious artifacts in isolated [[VirtualBox]] VMs before introducing them to the network. Together, these controls provide layered defense: SAST catches bugs during development of custom tools, code signing validates legitimacy during deployment, sandboxing isolates untested applications, and [[Wazuh]]/[[SIEM]] monitoring detects exploitation attempts.
 
 ---
 

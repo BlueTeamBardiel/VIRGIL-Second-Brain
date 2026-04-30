@@ -44,7 +44,7 @@ openssl req -new -key server.key -out server.csr
 
 # Non-interactive CSR with all fields inline
 openssl req -new -key server.key -out server.csr \
-  -subj "/C=US/ST=Virginia/L=Reston/O=COCYTUS Lab/OU=Infrastructure/CN=lab.cocytus.local"
+  -subj "/C=US/ST=Virginia/L=Reston/O=YOUR-LAB Lab/OU=Infrastructure/CN=lab.cocytus.local"
 
 # CSR with Subject Alternative Names (SANs) — critical for modern browsers
 openssl req -new -key server.key -out server.csr \
@@ -237,12 +237,12 @@ openssl genrsa -aes256 -out ca.key 4096
 
 # Generate self-signed CA certificate (valid 10 years)
 openssl req -new -x509 -days 3650 -key ca.key -out ca.crt \
-  -subj "/C=US/ST=Virginia/O=COCYTUS Lab CA/CN=COCYTUS Root CA"
+  -subj "/C=US/ST=Virginia/O=YOUR-LAB Lab CA/CN=YOUR-LAB Root CA"
 
 # Step 2: Generate server key and CSR
 cd ~/pki/server
 openssl genrsa -out server.key 4096
 
 openssl req -new -key server.key -out server.csr \
-  -subj "/C=US/ST=Virginia/O=COCYTUS Lab/CN=homelab.cocytus.local" \
+  -subj "/C=US/ST=Virginia/O=YOUR-LAB Lab/CN=homelab.cocytus.local" \
   -addext "subjectAltName=DNS:homelab.cocytus.local,DNS:*.homelab.cocytus.local

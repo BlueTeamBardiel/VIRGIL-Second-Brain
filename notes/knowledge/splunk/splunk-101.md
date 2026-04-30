@@ -97,7 +97,7 @@ Human cost: delayed detection of breaches, regulatory fines for non‑compliance
    - Verify the health of your data inputs: `splunk list inputs` should show all forwarders connected.  
    - Test alert thresholds by generating a burst of logs and watching if the alert fires correctly.
 
-4. **COCYTUS Context**  
+4. **YOUR-LAB Context**  
    - In a containerized environment, point Splunk’s HEC to Docker log endpoints (`docker logs --follow <container>`).  
    - Use Splunk’s `docker-forwarder` image to collect logs from multiple containers and index them under a shared sourcetype like `container_log`.  
    - Build dashboards that correlate container events with host system activity, aiding in rapid isolation of compromised workloads.

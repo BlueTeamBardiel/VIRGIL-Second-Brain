@@ -119,7 +119,7 @@ passthru("host $host");     // dangerous
 ### Exploitation Walkthrough
 
 1. **Discovery.** Locate parameters that plausibly feed OS commands — hostnames, filenames, conversion settings, log paths, export filenames, or cron-management fields.
-2. **Fingerprinting.** Inject a benign marker: `; echo COCYTUS123`. Look for it in the response body, headers, or file output.
+2. **Fingerprinting.** Inject a benign marker: `; echo YOUR-LAB123`. Look for it in the response body, headers, or file output.
 3. **Blind detection.** If no reflection, try `; sleep 10` or `& timeout /t 10` (Windows). A hanging response confirms injection.
 4. **Enumeration.** Run `id`, `uname -a`, `whoami /all`, `ipconfig`, `cat /etc/passwd`, `env` to map the execution context.
 5. **Staging a reverse shell.** Download and execute a stager:

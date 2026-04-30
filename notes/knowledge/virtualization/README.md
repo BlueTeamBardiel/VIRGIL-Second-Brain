@@ -196,7 +196,7 @@ The lab network is completely isolated from your home network. The attack VM has
 |---|---|---|
 | Single Kali + 1 target | 8 GB | 16 GB |
 | AD lab (DC + 2 clients) | 12 GB | 24 GB |
-| Full COCYTUS-style (10 VMs) | 32 GB | 64 GB |
+| Full YOUR-LAB-style (10 VMs) | 32 GB | 64 GB |
 | Proxmox with 6+ concurrent VMs | 16 GB | 32 GB |
 
 RAM is the primary constraint. CPUs with VT-x/AMD-V support are required (virtually all modern CPUs have this). Storage: SSDs dramatically improve VM performance — NVMe preferred.

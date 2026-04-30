@@ -79,7 +79,7 @@ RF jamming is different: it's like playing loud static over the loudspeaker at t
 
 ## Real-World Application
 
-In Morpheus's homelab, RF jamming would be a nightmare if an adversary had physical proximity to the [YOUR-LAB] fleet's [[802.11ac]]-enabled access points—it would bypass all encryption and authentication controls. [[Wazuh]] and network monitoring tools can detect sudden wireless client disconnections (deauth attack signatures), but they cannot defend against intentional RF jamming without RF monitoring hardware. In production sysadmin work, enterprise sites conduct RF site surveys and monitor spectrum to detect both accidental interference (facilities issues) and malicious jamming (security incident).
+In your homelab, RF jamming would be a nightmare if an adversary had physical proximity to the [YOUR-LAB] fleet's [[802.11ac]]-enabled access points—it would bypass all encryption and authentication controls. [[Wazuh]] and network monitoring tools can detect sudden wireless client disconnections (deauth attack signatures), but they cannot defend against intentional RF jamming without RF monitoring hardware. In production sysadmin work, enterprise sites conduct RF site surveys and monitor spectrum to detect both accidental interference (facilities issues) and malicious jamming (security incident).
 
 ---
 

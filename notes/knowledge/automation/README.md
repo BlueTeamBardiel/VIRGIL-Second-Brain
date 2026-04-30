@@ -190,7 +190,7 @@ Path("report.json").write_text(json.dumps(results, indent=2))
 
 ## Ansible
 
-[[Ansible]] is configuration management and task automation for fleets of machines. No agent needed — it uses SSH. This is what COCYTUS runs for fleet management.
+[[Ansible]] is configuration management and task automation for fleets of machines. No agent needed — it uses SSH. This is what YOUR-LAB runs for fleet management.
 
 ### What it is
 - **Idempotent:** run the same playbook 10 times, get the same result

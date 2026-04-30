@@ -88,7 +88,7 @@ Imagine you're sending a letter to your bank through the mail system. Normally, 
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, an on-path network attack could occur if an attacker on the same subnet performs [[ARP]] poisoning to intercept traffic between a workstation and the [[Active Directory]] domain controller, potentially capturing [[LDAP]] credentials or [[NTLM]] hashes. Deploying [[Wazuh]] with network monitoring enabled and implementing [[VLAN]] segmentation (isolating critical systems) reduces this risk. On-path browser attacks are more insidious: if a developer's workstation is compromised with a [[Trojan]], it could intercept credentials or [[API]] tokens even if they're transmitted over [[TLS]]/[[HTTPS]]. This is why endpoint detection (via [[Wazuh]] agent or [[EDR]]), [[MFA]], and regular malware scanning are non-negotiable in a production homelab.
+In your [YOUR-LAB] homelab, an on-path network attack could occur if an attacker on the same subnet performs [[ARP]] poisoning to intercept traffic between a workstation and the [[Active Directory]] domain controller, potentially capturing [[LDAP]] credentials or [[NTLM]] hashes. Deploying [[Wazuh]] with network monitoring enabled and implementing [[VLAN]] segmentation (isolating critical systems) reduces this risk. On-path browser attacks are more insidious: if a developer's workstation is compromised with a [[Trojan]], it could intercept credentials or [[API]] tokens even if they're transmitted over [[TLS]]/[[HTTPS]]. This is why endpoint detection (via [[Wazuh]] agent or [[EDR]]), [[MFA]], and regular malware scanning are non-negotiable in a production homelab.
 
 ---
 

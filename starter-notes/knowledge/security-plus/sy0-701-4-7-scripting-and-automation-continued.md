@@ -83,7 +83,7 @@ The lesson: automation amplifies both efficiency *and* risk. It requires **upfro
 
 ## Real-World Application
 
-In the [[[YOUR-LAB]]] homelab environment, Morpheus runs multiple automated security scripts (log collection via [[Wazuh]], threat intel updates via [[Pi-hole]], identity sync via [[Active Directory]]). Each automation saves time but introduces SPOF risk. For example, if the [[Wazuh]] log aggregation script crashes, security visibility drops immediately. The real-world solution: implement health checks, monitoring alerts on the automation itself, documented runbooks for manual failover, and version control (Git) for all scripts. Testing changes in a staging environment before production deployment also mitigates technical debt and supportability issues.
+In the [[[YOUR-LAB]]] homelab environment, you run multiple automated security scripts (log collection via [[Wazuh]], threat intel updates via [[Pi-hole]], identity sync via [[Active Directory]]). Each automation saves time but introduces SPOF risk. For example, if the [[Wazuh]] log aggregation script crashes, security visibility drops immediately. The real-world solution: implement health checks, monitoring alerts on the automation itself, documented runbooks for manual failover, and version control (Git) for all scripts. Testing changes in a staging environment before production deployment also mitigates technical debt and supportability issues.
 
 ---
 

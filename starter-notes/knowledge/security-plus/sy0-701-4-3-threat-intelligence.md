@@ -83,7 +83,7 @@ Each house then uses this collective intelligence to invest in the *best* locks,
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, threat intelligence directly informs [[Wazuh]] monitoring rules and [[Active Directory]] hardening. For example, if a threat intelligence feed reports that a specific malware variant targets unpatched Windows servers, that intelligence drives patch management prioritization and triggers custom [[Wazuh]] detection rules. Similarly, monitoring dark web forums for leaks mentioning his domain or employee names enables proactive password resets and breach response *before* credentials are actively exploited. For any sysadmin managing production systems, subscribing to threat feeds (even free ones) and reviewing CTA or government advisories weekly transforms security from reactive firefighting to informed, strategic defense.
+In your [[[YOUR-LAB]]] homelab, threat intelligence directly informs [[Wazuh]] monitoring rules and [[Active Directory]] hardening. For example, if a threat intelligence feed reports that a specific malware variant targets unpatched Windows servers, that intelligence drives patch management prioritization and triggers custom [[Wazuh]] detection rules. Similarly, monitoring dark web forums for leaks mentioning his domain or employee names enables proactive password resets and breach response *before* credentials are actively exploited. For any sysadmin managing production systems, subscribing to threat feeds (even free ones) and reviewing CTA or government advisories weekly transforms security from reactive firefighting to informed, strategic defense.
 
 ---
 

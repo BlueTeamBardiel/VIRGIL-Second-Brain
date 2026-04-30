@@ -98,7 +98,7 @@ Imagine a secure office building with two security models:
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, [[NAC]] via [[Wazuh]]-integrated posture checks ensures that only compliant systems can access the internal network before reaching the [[Tailscale]] VPN or [[Active Directory]]-managed resources. [[EDR]] capabilities (through Wazuh's lightweight agent and behavioral monitoring) detect anomalous process execution or lateral movement attempts in real-time, automatically isolating compromised systems without manual SOC intervention — critical for a distributed homelab where rapid response scales better than reactive ticket-based remediation. This aligns with [[Zero Trust]] principles: never trust, always verify.
+In your [[[YOUR-LAB]]] homelab, [[NAC]] via [[Wazuh]]-integrated posture checks ensures that only compliant systems can access the internal network before reaching the [[Tailscale]] VPN or [[Active Directory]]-managed resources. [[EDR]] capabilities (through Wazuh's lightweight agent and behavioral monitoring) detect anomalous process execution or lateral movement attempts in real-time, automatically isolating compromised systems without manual SOC intervention — critical for a distributed homelab where rapid response scales better than reactive ticket-based remediation. This aligns with [[Zero Trust]] principles: never trust, always verify.
 
 ---
 

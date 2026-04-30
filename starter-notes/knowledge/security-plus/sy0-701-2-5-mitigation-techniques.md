@@ -88,7 +88,7 @@ Imagine you're protecting a castle from invasion. You don't just build one wall 
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab, these mitigations are in constant play: [[Wazuh]] serves as the monitoring and detection layer, alerting on suspicious activity across the fleet; [[Active Directory]] enforces [[Least Privilege]] through group policy and role-based access control; full disk encryption protects VMs if storage is compromised; regular patching (especially out-of-band patches) keeps the lab's systems ahead of known exploits; [[Tailscale]] VPN enforces network segmentation and posture checking before devices connect to the internal mesh. Decommissioning policies ensure that when lab VMs or physical devices are retired, their data is securely wiped or destroyed, not left in snapshots or backups accessible to unauthorized parties.
+In your [[[YOUR-LAB]]] homelab, these mitigations are in constant play: [[Wazuh]] serves as the monitoring and detection layer, alerting on suspicious activity across the fleet; [[Active Directory]] enforces [[Least Privilege]] through group policy and role-based access control; full disk encryption protects VMs if storage is compromised; regular patching (especially out-of-band patches) keeps the lab's systems ahead of known exploits; [[Tailscale]] VPN enforces network segmentation and posture checking before devices connect to the internal mesh. Decommissioning policies ensure that when lab VMs or physical devices are retired, their data is securely wiped or destroyed, not left in snapshots or backups accessible to unauthorized parties.
 
 ---
 

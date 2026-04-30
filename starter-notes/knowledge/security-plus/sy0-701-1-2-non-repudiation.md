@@ -119,7 +119,7 @@ In the digital world, you can't use a pen. Instead:
 
 ## Real-World Application
 
-In Morpheus's [[Active Directory]]-based homelab and [[[YOUR-LAB]]] fleet, non-repudiation is critical for audit trails and compliance. For example, when using [[Wazuh]] as a [[SIEM]], digitally signed logs (via [[PKI|certificate-based]] authentication) ensure that log entries cannot be repudiated by a user or system—proving definitively who triggered an alert or accessed a resource. Similarly, in a production infrastructure, digitally signed configurations or deployment packages prevent operators from later denying they deployed a particular change, which is essential for [[Incident Response|incident response]] and [[Forensics|forensic]] investigations.
+In your [[Active Directory]]-based homelab and [[[YOUR-LAB]]] fleet, non-repudiation is critical for audit trails and compliance. For example, when using [[Wazuh]] as a [[SIEM]], digitally signed logs (via [[PKI|certificate-based]] authentication) ensure that log entries cannot be repudiated by a user or system—proving definitively who triggered an alert or accessed a resource. Similarly, in a production infrastructure, digitally signed configurations or deployment packages prevent operators from later denying they deployed a particular change, which is essential for [[Incident Response|incident response]] and [[Forensics|forensic]] investigations.
 
 ---
 

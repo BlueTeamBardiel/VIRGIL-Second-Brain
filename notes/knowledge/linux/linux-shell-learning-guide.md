@@ -66,7 +66,7 @@ When a shell script fails, the immediate victim is the user running it—command
 | **Running background jobs** | `sleep 60 &` | Check job control with `jobs` and `fg`. |
 | **Script debugging** | `bash -x myscript.sh` | Trace each step to locate errors. |
 
-In a COCYTUS home lab, set up a VM, install a basic shell (bash or zsh), and experiment with each command. Use the `strace` tool to watch system calls, or `journalctl` to monitor logs for any unintended side effects.
+In a YOUR-LAB home lab, set up a VM, install a basic shell (bash or zsh), and experiment with each command. Use the `strace` tool to watch system calls, or `journalctl` to monitor logs for any unintended side effects.
 
 ## Tags
 

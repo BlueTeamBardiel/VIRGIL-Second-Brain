@@ -22,18 +22,18 @@ except ImportError:
     print("ERROR: Missing deps. Run: pip3 install feedparser requests", file=sys.stderr)
     sys.exit(1)
 
-# ── Self-source API key from crontab if not set in environment ───────────────
+# ── Load API key from vault .env if not set in environment ───────────────────
 if not os.environ.get("ANTHROPIC_API_KEY"):
-    import subprocess, re as _re
-    try:
-        _ct = subprocess.run(["crontab", "-l"], capture_output=True, text=True)
-    except FileNotFoundError:
-        _ct = type('obj', (object,), {'stdout': '', 'returncode': 1})()
-    for _line in _ct.stdout.splitlines():
-        _m = _re.match(r'^ANTHROPIC_API_KEY=["\']?(.+?)["\']?\s*$', _line)
-        if _m:
-            os.environ["ANTHROPIC_API_KEY"] = _m.group(1)
-            break
+    import re as _re
+    _virgil_dir = Path(os.environ.get("VIRGIL_DIR", str(Path.home() / "VIRGIL")))
+    _env_file = _virgil_dir / ".env"
+    if _env_file.exists():
+        with open(_env_file) as _f:
+            for _line in _f:
+                _m = _re.match(r'^ANTHROPIC_API_KEY=["\']?(.+?)["\']?\s*$', _line)
+                if _m:
+                    os.environ["ANTHROPIC_API_KEY"] = _m.group(1)
+                    break
 
 # ── Config ────────────────────────────────────────────────────────────────────
 VIRGIL_DIR = Path(os.environ.get("VIRGIL_DIR", str(Path.home() / "VIRGIL")))

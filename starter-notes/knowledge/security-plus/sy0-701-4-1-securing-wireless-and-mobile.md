@@ -92,7 +92,7 @@ This reconnaissance phase is essential because wireless signals don't respect wa
 
 ## Real-World Application
 
-In Morpheus's [[[YOUR-LAB]]] homelab or a small business environment, wireless security becomes critical when sysadmins need to manage both company laptops and employee phones on the same network. For example, if you're running [[Active Directory]] and want to extend authentication to iOS/Android devices accessing company resources, you'd deploy an [[MDM]] solution (like Microsoft Intune or MobileIron) that enforces device enrollment, screen locks, and conditional access policies. A site survey of your homelab might reveal that your 2.4 GHz [[Wi-Fi]] access point is interfering with an IoT device on the same frequency—heat maps guide you to switch to 5 GHz or 6 GHz. With [[Tailscale]] and [[Wazuh]], you monitor these mobile devices for suspicious behavior and enforce that only compliant devices (passing [[MDM]] checks) can access sensitive resources—aligning with [[Zero Trust]] principles.
+In your [[[YOUR-LAB]]] homelab or a small business environment, wireless security becomes critical when sysadmins need to manage both company laptops and employee phones on the same network. For example, if you're running [[Active Directory]] and want to extend authentication to iOS/Android devices accessing company resources, you'd deploy an [[MDM]] solution (like Microsoft Intune or MobileIron) that enforces device enrollment, screen locks, and conditional access policies. A site survey of your homelab might reveal that your 2.4 GHz [[Wi-Fi]] access point is interfering with an IoT device on the same frequency—heat maps guide you to switch to 5 GHz or 6 GHz. With [[Tailscale]] and [[Wazuh]], you monitor these mobile devices for suspicious behavior and enforce that only compliant devices (passing [[MDM]] checks) can access sensitive resources—aligning with [[Zero Trust]] principles.
 
 ---
 
@@ -151,7 +151,7 @@ In Morpheus's [[[YOUR-LAB]]] homelab or a small business environment, wireless s
 - [[NIST Cybersecurity Framework]]
 - [[MITRE ATT&CK]]
 
-### Tools & Platforms (Morpheus's Stack)
+### Tools & Platforms (your Stack)
 - [[Active Directory]]
 - [[Tailscale]]
 - [[Wazuh]]

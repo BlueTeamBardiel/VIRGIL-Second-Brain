@@ -72,7 +72,7 @@ Now, imagine a thief steals the vault records containing damage patterns. A **br
 
 ## Real-World Application
 
-In Morpheus's [YOUR-LAB] homelab, [[Active Directory]] should be configured with account lockout policies (e.g., 5 failed attempts = 30-minute lockout) to defend against online brute force on domain accounts. Simultaneously, [[Wazuh]] should monitor failed authentication attempts and alert on patterns consistent with spraying attacks (many failed logins from a single source across different accounts). If a password database is ever compromised, weak hashing would expose the entire fleet; implementing [[bcrypt]] or [[Argon2]] with proper salting ensures that stolen hashes remain computationally infeasible to crack, even if attackers obtain them.
+In your [YOUR-LAB] homelab, [[Active Directory]] should be configured with account lockout policies (e.g., 5 failed attempts = 30-minute lockout) to defend against online brute force on domain accounts. Simultaneously, [[Wazuh]] should monitor failed authentication attempts and alert on patterns consistent with spraying attacks (many failed logins from a single source across different accounts). If a password database is ever compromised, weak hashing would expose the entire fleet; implementing [[bcrypt]] or [[Argon2]] with proper salting ensures that stolen hashes remain computationally infeasible to crack, even if attackers obtain them.
 
 ---
 

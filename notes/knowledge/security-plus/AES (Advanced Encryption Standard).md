@@ -101,7 +101,7 @@ from Crypto.Random import get_random_bytes
 key = get_random_bytes(32)          # 256-bit key
 nonce = get_random_bytes(16)        # 128-bit nonce
 cipher = AES.new(key, AES.MODE_GCM, nonce=nonce)
-ciphertext, tag = cipher.encrypt_and_digest(b"Hello, COCYTUS!")
+ciphertext, tag = cipher.encrypt_and_digest(b"Hello, YOUR-LAB!")
 
 print(f"Ciphertext: {ciphertext.hex()}")
 print(f"Auth Tag:   {tag.hex()}")
