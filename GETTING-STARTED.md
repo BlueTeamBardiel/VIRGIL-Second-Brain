@@ -215,6 +215,7 @@ This runs a 5-question quiz on a random topic and creates `logs/quiz-scores.json
 
 ```bash
 virgil-progress
+- `virgil-review` — spaced repetition review session, surfaces topics due today based on SM-2 algorithm
 ```
 
 Everything will show 0% or "no data" on day 1. That's expected. Bookmark this output — check it again in a week.
@@ -232,6 +233,7 @@ or `/cysa` if that's your cert. VIRGIL pulls your weakest topics and starts dril
 - [ ] `virgil-quiz` ran and asked 5 questions
 - [ ] `logs/quiz-scores.json` now exists
 - [ ] `virgil-progress` printed your cert dashboard
+- `virgil-review` — spaced repetition review session, surfaces topics due today based on SM-2 algorithm
 - [ ] `/secplus` gave you a Feynman explanation + exam question
 
 **Your vault is pre-loaded.** You have 5,000+ notes installed — Security+, CySA+, CCNA, ATT&CK techniques, and CVEs. The ingest pipelines will continue adding live threat intel each morning. By day 3, the vault is actively updating itself.
@@ -442,3 +444,4 @@ The wikilink-ingest script (runs nightly at 11:30pm) automatically injects `[[wi
 ---
 
 Full architecture details: [`ARCHITECTURE.md`](ARCHITECTURE.md)
+
