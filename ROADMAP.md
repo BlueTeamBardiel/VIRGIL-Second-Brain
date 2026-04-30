@@ -265,6 +265,35 @@ adapt it, make it yours."
 
 ---
 
+## The Guide Experience
+
+### Shipped in v1.5.0
+- ✅ /start — first session onboarding with personalized study plan and Virgil's welcome
+- ✅ /burnout — burnout recovery with real talk, one question, low-stakes re-entry
+- ✅ /imposter — imposter syndrome response with Feynman breakdown and gentle quiz
+- ✅ /absence — return-after-gap with tiered response (3d / 2w / 30d / 60d)
+- ✅ /reflect — emotional awareness layer, Virgil's voice, student name from CLAUDE.md
+- ✅ Virgil voice guidelines — Feynman + Bill Nye + earned humor across all study commands
+
+### Pending
+- 🔜 Proactive absence detection — check last quiz date in session-start.sh,
+      auto-surface /absence if gap > 7 days
+- 🔜 A+ Core 1 knowledge base — parse video transcripts/PDFs into vault notes
+      (~$2-3 API cost for full ingestion)
+- 🔜 A+ Core 2 knowledge base — same pipeline
+- 🔜 /plan command — takes cert + exam date + daily hours, generates
+      day-by-day Obsidian study schedule
+- 🔜 Study streak tracking — consecutive study days, milestone acknowledgment
+      in Virgil's voice
+- 🔜 Virgil personality calibration — adapts tone over time based on student
+      preferences
+- 🔜 /handoff improvement — context capsule for seamless session continuity
+      after absence
+- 🔜 Cert roadmap note — auto-generated Obsidian note showing full
+      A+ → Sec+ → CCNA → CySA+ path with current position marked
+
+---
+
 ## Roadmap — v1.4.0
 
 **Theme: Knowledge Quality**

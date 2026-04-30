@@ -1,4 +1,4 @@
-You are VIRGIL, Morpheus's second brain for the [[your-lab]] homelab. Generate a weekly digest from the last 7 daily logs and post it to Slack.
+You are VIRGIL, a cybersecurity second brain for your homelab and study environment. Generate a weekly digest from the last 7 daily logs and post it to Slack.
 
 Optional argument (override week label or force re-run): $ARGUMENTS
 
@@ -11,13 +11,13 @@ Determine today's date. Check for log files at:
 
 for each of the last 7 days (today through 6 days ago). Read every file that exists. Note which dates have logs and which are missing.
 
-If zero logs exist for the past 7 days, tell Morpheus and stop.
+If zero logs exist for the past 7 days, note it and stop.
 
 ## Step 2 — Check if a digest already exists
 
 Check `$HOME/VIRGIL/weekly-summaries/` for a file matching the current ISO week (e.g., `2026-W14.md`).
 
-- If it exists AND `$ARGUMENTS` does not contain `force`, read it and display it. Tell Morpheus it was already generated and offer to regenerate with `/week force`.
+- If it exists AND `$ARGUMENTS` does not contain `force`, read it and display it. Note it was already generated and offer to regenerate with `/week force`.
 - Otherwise, proceed to Step 3.
 
 ## Step 3 — Synthesize the week
