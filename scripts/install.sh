@@ -395,11 +395,21 @@ fi
 # Otherwise (piped from curl / process-substituted), clone the repo.
 
 INSTALL_SRC=""
+IS_LOCAL_CLONE=false
 if [[ -n "${BASH_SOURCE[0]:-}" && "${BASH_SOURCE[0]}" != "-" && \
       "${BASH_SOURCE[0]}" != "/dev/stdin" && -f "${BASH_SOURCE[0]}" ]]; then
-    INSTALL_SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-    info "Using local clone: $INSTALL_SRC"
-else
+    _CANDIDATE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+    if [[ -f "$_CANDIDATE/README.md" ]] && \
+       grep -q "VIRGIL-Second-Brain" "$_CANDIDATE/README.md" 2>/dev/null && \
+       [[ -d "$_CANDIDATE/.git" ]] && \
+       git -C "$_CANDIDATE" remote -v 2>/dev/null | grep -q "BlueTeamBardiel/VIRGIL-Second-Brain"; then
+        IS_LOCAL_CLONE=true
+        INSTALL_SRC="$_CANDIDATE"
+        info "Using local clone: $INSTALL_SRC"
+    fi
+fi
+
+if ! $IS_LOCAL_CLONE; then
     INSTALL_SRC="/tmp/virgil-src-$$"
     if $DRY_RUN; then
         info "[dry-run] Would clone $VIRGIL_REPO → $INSTALL_SRC"
@@ -534,9 +544,20 @@ else
     echo ""
     echo "  Default is ~/VIRGIL (your home directory). Press Enter to accept, or"
     echo "  type a different path if you want it somewhere else (e.g. external drive)."
-    read -r -e -i "$HOME/VIRGIL" vault_input </dev/tty
-    VAULT_INPUT="${vault_input:-$HOME/VIRGIL}"
-    VIRGIL_DIR="${VAULT_INPUT/#\~/$HOME}"
+    while true; do
+        read -r -e -i "$HOME/VIRGIL" vault_input </dev/tty
+        VAULT_INPUT="${vault_input:-$HOME/VIRGIL}"
+        VIRGIL_DIR="${VAULT_INPUT/#\~/$HOME}"
+        if [[ ${#VIRGIL_DIR} -le 2 ]]; then
+            echo "  Please enter a full path (e.g. ~/VIRGIL or /home/user/VIRGIL)"
+            continue
+        fi
+        if [[ "$VIRGIL_DIR" != /* ]]; then
+            echo "  Path must be absolute (start with / or ~)"
+            continue
+        fi
+        break
+    done
     ok "Vault: $VIRGIL_DIR"
     warn "Your vault lives on THIS machine only. Nothing syncs to a cloud service."
     warn "To use it across devices: Obsidian Sync (paid) or self-hosted Syncthing."
@@ -768,18 +789,18 @@ fi
 ALIAS_BLOCK="
 # ── VIRGIL aliases (added by install.sh $(date '+%Y-%m-%d')) ──────────────────
 export VIRGIL_DIR=\"$VIRGIL_DIR\"
-alias virgil-pdf='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/pdf-ingest.sh'
-alias virgil-nist='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/nist-ingest.sh'
-alias virgil-url='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/url-ingest.sh'
-alias virgil-rss='VIRGIL_DIR=\"\$VIRGIL_DIR\" python3 $INGEST/rss-ingest.py'
-alias virgil-cve='VIRGIL_DIR=\"\$VIRGIL_DIR\" python3 $INGEST/cve-ingest.py'
-alias virgil-triage='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/triage-inbox.sh'
-alias virgil-wikilink='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/wikilink-ingest.sh'
-alias virgil-orphans='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/orphan-detect.sh'
-alias virgil-workout='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/personal-ingest.sh workout'
-alias virgil-study='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/personal-ingest.sh study'
+alias virgil-pdf='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/pdf-ingest.sh'
+alias virgil-nist='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/nist-ingest.sh'
+alias virgil-url='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/url-ingest.sh'
+alias virgil-rss='VIRGIL_DIR=\"\$VIRGIL_DIR\" python3 \$VIRGIL_DIR/ingest/rss-ingest.py'
+alias virgil-cve='VIRGIL_DIR=\"\$VIRGIL_DIR\" python3 \$VIRGIL_DIR/ingest/cve-ingest.py'
+alias virgil-triage='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/triage-inbox.sh'
+alias virgil-wikilink='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/wikilink-ingest.sh'
+alias virgil-orphans='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/orphan-detect.sh'
+alias virgil-workout='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/personal-ingest.sh workout'
+alias virgil-study='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/personal-ingest.sh study'
 alias virgil-progress='python3 \$VIRGIL_DIR/hooks/virgil-progress.py'
-alias virgil-review='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $HOOKS/review.sh'
+alias virgil-review='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/hooks/review.sh'
 ${QUIZ_ALIAS}
 # ── end VIRGIL ────────────────────────────────────────────────────────────────"
 
