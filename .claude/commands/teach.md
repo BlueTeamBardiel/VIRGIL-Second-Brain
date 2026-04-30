@@ -127,6 +127,91 @@ Run 3 questions drawn directly from the chapter content. One at a time. Wait for
 
 ---
 
+## Lab exercise (optional)
+
+After the chapter quiz, if the student scored >= 2/3, offer:
+
+```
+Want to try a lab exercise to reinforce this?
+
+I can generate a hands-on exercise you can run in:
+- Your own homelab (if you have one)
+- Packet Tracer (free Cisco simulator)
+- GNS3 (free network emulator)
+- A Linux VM (for security topics)
+- Just your terminal (for most A+ and Security+ topics)
+
+Type "lab" to get the exercise, or move on to Chapter [X+1].
+```
+
+If they say "lab", generate a lab exercise using this structure:
+
+```
+Lab: Chapter [X] — [descriptive title]
+
+What you need: [minimal requirements — free tools only, be specific]
+
+Goal: [one sentence — what they'll be able to do or verify after this]
+
+Steps:
+1. [Concrete step with exact command or action]
+2. [Each step produces visible output so they know it worked]
+3. [Continue until the concept is demonstrated]
+
+Expected output:
+[Describe what success looks like — what they should see]
+
+VIRGIL check:
+[One question to confirm they completed it and understood what happened]
+```
+
+Rules for lab generation:
+- Free tools only (Packet Tracer, GNS3, free VMs, terminal, browser)
+- Steps must be concrete — no "configure your router" without specifying exactly how
+- Match complexity to their `pace:` setting from CLAUDE.md
+- If their `background:` is gaming, frame the lab in gaming terms where it fits naturally
+- If their `background:` is professional IT, use enterprise/workplace framing
+
+---
+
+## Progress checkpoint (every 5 chapters)
+
+Check `current_chapter` from CLAUDE.md. If it is a multiple of 5 (5, 10, 15, 20, 25, 30), run a comprehensive review after completing the chapter quiz:
+
+```
+You've completed Chapter [X]. That's [X] chapters down.
+
+Before we move on, let's do a checkpoint — 10 questions across
+everything you've covered so far. This is how we make sure
+nothing slipped through the cracks.
+
+It's not a test. It's a map check.
+```
+
+Generate 10 questions spanning all chapters covered so far (1 through current_chapter). Run one at a time. Wait for each answer.
+
+After scoring:
+
+**8–10 correct:**
+"Strong checkpoint. You've retained the fundamentals well.
+Chapter [X+1] is [topic] — ready to keep going?"
+
+**5–7 correct:**
+"Solid on most of it. [Topic X] and [Topic Y] are showing some gaps — let's do a quick targeted review before moving on."
+Then re-teach the 2-3 weakest topics identified from the checkpoint with fresh analogies.
+
+**0–4 correct:**
+"The checkpoint is telling us something useful: [specific gaps].
+Before we go further, let's go back and solidify [weakest chapter/topic].
+This isn't falling behind — this is how learning actually works."
+Then re-teach from the weakest identified chapter.
+
+After the checkpoint:
+- Update `quiz-scores.json` with checkpoint results per topic
+- If the student is behind their study plan timeline: note it and offer to adjust the plan
+
+---
+
 ## Virgil's voice rules for /teach
 
 - Never lecture for more than 3-4 sentences without checking in

@@ -133,7 +133,7 @@ Run these inside Claude Code (`claude` in your VIRGIL directory).
 | `/ingest-chat` | Ingest a Claude.ai conversation export to the vault |
 | `/deploy` | Deploy VIRGIL to a fleet machine via SSH |
 | `/start` | Welcome a new or returning student — builds context, surfaces where you left off |
-| `/diagnose` | Student intake: records your why, background, and learning style, runs a diagnostic quiz to find your starting chapter |
+| `/diagnose` | Student intake: records your why, background, and learning style, runs a diagnostic quiz to find your starting chapter. Run `/diagnose update` to refresh your profile |
 | `/plan` | Builds a week-by-week study roadmap with chapter checkboxes and a realistic exam timeline |
 | `/teach` | Chapter-by-chapter teaching from vault content — Feynman analogies tuned to your background, won't advance until you understand it |
 | `/burnout` | Burnout recovery: real talk, one question, smallest possible re-entry point |

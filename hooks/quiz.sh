@@ -279,3 +279,9 @@ with LOG_FILE.open("a", encoding="utf-8") as f:
     f.write("\n".join(block))
 print(f"[quiz] appended to {LOG_FILE}")
 PYEOF
+
+# ── Update study streak ───────────────────────────────────────────────────────
+python3 "$VIRGIL_DIR/hooks/streak.py" 2>/dev/null || true
+
+# ── Regenerate cert roadmap ───────────────────────────────────────────────────
+python3 "$VIRGIL_DIR/hooks/cert-roadmap.py" 2>/dev/null || true

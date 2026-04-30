@@ -830,6 +830,8 @@ alias virgil-study='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/persona
 alias virgil-progress='python3 \$VIRGIL_DIR/hooks/virgil-progress.py'
 alias virgil-review='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/hooks/review.sh'
 alias virgil-cert-ingest='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/cert-ingest.sh'
+alias virgil-streak='python3 \$VIRGIL_DIR/hooks/streak.py show'
+alias virgil-roadmap='python3 \$VIRGIL_DIR/hooks/cert-roadmap.py'
 ${QUIZ_ALIAS}
 # ── end VIRGIL ────────────────────────────────────────────────────────────────"
 

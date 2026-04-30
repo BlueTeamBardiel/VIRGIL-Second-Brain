@@ -53,6 +53,40 @@ fi
 
 printf '───────────────────────────────────────────────\n\n'
 
+# ── Proactive absence detection ───────────────────────────────────────────────
+SCORES_FILE="$VIRGIL_DIR/logs/quiz-scores.json"
+if [[ -f "$SCORES_FILE" ]]; then
+    LAST_TESTED=$(python3 -c "
+import json, sys
+from pathlib import Path
+try:
+    scores = json.loads(Path('$SCORES_FILE').read_text())
+    dates = [v.get('last_tested','') for v in scores.values() if isinstance(v,dict)]
+    dates = [d for d in dates if d]
+    print(max(dates)) if dates else print('')
+except:
+    print('')
+" 2>/dev/null)
+
+    if [[ -n "$LAST_TESTED" ]]; then
+        DAYS_AWAY=$(python3 -c "
+from datetime import date, datetime
+try:
+    last = datetime.strptime('$LAST_TESTED', '%Y-%m-%d').date()
+    print((date.today() - last).days)
+except:
+    print('')
+" 2>/dev/null)
+
+        if [[ -n "$DAYS_AWAY" ]] && [[ "$DAYS_AWAY" -ge 7 ]]; then
+            printf '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+            printf '  VIRGIL: You'\''ve been away for %s days.\n' "$DAYS_AWAY"
+            printf '  Type /absence in Claude Code to ease back in.\n'
+            printf '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n'
+        fi
+    fi
+fi
+
 # ── Create today's log file if it doesn't exist ──────────────────────────────
 if [[ ! -f "$LOG_FILE" ]]; then
     mkdir -p "$LOG_DIR"

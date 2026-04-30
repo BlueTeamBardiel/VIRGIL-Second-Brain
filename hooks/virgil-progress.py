@@ -109,6 +109,39 @@ DOMAIN_MAPS: dict[str, dict[str, list[str]]] = {
     },
 }
 
+# ── Ingested content helpers ──────────────────────────────────────────────────
+
+def load_ingested_topics(cert_slug: str) -> list[str]:
+    """Load topic names from ingested cert notes to supplement keyword matching."""
+    cert_dir = VIRGIL_DIR / "notes" / "knowledge" / cert_slug
+    if not cert_dir.exists():
+        return []
+    topics = []
+    for note in cert_dir.glob("*.md"):
+        if note.stem.lower() in {"index", "readme"}:
+            continue
+        stem = note.stem.lower()
+        parts = stem.split("-", 2)
+        topic = parts[2].replace("-", " ") if len(parts) >= 3 else stem.replace("-", " ")
+        topics.append(topic)
+    return topics
+
+
+def match_topic(topic: str, keywords: list[str]) -> bool:
+    """Check whether topic matches any keyword."""
+    t = topic.lower()
+    return any(kw in t for kw in keywords)
+
+
+def match_topic_enhanced(topic: str, keywords: list[str], cert_slug: str) -> bool:
+    """Match topic against hardcoded keywords AND ingested vault content."""
+    if match_topic(topic, keywords):
+        return True
+    ingested = load_ingested_topics(cert_slug)
+    t = topic.lower()
+    return any(ing in t or t in ing for ing in ingested)
+
+
 # ── Scoring helpers ───────────────────────────────────────────────────────────
 
 def load_scores() -> dict:
@@ -142,10 +175,9 @@ def map_topics_to_domain(scores: dict, cert: str) -> dict[str, list[tuple[str, f
     result: dict[str, list[tuple[str, float]]] = {d: [] for d in domains}
 
     for topic, info in scores.items():
-        topic_lower = topic.lower()
         matched = False
         for domain, keywords in domains.items():
-            if any(kw in topic_lower for kw in keywords):
+            if match_topic_enhanced(topic, keywords, cert):
                 result[domain].append((topic, topic_ratio(info)))
                 matched = True
                 break
