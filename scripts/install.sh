@@ -815,29 +815,34 @@ fi
 hdr "Step 10 — Crontab"
 
 if [[ "${INSTALL_CRON,,}" == "y" ]]; then
-    EXISTING_CRON=$(crontab -l 2>/dev/null | \
-        grep -v 'virgil\|VIRGIL\|ANTHROPIC_API_KEY\|SLACK_WEBHOOK_URL\|rss-ingest\|cve-ingest\|triage-inbox\|wikilink-ingest\|auto-reflect\|promote\.sh\|weekly-rollup' \
-        || true)
+    if command -v crontab &>/dev/null; then
+        EXISTING_CRON=$(crontab -l 2>/dev/null | \
+            grep -v 'virgil\|VIRGIL\|ANTHROPIC_API_KEY\|SLACK_WEBHOOK_URL\|rss-ingest\|cve-ingest\|triage-inbox\|wikilink-ingest\|auto-reflect\|promote\.sh\|weekly-rollup' \
+            || true)
 
-    {
-        echo "$EXISTING_CRON"
-        echo ""
-        echo "# ── VIRGIL (installed $(date '+%Y-%m-%d')) ────────────────────────────────────"
-        [[ -n "$API_KEY" ]]   && echo "ANTHROPIC_API_KEY=\"$API_KEY\""
-        [[ -n "$SLACK_URL" ]] && echo "SLACK_WEBHOOK_URL=\"$SLACK_URL\""
-        echo "VIRGIL_DIR=\"$VIRGIL_DIR\""
-        echo "0  6 * * *   python3 $INGEST/rss-ingest.py    >> $VIRGIL_DIR/logs/rss.log    2>&1"
-        echo "0  7 * * *   python3 $INGEST/cve-ingest.py --recent >> $VIRGIL_DIR/logs/cve.log 2>&1"
-        echo "0  8 * * 1   bash    $INGEST/triage-inbox.sh  >> $VIRGIL_DIR/logs/triage.log 2>&1"
-        echo "30 23 * * *  bash    $INGEST/wikilink-ingest.sh"
-        echo "55 23 * * *  bash    $HOOKS/auto-reflect.sh"
-        echo "0  1 * * 1-6 bash    $HOOKS/promote.sh"
-        echo "0  1 * * 0   bash    $HOOKS/weekly-rollup.sh"
-        echo "# ── end VIRGIL ──────────────────────────────────────────────────────────────"
-    } | crontab -
+        {
+            echo "$EXISTING_CRON"
+            echo ""
+            echo "# ── VIRGIL (installed $(date '+%Y-%m-%d')) ────────────────────────────────────"
+            [[ -n "$API_KEY" ]]   && echo "ANTHROPIC_API_KEY=\"$API_KEY\""
+            [[ -n "$SLACK_URL" ]] && echo "SLACK_WEBHOOK_URL=\"$SLACK_URL\""
+            echo "VIRGIL_DIR=\"$VIRGIL_DIR\""
+            echo "0  6 * * *   python3 $INGEST/rss-ingest.py    >> $VIRGIL_DIR/logs/rss.log    2>&1"
+            echo "0  7 * * *   python3 $INGEST/cve-ingest.py --recent >> $VIRGIL_DIR/logs/cve.log 2>&1"
+            echo "0  8 * * 1   bash    $INGEST/triage-inbox.sh  >> $VIRGIL_DIR/logs/triage.log 2>&1"
+            echo "30 23 * * *  bash    $INGEST/wikilink-ingest.sh"
+            echo "55 23 * * *  bash    $HOOKS/auto-reflect.sh"
+            echo "0  1 * * 1-6 bash    $HOOKS/promote.sh"
+            echo "0  1 * * 0   bash    $HOOKS/weekly-rollup.sh"
+            echo "# ── end VIRGIL ──────────────────────────────────────────────────────────────"
+        } | crontab -
 
-    mkdir -p "$VIRGIL_DIR/logs"
-    ok "Crontab installed (7 jobs)"
+        mkdir -p "$VIRGIL_DIR/logs"
+        ok "Crontab installed (7 jobs)"
+    else
+        warn "crontab not available on this system — skipping"
+        info "Add schedules manually later: see GETTING-STARTED.md"
+    fi
 else
     info "Crontab skipped — add manually from GETTING-STARTED.md"
 fi
