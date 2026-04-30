@@ -275,14 +275,32 @@ adapt it, make it yours."
 - ✅ /reflect — emotional awareness layer, Virgil's voice, student name from CLAUDE.md
 - ✅ Virgil voice guidelines — Feynman + Bill Nye + earned humor across all study commands
 
+### Shipped in v1.6.0
+- ✅ /diagnose — student intake: why, background, learning style, diagnostic quiz,
+      hands off to /plan with starting chapter from quiz results
+- ✅ /plan — personalized week-by-week study schedule, realistic timeline check,
+      chapter checkboxes, multi-cert roadmap, writes to notes/study-plans/
+- ✅ /teach — chapter-by-chapter content delivery from vault, Feynman analogies
+      tuned to student profile, understanding checks before advancing,
+      updates quiz-scores.json and current_chapter after each chapter
+- ✅ cert-ingest pipeline — ingest PDFs/transcripts/URLs into VIRGIL-format notes,
+      rewrites content in Feynman style (no plagiarism), chapter index generated,
+      virgil-cert-ingest alias installed
+- ✅ Student profile in CLAUDE.md — why, background, analogies, pace, cert goals,
+      current_chapter tracking — read by /teach, /diagnose, /plan, /reflect
+
 ### Pending
 - 🔜 Proactive absence detection — check last quiz date in session-start.sh,
       auto-surface /absence if gap > 7 days
-- 🔜 A+ Core 1 knowledge base — parse video transcripts/PDFs into vault notes
-      (~$2-3 API cost for full ingestion)
-- 🔜 A+ Core 2 knowledge base — same pipeline
-- 🔜 /plan command — takes cert + exam date + daily hours, generates
-      day-by-day Obsidian study schedule
+- 🔜 cert-ingest: CCNA Vol 1+2 pre-ingested notes (sanitized from private vault)
+- 🔜 cert-ingest: Security+ pre-ingested notes
+- 🔜 cert-ingest: CySA+ pre-ingested notes
+- 🔜 cert-ingest: A+ Core 1+2 pre-ingested notes
+- 🔜 /teach: lab exercise generator — after each chapter, generate a hands-on lab
+      the student can do in their homelab or a free simulator
+- 🔜 /teach: progress checkpoint — after every 5 chapters, comprehensive review
+      quiz, update study plan if behind
+- 🔜 /diagnose: re-run option — student can update their profile as they grow
 - 🔜 Study streak tracking — consecutive study days, milestone acknowledgment
       in Virgil's voice
 - 🔜 Virgil personality calibration — adapts tone over time based on student

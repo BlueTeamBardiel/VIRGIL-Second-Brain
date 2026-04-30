@@ -132,6 +132,58 @@ Run these inside Claude Code (`claude` in your VIRGIL directory).
 | `/enrich` | Run the enrichment pipeline — fills stub notes via LLM |
 | `/ingest-chat` | Ingest a Claude.ai conversation export to the vault |
 | `/deploy` | Deploy VIRGIL to a fleet machine via SSH |
+| `/start` | Welcome a new or returning student — builds context, surfaces where you left off |
+| `/diagnose` | Student intake: records your why, background, and learning style, runs a diagnostic quiz to find your starting chapter |
+| `/plan` | Builds a week-by-week study roadmap with chapter checkboxes and a realistic exam timeline |
+| `/teach` | Chapter-by-chapter teaching from vault content — Feynman analogies tuned to your background, won't advance until you understand it |
+| `/burnout` | Burnout recovery: real talk, one question, smallest possible re-entry point |
+| `/imposter` | Imposter syndrome: breaks down your specific wall, runs a gentle quiz to show you what you already know |
+| `/absence` | Return-after-gap: tiered response based on how long you've been away |
+
+---
+
+## The Learning Engine
+
+VIRGIL isn't just a note vault — it's a study companion that knows who you are and teaches accordingly.
+
+### Getting started
+
+```
+/diagnose    — Tell VIRGIL who you are and where you're going.
+               Builds your profile, runs a diagnostic quiz,
+               finds your starting point.
+
+/plan        — Generates your week-by-week study roadmap.
+               Realistic timelines, chapter checkboxes,
+               exam day prep.
+
+/teach       — Chapter-by-chapter teaching from vault content.
+               Feynman analogies tuned to your background.
+               Won't move on until you understand it.
+```
+
+### The cert path
+
+```
+A+ → Security+ → CCNA → CySA+
+```
+
+Each cert builds on the last. VIRGIL has pre-built content for all four. You don't need the textbook — the vault has everything.
+
+### Bring your own material
+
+```bash
+# Ingest a PDF textbook
+virgil-cert-ingest pdf ~/books/ccna-guide.pdf "CCNA"
+
+# Ingest a video transcript
+virgil-cert-ingest transcript ~/transcripts/sec-plus.txt "Security+"
+
+# Ingest a study guide URL
+virgil-cert-ingest url https://example.com/ccna-notes "CCNA"
+```
+
+VIRGIL rewrites source material in Feynman style — it doesn't reproduce the original text verbatim. Your notes, your vault, your words.
 
 ---
 

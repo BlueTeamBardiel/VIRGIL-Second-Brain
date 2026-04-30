@@ -698,8 +698,41 @@ ok ".env written (chmod 600)"
 hdr "Step 7 — Writing CLAUDE.md"
 
 cat > "$VIRGIL_DIR/CLAUDE.md" << CLAUDEEOF
-# VIRGIL — Claude Code Configuration
-# Second brain for $USER_NAME
+# VIRGIL — Student Profile
+
+name: $USER_NAME
+created: $(date '+%Y-%m-%d')
+
+## Why I'm here
+why:
+# Examples: money, career change, curiosity, job requirement, gaming background
+
+## Background
+background:
+# Examples: gaming, professional IT, career change, student, curiosity, money
+
+## How I learn best
+analogies:
+# Examples: gaming, sports, cooking, cars, music, mechanical, visual
+
+## Study pace
+pace: medium
+# Options: fast (push me), medium (balanced), slow (make sure I get it)
+
+## Cert goals (in order)
+certs: []
+# Example: [A+, Security+, CCNA, CySA+]
+
+## Current focus
+current_cert:
+current_chapter: 1
+current_domain: 1
+diagnostic_complete: false
+
+## Notes
+# VIRGIL reads this file at the start of every session.
+# Edit any field to update your profile.
+# Run /diagnose to set up your profile automatically.
 
 ## Memory Files
 - @memory-working.md — active pending tasks (cleared weekly)
@@ -717,11 +750,6 @@ cat > "$VIRGIL_DIR/CLAUDE.md" << CLAUDEEOF
 - [[wiki links]] for all lab hosts, tools, protocols, concepts
 - Run /reflect at end of each session
 - Run /week on Fridays or Sundays for weekly digest
-
-## Identity
-- User: $USER_NAME
-- Track: $TRACK_LABEL
-- Installed: $(date '+%Y-%m-%d')
 CLAUDEEOF
 
 ok "CLAUDE.md written with name: $USER_NAME"
@@ -801,6 +829,7 @@ alias virgil-workout='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/perso
 alias virgil-study='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/personal-ingest.sh study'
 alias virgil-progress='python3 \$VIRGIL_DIR/hooks/virgil-progress.py'
 alias virgil-review='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/hooks/review.sh'
+alias virgil-cert-ingest='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash \$VIRGIL_DIR/ingest/cert-ingest.sh'
 ${QUIZ_ALIAS}
 # ── end VIRGIL ────────────────────────────────────────────────────────────────"
 
