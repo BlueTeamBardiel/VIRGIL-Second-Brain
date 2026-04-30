@@ -1113,13 +1113,15 @@ if ! $FAST_MODE; then
                 ;;
             3)
                 echo ""
-                if [[ -n "$API_KEY" ]] && grep -q '^ANTHROPIC_API_KEY=' "$ENV_FILE" 2>/dev/null; then
-                    info "Running virgil-rss (this may take 30-60 seconds)..."
-                    set -a; source "$ENV_FILE"; set +a
-                    python3 "$VIRGIL_DIR/ingest/rss-ingest.py" || warn "RSS run exited with an error — check the log"
+                echo "  →  Running your first RSS digest now..."
+                echo "  →  This pulls today's security headlines into your vault."
+                echo "  →  No API key needed for this step — raw headlines save automatically."
+                echo "  →  Add a key later to get AI-enriched summaries."
+                echo ""
+                if command -v python3 &>/dev/null && [[ -f "$VIRGIL_DIR/ingest/rss-ingest.py" ]]; then
+                    VIRGIL_DIR="$VIRGIL_DIR" python3 "$VIRGIL_DIR/ingest/rss-ingest.py" 2>&1 | tail -15
                 else
-                    warn "You need an API key or Ollama to run the RSS digest."
-                    warn "See GETTING-STARTED.md for setup instructions."
+                    echo "  ⚠  RSS ingest script not found — run virgil-rss from your terminal after sourcing ~/.bashrc"
                 fi
                 ;;
             4|*)
