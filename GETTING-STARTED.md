@@ -114,6 +114,47 @@ Type `/secplus` and answer the first question. If you get a Feynman-style prompt
 
 ---
 
+## Your First 5 Minutes
+
+You've installed VIRGIL and opened it in Claude Code. Here's what to do right now.
+
+**Day 1 reality:** `quiz-scores.json` doesn't exist yet. The study commands work, but they'll pull random topics instead of weak ones — because you have no quiz history yet. That's fine. Fix it in 5 minutes.
+
+### 1. Seed your quiz history
+
+```bash
+virgil-quiz
+```
+
+This runs a 5-question quiz on a random topic and creates `logs/quiz-scores.json`. Answer honestly — this is how VIRGIL learns what you know.
+
+### 2. Check your baseline
+
+```bash
+virgil-progress
+```
+
+Everything will show 0% or "no data" on day 1. That's expected. Bookmark this output — check it again in a week.
+
+### 3. Start a study session
+
+Open Claude Code, then:
+```
+/secplus
+```
+or `/cysa` if that's your cert. VIRGIL pulls your weakest topics and starts drilling with Feynman analogies and exam questions.
+
+### Did it work?
+
+- [ ] `virgil-quiz` ran and asked 5 questions
+- [ ] `logs/quiz-scores.json` now exists
+- [ ] `virgil-progress` printed your cert dashboard
+- [ ] `/secplus` gave you a Feynman explanation + exam question
+
+**The vault starts sparse.** You installed 5,000+ notes but the ingest pipelines need a few days to pull live threat intel, CVEs, and ATT&CK updates. This is expected. By day 3, the vault fills itself.
+
+---
+
 ## Step 5 — Run your first ingest
 
 ```bash
@@ -164,8 +205,7 @@ ollama pull nomic-embed-text
 
 **Set up the embedding pipeline:**
 ```bash
-python3 ~/VIRGIL/ingest/chroma-ingest.py
-python3 ~/VIRGIL/ingest/chroma-owui-bridge.py --host 127.0.0.1 --port 5000
+python3 ~/VIRGIL/ingest/chroma-ingest.py  # embeds notes into ChromaDB
 ```
 
 **Wire into OpenWebUI:**
@@ -184,10 +224,10 @@ python3 ~/VIRGIL/ingest/chroma-owui-bridge.py --host 127.0.0.1 --port 5000
 3. In OpenWebUI → Admin Settings → Connections → add URL: `http://localhost:9099`, API Key: `0p3n-w3bu!`
 4. Select **VIRGIL RAG** from the model dropdown.
 
-**Make the bridge persistent:**
+**Make ingest persistent:**
 ```bash
-# Add to crontab
-@reboot sleep 30 && python3 ~/VIRGIL/ingest/chroma-owui-bridge.py --host 127.0.0.1 --port 5000 &
+# Add to crontab — re-embed vault nightly so new notes are searchable
+python3 ~/VIRGIL/ingest/chroma-ingest.py  # embeds notes into ChromaDB
 ```
 
 ---

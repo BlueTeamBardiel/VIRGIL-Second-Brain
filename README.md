@@ -99,6 +99,33 @@ Quiz the top overdue topic now? (y/N):
 
 ---
 
+## Slash Commands
+
+Run these inside Claude Code (`claude` in your VIRGIL directory).
+
+| Command | What it does |
+|---------|-------------|
+| `/cysa` | CySA+ CS0-003 study session — Feynman prompts, weak topic bias from quiz-scores.json |
+| `/secplus` | Security+ SY0-701 study session — domain-mapped Feynman prompts per SY0-701 objective |
+| `/aplus` | A+ Core 1/Core 2 study session — maps topics to 220-1101/1102 exam domains |
+| `/ccna` | CCNA study session — topic explainer, lab generator, or quiz mode |
+| `/reflect` | End-of-session memory distillation — fills daily log summary, marks completed tasks |
+| `/handoff` | Save session context to vault before closing — lets you resume in a new chat |
+| `/research` | Structured research on any topic → formatted Obsidian note in the vault |
+| `/challenge` | Challenge a proposed decision or architecture — plays devil's advocate |
+| `/day` | Brain dump processor — log loose notes, create topic stubs from what you mention |
+| `/week` | Synthesize last 7 daily logs into a weekly digest note |
+| `/task` | Capture and file a task to the appropriate memory section |
+| `/job` | Job search tracker — add posting, draft cover letter, log followups |
+| `/lab` | Generate a live fleet status snapshot |
+| `/focus` | Load context for a specific mode: `lab`, `study [cert]`, or `jobsearch` |
+| `/sync` | Sync external project progress into the vault — updates daily log and memory |
+| `/enrich` | Run the enrichment pipeline — fills stub notes via LLM |
+| `/ingest-chat` | Ingest a Claude.ai conversation export to the vault |
+| `/deploy` | Deploy VIRGIL to a fleet machine via SSH |
+
+---
+
 ## How it works
 
 ![VIRGIL knowledge graph](assets/virgil-graph.gif)

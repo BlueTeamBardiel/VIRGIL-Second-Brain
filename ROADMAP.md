@@ -48,6 +48,10 @@ Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
   - Pulls weak A+ topics from quiz-scores.json
   - Feynman prompts per domain
   - Ships in .claude/commands/aplus.md
+- ✅ virgil-progress — cert domain mastery tracker (Security+, CySA+, CCNA)
+  - Reads quiz-scores.json, maps topics to exam domains by keyword
+  - Shows % mastery per domain, weakest domain, review queue, ETA to 70%
+  - Ships in hooks/virgil-progress.py, alias added by installer
 
 ---
 
@@ -131,6 +135,14 @@ For a cybersecurity tool, trust is not optional.
 - Orphaned notes, stale notes, thin notes
 - Topic clusters with no connections to other clusters
 - Surfaces in Obsidian as a weekly digest note
+
+### Progress Tracking
+🔜 virgil-progress domain definitions — extract domain keyword lists from
+   course materials instead of hardcoded keyword lists
+   - Parse Security+ SY0-701 objectives PDF for domain/topic mapping
+   - Parse CySA+ CS0-003 objectives for domain mapping
+   - Parse CCNA 200-301 objectives for domain mapping
+   - Removes the manual maintenance burden as exams update
 
 ---
 

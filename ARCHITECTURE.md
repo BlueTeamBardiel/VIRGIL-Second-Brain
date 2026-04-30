@@ -233,8 +233,8 @@ ChromaDB is a local vector database. Without it, VIRGIL knows what Claude was tr
 **How it works:**
 
 1. `chroma-ingest.py` runs nightly, reads every note in your vault, converts them to vector embeddings using `nomic-embed-text`
-2. `chroma-owui-bridge.py` exposes ChromaDB over HTTP on port 5000
-3. OpenWebUI connects to the bridge via the Pipelines service
+2. `chroma-ingest.py` also serves the ChromaDB collection via the Pipelines service
+3. OpenWebUI connects via the Pipelines service on port 9099
 4. Every query to the VIRGIL RAG model automatically searches the vault for relevant chunks and injects them into the prompt
 
 **What this means in practice:** Ask "what do my notes say about lateral movement?" and VIRGIL returns an answer grounded in your actual ATT&CK notes, your CVE write-ups, and your lab session logs — not generic internet knowledge.

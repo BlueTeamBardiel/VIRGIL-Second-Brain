@@ -42,3 +42,4 @@ hooks/*.log
 # Temporary files
 *.tmp
 *~
+__pycache__/

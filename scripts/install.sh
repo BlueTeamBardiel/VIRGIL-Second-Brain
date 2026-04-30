@@ -752,6 +752,7 @@ alias virgil-wikilink='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/wikilink-ingest.
 alias virgil-orphans='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/orphan-detect.sh'
 alias virgil-workout='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/personal-ingest.sh workout'
 alias virgil-study='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/personal-ingest.sh study'
+alias virgil-progress='python3 \$VIRGIL_DIR/hooks/virgil-progress.py'
 ${QUIZ_ALIAS}
 # ── end VIRGIL ────────────────────────────────────────────────────────────────"
 
