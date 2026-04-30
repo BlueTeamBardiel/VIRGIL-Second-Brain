@@ -34,10 +34,70 @@ The installer defaults to `~/VIRGIL`. Accept the default unless you have a reaso
 
 ---
 
-## Step 1 — Install Ollama and pull a model
+## Glossary — what is all this?
+
+**CVE (Common Vulnerabilities and Exposures)**
+A CVE is a public record of a security vulnerability in software or hardware.
+Every CVE has a unique ID (like CVE-2024-1234), a severity score, and a description
+of what the vulnerability is and how it can be exploited.
+VIRGIL pulls new CVEs daily from the US government's vulnerability database (NVD).
+
+**MITRE ATT&CK**
+A publicly available knowledge base of real-world attacker tactics and techniques.
+Security teams use it to understand how attackers operate and to map defenses.
+VIRGIL includes notes on ATT&CK techniques so you can study them for your cert.
+
+**RSS Feed**
+RSS is a format that lets websites publish updates in a machine-readable way.
+VIRGIL subscribes to security news sites (Bleeping Computer, SANS ISC, etc.)
+and pulls their latest articles into your vault every morning automatically.
+
+**Obsidian**
+A free note-taking app that reads plain markdown files from a folder on your machine.
+VIRGIL writes all your notes as markdown files — Obsidian turns them into a connected
+knowledge graph you can search, browse, and navigate visually.
+
+**Claude Code**
+An AI coding and research assistant that runs in your terminal.
+VIRGIL uses it as the primary interface for study sessions, slash commands,
+and interacting with your vault using natural language.
+
+**Ollama**
+A tool that lets you run AI language models locally on your own hardware.
+VIRGIL can use Ollama instead of an API key if your machine has enough RAM or a GPU.
+See the hardware requirements section before installing.
+
+---
+
+## Step 1 — Check your hardware, then install Ollama
+
+### Before you pull a model — check your hardware
+
+`qwen2.5:14b` requires approximately 16 GB of RAM and runs best with a GPU.
+Running it on an underpowered machine will cause it to hang or crash silently.
+
+```bash
+free -h          # RAM — need 16 GB+ for qwen2.5:14b
+nproc            # CPU cores
+lspci | grep -i vga   # GPU (optional but recommended)
+```
+
+| Your hardware | Recommended model | RAM needed |
+|---|---|---|
+| GPU with 16 GB+ VRAM | `qwen2.5:14b` (best quality) | 16 GB RAM |
+| GPU with 8 GB VRAM | `qwen2.5:7b` (good quality) | 8 GB RAM |
+| No GPU / older laptop | Use Anthropic API key instead | Any |
+| Unsure | Use Anthropic API key instead | Any |
+
+If you're not sure, use an Anthropic API key — it's faster to set up and costs
+roughly $3–5/month at typical usage: https://console.anthropic.com
+
+### Install Ollama and pull your model
 
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
+
+# Replace qwen2.5:14b with qwen2.5:7b if you have less than 16 GB RAM
 ollama pull qwen2.5:14b
 ```
 
@@ -89,11 +149,34 @@ You should see folders in the left sidebar and notes in `notes/knowledge/`. Pres
 
 ---
 
-## Step 4 — Open VIRGIL in Claude Code
+## Step 4 — Install Claude Code and open VIRGIL
+
+Claude Code is the AI terminal interface for VIRGIL — it's how you run study sessions,
+use slash commands, and interact with your notes using natural language.
+
+### Install Claude Code
 
 ```bash
-cd ~/VIRGIL
-claude
+# Requires Node.js. Install it first if you don't have it:
+
+# Ubuntu/Debian:
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# macOS (with Homebrew):
+brew install node
+
+# Install Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# Verify
+claude --version
+```
+
+### Open VIRGIL
+
+```bash
+cd ~/VIRGIL && claude
 ```
 
 VIRGIL introduces itself and shows your vault status. From here:
@@ -151,7 +234,7 @@ or `/cysa` if that's your cert. VIRGIL pulls your weakest topics and starts dril
 - [ ] `virgil-progress` printed your cert dashboard
 - [ ] `/secplus` gave you a Feynman explanation + exam question
 
-**The vault starts sparse.** You installed 5,000+ notes but the ingest pipelines need a few days to pull live threat intel, CVEs, and ATT&CK updates. This is expected. By day 3, the vault fills itself.
+**Your vault is pre-loaded.** You have 5,000+ notes installed — Security+, CySA+, CCNA, ATT&CK techniques, and CVEs. The ingest pipelines will continue adding live threat intel each morning. By day 3, the vault is actively updating itself.
 
 ---
 

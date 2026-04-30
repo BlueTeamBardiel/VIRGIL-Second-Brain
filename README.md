@@ -25,6 +25,15 @@ bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Secon
 
 **Requires:** Linux / macOS / WSL2 · [Ollama](https://ollama.com) · [Obsidian](https://obsidian.md) · [Claude Code](https://claude.ai/code)
 
+### Which setup is right for you?
+
+| Situation | Recommended path |
+|-----------|-----------------|
+| Have an API key | Set `ANTHROPIC_API_KEY` in `.env` — fastest setup |
+| GPU with 8 GB+ VRAM | Install Ollama, pull `qwen2.5:14b` |
+| Laptop / no GPU | Use API key — Ollama will be too slow |
+| Just want to try it | Use API key, free tier works fine |
+
 No API key required. Twenty-minute setup.
 
 ## Quick start

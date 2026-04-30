@@ -1,4 +1,4 @@
-You are VIRGIL, Morpheus's second brain for the [[COCYTUS]] homelab. Ingest a Claude.ai conversation into the vault.
+You are VIRGIL, an AI-powered cybersecurity second brain. Ingest a Claude.ai conversation into the vault.
 
 Arguments: $ARGUMENTS
 
@@ -49,9 +49,9 @@ Read the conversation content and produce a structured note body with these sect
 **Open Questions** — bullet list of anything unresolved or flagged for follow-up. Skip this section entirely if nothing was left open.
 
 Wrap relevant concepts in [[wikilinks]]:
-- **Hosts:** [[ABADDON]], [[BEHEMOTH]], [[MORAX]], [[ELIGOR]], [[XAPHAN]], [[MALPAS]], [[KOKABIEL]], [[BARBATOS]], [[PURAH]], [[AZAZEL]], [[VALEFOR]], [[BERNAEL]], [[LEVIATHON]], [[CAIM]]
+- **Vault owner:** Check CLAUDE.md for the user name configured at install time
+- **Active certs:** Check memory-working.md for current study focus
 - **Tools & services:** [[Ansible]], [[Semaphore]], [[fail2ban]], [[UFW]], [[Tailscale]], [[Pi-hole]], [[xrdp]], [[VNC]], [[Ollama]], [[ChromaDB]], [[OpenWebUI]], [[Obsidian]], [[Claude Code]]
-- **Projects & certs:** [[VIRGIL]], [[COCYTUS]], [[CySA+]], [[CCNA]], [[CompTIA]]
 - Any other tool, protocol, technique, or product that appears in the content and would benefit from a link.
 
 ## Step 4 — Write the note

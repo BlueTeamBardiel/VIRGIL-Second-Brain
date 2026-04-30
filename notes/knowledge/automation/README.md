@@ -26,7 +26,7 @@ Bash is the glue language of Linux/Unix systems. Not the most elegant, but unive
 ### Variables
 ```bash
 #!/bin/bash
-NAME="morpheus"
+NAME="your-username"
 LOG_DIR="/var/log/myapp"
 TIMESTAMP=$(date '+%Y-%m-%d_%H:%M:%S')  # command substitution
 FILE_COUNT=$(ls -1 "$LOG_DIR" | wc -l)

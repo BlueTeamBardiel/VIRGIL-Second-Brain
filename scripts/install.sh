@@ -606,7 +606,7 @@ if $DRY_RUN; then
     [[ "${INSTALL_CRON,,}" == "y" ]] && step "Would install crontab entries"
     SHELL_RC="$HOME/.bashrc"; [[ "$OS" == "macos" ]] && SHELL_RC="$HOME/.zshrc"
     step "Would add aliases to:        $SHELL_RC"
-    step "Would copy starter-notes to: $VIRGIL_DIR/notes/"
+    step "Would copy 5,000+ notes to:   $VIRGIL_DIR/notes/"
     step "Would test Anthropic API:    $([ -n "$API_KEY" ] && echo yes || echo no \(no key\))"
     step "Would fetch CVE demo:        yes"
     echo ""
@@ -726,12 +726,14 @@ hdr "Step 8 — Starter notes"
 if [[ -d "$INSTALL_SRC/starter-notes" ]]; then
     NOTE_COUNT=$(find "$VIRGIL_DIR/notes" -name "*.md" 2>/dev/null | wc -l)
     if [[ "$NOTE_COUNT" -lt 10 ]]; then
-        info "Seeding starter notes..."
+        info "Seeding notes vault..."
         cp -r "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/"
-        ok "Starter notes seeded (vault was empty)"
+        [[ -d "$INSTALL_SRC/notes" ]] && cp -rn "$INSTALL_SRC/notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
+        ok "Vault seeded — 5,000+ notes installed"
     else
         cp -rn "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
-        ok "Starter notes copied to vault (skipped existing files)"
+        [[ -d "$INSTALL_SRC/notes" ]] && cp -rn "$INSTALL_SRC/notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
+        ok "Vault notes synced (skipped existing files)"
     fi
 fi
 if [[ -f "$INSTALL_SRC/GETTING-STARTED.md" ]]; then
@@ -777,6 +779,7 @@ alias virgil-orphans='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/orphan-detect.sh'
 alias virgil-workout='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/personal-ingest.sh workout'
 alias virgil-study='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $INGEST/personal-ingest.sh study'
 alias virgil-progress='python3 \$VIRGIL_DIR/hooks/virgil-progress.py'
+alias virgil-review='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $HOOKS/review.sh'
 ${QUIZ_ALIAS}
 # ── end VIRGIL ────────────────────────────────────────────────────────────────"
 
@@ -1012,7 +1015,15 @@ echo "       virgil-cve CVE-2024-0001"
 echo "       virgil-rss"
 echo "       virgil-url https://attack.mitre.org/techniques/T1059/"
 echo ""
-echo "    4. Read GETTING-STARTED.md in your vault."
+echo "    4. Install Claude Code — this is how you talk to VIRGIL:"
+echo "       npm install -g @anthropic-ai/claude-code"
+echo "       (requires Node.js — install from https://nodejs.org if needed)"
+echo ""
+echo "    5. Start your first study session:"
+echo "       cd ~/VIRGIL && claude"
+echo "       Then type: /secplus  (or /cysa if that's your cert)"
+echo ""
+echo "    6. Read GETTING-STARTED.md in your vault for the full guide."
 echo ""
 echo "  Docs:    $VIRGIL_RELEASES"
 echo "  Issues:  https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain/issues"

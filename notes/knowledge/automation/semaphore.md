@@ -14,7 +14,7 @@
 - Version: 2.17.31
 - Backend: SQLite
 - Config: `~/config.json`
-- Service: `semaphore.service` (systemd, runs as morpheus)
+- Service: `semaphore.service` (systemd, runs as YOUR-USERNAME)
 
 **Playbook path chain:**
 ```
@@ -50,7 +50,7 @@ cd ~/semaphore-playbooks-clone && git pull
 
 - **Name:** COCYTUS
 - **Type:** Static
-- **SSH Key:** morpheus-ssh (ed25519)
+- **SSH Key:** YOUR-USERNAME-ssh (ed25519)
 - **Sudo Credentials:** MUST be set to **None**
   - If set (even to a blank‑password key), Semaphore passes `-K` to ansible‑playbook, which prompts for a sudo password and breaks NOPASSWD sudo
 
@@ -81,7 +81,7 @@ azazel
 | Deploy UFW | `ufw.yml` | Configure firewall rules fleet‑wide | Manual |
 | Deploy Fastfetch | `fastfetch.yml` | Per‑host terminal theming | Manual |
 | Port Scan Report | `port-scan-report.yml` | nmap all hosts from [[YOUR_JUMP_SERVER]] | Manual |
-| Configure Sudoers | `sudoers.yml` | Passwordless sudo for morpheus | Manual |
+| Configure Sudoers | `sudoers.yml` | Passwordless sudo for YOUR-USERNAME | Manual |
 | Docker Install | `docker-install.yml` | Install Docker fleet‑wide | Manual |
 | Phase 2.2 Monitoring | `phase2.2-monitoring.yml` | Prometheus + Grafana + node exporters | Manual |
 | Phase 2.3 Wazuh | `phase2.3-wazuh.yml` | Wazuh 4.14.1 manager stack on LAB_HOST | Manual |
@@ -147,7 +147,7 @@ SQLite database was reset. Playbooks are still in `~/semaphore-playbooks/` — r
 
 - Inventory: COCYTUS
 - Repository: Local (`/home/your-username/semaphore-playbooks-clone`)
-- SSH Key: morpheus-ssh
+- SSH Key: YOUR-USERNAME-ssh
 - Sudo: None
 
 ## Installation Reference (New Control Node)

@@ -63,16 +63,16 @@ If you're starting out, use Second Brain. If you eventually want the full privat
 ```
 PRIVATE VIRGIL                        SECOND BRAIN (PUBLIC)
 ─────────────────────────────         ─────────────────────────────
- BEHEMOTH (primary GPU host)           Your machine
+ YOUR-GPU-HOST (primary inference host)           Your machine
   ├── Ollama (gpt-oss:20b)              ├── Anthropic API (Claude Haiku)
   ├── OpenWebUI                         └── Obsidian vault
   └── ChromaDB RAG (:5000)
          ↕ Tailscale mesh             crontab → ingest → vault
- ABADDON (backup + Slack bot)
+ YOUR-BACKUP-HOST (backup + Slack bot)
   ├── Ollama (qwen2.5:14b)
   └── Slack approval gate
          ↕
- Fleet (XAPHAN, MALPAS, etc.)
+ Fleet (your other machines)
   └── Ansible/Semaphore
 ```
 
@@ -110,7 +110,7 @@ Honest verdict: both are homelab-grade security. Neither is production-hardened.
 Going from Second Brain to a private VIRGIL-style stack:
 
 1. **Local inference** — install Ollama on a Linux host with a GPU, pull your model of choice (`ollama pull <model>`)
-2. **Three-tier fallback** — copy `hooks/llm-client.sh` and `hooks/llm_client.py` from private repo, configure `BEHEMOTH_URL` and `ABADDON_URL` for your hosts
+2. **Three-tier fallback** — copy `hooks/llm-client.sh` and `hooks/llm_client.py` from private repo, configure `PRIMARY_OLLAMA_URL` and `BACKUP_OLLAMA_URL` for your hosts
 3. **Tailscale mesh** — connect your machines (`tailscale up`), use MagicDNS hostnames instead of IPs
 4. **Fleet deployment** — use `scripts/deploy-machine.sh` to push VIRGIL to additional hosts
 5. **Slack approval gate** — deploy the Flask bot on your backup node, wire it into `hooks/virgil-approve.sh`

@@ -235,7 +235,7 @@ eval $(op signin)
 op item create \
   --category=login \
   --title="Proxmox Admin" \
-  --url="https://192.168.1.10:8006" \
+  --url="https://YOUR-HOMELAB-IP:8006" \
   username[text]=root \
   password[password]=$(openssl rand -base64 32)
 
