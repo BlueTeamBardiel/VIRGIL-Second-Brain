@@ -44,18 +44,22 @@ step()  { echo -e "  ${BOLD}$*${RST}"; }
 die() { err "$*"; exit 1; }
 
 verify_checksums() {
+  local src_dir="${1:-}"
   if ! command -v sha256sum &>/dev/null; then
     warn "sha256sum not available — skipping checksum verification"
     return 0
   fi
-  info "Verifying installer checksums..."
+  info "Verifying file checksums..."
   if curl -fsSL "$VIRGIL_CHECKSUM_URL" -o /tmp/virgil-checksums.sha256 2>/dev/null; then
-    cd "$(dirname "$0")"
-    if sha256sum --check /tmp/virgil-checksums.sha256 --quiet 2>/dev/null; then
-      ok "Checksums verified"
+    if [[ -n "$src_dir" && -d "$src_dir" ]]; then
+      if (cd "$src_dir" && sha256sum --check /tmp/virgil-checksums.sha256 --quiet 2>/dev/null); then
+        ok "Checksums verified"
+      else
+        warn "Checksum mismatch detected — installer may be modified"
+        warn "Continuing anyway — verify manually if concerned"
+      fi
     else
-      warn "Checksum mismatch detected — installer may be modified"
-      warn "Continuing anyway — verify manually if concerned"
+      warn "No source directory for checksum verification — skipping"
     fi
     rm -f /tmp/virgil-checksums.sha256
   else
@@ -124,21 +128,22 @@ if $DRY_RUN; then
 fi
 
 # ── What this installer will do ───────────────────────────────────────────────
-echo "  Here's what's about to happen — nothing is done yet, you can still cancel:"
+echo "  Welcome to VIRGIL — your cybersecurity study companion."
 echo ""
-echo "    • Check for required tools (python, git, curl) and install missing ones"
-echo "      using your system package manager (apt / brew / pacman — may ask for sudo)"
-echo "    • Download the VIRGIL scripts from GitHub into a folder on your machine"
-echo "    • Create a vault folder — a folder full of markdown notes you browse in"
-echo "      Obsidian. Default location is ~/VIRGIL (you can change it)."
-echo "    • Write a .env file holding your API key and config (chmod 600, never logged)"
-echo "    • Ask if you want scheduled jobs (crontab entries). You can say no."
-echo "    • Add shortcut commands (virgil-rss, virgil-cve, etc.) to your shell"
-echo "    • Test the API connection if you gave a key"
-echo "    • Fetch one real CVE from the US government vulnerability database so you"
-echo "      can see what a VIRGIL note actually looks like"
+echo "  VIRGIL is a local AI-powered second brain for cybersecurity learners."
+echo "  It lives entirely on your machine, learns what you study, tracks what"
+echo "  you struggle with, and helps you get exam-ready — one topic at a time."
+echo "  No cloud. No subscriptions. Everything stays here."
 echo ""
-echo "  Everything stays on this machine. Nothing is uploaded anywhere."
+echo "  Here's what we'll set up together:"
+echo ""
+echo "    • Check your machine has the tools VIRGIL needs (we'll install anything missing)"
+echo "    • Download VIRGIL onto your machine from GitHub"
+echo "    • Create your vault — the folder where all your notes will live"
+echo "    • Set up a private config file for your API key (optional, never shared)"
+echo "    • Ask if you'd like VIRGIL to run automatically each day (you can say no)"
+echo "    • Add study commands to your terminal (virgil-quiz, virgil-rss, etc.)"
+echo "    • Run a quick test so you can see VIRGIL working before you close this window"
 echo ""
 echo "  Source:  $VIRGIL_REPO"
 echo "  Docs:    $VIRGIL_RELEASES"
@@ -263,6 +268,7 @@ if ! $OBSIDIAN_FOUND; then
                 chmod +x "$OBS_DEST"
                 ok "Installed: $OBS_DEST"
                 info "Launch with: $OBS_DEST   (or add ~/.local/bin to PATH)"
+                OBSIDIAN_FOUND=true
             else
                 warn "Download failed — install manually from https://obsidian.md"
             fi
@@ -384,8 +390,6 @@ if [[ ${#MISSING_SOFT[@]} -gt 0 ]]; then
     fi
 fi
 
-verify_checksums
-
 # ── Determine install source ──────────────────────────────────────────────────
 # If BASH_SOURCE is set and points to a real file, we're running from a local clone.
 # Otherwise (piped from curl / process-substituted), clone the repo.
@@ -406,11 +410,15 @@ else
     fi
 fi
 
+if ! $DRY_RUN && [[ -d "$INSTALL_SRC" ]]; then
+    verify_checksums "$INSTALL_SRC"
+fi
+
 # ── 3. Wizard / fast-mode questions ──────────────────────────────────────────
 hdr "Step 3 — Configuration"
 
 # Defaults
-USER_NAME="User"
+USER_NAME="Learner"
 API_KEY="${ANTHROPIC_API_KEY:-}"
 SLACK_URL=""
 VIRGIL_DIR="$HOME/VIRGIL"
@@ -434,8 +442,14 @@ else
     echo "  VIRGIL writes this name into CLAUDE.md — the config file that tells any"
     echo "  AI assistant working with your vault who you are. It's also used in your"
     echo "  daily session logs. Nothing is sent anywhere; it stays on this machine."
-    read -r -p "  Your name [User]: " NAME_INPUT </dev/tty
-    USER_NAME="${NAME_INPUT:-User}"
+    read -r -p "  Your name: " NAME_INPUT </dev/tty
+    if [[ -z "$NAME_INPUT" ]]; then
+        ask "Please enter a name — even just your first name works:"
+        read -r -p "  Your name: " NAME_INPUT </dev/tty
+        USER_NAME="${NAME_INPUT:-Learner}"
+    else
+        USER_NAME="$NAME_INPUT"
+    fi
     ok "Name set to: $USER_NAME"
 
     # Q2: API key
@@ -462,18 +476,28 @@ else
         fi
     fi
     if [[ -z "$API_KEY" ]]; then
+        API_ATTEMPTS=0
         while true; do
             read -r -sp "  API key (or Enter to skip): " API_KEY </dev/tty
             echo ""
             if [[ -z "$API_KEY" ]]; then
-                warn "No key — AI features (RSS synthesis, CVE ingest, triage) will not work"
+                info "No problem — VIRGIL works without a key. Add one later by editing ~/VIRGIL/.env"
+                info "AI-powered summaries will be available once you do."
                 break
-            elif [[ "$API_KEY" != sk-ant-* ]]; then
+            fi
+            API_ATTEMPTS=$((API_ATTEMPTS + 1))
+            if [[ "$API_KEY" != sk-ant-* ]]; then
                 err "Key doesn't start with sk-ant- — check and re-enter"
             elif [[ "${#API_KEY}" -lt 40 ]]; then
                 err "Key looks too short (Anthropic keys are 100+ chars)"
             else
                 ok "Key accepted (${#API_KEY} chars)"
+                break
+            fi
+            if [[ $API_ATTEMPTS -ge 3 ]]; then
+                API_KEY=""
+                info "No problem — VIRGIL works without a key. Add one later by editing ~/VIRGIL/.env"
+                info "AI-powered summaries will be available once you do."
                 break
             fi
         done
@@ -496,7 +520,7 @@ else
     if [[ -n "$SLACK_URL" ]]; then
         ok "Slack webhook configured"
     else
-        info "Slack notifications disabled"
+        info "Slack notifications skipped — add a webhook later in ~/VIRGIL/.env"
     fi
 
     # Q4: Vault location
@@ -510,8 +534,8 @@ else
     echo ""
     echo "  Default is ~/VIRGIL (your home directory). Press Enter to accept, or"
     echo "  type a different path if you want it somewhere else (e.g. external drive)."
-    read -r -p "  Vault path [~/VIRGIL]: " VAULT_INPUT </dev/tty
-    VAULT_INPUT="${VAULT_INPUT:-$HOME/VIRGIL}"
+    read -r -e -i "$HOME/VIRGIL" vault_input </dev/tty
+    VAULT_INPUT="${vault_input:-$HOME/VIRGIL}"
     VIRGIL_DIR="${VAULT_INPUT/#\~/$HOME}"
     ok "Vault: $VIRGIL_DIR"
     warn "Your vault lives on THIS machine only. Nothing syncs to a cloud service."
@@ -736,7 +760,7 @@ if [[ -f "$INGEST/chroma-query.py" && -f "$HOOKS/llm_client.py" ]]; then
     QUIZ_ALIAS="alias virgil-quiz='VIRGIL_DIR=\"\$VIRGIL_DIR\" bash $HOOKS/quiz.sh'"
     info "virgil-quiz: RAG deps present — alias will be installed"
 else
-    warn "virgil-quiz not installed — RAG stack required (see GETTING-STARTED.md)"
+    info "virgil-quiz requires ChromaDB (vector search) — set up later in GETTING-STARTED.md"
 fi
 
 ALIAS_BLOCK="
@@ -960,6 +984,18 @@ echo -e "  ${BOLD}Vault:${RST}   $VIRGIL_DIR"
 echo -e "  ${BOLD}Track:${RST}   $TRACK_LABEL"
 echo -e "  ${BOLD}Demo:${RST}    $CVE_NOTE_PATH"
 echo ""
+if ! $OBSIDIAN_FOUND; then
+    echo -e "${BOLD}${CYN}  📓 You'll need Obsidian to read your vault.${RST}"
+    echo ""
+    echo "  VIRGIL writes everything as plain text files in $VIRGIL_DIR."
+    echo "  Obsidian is the free app that turns that folder into a connected"
+    echo "  knowledge graph — search, links, tags, and a visual map of everything"
+    echo "  you've learned. Without it, your vault is just a folder of files."
+    echo ""
+    echo "  Download free: https://obsidian.md"
+    echo "  Once installed: File → Open Folder as Vault → select $VIRGIL_DIR"
+    echo ""
+fi
 echo -e "  ${BOLD}Next steps:${RST}"
 echo ""
 echo "    1. Activate aliases:"
