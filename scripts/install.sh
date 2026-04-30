@@ -1032,7 +1032,7 @@ if $IS_WSL; then
 fi
 echo ""
 echo "    3. Test the pipeline:"
-echo "       virgil-cve CVE-2024-0001"
+echo "       virgil-cve --recent"
 echo "       virgil-rss"
 echo "       virgil-url https://attack.mitre.org/techniques/T1059/"
 echo ""

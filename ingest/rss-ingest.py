@@ -25,7 +25,10 @@ except ImportError:
 # ── Self-source API key from crontab if not set in environment ───────────────
 if not os.environ.get("ANTHROPIC_API_KEY"):
     import subprocess, re as _re
-    _ct = subprocess.run(["crontab", "-l"], capture_output=True, text=True)
+    try:
+        _ct = subprocess.run(["crontab", "-l"], capture_output=True, text=True)
+    except FileNotFoundError:
+        _ct = type('obj', (object,), {'stdout': '', 'returncode': 1})()
     for _line in _ct.stdout.splitlines():
         _m = _re.match(r'^ANTHROPIC_API_KEY=["\']?(.+?)["\']?\s*$', _line)
         if _m:
