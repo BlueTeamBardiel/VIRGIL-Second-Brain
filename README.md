@@ -165,7 +165,7 @@ VIRGIL isn't just a note vault — it's a study companion that knows who you are
 ### The cert path
 
 ```
-A+ → Security+ → CCNA → CySA+
+A+ → Network+ → Security+ → CCNA → CySA+
 ```
 
 Each cert builds on the last. VIRGIL has pre-built content for all four. You don't need the textbook — the vault has everything.

@@ -292,6 +292,9 @@ adapt it, make it yours."
 ### Pending
 - 🔜 Proactive absence detection — check last quiz date in session-start.sh,
       auto-surface /absence if gap > 7 days
+- 🔜 cert-ingest: Net+ N10-009 notes (87 Professor Messer videos)
+- 🔜 cert-ingest: Security+ SY0-701 notes (121 Professor Messer videos)
+- 🔜 cert-ingest: SDR hobbyist series (28 videos, RTL-SDR/GNU Radio focus)
 - 🔜 cert-ingest: CCNA Vol 1+2 pre-ingested notes (sanitized from private vault)
 - 🔜 cert-ingest: Security+ pre-ingested notes
 - 🔜 cert-ingest: CySA+ pre-ingested notes

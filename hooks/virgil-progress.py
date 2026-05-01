@@ -107,6 +107,49 @@ DOMAIN_MAPS: dict[str, dict[str, list[str]]] = {
             "api", "automation", "devops", "infrastructure as code",
         ],
     },
+    "netplus": {
+        "1 — Networking Concepts": [
+            "ip addressing", "subnetting", "routing", "switching", "dns", "dhcp",
+            "nat", "vlan", "ospf", "bgp", "tcp", "udp", "osi model", "ethernet",
+            "wifi", "wireless", "ipv4", "ipv6", "mac", "arp", "cidr",
+        ],
+        "2 — Network Implementation": [
+            "configure", "router", "switch", "firewall", "access point", "cable",
+            "fiber", "copper", "ssid", "wpa", "vlan", "trunk", "port", "interface",
+            "sfp", "poe", "qos",
+        ],
+        "3 — Network Operations": [
+            "monitoring", "syslog", "snmp", "netflow", "baseline", "documentation",
+            "diagram", "change management", "backup", "patch", "update",
+        ],
+        "4 — Network Security": [
+            "firewall", "acl", "vpn", "ids", "ips", "zero trust", "authentication",
+            "radius", "tacacs", "wpa3", "threat", "vulnerability", "hardening",
+        ],
+        "5 — Network Troubleshooting": [
+            "troubleshoot", "latency", "jitter", "packet loss", "ping", "traceroute",
+            "nslookup", "ipconfig", "netstat", "cable tester", "loopback", "duplex",
+        ],
+    },
+    "sdr": {
+        "1 — RF Fundamentals": [
+            "frequency", "wavelength", "amplitude", "modulation", "bandwidth",
+            "spectrum", "signal", "noise", "antenna", "gain", "decibel", "db",
+            "propagation", "polarization",
+        ],
+        "2 — Digital Signal Processing": [
+            "sample rate", "nyquist", "fft", "filter", "demodulation", "iq signal",
+            "baseband", "decimation", "interpolation", "convolution", "windowing",
+        ],
+        "3 — Hardware": [
+            "rtl-sdr", "hackrf", "sdrplay", "gnu radio", "sdr#", "gqrx", "dongle",
+            "tuner", "upconverter", "lna", "bias tee", "coax", "connector",
+        ],
+        "4 — Applications": [
+            "adsb", "acars", "noaa", "weather satellite", "pager", "trunking",
+            "p25", "dmr", "aprs", "pocsag", "ais", "vor", "rx",
+        ],
+    },
 }
 
 # ── Ingested content helpers ──────────────────────────────────────────────────
@@ -242,7 +285,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="VIRGIL cert domain mastery tracker")
     ap.add_argument(
         "--cert",
-        choices=["secplus", "cysa", "ccna", "all"],
+        choices=["secplus", "cysa", "ccna", "netplus", "sdr", "all"],
         default="all",
         help="Which cert to show (default: all)",
     )
@@ -262,7 +305,7 @@ def main() -> None:
         print(f"{'═' * 48}\n")
         return
 
-    certs = ["secplus", "cysa", "ccna"] if args.cert == "all" else [args.cert]
+    certs = ["secplus", "cysa", "ccna", "netplus", "sdr"] if args.cert == "all" else [args.cert]
     for cert in certs:
         render_cert(cert, scores, today)
 
