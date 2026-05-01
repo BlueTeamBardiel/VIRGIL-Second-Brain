@@ -683,7 +683,7 @@ Wrong answers: A) [[Open Service Ports]] describe listening network services; th
 
 ---
 
-**Study Tips for Morpheus:**
+**Study Tips:**
 - **Least Privilege** and **Default Credentials** are perennial Security+ topics—master both.
 - **Incident Response** sequence: Containment first, investigation second, eradication/recovery last.
 - **Risk Management** has four strategies: Mitigation, Transference, Acceptance, Avoidance.
@@ -1252,7 +1252,7 @@ D) Self-signed certificates
 
 ---
 
-**Study Notes for Morpheus:**
+**Study Notes:**
 - **Key domains covered:** Threat actors, network controls ([[WAF]], [[firewall]] types), digital forensics ([[hashing]]), [[IAM]] ([[802.1X]], [[LDAP]]), endpoint security ([[HIPS]], file integrity), and cryptography.
 - **Common patterns:** Questions favor practical, layered defenses over single-tool solutions.
 - **Weak cipher reminder:** While B67's weak cipher is a concern, [[replay attack]]s are more directly enabled by plaintext—a direct cause vs. theoretical vulnerability.

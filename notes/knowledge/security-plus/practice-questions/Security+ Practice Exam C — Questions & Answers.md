@@ -196,7 +196,7 @@ D) Unskilled attacker
 
 ---
 
-**Study Notes for Morpheus:**
+**Study Notes:**
 - **C1–C5:** Practical device/technology matching — focus on function (firewall rules, IPS, proxy caching, biometrics, etc.)
 - **C6–C8:** Backup/retention, key management, IPS tuning — operational best practices
 - **C9–C10:** Application security (input validation), authentication factors (biometric = "something you are")
