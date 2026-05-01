@@ -22,7 +22,7 @@
 set -euo pipefail
 
 # ── Constants ─────────────────────────────────────────────────────────────────
-VIRGIL_VERSION="1.3.0"
+VIRGIL_VERSION="1.9.0"
 VIRGIL_REPO="https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain.git"
 VIRGIL_RAW="https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main"
 VIRGIL_RELEASES="https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain/releases"
@@ -627,7 +627,7 @@ if $DRY_RUN; then
     [[ "${INSTALL_CRON,,}" == "y" ]] && step "Would install crontab entries"
     SHELL_RC="$HOME/.bashrc"; [[ "$OS" == "macos" ]] && SHELL_RC="$HOME/.zshrc"
     step "Would add aliases to:        $SHELL_RC"
-    step "Would copy 5,000+ notes to:   $VIRGIL_DIR/notes/"
+    step "Would copy 1,500+ notes to:   $VIRGIL_DIR/notes/"
     step "Would test Anthropic API:    $([ -n "$API_KEY" ] && echo yes || echo no \(no key\))"
     step "Would fetch CVE demo:        yes"
     echo ""
@@ -648,9 +648,6 @@ VAULT_DIRS=(
     "$VIRGIL_DIR/notes/knowledge/security"
     "$VIRGIL_DIR/notes/knowledge/networking"
     "$VIRGIL_DIR/notes/knowledge/nist"
-    "$VIRGIL_DIR/notes/personal/workouts"
-    "$VIRGIL_DIR/notes/personal/study"
-    "$VIRGIL_DIR/notes/personal/nutrition"
     "$VIRGIL_DIR/daily-logs"
     "$VIRGIL_DIR/weekly-summaries"
     "$VIRGIL_DIR/scripts"
@@ -778,7 +775,7 @@ if [[ -d "$INSTALL_SRC/starter-notes" ]]; then
         info "Seeding notes vault..."
         cp -r "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/"
         [[ -d "$INSTALL_SRC/notes" ]] && cp -rn "$INSTALL_SRC/notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
-        ok "Vault seeded — 5,000+ notes installed"
+        ok "Vault seeded — 1,500+ notes installed"
     else
         cp -rn "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
         [[ -d "$INSTALL_SRC/notes" ]] && cp -rn "$INSTALL_SRC/notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true

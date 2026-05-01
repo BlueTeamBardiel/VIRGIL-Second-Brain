@@ -215,7 +215,6 @@ This runs a 5-question quiz on a random topic and creates `logs/quiz-scores.json
 
 ```bash
 virgil-progress
-- `virgil-review` — spaced repetition review session, surfaces topics due today based on SM-2 algorithm
 ```
 
 Everything will show 0% or "no data" on day 1. That's expected. Bookmark this output — check it again in a week.
@@ -233,10 +232,9 @@ or `/cysa` if that's your cert. VIRGIL pulls your weakest topics and starts dril
 - [ ] `virgil-quiz` ran and asked 5 questions
 - [ ] `logs/quiz-scores.json` now exists
 - [ ] `virgil-progress` printed your cert dashboard
-- `virgil-review` — spaced repetition review session, surfaces topics due today based on SM-2 algorithm
 - [ ] `/secplus` gave you a Feynman explanation + exam question
 
-**Your vault is pre-loaded.** You have 5,000+ notes installed — Security+, CySA+, CCNA, ATT&CK techniques, and CVEs. The ingest pipelines will continue adding live threat intel each morning. By day 3, the vault is actively updating itself.
+**Your vault is pre-loaded.** You have 1,500+ notes installed — Security+, CySA+, CCNA, ATT&CK techniques, and CVEs. The ingest pipelines will continue adding live threat intel each morning. By day 3, the vault is actively updating itself.
 
 ---
 
@@ -263,8 +261,35 @@ VIRGIL runs mostly on autopilot once crontab is configured.
 
 1. **Morning**: Check `notes/feeds/YYYY-MM-DD.md` for overnight threat intel digest
 2. **During study**: Use `virgil-pdf` and `virgil-url` to capture anything interesting
-3. **After a session**: Run `/reflect` to distill your session into permanent memory
-4. **Sunday**: Check `weekly-summaries/YYYY-WNN.md` for the week's synthesis
+3. **After a quiz**: Run `virgil-review` — this is the most important 5 minutes you'll spend
+4. **After a session**: Run `/reflect` to distill your session into permanent memory
+5. **Sunday**: Check `weekly-summaries/YYYY-WNN.md` for the week's synthesis
+
+### virgil-review — your daily spaced repetition session
+
+After any quiz, run:
+
+```bash
+virgil-review
+```
+
+This surfaces your weakest topics using the SM-2 spaced repetition algorithm — the same algorithm behind Anki. Topics you struggle with come back sooner; topics you've mastered drift further out. Without review, quiz scores don't compound. With it, you build durable knowledge instead of short-term recall.
+
+`virgil-review` shows what's due today, what's coming up, and lets you jump straight into a quiz on the top overdue topic. It takes 5–10 minutes.
+
+---
+
+## Your first week with VIRGIL
+
+| Day | What to do | Command |
+|-----|-----------|---------|
+| 1 | Set up your profile and find your starting point | `/start` then `/diagnose` |
+| 2 | First teaching session — learn from your vault | `/teach` |
+| 3 | First quiz + spaced repetition review | `virgil-quiz [topic]` then `virgil-review` |
+| 4 | Check your progress by domain | `virgil-progress` |
+| 7 | Weekly synthesis — what you covered this week | `/week` |
+
+After day 7, the system runs itself. The cron jobs pull threat intel, your quiz scores track what you know, and `virgil-review` tells you what to study next.
 
 ---
 

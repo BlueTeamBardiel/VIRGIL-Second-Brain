@@ -54,12 +54,54 @@ topic = os.environ.get("TOPIC", "").strip()
 sys.path.insert(0, str(VIRGIL_DIR / "hooks"))
 from llm_client import ask, LLMError  # type: ignore
 
-# Load chroma-query by path (hyphen in filename)
-spec = importlib.util.spec_from_file_location(
-    "chroma_query", VIRGIL_DIR / "ingest" / "chroma-query.py"
-)
-cq = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(cq)
+# ── ChromaDB: try to load, fall back to grep-based context if unavailable ────
+CHROMA_AVAILABLE = False
+cq = None
+try:
+    import chromadb as _  # noqa: F401 — probe only
+    chroma_path = VIRGIL_DIR / "ingest" / "chroma-query.py"
+    if chroma_path.exists():
+        spec = importlib.util.spec_from_file_location("chroma_query", chroma_path)
+        cq = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cq)
+        CHROMA_AVAILABLE = True
+except Exception:
+    pass
+
+
+def grep_context(topic: str, vault_dir: Path) -> str:
+    """Fallback: grep vault notes for topic keywords, return first 200 lines."""
+    print("[quiz] ChromaDB not available — using grep fallback for context")
+    knowledge_dir = vault_dir / "notes" / "knowledge"
+    if not knowledge_dir.exists():
+        return ""
+    # Find up to 3 files matching the topic
+    words = [w for w in re.split(r'\W+', topic.lower()) if len(w) > 2]
+    pattern = "|".join(re.escape(w) for w in words) if words else re.escape(topic.lower())
+    matched_files = []
+    for md in knowledge_dir.rglob("*.md"):
+        if re.search(pattern, md.stem.lower().replace("-", " ")):
+            matched_files.append(md)
+            if len(matched_files) >= 3:
+                break
+    if not matched_files:
+        # Broader: search file contents
+        for md in sorted(knowledge_dir.rglob("*.md"))[:200]:
+            try:
+                if re.search(pattern, md.read_text(encoding="utf-8", errors="replace")[:2000].lower()):
+                    matched_files.append(md)
+                    if len(matched_files) >= 3:
+                        break
+            except Exception:
+                continue
+    chunks = []
+    for f in matched_files:
+        try:
+            chunks.append(f"[source: {f.name}]\n" + f.read_text(encoding="utf-8", errors="replace")[:1500])
+        except Exception:
+            continue
+    return "\n\n".join(chunks)
+
 
 # ── Open /dev/tty for user input ─────────────────────────────────────────────
 # The bash wrapper feeds this Python via heredoc, so stdin is already at EOF
@@ -113,20 +155,27 @@ if not topic:
 
 print(f"\nVIRGIL Quiz — topic: {topic}\n" + "─" * 50)
 
-# ── Pull top 3 chunks from Chroma ────────────────────────────────────────────
-try:
-    results = cq.query(topic, k=3)
-except Exception as e:
-    print(f"[quiz] ChromaDB query failed: {e}", file=sys.stderr)
-    sys.exit(1)
+# ── Pull context: ChromaDB preferred, grep fallback ───────────────────────────
+if CHROMA_AVAILABLE and cq is not None:
+    try:
+        results = cq.query(topic, k=3)
+        if results:
+            context = "\n\n".join(
+                f"[source: {r['filename']}]\n{r['chunk'].strip()}" for r in results
+            )
+        else:
+            print(f"[quiz] ChromaDB returned no results for {topic!r} — trying grep fallback")
+            context = grep_context(topic, VIRGIL_DIR)
+    except Exception as e:
+        print(f"[quiz] ChromaDB query failed ({e}) — using grep fallback", file=sys.stderr)
+        context = grep_context(topic, VIRGIL_DIR)
+else:
+    context = grep_context(topic, VIRGIL_DIR)
 
-if not results:
-    print(f"[quiz] No vault content found for {topic!r}.", file=sys.stderr)
+if not context.strip():
+    print(f"[quiz] No vault content found for {topic!r}. Add notes first with virgil-cert-ingest.",
+          file=sys.stderr)
     sys.exit(1)
-
-context = "\n\n".join(
-    f"[source: {r['filename']}]\n{r['chunk'].strip()}" for r in results
-)
 
 
 # ── Ask the LLM for N questions, with a retry fallback ───────────────────────

@@ -6,8 +6,8 @@
 $Zone = "cocytus.lab"
 
 $Records = @(
-    [pscustomobject]@{ Name = "ABADDON";   IP = "YOUR_LAN_IP" }
-    [pscustomobject]@{ Name = "BEHEMOTH";  IP = "YOUR_LAN_IP"  }
+    [pscustomobject]@{ Name = "HOST01";    IP = "YOUR_LAN_IP" }
+    [pscustomobject]@{ Name = "HOST02";    IP = "YOUR_LAN_IP"  }
     [pscustomobject]@{ Name = "MORAX";     IP = "YOUR_LAN_IP"  }
     [pscustomobject]@{ Name = "ELIGOR";    IP = "YOUR_TAILSCALE_IP"  }
     [pscustomobject]@{ Name = "XAPHAN";    IP = "YOUR_TAILSCALE_IP" }

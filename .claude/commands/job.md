@@ -72,10 +72,9 @@ Then confirm: "Logged: `<role>` at `<company>` — applied `<date>`."
 
 ### Background to draw from (always include relevant pieces):
 
-**Current role:** Lead Service Desk Technician, TidalHealth Peninsula Regional, Salisbury MD
-- Tier 1/2 technical support for clinical staff
-- Experience with Windows, Active Directory, enterprise ticketing systems
-- Healthcare IT environment — HIPAA-adjacent, high availability expectations
+**Current role:** (read from `name:` and notes in `$HOME/VIRGIL/CLAUDE.md`)
+- Read the user's background, current role, and experience from their CLAUDE.md profile
+- Use whatever is in their `background:` and `why:` fields as the source of truth
 
 **Homelab (your-lab):**
 - Fleet of 12+ hosts managed with Ansible + Semaphore
@@ -92,7 +91,7 @@ Then confirm: "Logged: `<role>` at `<company>` — applied `<date>`."
 - Background: line cook through pastry chef — hospitality management track
 
 **Personal:**
-- Located Salisbury, MD
+- Location from CLAUDE.md if set
 - Self-directed learner — built significant lab infrastructure independently
 
 ### Draft structure:
@@ -106,7 +105,7 @@ Dear Hiring Manager,
 
 [Opening: 2 sentences — why this role, what makes the student a strong fit. Reference the specific company/role if any detail is known.]
 
-[Body paragraph 1: TidalHealth experience — IT support at scale, real-world service desk, healthcare environment. 3-4 sentences.]
+[Body paragraph 1: Current role experience — IT support, real-world service desk work. Draw from the user's background in CLAUDE.md. 3-4 sentences.]
 
 [Body paragraph 2: Homelab / technical depth — your-lab, Ansible, security work, CySA+. 3-4 sentences. Frame as "I don't just support infrastructure, I build and operate it."]
 

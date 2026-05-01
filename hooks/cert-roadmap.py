@@ -40,6 +40,20 @@ CERT_PATH = [
         "command": "/aplus",
     },
     {
+        "cert": "Network+",
+        "full_name": "CompTIA Network+ (N10-009)",
+        "domains": [
+            "Networking Concepts",
+            "Network Implementation",
+            "Network Operations",
+            "Network Security",
+            "Network Troubleshooting",
+        ],
+        "total_topics": 30,
+        "slug": "netplus",
+        "command": "/netplus",
+    },
+    {
         "cert": "Security+",
         "full_name": "CompTIA Security+ (SY0-701)",
         "domains": [
@@ -218,7 +232,7 @@ def generate_roadmap() -> None:
         "## The Path",
         "",
         "```",
-        "A+  →  Security+  →  CCNA  →  CySA+",
+        "A+  →  Network+  →  Security+  →  CCNA  →  CySA+",
         "```",
         "",
         "Each cert builds on the last. Complete them in order for maximum retention.",

@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Syntax check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check shell script syntax
+        run: |
+          echo "Checking shell scripts..."
+          find . -name "*.sh" -not -path "./.git/*" | while read f; do
+            bash -n "$f" && echo "OK: $f" || { echo "FAIL: $f"; exit 1; }
+          done
+
+      - name: Check Python syntax
+        run: |
+          echo "Checking Python files..."
+          find . -name "*.py" -not -path "./.git/*" | while read f; do
+            python3 -m py_compile "$f" && echo "OK: $f" || { echo "FAIL: $f"; exit 1; }
+          done
+
+      - name: Verify checksums file exists
+        run: |
+          test -f checksums.sha256 && echo "checksums.sha256 exists" || exit 1
+
+      - name: Check for private data
+        run: |
+          echo "Scanning for private data..."
+          if grep -rE "BEHEMOTH|ABADDON|TidalHealth|gpt-oss" \
+            hooks/ ingest/ scripts/ .claude/ 2>/dev/null | \
+            grep -v "^Binary" | \
+            grep -v "\.pyc"; then
+            echo "FAIL: Private data found in source files"
+            exit 1
+          fi
+          echo "Clean"

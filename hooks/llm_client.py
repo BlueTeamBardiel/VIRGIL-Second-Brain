@@ -2,7 +2,7 @@
 """
 llm_client.py — LLM inference wrapper with automatic fallback.
 
-Chain: BEHEMOTH Ollama (gpt-oss:20b) → ABADDON Ollama (qwen2.5:14b) → Anthropic API
+Chain: Primary Ollama → Secondary Ollama → Anthropic API
 
 As a module:
     from llm_client import ask
@@ -15,31 +15,38 @@ As a script:
 Options:
     -s/--system TEXT       System prompt
     -m/--model MODEL       Override model
-    -b/--backend NAME      Force: behemoth | abaddon | anthropic
+    -b/--backend NAME      Force: primary | secondary | anthropic
     -t/--timeout N         Per-backend timeout in seconds (default: 60)
     --max-tokens N         Max tokens (default: 2048)
+
+Environment variables:
+    VIRGIL_PRIMARY_OLLAMA_URL    Primary Ollama endpoint (default: http://localhost:11434)
+    VIRGIL_SECONDARY_OLLAMA_URL  Secondary Ollama endpoint (optional, skip if unset)
+    VIRGIL_PRIMARY_MODEL         Model for primary Ollama (default: llama3.2)
+    VIRGIL_SECONDARY_MODEL       Model for secondary Ollama (default: qwen2.5:14b)
+    VIRGIL_LLM_BACKEND           Force a backend: primary | secondary | anthropic
+    ANTHROPIC_API_KEY            Required for Anthropic backend
 
 Exit codes: 0=ok, 1=all backends failed
 """
 
 import json
 import os
-import subprocess
 import sys
 import urllib.error
 import urllib.request
 from typing import Optional
 
 # ── Config ────────────────────────────────────────────────────────────────────
-BEHEMOTH_URL    = "http://localhost:11434"
-ABADDON_URL     = os.environ.get("ABADDON_OLLAMA_URL", "http://abaddon:11434")
+PRIMARY_URL     = os.environ.get("VIRGIL_PRIMARY_OLLAMA_URL", "http://localhost:11434")
+SECONDARY_URL   = os.environ.get("VIRGIL_SECONDARY_OLLAMA_URL", "")
 ANTHROPIC_URL   = "https://api.anthropic.com/v1/messages"
 
-MODEL_BEHEMOTH  = "gpt-oss:20b"
-MODEL_ABADDON   = "qwen2.5:14b"
+MODEL_PRIMARY   = os.environ.get("VIRGIL_PRIMARY_MODEL", "llama3.2")
+MODEL_SECONDARY = os.environ.get("VIRGIL_SECONDARY_MODEL", "qwen2.5:14b")
 MODEL_ANTHROPIC = "claude-haiku-4-5-20251001"
 
-FALLBACK_ORDER  = ["behemoth", "abaddon", "anthropic"]
+FALLBACK_ORDER  = ["primary", "secondary", "anthropic"]
 
 
 class LLMError(RuntimeError):
@@ -49,20 +56,7 @@ class LLMError(RuntimeError):
 # ── Internal helpers ──────────────────────────────────────────────────────────
 
 def _get_anthropic_key() -> str:
-    key = os.environ.get("ANTHROPIC_API_KEY", "")
-    if key:
-        return key
-    try:
-        cron = subprocess.check_output(
-            ["crontab", "-l"], stderr=subprocess.DEVNULL, text=True
-        )
-        for line in cron.splitlines():
-            if "ANTHROPIC_API_KEY" in line and "=" in line:
-                val = line.split("=", 1)[1].strip().strip('"').strip("'")
-                return val
-    except Exception:
-        pass
-    return ""
+    return os.environ.get("ANTHROPIC_API_KEY", "")
 
 
 def _ollama_call(
@@ -157,7 +151,7 @@ def ask(
     timeout: int = 60,
 ) -> str:
     """
-    Query LLM with automatic fallback: BEHEMOTH → ABADDON → Anthropic.
+    Query LLM with automatic fallback: Primary Ollama → Secondary Ollama → Anthropic.
 
     Args:
         prompt:     User message.
@@ -173,20 +167,26 @@ def ask(
     Raises:
         LLMError: If all backends fail (or the forced backend fails).
     """
-    order = [backend] if backend else ([os.environ["VIRGIL_LLM_BACKEND"]] if os.environ.get("VIRGIL_LLM_BACKEND") else FALLBACK_ORDER)
+    order = (
+        [backend] if backend
+        else ([os.environ["VIRGIL_LLM_BACKEND"]] if os.environ.get("VIRGIL_LLM_BACKEND")
+              else FALLBACK_ORDER)
+    )
     errors: list[str] = []
 
     for b in order:
         try:
-            if b == "behemoth":
-                m = model or MODEL_BEHEMOTH
-                print(f"[llm_client] trying BEHEMOTH ({m})", file=sys.stderr)
-                return _ollama_call(BEHEMOTH_URL, m, prompt, system, max_tokens, timeout)
+            if b == "primary":
+                m = model or MODEL_PRIMARY
+                print(f"[llm_client] trying primary ollama ({m})", file=sys.stderr)
+                return _ollama_call(PRIMARY_URL, m, prompt, system, max_tokens, timeout)
 
-            elif b == "abaddon":
-                m = model or MODEL_ABADDON
-                print(f"[llm_client] trying ABADDON ({m})", file=sys.stderr)
-                return _ollama_call(ABADDON_URL, m, prompt, system, max_tokens, timeout)
+            elif b == "secondary":
+                if not SECONDARY_URL:
+                    raise LLMError("VIRGIL_SECONDARY_OLLAMA_URL not set — skipping secondary")
+                m = model or MODEL_SECONDARY
+                print(f"[llm_client] trying secondary ollama ({m})", file=sys.stderr)
+                return _ollama_call(SECONDARY_URL, m, prompt, system, max_tokens, timeout)
 
             elif b == "anthropic":
                 m = model or MODEL_ANTHROPIC
@@ -209,7 +209,7 @@ def main() -> None:
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="LLM wrapper: BEHEMOTH → ABADDON → Anthropic",
+        description="LLM wrapper: Primary Ollama → Secondary Ollama → Anthropic",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )

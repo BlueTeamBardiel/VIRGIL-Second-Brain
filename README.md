@@ -3,7 +3,7 @@
 > Your personal knowledge base that studies with you, not for you.
 > Local. Private. Free.
 
-![Version](https://img.shields.io/badge/version-v1.3.0-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
+![Version](https://img.shields.io/badge/version-v1.9.0-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
 
 ## What it does
 
@@ -11,7 +11,7 @@ VIRGIL ingests threat intel daily, lets you quiz yourself on weak topics, tracks
 
 ## What you get on day one
 
-- **5,000+ knowledge notes** — Security+, CySA+, CCNA, MITRE ATT&CK, 350+ CVEs with Feynman explanations
+- **1,500+ knowledge notes** — Security+, CySA+, CCNA, MITRE ATT&CK, 350+ CVEs with Feynman explanations
 - **Daily threat intel** — 22 RSS feeds + NVD CVE pipeline, automated every morning
 - **Study commands** — `/cysa`, `/ccna`, `/secplus`, `/aplus` — domain-mapped Feynman sessions
 - **Spaced repetition** — `virgil-review` surfaces what's due based on your quiz scores

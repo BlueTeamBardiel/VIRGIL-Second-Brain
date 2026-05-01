@@ -104,7 +104,7 @@ echo "[cert-ingest] Content loaded ($(echo "$RAW_TEXT" | wc -c) bytes)"
 
 # ── Write raw text to temp file (avoids heredoc special-char corruption) ───────
 TEMP_FILE=$(mktemp /tmp/virgil-ingest-XXXXXX.txt)
-echo "$RAW_TEXT" > "$TEMP_FILE"
+printf '%s\n' "$RAW_TEXT" > "$TEMP_FILE"
 trap "rm -f $TEMP_FILE" EXIT
 
 # ── Split into chunks and process via LLM ──────────────────────

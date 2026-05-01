@@ -141,11 +141,31 @@ def build_raw_digest(items_by_source: dict, date_str: str) -> str:
     return "\n".join(lines)
 
 
+def _read_claude_md_profile() -> tuple[str, str]:
+    """Read name and current_cert from CLAUDE.md. Returns (user_name, current_cert)."""
+    claude_md = VIRGIL_DIR / "CLAUDE.md"
+    user_name = "the user"
+    current_cert = "cybersecurity"
+    if claude_md.exists():
+        for line in claude_md.read_text(encoding="utf-8").splitlines():
+            if line.startswith("name:"):
+                val = line.split(":", 1)[1].strip()
+                if val:
+                    user_name = val
+            elif line.startswith("current_cert:"):
+                val = line.split(":", 1)[1].strip()
+                if val:
+                    current_cert = val
+    return user_name, current_cert
+
+
 def build_digest(items_by_source: dict, date_str: str) -> str:
     """Call Claude haiku to synthesize feed items into a digest."""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         raise RuntimeError("ANTHROPIC_API_KEY not set")
+
+    user_name, current_cert = _read_claude_md_profile()
 
     # Build compact feed text
     feed_text = ""
@@ -162,13 +182,13 @@ def build_digest(items_by_source: dict, date_str: str) -> str:
         return ""
 
     prompt = (
-        f"You are a security intelligence analyst. Morpheus is a sysadmin/homelab operator studying for CySA+.\n"
+        f"You are a security intelligence analyst. {user_name} is a cybersecurity learner studying for {current_cert}.\n"
         f"The following are RSS feed items from {date_str}. Synthesize them into a concise daily threat and news digest.\n\n"
         f"Structure:\n"
         f"## Daily Feed Digest — {date_str}\n\n"
         f"### Top Stories\n(3–5 most significant items — new vulnerabilities, active exploits, major incidents)\n\n"
         f"### Homelab / Tooling\n(items relevant to homelabs, self-hosted tools, Ansible, Docker, Linux)\n\n"
-        f"### CySA+ Relevant\n(items touching on blue team concepts, SOC operations, threat hunting, SIEM, IDS)\n\n"
+        f"### {current_cert} Relevant\n(items touching on blue team concepts, SOC operations, threat hunting, SIEM, IDS)\n\n"
         f"### Quick Hits\n(remaining notable items — one line each)\n\n"
         f"Rules:\n"
         f"- Use [[wiki links]] for tools and concepts (e.g., [[Wazuh]], [[Suricata]], [[CVE]]).\n"
@@ -183,18 +203,26 @@ def build_digest(items_by_source: dict, date_str: str) -> str:
         "messages": [{"role": "user", "content": prompt}]
     }
 
-    resp = requests.post(
-        "https://api.anthropic.com/v1/messages",
-        headers={
-            "x-api-key": api_key,
-            "anthropic-version": "2023-06-01",
-            "content-type": "application/json",
-        },
-        json=payload,
-        timeout=60,
-    )
+    for attempt in range(2):
+        resp = requests.post(
+            "https://api.anthropic.com/v1/messages",
+            headers={
+                "x-api-key": api_key,
+                "anthropic-version": "2023-06-01",
+                "content-type": "application/json",
+            },
+            json=payload,
+            timeout=60,
+        )
+        if resp.status_code == 429 and attempt == 0:
+            log("Rate limited (429) — waiting 60s before retry")
+            time.sleep(60)
+            continue
+        resp.raise_for_status()
+        return resp.json()["content"][0]["text"]
+
     resp.raise_for_status()
-    return resp.json()["content"][0]["text"]
+    return ""
 
 
 def slack_notify(message: str) -> None:

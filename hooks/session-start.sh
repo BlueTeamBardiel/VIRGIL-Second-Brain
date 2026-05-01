@@ -98,6 +98,17 @@ if [[ ! -f "$LOG_FILE" ]]; then
 EOF
 fi
 
+# ── First-session hint (no quiz history yet) ─────────────────────────────────
+SCORES_FILE_CHECK="$VIRGIL_DIR/logs/quiz-scores.json"
+if [[ ! -f "$SCORES_FILE_CHECK" ]] || [[ ! -s "$SCORES_FILE_CHECK" ]] || \
+   python3 -c "import json,sys; d=json.load(open('$SCORES_FILE_CHECK')); sys.exit(0 if d else 1)" 2>/dev/null; then
+    if [[ ! -f "$SCORES_FILE_CHECK" ]] || ! python3 -c "import json,sys; d=json.load(open('$SCORES_FILE_CHECK')); sys.exit(0 if d else 1)" 2>/dev/null; then
+        printf '\n'
+        printf '  New here? Type /start in Claude Code to begin your first session.\n'
+        printf '\n'
+    fi
+fi
+
 # ── Warn about unfilled summaries in today's log ──────────────────────────────
 if [[ -f "$LOG_FILE" ]]; then
     UNFILLED=$(grep -c '<!-- fill in manually -->' "$LOG_FILE" 2>/dev/null || true)
