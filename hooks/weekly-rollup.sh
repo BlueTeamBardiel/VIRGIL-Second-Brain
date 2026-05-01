@@ -12,6 +12,16 @@ WEEK_LABEL=$(date +%G-W%V)          # e.g. 2026-W14
 OUTPUT_FILE="$SUMMARIES_DIR/$WEEK_LABEL.md"
 LOGPREFIX="[weekly-rollup.sh $WEEK_LABEL]"
 
+# ── Dynamic user config from CLAUDE.md ───────────────────────────────────────
+user_name="the user"
+current_cert="their current certification"
+if [[ -f "$VIRGIL_DIR/CLAUDE.md" ]]; then
+    _name=$(grep -m1 "^name:" "$VIRGIL_DIR/CLAUDE.md" | cut -d: -f2- | xargs 2>/dev/null || true)
+    [[ -n "$_name" ]] && user_name="$_name"
+    _cert=$(grep -Em1 "^(cert|current_cert):" "$VIRGIL_DIR/CLAUDE.md" | cut -d: -f2- | xargs 2>/dev/null || true)
+    [[ -n "$_cert" ]] && current_cert="$_cert"
+fi
+
 # ── Slack helper ──────────────────────────────────────────────────────────────
 slack_notify() {
     local message="$1"
@@ -101,11 +111,15 @@ done
 # ── 4. Build JSON payload ─────────────────────────────────────────────────────
 # Note: pipe + heredoc on the same command causes the heredoc to win and the
 # pipe to be silently dropped. Write Python to a temp file instead.
-_TMPSCRIPT=$(mktemp /tmp/virgil-rollup-XXXXXX.py)
+_TMPSCRIPT=$(umask 0177; mktemp /tmp/virgil-rollup-XXXXXX.py)
+chmod 600 "$_TMPSCRIPT" 2>/dev/null || true
 trap "rm -f $_TMPSCRIPT" EXIT
 
 cat > "$_TMPSCRIPT" <<'PYEOF'
 import json, sys
+
+user_name = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] else "the user"
+current_cert = sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] else "their current certification"
 
 combined, feed_combined, study_combined = sys.stdin.read().split("\x00", 2)
 
@@ -117,13 +131,13 @@ if feed_combined.strip():
     )
 if study_combined.strip():
     extra_sections += (
-        "**Cert Study Progress:** "
-        "(bullet list — topics covered, weak areas identified, CySA+ domain coverage)\n\n"
+        f"**Cert Study Progress:** "
+        f"(bullet list — topics covered, weak areas identified, {current_cert} domain coverage)\n\n"
     )
 
 prompt = (
-    "You are a second-brain assistant for a sysadmin/homelab operator named Morpheus. "
-    "He runs a homelab called your-lab, is studying for CySA+, and is job searching. "
+    f"You are a second-brain assistant for a sysadmin/homelab operator named {user_name}. "
+    f"They run a homelab, are studying for {current_cert}, and are job searching. "
     "Synthesize the following data from the past week into a concise weekly digest.\n\n"
     "Structure the output as:\n\n"
     "## Weekly Digest\n\n"
@@ -151,7 +165,7 @@ payload = {
 print(json.dumps(payload))
 PYEOF
 
-PAYLOAD=$(printf '%s\x00%s\x00%s' "$COMBINED" "$FEED_COMBINED" "$STUDY_COMBINED" | python3 "$_TMPSCRIPT")
+PAYLOAD=$(printf '%s\x00%s\x00%s' "$COMBINED" "$FEED_COMBINED" "$STUDY_COMBINED" | python3 "$_TMPSCRIPT" "$user_name" "$current_cert")
 
 # ── 5. Call Claude API ────────────────────────────────────────────────────────
 RESPONSE=$(curl -s -w "\n%{http_code}" \

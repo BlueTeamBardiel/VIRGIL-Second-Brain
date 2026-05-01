@@ -90,7 +90,8 @@ print('\n\n'.join(sections) if sections else 'No pending tasks found.')
 
 # ── 6. Build JSON payload via Python ──────────────────────────────────────────
 LOG_CONTENT=$(cat "$LOG_FILE")
-_TMPSCRIPT=$(mktemp /tmp/virgil-promote-XXXXXX.py)
+_TMPSCRIPT=$(umask 0177; mktemp /tmp/virgil-promote-XXXXXX.py)
+chmod 600 "$_TMPSCRIPT" 2>/dev/null || true
 trap "rm -f $_TMPSCRIPT" EXIT
 
 cat > "$_TMPSCRIPT" <<'PYEOF'
@@ -163,7 +164,8 @@ if [[ "$HTTP_CODE" != "200" ]]; then
 fi
 
 # ── 8. Parse response — split into promotion content and completed tasks ───────
-_PARSE_SCRIPT=$(mktemp /tmp/virgil-parse-XXXXXX.py)
+_PARSE_SCRIPT=$(umask 0177; mktemp /tmp/virgil-parse-XXXXXX.py)
+chmod 600 "$_PARSE_SCRIPT" 2>/dev/null || true
 trap "rm -f $_TMPSCRIPT $_PARSE_SCRIPT" EXIT
 
 cat > "$_PARSE_SCRIPT" <<'PYEOF'

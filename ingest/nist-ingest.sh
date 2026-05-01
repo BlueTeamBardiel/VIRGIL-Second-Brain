@@ -16,6 +16,16 @@ LOGPREFIX="[nist-ingest $(date '+%Y-%m-%d %H:%M')]"
 
 log() { echo "$LOGPREFIX $*" | tee -a "$LOGFILE"; }
 
+# ── Dynamic user config from CLAUDE.md ───────────────────────────────────────
+user_name="the user"
+current_cert="their current certification"
+if [[ -f "$VIRGIL_DIR/CLAUDE.md" ]]; then
+    _name=$(grep -m1 "^name:" "$VIRGIL_DIR/CLAUDE.md" | cut -d: -f2- | xargs 2>/dev/null || true)
+    [[ -n "$_name" ]] && user_name="$_name"
+    _cert=$(grep -Em1 "^(cert|current_cert):" "$VIRGIL_DIR/CLAUDE.md" | cut -d: -f2- | xargs 2>/dev/null || true)
+    [[ -n "$_cert" ]] && current_cert="$_cert"
+fi
+
 # ── Args ──────────────────────────────────────────────────────────────────────
 if [[ $# -lt 1 ]]; then
     echo "Usage: $0 <path-to-pdf>" >&2
@@ -59,24 +69,27 @@ if [[ -z "$RAW_TEXT" ]]; then
 fi
 
 # ── Build NIST-specific prompt ────────────────────────────────────────────────
-_TMPSCRIPT=$(mktemp /tmp/virgil-nist-XXXXXX.py)
+_TMPSCRIPT=$(umask 0177; mktemp /tmp/virgil-nist-XXXXXX.py)
+chmod 600 "$_TMPSCRIPT" 2>/dev/null || true
 trap "rm -f $_TMPSCRIPT" EXIT
 
 cat > "$_TMPSCRIPT" <<'PYEOF'
 import json, sys
 
 pdf_name = sys.argv[1]
+user_name = sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] else "the user"
+current_cert = sys.argv[3] if len(sys.argv) > 3 and sys.argv[3] else "their current certification"
 raw_text = sys.stdin.read()
 
 prompt = (
-    f"You are a second-brain assistant for Morpheus, a sysadmin studying for CySA+.\n"
+    f"You are a second-brain assistant for {user_name}, a sysadmin studying for {current_cert}.\n"
     f"Convert this NIST publication PDF into a structured Obsidian note optimized for CySA+ exam relevance.\n\n"
     f"Document: {pdf_name}\n\n"
     f"Required sections:\n"
     f"1. **Title + Publication ID** (e.g., NIST SP 800-53 Rev 5)\n"
     f"2. **Purpose / Scope** — 2-3 sentences\n"
     f"3. **Key Concepts** — bullet list of the most important controls, frameworks, or definitions\n"
-    f"4. **CySA+ Exam Relevance** — which exam objectives this covers (if inferrable)\n"
+    f"4. **{current_cert} Exam Relevance** — which exam objectives this covers (if inferrable)\n"
     f"5. **Control Families / Sections** — structured list of main sections or control families\n"
     f"6. **Actionable Takeaways** — how this applies to a blue team / SOC operator\n"
     f"7. **Tags** — include nist, cysa-plus, and relevant control-family or framework tags\n\n"
@@ -97,7 +110,7 @@ print(json.dumps(payload))
 PYEOF
 
 log "Calling Claude API (NIST framing)"
-PAYLOAD=$(echo "$RAW_TEXT" | python3 "$_TMPSCRIPT" "$PDF_BASENAME")
+PAYLOAD=$(echo "$RAW_TEXT" | python3 "$_TMPSCRIPT" "$PDF_BASENAME" "$user_name" "$current_cert")
 
 RESPONSE=$(curl -s -w "\n%{http_code}" \
     https://api.anthropic.com/v1/messages \

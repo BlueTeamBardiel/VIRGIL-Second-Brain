@@ -53,10 +53,15 @@ verify_checksums() {
   if curl -fsSL "$VIRGIL_CHECKSUM_URL" -o /tmp/virgil-checksums.sha256 2>/dev/null; then
     if [[ -n "$src_dir" && -d "$src_dir" ]]; then
       if (cd "$src_dir" && sha256sum --check /tmp/virgil-checksums.sha256 --quiet 2>/dev/null); then
-        ok "Checksums verified"
+        ok "Checksums verified ✓"
       else
-        warn "Checksum mismatch detected — installer may be modified"
-        warn "Continuing anyway — verify manually if concerned"
+        echo ""
+        echo "  ✗ FATAL: Checksum verification failed"
+        echo "  The installer files may have been modified or corrupted."
+        echo "  Do not proceed. Download VIRGIL again from:"
+        echo "  https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain"
+        echo ""
+        exit 1
       fi
     else
       warn "No source directory for checksum verification — skipping"

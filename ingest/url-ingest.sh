@@ -45,6 +45,12 @@ if [[ ! "$URL" =~ ^https?:// ]]; then
     exit 1
 fi
 
+# Reject excessively long URLs (prevents log injection, oversized inputs)
+if [[ ${#URL} -gt 4096 ]]; then
+    echo "[url-ingest] ERROR: URL too long (max 4096 chars)" >&2
+    exit 1
+fi
+
 # Block private/local IP ranges — prevents SSRF to internal services
 HOSTNAME=$(python3 -c "
 from urllib.parse import urlparse
@@ -89,7 +95,7 @@ command -v pandoc &>/dev/null || die "pandoc not found. Install: sudo apt instal
 log "Fetching: $URL"
 
 # ── Fetch + convert to plain text ────────────────────────────────────────────
-RAW_HTML=$(curl -sL --max-time 30 --user-agent "Mozilla/5.0 (compatible; VIRGIL/1.0)" "$URL" 2>/dev/null) \
+RAW_HTML=$(curl -sL --max-time 30 --user-agent "Mozilla/5.0 (compatible; VIRGIL/1.0)" -- "$URL" 2>/dev/null) \
     || die "curl failed fetching $URL"
 
 [[ -n "$RAW_HTML" ]] || die "Empty response from $URL"
@@ -108,7 +114,8 @@ TITLE_LIST=$(find "$NOTES_DIR" -maxdepth 2 -name "*.md" ! -name ".*" \
     -printf "%f\n" 2>/dev/null | sed 's/\.md$//' | sort | head -200)
 
 # ── Python: call Claude Haiku, parse JSON response ───────────────────────────
-_TMPPY=$(mktemp /tmp/virgil-url-XXXXXX.py)
+_TMPPY=$(umask 0177; mktemp /tmp/virgil-url-XXXXXX.py)
+chmod 600 "$_TMPPY" 2>/dev/null || true
 trap "rm -f $_TMPPY" EXIT
 
 cat > "$_TMPPY" <<'PYEOF'

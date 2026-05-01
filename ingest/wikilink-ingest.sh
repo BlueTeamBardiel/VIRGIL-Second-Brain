@@ -45,7 +45,8 @@ fi
 log "Processing ${#MODIFIED[@]} modified note(s)"
 
 # ── Build title index (all .md filenames without extension) ──────────────────
-_TMPPY=$(mktemp /tmp/virgil-wikilink-XXXXXX.py)
+_TMPPY=$(umask 0177; mktemp /tmp/virgil-wikilink-XXXXXX.py)
+chmod 600 "$_TMPPY" 2>/dev/null || true
 trap "rm -f $_TMPPY" EXIT
 
 cat > "$_TMPPY" <<'PYEOF'

@@ -52,7 +52,8 @@ log "Found $PLACEHOLDER_COUNT unfilled placeholder(s)"
 LOG_CONTENT=$(cat "$LOG_FILE")
 
 # ── Python: fill each placeholder via Claude API ─────────────────────────────
-_TMPPY=$(mktemp /tmp/virgil-autoreflect-XXXXXX.py)
+_TMPPY=$(umask 0177; mktemp /tmp/virgil-autoreflect-XXXXXX.py)
+chmod 600 "$_TMPPY" 2>/dev/null || true
 trap "rm -f $_TMPPY" EXIT
 
 cat > "$_TMPPY" <<'PYEOF'

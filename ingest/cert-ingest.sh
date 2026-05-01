@@ -83,7 +83,11 @@ case "$MODE" in
             echo "[cert-ingest] ERROR: Only http/https URLs are allowed."
             exit 1
         fi
-        RAW_TEXT=$(curl -fsSL --max-time 30 "$SOURCE" | python3 -c "
+        if [[ ${#SOURCE} -gt 4096 ]]; then
+            echo "[cert-ingest] ERROR: URL too long (max 4096 chars)"
+            exit 1
+        fi
+        RAW_TEXT=$(curl -fsSL --max-time 30 -- "$SOURCE" | python3 -c "
 import sys, html, re
 content = sys.stdin.read()
 content = re.sub('<[^>]+>', ' ', content)
@@ -114,7 +118,8 @@ fi
 echo "[cert-ingest] Content loaded ($(echo "$RAW_TEXT" | wc -c) bytes)"
 
 # ── Write raw text to temp file (avoids heredoc special-char corruption) ───────
-TEMP_FILE=$(mktemp /tmp/virgil-ingest-XXXXXX.txt)
+TEMP_FILE=$(umask 0177; mktemp /tmp/virgil-ingest-XXXXXX.txt)
+chmod 600 "$TEMP_FILE" 2>/dev/null || true
 printf '%s\n' "$RAW_TEXT" > "$TEMP_FILE"
 trap "rm -f $TEMP_FILE" EXIT
 

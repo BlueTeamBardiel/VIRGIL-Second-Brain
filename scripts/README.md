@@ -15,7 +15,7 @@ One-shot scripts run manually from [[your-workstation]]. They are not cron-sched
 ./scripts/deploy-machine.sh [user@]host
 
 # Examples:
-./scripts/deploy-machine.sh abaddon
+./scripts/deploy-machine.sh your-hostname
 ./scripts/deploy-machine.sh your-username@YOUR_HOST_IP
 ```
 
@@ -26,11 +26,11 @@ One-shot scripts run manually from [[your-workstation]]. They are not cron-sched
 
 ---
 
-### deploy-abaddon.sh
+### deploy-control-node.sh
 **Purpose:** Dedicated deploy script for [[your-control-node]] (YOUR_LAN_IP / Tailscale YOUR_TAILSCALE_IP). Functionally similar to `deploy-machine.sh` but hardcodes [[your-control-node]]'s address and includes your-control-node-specific cron entries (rss-ingest.py at 6am, cve-ingest.py at 7am).
 
 ```bash
-./scripts/deploy-abaddon.sh
+./scripts/deploy-control-node.sh
 ```
 
 **Prerequisites:**

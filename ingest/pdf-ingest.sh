@@ -61,6 +61,16 @@ fi
 [[ -n "${ANTHROPIC_API_KEY:-}" ]] || die "ANTHROPIC_API_KEY is not set."
 command -v pdftotext &>/dev/null   || die "pdftotext not found. Install poppler-utils."
 
+# ── Dynamic user config from CLAUDE.md ───────────────────────────────────────
+user_name="the user"
+current_cert="their current certification"
+if [[ -f "$VIRGIL_DIR/CLAUDE.md" ]]; then
+    _name=$(grep -m1 "^name:" "$VIRGIL_DIR/CLAUDE.md" | cut -d: -f2- | xargs 2>/dev/null || true)
+    [[ -n "$_name" ]] && user_name="$_name"
+    _cert=$(grep -Em1 "^(cert|current_cert):" "$VIRGIL_DIR/CLAUDE.md" | cut -d: -f2- | xargs 2>/dev/null || true)
+    [[ -n "$_cert" ]] && current_cert="$_cert"
+fi
+
 # ── Extract text ──────────────────────────────────────────────────────────────
 PDF_BASENAME=$(basename "$PDF_PATH" .pdf)
 SLUG=$(echo "$PDF_BASENAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9-')
@@ -82,7 +92,8 @@ CHAR_COUNT=${#RAW_TEXT}
 log "Extracted $CHAR_COUNT characters${FIRST_PAGES:+ (first $FIRST_PAGES pages)}"
 
 # ── Python helper (chunking + API) ────────────────────────────────────────────
-_TMPPY=$(mktemp /tmp/virgil-pdf-XXXXXX.py)
+_TMPPY=$(umask 0177; mktemp /tmp/virgil-pdf-XXXXXX.py)
+chmod 600 "$_TMPPY" 2>/dev/null || true
 trap "rm -f $_TMPPY" EXIT
 
 cat > "$_TMPPY" <<'PYEOF'
@@ -137,7 +148,7 @@ def chunk_text(text, size):
 def single_call(raw_text, pdf_name):
     log(f"Single-call mode — {len(raw_text):,} chars")
     prompt = (
-        f"You are a second-brain assistant for Morpheus, a sysadmin/homelab operator studying for CySA+ and CCNA.\n"
+        f"You are a second-brain assistant for {user_name}, a sysadmin/homelab operator studying for {current_cert}.\n"
         f"Convert the following extracted PDF text into a clean Obsidian Markdown knowledge note.\n\n"
         f"Document: {pdf_name}\n\n"
         f"Rules:\n"
@@ -160,8 +171,8 @@ def chunked_call(raw_text, pdf_name):
     for i, chunk in enumerate(chunks, 1):
         log(f"  Chunk {i}/{total} — {len(chunk):,} chars")
         prompt = (
-            f"You are extracting structured knowledge from a technical document for Morpheus, "
-            f"a sysadmin studying for CySA+ and CCNA.\n\n"
+            f"You are extracting structured knowledge from a technical document for {user_name}, "
+            f"a sysadmin studying for {current_cert}.\n\n"
             f"Document: \"{pdf_name}\" — Chunk {i} of {total}\n\n"
             f"Extract from this chunk:\n"
             f"- Key concepts and their definitions\n"
@@ -182,7 +193,7 @@ def chunked_call(raw_text, pdf_name):
     log(f"Synthesising {total} chunk summaries into final note...")
     combined = "\n\n---\n\n".join(summaries)
     synthesis_prompt = (
-        f"You are a second-brain assistant for Morpheus, a sysadmin studying for CySA+ and CCNA.\n"
+        f"You are a second-brain assistant for {user_name}, a sysadmin studying for {current_cert}.\n"
         f"The following are structured summaries extracted from {total} sequential chunks of:\n"
         f"\"{pdf_name}\"\n\n"
         f"Synthesise these into a single, well-structured Obsidian Markdown knowledge note.\n\n"
@@ -200,7 +211,9 @@ def chunked_call(raw_text, pdf_name):
     return api_call(synthesis_prompt, max_tokens=8192)
 
 # ── Main ──────────────────────────────────────────────────────────────────────
-pdf_name = sys.argv[1]
+pdf_name     = sys.argv[1]
+user_name    = sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] else "the user"
+current_cert = sys.argv[3] if len(sys.argv) > 3 and sys.argv[3] else "their current certification"
 raw_text = sys.stdin.read()
 
 if len(raw_text) < CHUNK_THRESHOLD:
@@ -218,7 +231,7 @@ else
     log "Standard PDF — single-call mode (${CHAR_COUNT} chars)"
 fi
 
-NOTE=$(echo "$RAW_TEXT" | python3 "$_TMPPY" "$PDF_BASENAME" 2> >(while IFS= read -r line; do log "$line"; done))
+NOTE=$(echo "$RAW_TEXT" | python3 "$_TMPPY" "$PDF_BASENAME" "$user_name" "$current_cert" 2> >(while IFS= read -r line; do log "$line"; done))
 
 [[ -n "$NOTE" ]] || die "Python helper returned empty output."
 

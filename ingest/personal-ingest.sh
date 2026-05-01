@@ -48,7 +48,8 @@ ensure_dir() {
 
 open_editor() {
     local tmpfile
-    tmpfile=$(mktemp /tmp/virgil-personal-XXXXXX.md)
+    tmpfile=$(umask 0177; mktemp /tmp/virgil-personal-XXXXXX.md)
+    chmod 600 "$tmpfile" 2>/dev/null || true
     ${EDITOR:-nano} "$tmpfile"
     cat "$tmpfile"
     rm -f "$tmpfile"

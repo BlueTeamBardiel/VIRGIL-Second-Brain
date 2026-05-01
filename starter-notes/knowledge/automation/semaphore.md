@@ -57,8 +57,8 @@ cd ~/semaphore-playbooks-clone && git pull
 **Inventory content:**
 ```ini
 [homelab]
-abaddon   ansible_host=192.168.x.x
-behemoth  ansible_host=192.168.x.x
+your-control-node   ansible_host=192.168.x.x
+your-primary-host   ansible_host=192.168.x.x
 eligor
 morax
 xaphan
@@ -128,7 +128,7 @@ GPG error: repository.spotify.com ...
 Stale Spotify repo cache. Fix:
 
 ```bash
-ssh behemoth 'sudo apt clean'
+ssh your-primary-host 'sudo apt clean'
 ```
 
 ### Host unreachable

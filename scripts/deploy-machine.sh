@@ -5,7 +5,7 @@
 #   ./scripts/deploy-machine.sh [user@]host
 #
 # Examples:
-#   ./scripts/deploy-machine.sh abaddon
+#   ./scripts/deploy-machine.sh your-hostname
 #   ./scripts/deploy-machine.sh your-username@YOUR_HOST_IP
 #
 # Prerequisites on this machine:
@@ -19,12 +19,12 @@ set -euo pipefail
 TARGET="${1:-}"
 if [[ -z "$TARGET" ]]; then
     echo "Usage: $0 [user@]host"
-    echo "Example: $0 abaddon"
+    echo "Example: $0 your-hostname"
     echo "         $0 your-username@YOUR_HOST_IP"
     exit 1
 fi
 
-VIRGIL_REPO="git@github.com:Morpheus6669/VIRGIL.git"
+VIRGIL_REPO="git@github.com:YOUR_GITHUB_USERNAME/VIRGIL.git"
 REMOTE_DIR="${REMOTE_DIR:-$HOME/VIRGIL}"
 
 # ── Collect secrets ───────────────────────────────────────────────────────────

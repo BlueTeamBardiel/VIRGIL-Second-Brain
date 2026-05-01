@@ -3,7 +3,7 @@ Deploy VIRGIL to a your-lab fleet machine.
 Target: $ARGUMENTS
 
 Steps:
-1. Resolve the target. If `$ARGUMENTS` is a short hostname (e.g. `abaddon`, `morax`), look it up in `~/.ssh/config` to confirm it's reachable. If it's a bare IP or `user@host`, use it directly.
+1. Resolve the target. If `$ARGUMENTS` is a short hostname (e.g. `your-hostname`, `morax`), look it up in `~/.ssh/config` to confirm it's reachable. If it's a bare IP or `user@host`, use it directly.
 2. Run the deploy script:
    ```
    bash ~/VIRGIL/scripts/deploy-machine.sh $ARGUMENTS

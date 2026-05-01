@@ -20,7 +20,7 @@ Each `.json` file is a structured knowledge dump that can be loaded via [[LOGOS]
 
 ## Procedure Files
 
-### abaddon_headless_vnc_procedure.json
+### headless-vnc-procedure.json
 **What it loads:** Step-by-step procedure for making [[your-control-node]] a stable headless Linux Mint jump host with SSH + persistent GUI via x11vnc. Includes networking config, successful steps, known pitfalls, and recommended next steps.
 **When to use:** Setting up VNC on your-control-node again, troubleshooting headless GUI issues, or replicating the setup on another host.
 

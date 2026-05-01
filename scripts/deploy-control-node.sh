@@ -1,9 +1,9 @@
 #!/bin/bash
-# deploy-abaddon.sh — Deploy VIRGIL second brain to YOUR-CONTROL-NODE
+# deploy-control-node.sh — Deploy VIRGIL second brain to YOUR-CONTROL-NODE
 # Run from YOUR-WORKSTATION. SSHes into YOUR-CONTROL-NODE, clones VIRGIL, sets up hooks and cron.
 #
 # Usage:
-#   ./scripts/deploy-abaddon.sh
+#   ./scripts/deploy-control-node.sh
 #
 # Prerequisites on YOUR-WORKSTATION:
 #   - SSH access to your-username@YOUR_HOST_IP (or via Tailscale: YOUR_TAILSCALE_IP)

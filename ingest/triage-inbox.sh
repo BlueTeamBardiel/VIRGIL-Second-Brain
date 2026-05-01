@@ -55,7 +55,8 @@ TITLE_LIST=$(find "$NOTES_DIR" -maxdepth 2 -name "*.md" \
     | sed 's/\.md$//' | sort)
 
 # ── Python helper: call Claude, parse JSON ───────────────────────────────────
-_TMPPY=$(mktemp /tmp/virgil-triage-XXXXXX.py)
+_TMPPY=$(umask 0177; mktemp /tmp/virgil-triage-XXXXXX.py)
+chmod 600 "$_TMPPY" 2>/dev/null || true
 trap "rm -f $_TMPPY" EXIT
 
 cat > "$_TMPPY" <<'PYEOF'

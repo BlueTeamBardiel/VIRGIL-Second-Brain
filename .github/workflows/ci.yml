@@ -40,9 +40,49 @@ jobs:
       - name: Check for private data
         run: |
           echo "Scanning git-tracked files for private data..."
-          if git grep -E "BEHEMOTH|ABADDON|TidalHealth|gpt-oss" \
-            -- 'hooks/' 'ingest/' 'scripts/' '.claude/' 2>/dev/null; then
-            echo "FAIL: Private data found in tracked source files"
+          FAILED=0
+
+          # Check for private hostnames and lab names
+          if git grep -iE "BEHEMOTH|ABADDON|TidalHealth|gpt-oss" \
+            -- '*.sh' '*.py' '*.md' '*.yml' '*.json' \
+            ':!.github/workflows/ci.yml' 2>/dev/null; then
+            echo "FAIL: Private infrastructure names found"
+            FAILED=1
+          fi
+
+          # Check for personal names (case-insensitive), with exclusions for legitimate docs
+          if git grep -iE "\bmorpheus\b" \
+            -- '*.sh' '*.py' '*.yml' \
+            ':!CHANGELOG.md' \
+            ':!ROADMAP.md' 2>/dev/null; then
+            echo "FAIL: Personal name found in source files"
+            FAILED=1
+          fi
+
+          # Check for personal GitHub handles in scripts
+          if git grep -iE "Morpheus6669" \
+            -- '*.sh' '*.py' \
+            ':!.github/workflows/ci.yml' 2>/dev/null; then
+            echo "FAIL: Personal GitHub handle in scripts"
+            FAILED=1
+          fi
+
+          # Check for private homelab IP range (192.168.88.x — not generic tutorial IPs)
+          if git grep -E "192\.168\.88\." \
+            -- '*.sh' '*.py' '*.md' 2>/dev/null; then
+            echo "FAIL: Private homelab IP addresses found"
+            FAILED=1
+          fi
+
+          # Check for Tailscale IPs (100.64.x.x – 100.127.x.x range)
+          if git grep -E "100\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\." \
+            -- '*.sh' '*.py' 2>/dev/null; then
+            echo "FAIL: Tailscale IP addresses found"
+            FAILED=1
+          fi
+
+          if [[ "$FAILED" -eq 1 ]]; then
             exit 1
           fi
-          echo "Clean"
+
+          echo "✓ Clean — no private data found"

@@ -18,7 +18,8 @@ if [[ ! -f "$SCORES_FILE" ]]; then
 fi
 
 # Write top-due topic to a tmpfile so bash can read it for the interactive prompt
-TMPFILE=$(mktemp)
+TMPFILE=$(umask 0177; mktemp)
+chmod 600 "$TMPFILE" 2>/dev/null || true
 
 SCORES_FILE="$SCORES_FILE" TODAY="$TODAY" VIRGIL_DIR="$VIRGIL_DIR" TMPFILE="$TMPFILE" \
 python3 <<'PYEOF'

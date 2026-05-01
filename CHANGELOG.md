@@ -21,7 +21,7 @@ Format: [Semantic Versioning](https://semver.org/) — `MAJOR.MINOR.PATCH`
 ## [1.9.1] — 2026-05-01
 
 - Audit remediation: version bump to v1.9.0, private data scrub, CI added
-- `hooks/llm_client.py`: BEHEMOTH/ABADDON removed; env-var-driven primary/secondary Ollama
+- `hooks/llm_client.py`: private hostnames removed; env-var-driven primary/secondary Ollama
 - `hooks/llm_client.py`: crontab API key extraction replaced with simple env lookup
 - `ingest/rss-ingest.py`: hardcoded personal name replaced with CLAUDE.md dynamic profile; 429 retry added
 - `hooks/cert-roadmap.py`: Network+ added to CERT_PATH; cert path updated
@@ -29,7 +29,7 @@ Format: [Semantic Versioning](https://semver.org/) — `MAJOR.MINOR.PATCH`
 - `hooks/session-start.sh`: first-session `/start` hint added
 - `ingest/cert-ingest.sh`: `echo` replaced with `printf` for safe temp file write
 - `scripts/install.sh`: personal vault dirs removed; note count corrected to 1,500+
-- `scripts/ad/`: BEHEMOTH/ABADDON replaced with generic hostnames in examples
+- `scripts/ad/`: private hostnames replaced with generic hostnames in examples
 - `.claude/commands/job.md`: personal employer data removed
 - `.github/workflows/ci.yml`: syntax check + private data scan CI added
 - `.github/ISSUE_TEMPLATE/content_contribution.md`: new issue template

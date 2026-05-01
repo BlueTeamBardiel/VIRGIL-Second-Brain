@@ -13,7 +13,7 @@ How VIRGIL works technically. Target audience: basic Linux knowledge, curious ab
 │  ┌──────────┐    ┌──────────┐    ┌──────────────┐   │
 │  │ Obsidian │    │  Claude  │    │    Ollama    │   │
 │  │  Vault   │◄──►│   Code   │◄──►│  (local AI)  │   │
-│  │ 5000+    │    │ (VIRGIL) │    │  gpt-oss:20b │   │
+│  │ 5000+    │    │ (VIRGIL) │    │  [your-local-model]:latest │   │
 │  │  notes   │    └────┬─────┘    └──────────────┘   │
 │  └──────────┘         │                              │
 │                        │                              │
@@ -119,7 +119,7 @@ Ollama runs models on your own hardware. No data leaves your machine. No API cos
 
 | Model | Role | VRAM |
 |-------|------|------|
-| gpt-oss:20b | Primary inference | ~12 GB |
+| [your-local-model]:latest | Primary inference | ~12 GB |
 | qwen2.5:14b | Fallback | ~9 GB |
 | nomic-embed-text | Embeddings (RAG) | ~600 MB |
 
@@ -137,7 +137,7 @@ Ollama runs models on your own hardware. No data leaves your machine. No API cos
      ┌──────────▼──────────┐
      │  Tier 1: primary    │  ← Local GPU inference. Any 8GB+ VRAM GPU.
      │  Ollama :11434       │    CPU fallback works if no GPU available.
-     │  gpt-oss:20b         │
+     │  [your-local-model]:latest         │
      └──────────┬──────────┘
                 │ FAIL / BUSY
      ┌──────────▼──────────┐
@@ -153,7 +153,7 @@ Ollama runs models on your own hardware. No data leaves your machine. No API cos
      └─────────────────────┘
 ```
 
-**Important for reasoning models** (`gpt-oss`, `deepseek-r1`, `qwen-thinking`): these models use internal thinking tokens before generating output. Set `num_predict` to at least 3000 — without this, complex questions may return empty responses because the model exhausted its token budget while thinking.
+**Important for reasoning models** (e.g. `deepseek-r1`, `qwen-thinking`, local reasoning variants): these models use internal thinking tokens before generating output. Set `num_predict` to at least 3000 — without this, complex questions may return empty responses because the model exhausted its token budget while thinking.
 
 ---
 
@@ -366,7 +366,7 @@ Key environment variables (set in `~/.env`):
 | Variable | Default | Effect |
 |----------|---------|--------|
 | `VIRGIL_BACKEND` | `anthropic` | Set `ollama` to go fully local |
-| `OLLAMA_MODEL` | `gpt-oss:20b` | Primary inference model |
+| `OLLAMA_MODEL` | `[your-local-model]:latest` | Primary inference model |
 | `OLLAMA_URL` | `http://localhost:11434` | Ollama endpoint |
 | `ANTHROPIC_API_KEY` | (unset) | Cloud fallback API key |
 | `VIRGIL_DIR` | `~/VIRGIL` | Vault root directory |
