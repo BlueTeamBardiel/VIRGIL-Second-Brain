@@ -247,7 +247,7 @@ README shows:
 ```
 VIRGIL Status — 2026-04-29 09:00
 Bridge (ChromaDB):     ✅ running — 7868 chunks
-Ollama:                ✅ running — gpt-oss:20b
+Ollama:                ✅ running — llama3.2
 ```
 
 **A `virgil-status` command should exist and be installed by default.**

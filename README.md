@@ -3,7 +3,7 @@
 > Your personal knowledge base that studies with you, not for you.
 > Local. Private. Free.
 
-![Version](https://img.shields.io/badge/version-v1.9.0-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
+![Version](https://img.shields.io/badge/version-v1.9.2-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
 
 ## What it does
 
@@ -96,7 +96,7 @@ Quiz the top overdue topic now? (y/N):
   VIRGIL Status — 2026-04-29 09:00
 ══════════════════════════════════════════
   Bridge (ChromaDB):     ✅ running — 7868 chunks
-  Ollama:                ✅ running — gpt-oss:20b
+  Ollama:                ✅ running — llama3.2
   OpenWebUI:             ✅ running (port 3000)
   Conversation ingest:   ✅ running (port 5002)
   Promote.sh:            ✅ ran today
@@ -242,9 +242,9 @@ VIRGIL does not congratulate you for showing up. The work is the work. VIRGIL is
 
 ## Security
 
-A four-source independent audit was completed April 2026 (Claude Sonnet 4.6, Gemini 1.5 Pro, Claude Haiku 4.5, Claude Opus 4.6). Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
+Community audits and contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md)
 
-Fixed in this release: sanitization leaks, Python dependency pinning, url-ingest.sh URL validation with SSRF protection, eval+crontab pattern replaced with safe secret loading.
+Known mitigations in this release: input sanitization in ingest scripts, SSRF protection on url-ingest, API keys sourced from `.env` only (never embedded in crontab or code).
 
 ---
 

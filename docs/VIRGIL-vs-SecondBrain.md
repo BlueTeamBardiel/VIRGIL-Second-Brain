@@ -21,7 +21,7 @@ If you're starting out, use Second Brain. If you eventually want the full privat
 | NIST ingestion | ✅ | ✅ | Identical |
 | Personal notes | ✅ | ✅ | Identical |
 | **LLM STACK** | | | |
-| Local inference | ✅ gpt-oss:20b (GPU) | ❌ API only | Requires Ollama + GPU |
+| Local inference | ✅ llama3.2 (GPU) | ❌ API only | Requires Ollama + GPU |
 | Three-tier fallback | ✅ Local→Backup→API | ⚠️ Single API | Private multi-node |
 | GPU acceleration | ✅ RX 9070 XT | ❌ | Hardware-specific |
 | OpenWebUI | ✅ Port 3000 | ❌ | Private only |
@@ -64,7 +64,7 @@ If you're starting out, use Second Brain. If you eventually want the full privat
 PRIVATE VIRGIL                        SECOND BRAIN (PUBLIC)
 ─────────────────────────────         ─────────────────────────────
  YOUR-GPU-HOST (primary inference host)           Your machine
-  ├── Ollama (gpt-oss:20b)              ├── Anthropic API (Claude Haiku)
+  ├── Ollama (llama3.2)              ├── Anthropic API (Claude Haiku)
   ├── OpenWebUI                         └── Obsidian vault
   └── ChromaDB RAG (:5000)
          ↕ Tailscale mesh             crontab → ingest → vault

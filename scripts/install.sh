@@ -22,7 +22,7 @@
 set -euo pipefail
 
 # ── Constants ─────────────────────────────────────────────────────────────────
-VIRGIL_VERSION="1.9.0"
+VIRGIL_VERSION="1.9.2"
 VIRGIL_REPO="https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain.git"
 VIRGIL_RAW="https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main"
 VIRGIL_RELEASES="https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain/releases"

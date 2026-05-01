@@ -4,10 +4,8 @@
 
 ---
 
-## Audit Status — April 2026
-Four-source independent audit completed 2026-04-27.
-Sources: Claude Sonnet 4.6 | Gemini 1.5 Pro | Claude Haiku 4.5 | Claude Opus 4.6
-Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
+## Audit Status — v1.9.2
+Community and self-audits ongoing. See [CONTRIBUTING.md](CONTRIBUTING.md) to report issues.
 
 **Fixed this release:**
 - Sanitization leak (private lab name in public scripts)
@@ -251,7 +249,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 Feature requests and feed suggestions welcome via GitHub Issues.
 
 ## External Audit Findings — April 2026
-See [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md) for full report.
 
 Key verdict from Claude Opus 4.6:
 "The work itself is impressive. The Bash and Python are competent,

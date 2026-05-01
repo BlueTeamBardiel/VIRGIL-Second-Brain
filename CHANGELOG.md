@@ -6,6 +6,95 @@ Format: [Semantic Versioning](https://semver.org/) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.9.2] — 2026-05-01
+
+- Security hardening: command injection prevention in ingest scripts
+- Security hardening: path traversal protection in cert-ingest.sh
+- Circuit breaker added to llm_client.py for sustained API failure
+- Docker documentation added (`docs/DOCKER.md`)
+- Dependency manifest added (`docs/DEPENDENCIES.md`, `scripts/check-deps.sh`)
+- Comprehensive CHANGELOG added with all intermediate versions
+- False independent audit reference removed from README
+
+---
+
+## [1.9.1] — 2026-05-01
+
+- Audit remediation: version bump to v1.9.0, private data scrub, CI added
+- `hooks/llm_client.py`: BEHEMOTH/ABADDON removed; env-var-driven primary/secondary Ollama
+- `hooks/llm_client.py`: crontab API key extraction replaced with simple env lookup
+- `ingest/rss-ingest.py`: hardcoded personal name replaced with CLAUDE.md dynamic profile; 429 retry added
+- `hooks/cert-roadmap.py`: Network+ added to CERT_PATH; cert path updated
+- `hooks/quiz.sh`: ChromaDB crash replaced with graceful grep fallback
+- `hooks/session-start.sh`: first-session `/start` hint added
+- `ingest/cert-ingest.sh`: `echo` replaced with `printf` for safe temp file write
+- `scripts/install.sh`: personal vault dirs removed; note count corrected to 1,500+
+- `scripts/ad/`: BEHEMOTH/ABADDON replaced with generic hostnames in examples
+- `.claude/commands/job.md`: personal employer data removed
+- `.github/workflows/ci.yml`: syntax check + private data scan CI added
+- `.github/ISSUE_TEMPLATE/content_contribution.md`: new issue template
+- `scripts/uninstall.sh`: clean uninstall script added
+- `GETTING-STARTED.md`: `virgil-review` daily habit section + first-week guide added
+
+---
+
+## [1.9.0] — 2026-05-01
+
+- Net+ N10-009 starter notes (87 Professor Messer videos ingested)
+- Security+ SY0-701 starter notes (121 Professor Messer videos ingested)
+- SDR hobbyist series starter notes (28 videos ingested)
+- Total starter notes: 236 new notes
+- Cert path updated: A+ → Network+ → Security+ → CCNA → CySA+
+- `hooks/virgil-progress.py`: `netplus` (5 domains) and `sdr` (4 domains) added to `DOMAIN_MAPS`
+- `run-netplus-sdr-ingest.sh`: overnight pipeline for all three playlists
+
+---
+
+## [1.8.1] — 2026-04-30
+
+- A+ Core 1+2 starter notes: 137 notes from Professor Messer transcripts
+- `run-aplus-ingest.sh`: overnight VTT → Obsidian pipeline for Core 1 and Core 2
+
+---
+
+## [1.8.0] — 2026-04-30
+
+- CCNA + CySA+ starter notes added to `starter-notes/knowledge/`
+- Content ingestion pipeline established for cert note generation
+- `hooks/llm_client.py`: Anthropic backend moved to first in fallback order
+
+---
+
+## [1.7.0] — 2026-04-30
+
+- Streak tracking (`hooks/streak.py`): consecutive study days, milestone messages
+- Cert roadmap generator (`hooks/cert-roadmap.py`): Obsidian note with progress bars
+- Lab status generator (`hooks/lab-generator.py`)
+- Progress checkpoint system (`hooks/virgil-progress.py`)
+- Proactive absence detection in `hooks/session-start.sh`
+- `ingest/cert-ingest.sh`: heredoc special-character corruption bug fixed
+
+---
+
+## [1.6.0] — 2026-04-29
+
+- Learning engine: `/diagnose`, `/plan`, `/teach` slash commands
+- `ingest/cert-ingest.sh`: PDF/URL/transcript → Feynman-style vault notes
+- `virgil-cert-ingest` alias installed by `scripts/install.sh`
+- Student personality profile in `CLAUDE.md`: why, background, analogies, pace, cert goals
+- `current_chapter` tracking — read by `/teach`, `/diagnose`, `/plan`, `/reflect`
+
+---
+
+## [1.5.0] — 2026-04-29
+
+- Guide experience: `/start`, `/burnout`, `/imposter`, `/absence` slash commands
+- Feynman + Bill Nye voice guidelines across all study commands
+- Emotional reflection layer in `/reflect`
+- Tiered absence response (3d / 2w / 30d / 60d) in `/absence`
+
+---
+
 ## [1.0.0] — 2026-04-10
 
 ### Initial Public Release

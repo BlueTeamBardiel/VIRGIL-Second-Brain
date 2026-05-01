@@ -42,8 +42,19 @@ if [[ -z "$MODE" || -z "$SOURCE" || -z "$CERT" ]]; then
     exit 1
 fi
 
-CERT_SLUG=$(echo "$CERT" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr '+' 'plus')
+# Sanitize cert slug: lowercase, spaces→dash, +→plus, strip anything not alphanumeric/dash/underscore
+CERT_SLUG=$(echo "$CERT" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr '+' 'plus' | tr -cd '[:alnum:]_-')
+# Reject slugs that are empty or contain path traversal sequences
+if [[ -z "$CERT_SLUG" ]] || [[ "$CERT_SLUG" == *".."* ]] || [[ "$CERT_SLUG" == -* ]]; then
+    echo "[cert-ingest] ERROR: Invalid cert name '$CERT' — must be alphanumeric (e.g. 'CCNA', 'Security+')"
+    exit 1
+fi
 CERT_DIR="$VIRGIL_DIR/notes/knowledge/$CERT_SLUG"
+# Verify the resolved path stays inside the vault
+case "$CERT_DIR" in
+    "$VIRGIL_DIR"/notes/knowledge/*) ;;
+    *) echo "[cert-ingest] ERROR: Cert path escapes vault: $CERT_DIR"; exit 1 ;;
+esac
 mkdir -p "$CERT_DIR"
 mkdir -p "$LOGS_DIR"
 

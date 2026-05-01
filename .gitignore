@@ -43,3 +43,4 @@ hooks/*.log
 *.tmp
 *~
 __pycache__/
+teamviewer_amd64.deb

@@ -355,7 +355,7 @@ Total time from your last keystroke to a fully updated vault: ~4 hours, automate
 
 **Audit trail.** Every promote, ingest, and enrichment action is logged to `hooks/` log files with timestamps.
 
-A four-source independent audit was completed April 2026. Full report: [docs/audit-2026-04-27.md](docs/audit-2026-04-27.md)
+Community audits and contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 

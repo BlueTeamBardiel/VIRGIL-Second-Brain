@@ -107,7 +107,7 @@ ollama run qwen2.5:14b "Hello"
 ```
 You should see a short response. If Ollama isn't running, see [Troubleshooting](#troubleshooting).
 
-> **Reasoning models (deepseek-r1, gpt-oss variants):** Set `num_predict` to at least 3000 — these models use internal thinking tokens and may return empty responses on complex questions if the limit is too low. Add `PARAMETER num_predict 3000` to your Modelfile or pass `--num-predict 3000` when running.
+> **Reasoning models (deepseek-r1, deepseek-r1 variants):** Set `num_predict` to at least 3000 — these models use internal thinking tokens and may return empty responses on complex questions if the limit is too low. Add `PARAMETER num_predict 3000` to your Modelfile or pass `--num-predict 3000` when running.
 
 ---
 

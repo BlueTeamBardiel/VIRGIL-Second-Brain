@@ -54,7 +54,7 @@ foreach ($Group in $Groups) {
     }
 }
 
-# Add Morpheus (assuming the domain admin account is named morpheus) to COCYTUS-Admins
+# Add your domain admin account to COCYTUS-Admins — update $AdminUser below
 $AdminUser = "your-username"
 if (Get-ADUser -Filter "SamAccountName -eq '$AdminUser'" -ErrorAction SilentlyContinue) {
     Add-ADGroupMember -Identity "COCYTUS-Admins" -Members $AdminUser -ErrorAction SilentlyContinue

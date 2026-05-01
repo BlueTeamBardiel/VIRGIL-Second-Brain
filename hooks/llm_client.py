@@ -33,8 +33,11 @@ Exit codes: 0=ok, 1=all backends failed
 import json
 import os
 import sys
+import tempfile
+import time
 import urllib.error
 import urllib.request
+from pathlib import Path
 from typing import Optional
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -47,6 +50,59 @@ MODEL_SECONDARY = os.environ.get("VIRGIL_SECONDARY_MODEL", "qwen2.5:14b")
 MODEL_ANTHROPIC = "claude-haiku-4-5-20251001"
 
 FALLBACK_ORDER  = ["primary", "secondary", "anthropic"]
+
+# ── Circuit breaker ───────────────────────────────────────────────────────────
+# After CIRCUIT_THRESHOLD consecutive failures a backend is skipped for
+# CIRCUIT_COOLDOWN seconds.  State persists in a tmp file so it survives
+# across subprocess calls within the same cron job.
+CIRCUIT_THRESHOLD = 3
+CIRCUIT_COOLDOWN  = 300  # 5 minutes
+_CB_FILE = Path(tempfile.gettempdir()) / "virgil_circuit_breaker.json"
+
+
+def _cb_load() -> dict:
+    try:
+        return json.loads(_CB_FILE.read_text())
+    except Exception:
+        return {}
+
+
+def _cb_save(state: dict) -> None:
+    try:
+        _CB_FILE.write_text(json.dumps(state))
+    except Exception:
+        pass
+
+
+def _cb_is_open(backend: str) -> bool:
+    """Return True if the circuit is open (backend should be skipped)."""
+    state = _cb_load()
+    entry = state.get(backend, {})
+    if entry.get("failures", 0) >= CIRCUIT_THRESHOLD:
+        opened_at = entry.get("opened_at", 0)
+        if time.time() - opened_at < CIRCUIT_COOLDOWN:
+            return True
+        # Cooldown expired — reset and allow retry
+        entry["failures"] = 0
+        state[backend] = entry
+        _cb_save(state)
+    return False
+
+
+def _cb_record_failure(backend: str) -> None:
+    state = _cb_load()
+    entry = state.get(backend, {"failures": 0})
+    entry["failures"] = entry.get("failures", 0) + 1
+    if entry["failures"] >= CIRCUIT_THRESHOLD:
+        entry["opened_at"] = time.time()
+    state[backend] = entry
+    _cb_save(state)
+
+
+def _cb_record_success(backend: str) -> None:
+    state = _cb_load()
+    state[backend] = {"failures": 0}
+    _cb_save(state)
 
 
 class LLMError(RuntimeError):
@@ -175,29 +231,40 @@ def ask(
     errors: list[str] = []
 
     for b in order:
+        # Circuit breaker: skip backends that have failed repeatedly
+        if _cb_is_open(b):
+            msg = f"{b}: circuit open (>{CIRCUIT_THRESHOLD} recent failures — cooldown {CIRCUIT_COOLDOWN}s)"
+            print(f"[llm_client] skipping {b} — circuit open", file=sys.stderr)
+            errors.append(msg)
+            continue
+
         try:
             if b == "primary":
                 m = model or MODEL_PRIMARY
                 print(f"[llm_client] trying primary ollama ({m})", file=sys.stderr)
-                return _ollama_call(PRIMARY_URL, m, prompt, system, max_tokens, timeout)
+                result = _ollama_call(PRIMARY_URL, m, prompt, system, max_tokens, timeout)
 
             elif b == "secondary":
                 if not SECONDARY_URL:
                     raise LLMError("VIRGIL_SECONDARY_OLLAMA_URL not set — skipping secondary")
                 m = model or MODEL_SECONDARY
                 print(f"[llm_client] trying secondary ollama ({m})", file=sys.stderr)
-                return _ollama_call(SECONDARY_URL, m, prompt, system, max_tokens, timeout)
+                result = _ollama_call(SECONDARY_URL, m, prompt, system, max_tokens, timeout)
 
             elif b == "anthropic":
                 m = model or MODEL_ANTHROPIC
                 print(f"[llm_client] trying Anthropic ({m})", file=sys.stderr)
-                return _anthropic_call(m, prompt, system, max_tokens, timeout)
+                result = _anthropic_call(m, prompt, system, max_tokens, timeout)
 
             else:
                 raise LLMError(f"Unknown backend: {b!r}")
 
+            _cb_record_success(b)
+            return result
+
         except LLMError as e:
             print(f"[llm_client] {b} failed: {e}", file=sys.stderr)
+            _cb_record_failure(b)
             errors.append(f"{b}: {e}")
 
     raise LLMError("All backends failed:\n" + "\n".join(errors))

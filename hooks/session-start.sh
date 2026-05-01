@@ -100,13 +100,19 @@ fi
 
 # ── First-session hint (no quiz history yet) ─────────────────────────────────
 SCORES_FILE_CHECK="$VIRGIL_DIR/logs/quiz-scores.json"
-if [[ ! -f "$SCORES_FILE_CHECK" ]] || [[ ! -s "$SCORES_FILE_CHECK" ]] || \
-   python3 -c "import json,sys; d=json.load(open('$SCORES_FILE_CHECK')); sys.exit(0 if d else 1)" 2>/dev/null; then
-    if [[ ! -f "$SCORES_FILE_CHECK" ]] || ! python3 -c "import json,sys; d=json.load(open('$SCORES_FILE_CHECK')); sys.exit(0 if d else 1)" 2>/dev/null; then
-        printf '\n'
-        printf '  New here? Type /start in Claude Code to begin your first session.\n'
-        printf '\n'
+_has_scores=false
+if [[ -f "$SCORES_FILE_CHECK" ]] && [[ -s "$SCORES_FILE_CHECK" ]]; then
+    # Pass path via env var — never interpolate into Python string literals
+    if VIRGIL_SCORES="$SCORES_FILE_CHECK" python3 -c \
+        "import json,os,sys; d=json.load(open(os.environ['VIRGIL_SCORES'])); sys.exit(0 if d else 1)" \
+        2>/dev/null; then
+        _has_scores=true
     fi
+fi
+if [[ "$_has_scores" == "false" ]]; then
+    printf '\n'
+    printf '  New here? Type /start in Claude Code to begin your first session.\n'
+    printf '\n'
 fi
 
 # ── Warn about unfilled summaries in today's log ──────────────────────────────

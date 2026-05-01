@@ -39,12 +39,10 @@ jobs:
 
       - name: Check for private data
         run: |
-          echo "Scanning for private data..."
-          if grep -rE "BEHEMOTH|ABADDON|TidalHealth|gpt-oss" \
-            hooks/ ingest/ scripts/ .claude/ 2>/dev/null | \
-            grep -v "^Binary" | \
-            grep -v "\.pyc"; then
-            echo "FAIL: Private data found in source files"
+          echo "Scanning git-tracked files for private data..."
+          if git grep -E "BEHEMOTH|ABADDON|TidalHealth|gpt-oss" \
+            -- 'hooks/' 'ingest/' 'scripts/' '.claude/' 2>/dev/null; then
+            echo "FAIL: Private data found in tracked source files"
             exit 1
           fi
           echo "Clean"
