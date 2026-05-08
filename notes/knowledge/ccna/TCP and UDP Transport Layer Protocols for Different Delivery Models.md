@@ -2,13 +2,13 @@
 
 ## What it is
 
-Two delivery services with very different vibes. TCP is the Amazon package with tracking, signature confirmation, and "we'll redeliver if you missed it." UDP is tossing a flyer over the fence — if it lands, great; if not, the sender already moved on.
+In *League of Legends*, TCP is your ranked match's chat with a friend coordinating a gank — every message has to arrive, in order, or the play falls apart ("wait what lane?"). UDP is the positional data streaming from your ADC's champion 30 times a second — if one packet of "Jinx is at coordinate X,Y" gets dropped, nobody wants the client to pause and replay it; you want the *next* position update, right now, so the dodge still matters.
 
 Both live at **Layer 4 (Transport)** of the OSI model, sitting on top of IP. Their job is to take application data and hand it off to the network, but they make wildly different promises about what happens next.
 
-**TCP (Transmission Control Protocol)** is connection-oriented. Before any real data flows, both sides shake hands, agree on sequence numbers, and maintain a stateful conversation. Every segment is numbered, acknowledged, and retransmitted if lost. Think of the lobby in *Among Us* — everyone has to be in the room and ready before the round starts.
+**TCP (Transmission Control Protocol)** is connection-oriented. Before any real data flows, both sides shake hands, agree on sequence numbers, and maintain a stateful conversation. Every segment is numbered, acknowledged, and retransmitted if lost. Think of the champion select lock-in phase — nothing proceeds until every player has confirmed and the server has acknowledged each one.
 
-**UDP (User Datagram Protocol)** is connectionless. No handshake, no state, no acknowledgments. You fire a datagram and hope. This is the voice chat in *Call of Duty* — if a 20ms slice of someone's mic gets dropped, you don't want the game to pause and replay it three seconds later. You want the *next* slice, now.
+**UDP (User Datagram Protocol)** is connectionless. No handshake, no state, no acknowledgments. You fire a datagram and hope. This is the real-time game state itself — skillshot trajectories, minion positions, ability cooldowns. If a packet drops, the engine just uses the next one. Stopping the match to redeliver a stale snapshot would be worse than losing it.
 
 ## Why it matters
 

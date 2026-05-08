@@ -2,11 +2,11 @@
 
 ## What it is
 
-A Wi-Fi network is the Discord voice channel of the physical world — everyone in the room can hear everyone else talking, only one person can speak cleanly at a time, and if two people start talking at once it's just garbled noise. That's the fundamental problem 802.11 has to solve.
+In Madden, the offense breaks the huddle and only one quarterback can call the audible at the line — if two players try to bark out signals at once, the whole play falls apart in confused noise. That's exactly what a Wi-Fi network deals with: every device in range hears every transmission, and only one can speak cleanly at a time.
 
-IEEE 802.11 is the standard that defines Wi-Fi. It operates at Layers 1 (the actual radio waves bouncing through the air) and 2 (the framing rules that decide who gets to talk and when). Instead of pushing electrons down a copper wire or photons down fiber, 802.11 modulates electromagnetic waves traveling through open air, which means every device in range receives every transmission whether it was meant for them or not.
+IEEE 802.11 is the standard that defines Wi-Fi. It operates at Layers 1 (the actual radio waves bouncing through the air) and 2 (the framing rules that decide who gets to talk and when). Instead of pushing electrons down a copper wire or photons down fiber, 802.11 modulates electromagnetic waves traveling through open air, which means every device in range receives every transmission whether it was meant for them or not — like every defender on the field hearing the QB's cadence, even though only the offense is supposed to act on it.
 
-Because radios can't transmit and receive on the same frequency at once without deafening themselves, Wi-Fi is **half-duplex** — like a walkie-talkie, not a phone call. To keep devices from talking over each other, 802.11 uses **CSMA/CA** (Carrier Sense Multiple Access with Collision Avoidance): listen first, wait a random backoff, then transmit. It's the proximity-chat etiquette in *Among Us* — you wait for a gap before speaking. CSMA/CA *reduces* collisions; it doesn't eliminate them. Two devices that both think the channel is clear can still key up at the same instant.
+Because radios can't transmit and receive on the same frequency at once without deafening themselves, Wi-Fi is **half-duplex** — like the play clock in Madden, where one side runs their snap count and the other side reacts, never both calling plays simultaneously. To keep devices from talking over each other, 802.11 uses **CSMA/CA** (Carrier Sense Multiple Access with Collision Avoidance): listen first, wait a random backoff, then transmit. It's the pre-snap rhythm — you wait for the noise to die down before barking the count. CSMA/CA *reduces* collisions; it doesn't eliminate them. Two receivers running crossing routes at full speed can still collide at the same spot, and two devices that both think the channel is clear can still key up at the same instant.
 
 ## Why it matters
 

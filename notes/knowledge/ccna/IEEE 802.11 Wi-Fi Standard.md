@@ -2,15 +2,15 @@
 
 ## What it is
 
-Wi-Fi is the Discord voice channel of networking — everyone in the room can technically hear everyone else, so there have to be strict rules about who talks when, who's allowed in, and how to keep eavesdroppers from understanding the conversation.
+In Bloodborne, every hunter in the Hunter's Dream shares the same dream-space — multiple players can be summoned into one host's world, and the game has to enforce strict etiquette about who can act, who can be heard, and which intruders (red phantoms, bell-ringers) are allowed to crash the session. That's exactly what IEEE 802.11 does — it's the rulebook for a shared invisible space where every device technically hears every other device, so the protocol decides who transmits, who listens, and who gets locked out.
 
-IEEE 802.11 is the family of specifications that defines exactly those rules for wireless local area networks (WLANs). It's not one document but a sprawling set of amendments (a, b, g, n, ac, ax, and more) that govern three big things:
+IEEE 802.11 is the family of specifications that defines those rules for wireless local area networks (WLANs). It's not one document but a sprawling set of amendments (a, b, g, n, ac, ax, and more) that govern three big things:
 
 - **Physical layer modulation** — how bits get encoded onto radio waves
 - **MAC-layer access control** — who gets to transmit and when, so devices don't talk over each other
 - **Security protocols** — how to authenticate clients and encrypt the air
 
-Each letter amendment is basically a generational upgrade — the same way Call of Duty drops a new title every year but the core gunplay loop stays recognizable.
+Each letter amendment is a generational upgrade in the same way each Soulsborne title refines the formula — new mechanics, sharper performance, but the core ritual of bonfires, bosses, and bloodstains remains recognizable.
 
 ## Why it matters
 

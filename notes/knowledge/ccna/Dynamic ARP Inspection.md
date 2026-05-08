@@ -2,11 +2,11 @@
 
 ## What it is
 
-ARP is the protocol equivalent of Among Us with no emergency meetings — anyone can claim to be anyone, and the crew just believes them. When your laptop asks "who has 10.0.0.1?", any device on the LAN can shout back "that's me!" and your laptop will dutifully update its ARP table. No password, no signature, no second opinion. This is how attackers achieve man-in-the-middle: they spam **gratuitous ARP replies** claiming to own the gateway's IP, every host on the segment overwrites their ARP cache, and now all upstream traffic flows through the attacker's machine first.
+In Tomb Raider, Lara navigates ruins where pressure plates and trip-wires don't ask who you are — step on one and the spikes fire, no questions asked. ARP works the same way: when your laptop asks "who has 10.0.0.1?", any device on the LAN can shout back "that's me!" and your laptop dutifully updates its ARP table. No password, no signature, no second opinion. This is how attackers achieve man-in-the-middle: they spam **gratuitous ARP replies** claiming to own the gateway's IP, every host on the segment overwrites their ARP cache, and now all upstream traffic flows through the attacker's machine first.
 
-Dynamic ARP Inspection (DAI) is the bouncer at the door checking IDs. Before a switch forwards an ARP message arriving on an untrusted port, DAI cross-references the sender's IP-MAC pair against a known-good list. If the pairing isn't on the list, the frame gets dropped and never reaches its victims.
+Dynamic ARP Inspection (DAI) is the puzzle mechanism that checks the artifact's weight before retracting the spikes — wrong artifact, the trap stays armed. Before a switch forwards an ARP message arriving on an untrusted port, DAI cross-references the sender's IP-MAC pair against a known-good list. If the pairing isn't on the list, the frame gets dropped and never reaches its victims.
 
-That known-good list isn't something you maintain by hand — DAI piggybacks on the **DHCP Snooping binding table**. When DHCP Snooping watches legitimate DHCP exchanges happen, it records "MAC X got IP Y on port Z." DAI then uses that ledger to judge ARP traffic. No DHCP Snooping, no ledger, no DAI.
+That known-good list isn't something you maintain by hand — DAI piggybacks on the [[DHCP Snooping]] binding table. When DHCP Snooping watches legitimate DHCP exchanges happen, it records "MAC X got IP Y on port Z." DAI then uses that ledger to judge ARP traffic. No DHCP Snooping, no ledger, no DAI.
 
 ## Why it matters
 

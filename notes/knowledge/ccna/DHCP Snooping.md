@@ -2,11 +2,11 @@
 
 ## What it is
 
-In Among Us, the imposter wins by pretending to be crew. A rogue DHCP server is the imposter — it sits on the LAN, waits for someone to yell "I need an IP!", and races to answer first with malicious settings (usually pointing the default gateway at itself). Now every packet the victim sends to the internet flows through the attacker's box. Classic man-in-the-middle.
+In Final Fantasy, a Mimic disguises itself as a treasure chest, waits for a greedy adventurer to walk up, and ambushes them the moment they reach for the loot. A rogue DHCP server is the Mimic — it sits on the LAN, waits for a client to shout "I need an IP!", and races to answer first with poisoned settings (usually pointing the default gateway at itself). Every packet the victim sends to the internet now flows through the attacker's box. Classic man-in-the-middle.
 
-DHCP Snooping is the emergency meeting. It's a switch feature that splits every port into two camps — **trusted** and **untrusted** — and enforces a simple rule: only trusted ports are allowed to speak as a DHCP server. If an untrusted port tries to send an OFFER, ACK, or NAK, the switch drops it on the floor before it ever reaches a victim.
+DHCP Snooping is the Sense ability — the switch inspects every chest before you open it. It's a feature that splits every port into two camps, **trusted** and **untrusted**, and enforces one rule: only trusted ports are allowed to speak as a DHCP server. If an untrusted port tries to send an OFFER, ACK, or NAK, the switch drops the packet before it ever reaches a victim.
 
-The switch becomes a bouncer at UDP ports 67/68, inspecting every DHCP message and asking: "Did this come from a port I trust to be a server?" If no, and it's a server-type message, it dies at the switch.
+The switch becomes a gatekeeper at UDP ports 67/68, inspecting every DHCP message and asking: "Did this come from a port I trust to be a server?" If no, and it's a server-type message, it dies at the switch.
 
 ## Why it matters
 

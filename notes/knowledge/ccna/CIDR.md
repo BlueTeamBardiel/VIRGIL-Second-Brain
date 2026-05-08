@@ -2,11 +2,11 @@
 
 ## What it is
 
-Loadout slots in Call of Duty: you get a fixed budget of "points" to spend, and how you spend them determines what your loadout actually looks like. CIDR (Classless Inter-Domain Routing) works the same way — you have 32 bits to spend on an IPv4 address, and the suffix tells you how many of those bits are locked in as the "network" portion versus left free for individual hosts.
+In Metroid, Samus's energy tanks and missile capacity aren't a fixed character build — every region of Zebes carves up her total upgrade budget differently depending on what you've collected. CIDR (Classless Inter-Domain Routing) works the same way — you have 32 bits to spend on an IPv4 address, and the suffix tells you how many of those bits are locked in as the "network" portion versus left free for individual hosts.
 
 Written as `192.168.1.0/24`, the `/24` means the first 24 bits identify the network, and the remaining 8 bits identify hosts inside it. That `/24` is just shorthand for the subnet mask `255.255.255.0` — same thing, fewer keystrokes.
 
-Before 1993, IP allocation used rigid "classes" (A, B, C) with fixed boundaries at /8, /16, and /24. That's like a character creator that only lets you pick "Warrior, Mage, or Rogue" with no customization — wasteful and inflexible. If you needed 500 hosts, a Class C (254 hosts) was too small and a Class B (65,534 hosts) was absurd overkill. CIDR threw the classes out and let networks be sized at any bit boundary.
+Before 1993, IP allocation used rigid "classes" (A, B, C) with fixed boundaries at /8, /16, and /24. That's like the original Metroid forcing you to pick from three preset suits with hardcoded ability counts — no morph ball here, no varia there, take it or leave it. If you needed 500 hosts, a Class C (254 hosts) was too small and a Class B (65,534 hosts) was absurd overkill. CIDR threw the classes out and let networks be sized at any bit boundary.
 
 ## Why it matters
 

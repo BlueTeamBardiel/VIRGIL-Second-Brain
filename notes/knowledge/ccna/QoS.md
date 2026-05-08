@@ -2,11 +2,11 @@
 
 ## What it is
 
-Helldivers 2 has a stratagem priority system — when you call in a 500kg bomb during a bug breach, that request cuts the line ahead of your buddy's resupply pod. Same concept here: QoS (Quality of Service) is the network's stratagem priority system, deciding which packets get the express lane and which ones wait their turn during congestion.
+In Tetris, when the board is filling up and a vertical I-piece — the long blue one — is finally about to drop, that piece doesn't politely wait behind the S-blocks and Z-blocks queued up. The game's "next piece" preview and hold mechanic let you reserve and prioritize the piece you actually need to clear four lines and survive. That's exactly what QoS (Quality of Service) does — it decides which packets get the I-piece treatment and which ones get shoved to the back of the queue when the network is about to top out.
 
-Technically, QoS is a collection of technologies and policies that manage network traffic so that critical applications — voice calls, video conferencing, real-time control traffic — get guaranteed bandwidth, low latency, and reduced jitter. It works in three steps: **classify** the traffic (what is this packet?), **mark** it with a priority value (stamp it), and **queue** it according to predefined rules (which line do you stand in?).
+Technically, QoS is a collection of technologies and policies that manage network traffic so that critical applications — voice calls, video conferencing, real-time control traffic — get guaranteed bandwidth, low latency, and reduced jitter. It works in three steps: **classify** the traffic (what shape is this piece?), **mark** it with a priority value (stamp it), and **queue** it according to predefined rules (which slot does it drop into?).
 
-The marking happens inside the IP header itself. The modern standard, **DSCP (Differentiated Services Code Point)**, uses a 6-bit field inside the old ToS (Type of Service) byte of the IPv4 header. Those 6 bits give 64 possible markings, replacing the older, clunkier IP Precedence model that only had 8 levels. A common DSCP value you'll see is **Expedited Forwarding (EF)** — the marking reserved for stuff like VoIP that absolutely cannot tolerate delay.
+The marking happens inside the IP header itself. The modern standard, **DSCP (Differentiated Services Code Point)**, uses a 6-bit field inside the old ToS (Type of Service) byte of the IPv4 header. Those 6 bits give 64 possible markings, replacing the older, clunkier IP Precedence model that only had 8 levels. A common DSCP value you'll see is **Expedited Forwarding (EF)** — the marking reserved for stuff like VoIP that absolutely cannot tolerate delay. It's the I-piece of the network: when it shows up, everything else moves out of the way.
 
 ## Why it matters
 

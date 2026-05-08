@@ -2,11 +2,11 @@
 
 ## What it is
 
-Dropping a care package in Helldivers 2 vs. running a full Tarkov raid with extraction — that's the gap between TFTP and FTP.
+In Metal Gear Solid, dropping a supply box from Snake's parachute drop versus infiltrating Shadow Moses with full CODEC support, item management, and save points — that's the gap between TFTP and FTP.
 
-TFTP (Trivial File Transfer Protocol) is the care package: you call it in, it lands, you grab it, done. No login, no inventory check, no questions about what else is on the map. It's a barebones file transfer service running over UDP that exists for one job — moving a known file between two machines on a trusted network.
+TFTP (Trivial File Transfer Protocol) is the supply drop: you call it in over the radio, it falls where you asked, you pick it up. No guards challenging your ID, no inventory menu to browse, no acknowledgment that anything else exists on the map. It's a barebones file transfer service running over UDP that exists for one job — moving a known file between two machines on a trusted network.
 
-FTP (File Transfer Protocol) is the full raid: you authenticate at the entry, navigate the map, list what's in the stash, decide what to extract, and the whole thing runs over reliable TCP connections so nothing gets lost in transit.
+FTP (File Transfer Protocol) is the full infiltration: Otacon authenticates you on the CODEC, you navigate the facility, you browse what's in each room, you decide what to extract, and the whole operation runs over reliable TCP connections so nothing drops out mid-mission.
 
 Both protocols solve the same surface problem ("get this file from there to here"), but they're built for completely different threat models and use cases. Network engineers reach for them constantly when shoving IOS images onto switches or yanking config backups off routers.
 

@@ -2,14 +2,14 @@
 
 ## What it is
 
-Setting up a fresh Minecraft server by hand — installing Java, editing `server.properties`, port forwarding, adding plugins one by one — works fine for one server. Now do it for 200 servers, and make sure they all stay identical six months later when someone "just tweaks one thing real quick." That's the nightmare Infrastructure as Code (IaC) solves.
+In Assassin's Creed, every mission you replay through the Animus is reconstructed from genetic memory — the same rooftops, the same guard patrols, the same haystack in the same alley, every single time. Desmond doesn't rebuild Masyaf by hand; the Animus reads the data and renders the world identically on demand. That's exactly what Infrastructure as Code (IaC) does — your network lives as a file, and the live infrastructure is just what gets rendered when you run it.
 
 **Infrastructure as Code** is the practice of describing your infrastructure — switches, routers, firewalls, cloud VMs, VLANs — in machine-readable files instead of clicking through GUIs or typing commands into a terminal at 2 AM. The file is the source of truth. The infrastructure is just an output of running that file.
 
 Two of the heaviest hitters here are **Ansible** and **Terraform**, and they solve overlapping but distinct problems.
 
-- **Ansible** is the procedural one. It's a recipe: "do step 1, then step 2, then step 3." Like writing out a Helldivers 2 stratagem input — a specific sequence to get a specific outcome.
-- **Terraform** is the declarative one. You describe the *end state* you want, and Terraform figures out how to get there. Like setting a build target in a base-builder game: "I want 4 turrets and 2 generators here," and the game computes what to construct, demolish, or leave alone.
+- **Ansible** is the procedural one. It's a recipe: "do step 1, then step 2, then step 3." Like an Assassin's Creed mission script with forced objectives in order — tail the target, eavesdrop, then assassinate. A specific sequence to get a specific outcome.
+- **Terraform** is the declarative one. You describe the *end state* you want, and Terraform figures out how to get there. Like upgrading the Villa in AC2 or your Homestead in AC3: you mark what you want built, and the game works out which structures to add, which to leave alone, and what it costs.
 
 ## Why it matters
 

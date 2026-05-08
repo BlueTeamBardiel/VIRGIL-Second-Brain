@@ -2,9 +2,9 @@
 
 ## What it is
 
-Helldivers 2 squad voice chat cutting out because someone in the lobby is downloading a 90GB game update — that's what happens when every packet on a link is treated as equal. QoS is the traffic cop that says "voice goes first, the download waits its turn." It doesn't make your pipe bigger; it just decides who gets to speak when the pipe is full.
+In Valorant, your callout of "two on A site" needs to land in your teammate's ear *now*, not after Riot's voice server finishes shipping someone else's match replay. That's exactly what QoS does — it tells the network "voice and game packets go first, everything else waits." It doesn't make your connection faster; it just decides whose packet gets to cross the wire when the wire is full.
 
-More precisely: QoS is a set of mechanisms on switches and routers that **classify** traffic, **mark** it with a priority tag, and then **queue, drop, or smooth** it during congestion. The whole point is that real-time traffic (voice, video, game packets) cannot tolerate delay or jitter, while bulk traffic (Steam downloads, backups, email) can wait 200ms and nobody dies.
+More precisely: QoS is a set of mechanisms on switches and routers that **classify** traffic, **mark** it with a priority tag, and then **queue, drop, or smooth** it during congestion. The whole point is that real-time traffic (voice, video, game packets) cannot tolerate delay or jitter, while bulk traffic (Steam downloads, backups, email) can wait 200ms and nobody dies — or, in Valorant terms, nobody eats a Jett dash to the face because their "he's behind you" callout arrived a second late.
 
 A common deployment scenario: a VoIP phone sits on a desk, and a PC plugs into the back of that phone. Both share one cable run to the switch, but the phone's voice packets need VIP treatment while the PC's Spotify stream can ride coach. QoS plus VLAN tagging is what makes that coexistence work.
 

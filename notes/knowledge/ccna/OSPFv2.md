@@ -2,11 +2,11 @@
 
 ## What it is
 
-A guild in an MMO where every member constantly shouts their current location, gear, and status into guild chat — so every other member can draw the entire guild map in their head and calculate the fastest route to any dungeon. That's OSPFv2. Every router knows the full topology, not just "go ask the next guy."
+In Mass Effect, every Spectre and Council species shares full intel through the galactic comm buoy network — the Citadel knows what's happening on Tuchanka, Palaven knows what's burning on Earth, and every relay node has the same star map. No one whispers "ask the krogan, they might know." Everyone has the whole picture. That's OSPFv2. Every router knows the full topology, not just "go ask the next hop."
 
-OSPFv2 (Open Shortest Path First version 2) is a **link-state interior gateway protocol (IGP)**. "Interior" means it runs inside a single autonomous system — one organization's network, like Styx Networking's internal backbone. Routers flood each other with Link-State Advertisements (LSAs) describing their directly connected links, every router assembles an identical map of the AS, and then each one independently runs **Dijkstra's shortest path first algorithm** to compute the best route to every destination.
+OSPFv2 (Open Shortest Path First version 2) is a **link-state interior gateway protocol (IGP)**. "Interior" means it runs inside a single autonomous system — one organization's network, the way Alliance comms run inside Alliance space. Routers flood each other with Link-State Advertisements (LSAs) describing their directly connected links, every router assembles an identical map of the AS, and then each one independently runs **Dijkstra's shortest path first algorithm** to compute the best route to every destination.
 
-It runs **directly on top of IP as protocol number 89** — no TCP, no UDP, no middleman. Think of it like a raw netcode packet in Counter-Strike 2 instead of a wrapped HTTP request: less overhead, but OSPF has to handle its own reliability.
+It runs **directly on top of IP as protocol number 89** — no TCP, no UDP, no middleman. Think of it like a direct mass relay jump instead of routing through three star systems and a customs checkpoint: less overhead, but OSPF has to handle its own reliability — acknowledgments, retransmissions, sequencing, all in-house.
 
 ## Why it matters
 

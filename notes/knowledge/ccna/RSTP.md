@@ -2,7 +2,7 @@
 
 ## What it is
 
-Respawn timers in Call of Duty used to be brutal — 30-50 seconds of staring at the killcam. RSTP is the patch that cut that down to about 1 second. Same game, same purpose (keep the network loop-free), just way faster recovery.
+In Half-Life, when you quickload after dying to a headcrab, the original game made you wait through a long disk grind before you were back in the action. The Source engine rebuild made quickloads near-instant — same save, same level, same enemies, just fast enough that dying didn't break your flow. RSTP is that same upgrade applied to spanning tree.
 
 **Rapid Spanning Tree Protocol (IEEE 802.1w)** is the evolution of legacy STP. Switches in a redundant Layer 2 topology need a way to agree on which links to use and which to block, otherwise broadcast frames loop forever and melt the network. RSTP keeps that loop-prevention logic but rebuilds the convergence engine to react in roughly **1 second** instead of the painful **30-50 seconds** legacy STP took to recover from a topology change.
 

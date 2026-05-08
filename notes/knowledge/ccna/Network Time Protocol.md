@@ -2,7 +2,7 @@
 
 ## What it is
 
-Among Us only works because everyone's emergency meeting timer counts down at the same rate. If Beatrice's client thinks the meeting started 8 seconds ago and Dante's thinks it started 3 seconds ago, the votes get counted wrong and the whole round desyncs. NTP is the protocol that keeps every device's clock voting on the same second.
+In Sonic the Hedgehog 2's competitive multiplayer, the split-screen race only works because both Sonic and Tails are running on the same frame counter. If Player 1's clock thinks the race has been going for 47 seconds and Player 2's thinks 51, the goal-tape triggers at different moments and someone wins a race they actually lost. NTP is the protocol that keeps every device's clock running on the same tick.
 
 Network Time Protocol synchronizes the clocks of network devices — routers, switches, servers, your laptop — against an upstream authoritative time source, then accounts for the network delay so the answer is actually accurate instead of "correct as of when the packet left, lol."
 

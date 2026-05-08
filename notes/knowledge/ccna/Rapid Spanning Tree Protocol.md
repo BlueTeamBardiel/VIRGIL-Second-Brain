@@ -2,7 +2,7 @@
 
 ## What it is
 
-When a Counter-Strike 2 player gets killed mid-round, the team doesn't wait 50 seconds before reacting — someone immediately rotates to cover the gap. Classic STP is the opposite: when a link dies, switches sit in silence counting down timers like they're waiting for a respawn wave. RSTP (802.1w) is the version where teammates actively call out the rotation in voice chat and move *now*.
+In Gran Turismo, when you spin out at the apex of Spoon Curve, the AI opponents don't politely wait 30 seconds for you to recover — they immediately recalculate their racing line and blow past you. Classic STP is the opposite: when a link dies, switches sit at the start line counting down timers like they're waiting for the formation lap to end. RSTP (802.1w) is the version where the cars actually react to the yellow flag in real time.
 
 Both protocols solve the same fundamental problem: Ethernet frames have no TTL field (unlike IP packets), so a Layer 2 loop will replicate frames forever, melting CPUs and saturating links with broadcast storms while MAC tables flap between ports. STP and RSTP build a loop-free logical tree by blocking redundant paths, but RSTP does it dramatically faster by replacing passive timers with an active proposal/agreement handshake between neighbors.
 

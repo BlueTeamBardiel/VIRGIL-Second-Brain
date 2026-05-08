@@ -2,9 +2,9 @@
 
 ## What it is
 
-Configuring 200 switches by hand is the networking equivalent of crafting every single arrow one-by-one in Tears of the Kingdom when you could just fuse a bundle and be done. Network automation is software doing the repetitive clicking for you — pushing configs, provisioning new devices, enforcing policies, watching for problems, and fixing them — without a human SSHing into each box at 2 AM.
+In Persona 5, fusing every Persona one-by-one in the Velvet Room when you're trying to build a maxed-out compendium is suffering — but the Itemize and mass-fusion shortcuts let Igor do the grunt work while you focus on heists. Network automation is the same idea: software doing the repetitive clicking for you — pushing configs, provisioning new devices, enforcing policies, watching for problems, and fixing them — without a human SSHing into each box at 2 AM.
 
-The bigger shift behind automation is **Software-Defined Networking (SDN)**. Traditional switches and routers are like every squad member in Helldivers 2 making their own independent decisions about where to shoot — each device runs its own brain. SDN rips the brain out of every device and puts it in a central commander (the controller). The devices become dumb muscle that just forwards packets based on what the controller tells them.
+The bigger shift behind automation is **Software-Defined Networking (SDN)**. Traditional switches and routers are like every Phantom Thief in a Persona 5 fight picking their own targets independently — each device runs its own brain, each turn its own decision. SDN is Baton Pass run from the top: a central controller calls every shot, and the devices become dumb muscle that forwards packets based on what the controller dictates.
 
 To pull this apart cleanly, networking is split into three planes:
 

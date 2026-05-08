@@ -2,7 +2,7 @@
 
 ## What it is
 
-In Apex Legends, when your squad's jumpmaster gets knocked, someone else instantly takes over — the squad keeps moving, the role just transfers. FHRP does the same thing for your default gateway. Your laptop knows about exactly one gateway IP (say, 10.0.0.1), but behind that single IP is a tag-team of physical routers ready to swap in the moment one drops.
+In StarCraft, you queue commands to a Command Center — but if it gets sieged by tanks, you'd want production to seamlessly continue from a backup CC across the map without re-clicking anything. FHRP does that for your default gateway. Your laptop knows about exactly one gateway IP (say, 10.0.0.1), but behind that single IP is a tag-team of physical routers ready to swap in the moment one drops.
 
 The trick: FHRP fabricates a **virtual IP address** and a **virtual MAC address** that float between routers. Hosts ARP for the gateway, get the virtual MAC, and have no idea which physical box is actually answering. One router is "active" (or "master") and forwards the traffic. The others are watching, listening for hello messages, and waiting to take over if the heartbeat stops.
 

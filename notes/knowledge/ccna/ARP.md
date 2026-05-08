@@ -2,11 +2,11 @@
 
 ## What it is
 
-A Discord server where someone shouts "yo, who has the IP 10.0.0.5?" into the general channel, and only the one person with that IP DMs back their MAC address. That's ARP — the Address Resolution Protocol — in one sentence.
+In Red Dead Redemption 2, Arthur rides into Valentine and shouts "I'm looking for a man named Tommy!" — and only the actual Tommy turns around to answer. That's exactly what ARP — the Address Resolution Protocol — does. You know the name. You need to know which face in the saloon belongs to it.
 
 More technically: ARP is the glue between Layer 3 and Layer 2. Your computer knows the destination IP address (32 bits, IPv4), but the network card can only actually deliver frames to a MAC address (48 bits, burned into the NIC). ARP is how the box figures out "what hardware address do I slap on this Ethernet frame so it reaches 10.0.0.5?"
 
-ARP rides directly on Ethernet frames. No TCP, no UDP, no IP header — it's a link-layer protocol that skips the transport stack entirely. It's also stateless: each request and reply stands alone, with no session, no handshake, no memory of who asked what. This statelessness is the design flaw that every attacker in Watch Dogs would salivate over.
+ARP rides directly on Ethernet frames. No TCP, no UDP, no IP header — it's a link-layer protocol that skips the transport stack entirely. It's also stateless: each request and reply stands alone, with no session, no handshake, no memory of who asked what. It's the same reason any drifter in Saint Denis can claim to be Tommy and walk off with your money — nobody checks ID, and that's the design flaw every attacker salivates over.
 
 ## Why it matters
 

@@ -2,14 +2,14 @@
 
 ## What it is
 
-Routing is Google Maps for packets — except every intersection (router) has its own opinion about the best route, and some of them are lying.
+In Bioshock, you wander Rapture following a glowing arrow that bends around corners, through vents, and across collapsed corridors to wherever your next objective lives. That's exactly what routing does — every packet has a destination, and each router along the way figures out which door to shove it through next.
 
 When your laptop sends a packet to a server across the internet, that packet hops through a chain of routers. Each router consults its **routing table** — a lookup sheet of "if the destination looks like X, send it out interface Y toward next-hop Z" — and forwards the packet one step closer. The routing table is the router's strategy guide; without it, the router is just an expensive paperweight.
 
 How those tables get filled is the whole game:
 
-- **Static routes** are hand-written rules. Like manually placing waypoints in Elden Ring — they don't move when the world changes. If a link dies, the route still points at the dead link until you fix it yourself.
-- **Dynamic routes** are filled in by protocols (OSPF, RIP, BGP) that gossip with neighboring routers and rebuild the map automatically when the topology shifts. Think of the live minimap in Apex Legends updating as squads move — routers exchange updates so everyone's view stays current.
+- **Static routes** are hand-written rules. Like the fixed pneumo tubes in Rapture — Andrew Ryan laid them down once, and they go where they go. If the tube is severed, mail piles up until someone physically rebuilds it.
+- **Dynamic routes** are filled in by protocols (OSPF, RIP, BGP) that gossip with neighboring routers and rebuild the map automatically when the topology shifts. Think of the quest arrow in Bioshock recalculating the moment a bulkhead seals — routers exchange updates so every node's view of the city stays current.
 
 ## Why it matters
 

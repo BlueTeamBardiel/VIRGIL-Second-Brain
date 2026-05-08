@@ -2,15 +2,15 @@
 
 ## What it is
 
-A LAN architecture is the blueprint — the same way a raid composition in *Helldivers 2* dictates whether you bring an anti-tank loadout, a crowd-clear loadout, or both, your network's physical and logical design dictates how traffic flows, how it scales, and where it breaks. You don't just throw switches at a wall and hope packets find each other.
+In Bloodborne, you don't just charge into Yharnam swinging — you plan the route. Hunter's Dream is your hub, lamps are your waypoints, and every chalice dungeon has a deliberate layout because random corridors get you killed by a Winter Lantern. That's exactly what a LAN architecture does — it's the deliberate blueprint of how devices connect, how traffic moves, and where the chokepoints are. You don't throw switches at a wall and pray packets find each other any more than you'd run blindfolded through Mergo's Loft.
 
 At the smallest scale, you have **topologies** — the raw shape of how devices connect:
 
-- **Star**: every device plugs into a central switch. Like a Discord server where every member talks through the same server, not directly to each other.
-- **Full mesh**: everybody has a direct link to everybody else. Requires `N(N-1)/2` connections — 10 sites = 45 cables. Expensive and ugly fast.
-- **Partial mesh**: a sensible compromise — important nodes get direct links, others go through a hop.
+- **Star**: every device plugs into a central switch. Like Hunter's Dream — every location warps you back through the same lamp hub, never directly between graveyards.
+- **Full mesh**: everybody has a direct link to everybody else. Requires `N(N-1)/2` connections — 10 sites = 45 cables. Expensive and ugly fast, like trying to parry every enemy in the Nightmare simultaneously.
+- **Partial mesh**: a sensible compromise — important nodes get direct links, the rest hop through a neighbor.
 
-Stack those topologies into tiers and you get the **hierarchical campus LAN**, the Cisco-style three-layer cake (access → distribution → core), or its smaller sibling the two-tier "collapsed core." Data centers flip the script entirely with **spine-leaf**, designed for the way modern apps actually talk. And once you leave the building, you're in **WAN** territory — leased lines, MPLS, or VPN tunnels riding the public internet.
+Stack those topologies into tiers and you get the **hierarchical campus LAN**, the Cisco-style three-layer cake (access → distribution → core), or its smaller sibling the two-tier "collapsed core." Data centers flip the script entirely with **spine-leaf**, built for how modern apps actually talk to each other. And once you leave the building, you're in **WAN** territory — leased lines, MPLS, or VPN tunnels riding the public internet. Different nightmare, different rules.
 
 ## Why it matters
 

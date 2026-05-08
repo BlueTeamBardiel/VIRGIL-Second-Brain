@@ -2,11 +2,11 @@
 
 ## What it is
 
-A Discord server with separate channels for separate friend groups — everyone's connected to the same server (the switch), but the people in #raid-team can't see what's happening in #book-club. That's a VLAN.
+In NBA 2K MyCareer, you walk into The City and everyone's on the same servers, but the Pro-Am court, the Rec, and the Park are completely separate experiences — your squad in the Rec can't trash-talk the players running Pro-Am, even though you're all in the same digital neighborhood. That's a VLAN.
 
 A **Virtual LAN** logically slices one physical switch into multiple isolated broadcast domains. Plug eight devices into the same 24-port switch, assign ports 1–4 to VLAN 10 and ports 5–8 to VLAN 20, and the two groups behave as if they were on entirely separate switches. Broadcasts stay in their lane. ARP requests don't cross over. They share copper but not conversations.
 
-If a device on VLAN 10 wants to talk to a device on VLAN 20, the traffic has to leave the Layer 2 world entirely and go through a router or Layer 3 switch — like how players in two separate Among Us lobbies can't chat unless someone bridges them through an external Discord call.
+If a device on VLAN 10 wants to talk to a device on VLAN 20, the traffic has to leave the Layer 2 world entirely and go through a router or Layer 3 switch — like how a player grinding the Rec can't matchmake into a Pro-Am game without backing out and joining through a different lobby system entirely.
 
 ## Why it matters
 

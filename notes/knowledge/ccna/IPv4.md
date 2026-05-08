@@ -2,9 +2,9 @@
 
 ## What it is
 
-Every device on the internet needs a callsign, the same way every player in a Call of Duty lobby needs a gamertag — without one, nobody knows where to send the bullets, the voice chat, or the loot. IPv4 (Internet Protocol version 4) is that callsign system for the internet, and it's been the default since the 80s.
+In Sonic, every Chaos Emerald, every gold ring, every Badnik has a fixed location on the Zone map — without coordinates, Sonic can't dash to them and the level engine can't render them. That's exactly what IPv4 does — it gives every device on the internet a unique numeric coordinate so traffic knows where to go. IPv4 (Internet Protocol version 4) has been the default addressing system since the 80s, back when "the internet" was a few thousand academics, not eight billion phones.
 
-Technically, IPv4 is a Layer 3 protocol that defines three things: how packets are **addressed** (who's sending, who's receiving), how they're **routed** (which path they take across networks), and how they're **delivered** (best-effort, no guarantees — like sending a Snapchat into the void and hoping it lands).
+Technically, IPv4 is a Layer 3 protocol that defines three things: how packets are **addressed** (who's sending, who's receiving), how they're **routed** (which path they take across networks), and how they're **delivered** (best-effort, no guarantees — like Sonic launching off a spring with no promise he'll land on the platform).
 
 An IPv4 address is a **32-bit number**, usually written as four decimal octets separated by dots: `192.168.1.10`. Each octet is 8 bits, ranging 0–255. That 32-bit space gives roughly **4.3 billion** (2³²) possible addresses — which sounded infinite in 1981 and sounds laughable now.
 

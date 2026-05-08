@@ -2,9 +2,9 @@
 
 ## What it is
 
-The Cisco IOS CLI is the command console you drop into when you SSH into a router — closer to the developer console in Cyberpunk 2077 than to a polished menu. No mouse, no icons, just a blinking prompt waiting for typed instructions. The shell sitting behind that prompt acts as a translator: you type human-readable words like `show ip route`, and it converts them into actions the device hardware actually performs.
+In Halo, when you boot the Forge mode in *Halo 5* and start sculpting a map, you stop being a player and become an operator — every object, spawn point, and physics tweak is set through a precise menu of typed parameters and exact coordinates, not by waving a Spartan around hoping things click into place. That's exactly what the Cisco IOS CLI does — it's the operator's console you drop into when you SSH into a router. No mouse, no icons, just a blinking prompt waiting for typed instructions. The shell behind that prompt is a translator: you type human-readable commands like `show ip route`, and it converts them into actions the device hardware actually performs.
 
-A GUI would be the equivalent of navigating Netflix with a remote — pretty pictures, intuitive, slow. The CLI is the keyboard shortcut power-user mode: ugly, fast, and precise. For a beginner the GUI wins. For anyone who has typed `conf t` ten thousand times, the CLI wins by an enormous margin, which is why CCNA candidates are tested on actual hands-on configuration rather than multiple choice trivia about where a checkbox lives.
+A GUI is the campaign on Easy with waypoint markers — pretty, guided, slow. The CLI is Legendary with skull modifiers stacked on: ugly, fast, unforgiving, and precise. For a beginner the GUI wins. For anyone who has typed `conf t` ten thousand times, the CLI wins by an enormous margin, which is why CCNA candidates are tested on hands-on configuration rather than multiple choice trivia about where a checkbox lives.
 
 ## Why it matters
 

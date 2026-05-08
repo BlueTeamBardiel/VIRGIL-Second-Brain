@@ -2,11 +2,11 @@
 
 ## What it is
 
-DTP and VTP are two Cisco-proprietary protocols that automate the boring parts of switch configuration — and in doing so, create some of the most infamous footguns in network security.
+In FIFA, when you start a match, the game auto-negotiates your formation, your captain, your kit, even who takes the penalties — based on what you and your opponent set as preferences in the menu. You don't manually agree on any of it. The system just picks based on both sides' configured options. That's exactly what DTP and VTP do — they're two Cisco-proprietary protocols that auto-negotiate switch settings so you don't have to configure every link and every VLAN by hand. And like FIFA's auto-settings, they're convenient until they bite you.
 
-**DTP (Dynamic Trunking Protocol)** is the matchmaking service between two switch ports. When you plug a cable between two switches, DTP handles the awkward "so… are we a trunk or just a regular access link?" conversation automatically. Think of it like the auto-party-invite system in Helldivers 2 — two players show up on the same planet, and the game tries to figure out if they should team up. Each port has a "preference" (dynamic desirable, dynamic auto, trunk, access, nonegotiate), and the result depends on both sides.
+**DTP (Dynamic Trunking Protocol)** is the pre-match formation handshake between two switch ports. When you plug a cable between two switches, DTP handles the "are we a trunk or an access link?" negotiation automatically. Each port has a posture — *dynamic desirable*, *dynamic auto*, *trunk*, *access*, or *nonegotiate* — and the resulting link depends on what both sides bring to the kickoff. Two *desirable* ports become a trunk. Two *auto* ports stay access. Mismatched aggression, mismatched outcome.
 
-**VTP (VLAN Trunking Protocol)** is shared cloud saves for your VLAN database. Instead of manually creating VLAN 50 on every single switch in your network, you make it once on a VTP Server and the change syncs across the whole domain — like editing a shared Google Doc, where every switch in the domain pulls the latest version. The version number is what decides whose copy is "newest."
+**VTP (VLAN Trunking Protocol)** is FIFA Ultimate Team's squad sync across devices. Instead of rebuilding your VLAN database on every switch, you edit it once on a VTP Server and the change propagates to every switch in the domain — like updating your squad on console and seeing it appear on the companion app. The revision number decides whose database is "newest," and the highest number wins. This is fine until a stray switch with a higher revision number joins your domain and overwrites everyone's VLANs with its own. The cloud save, but evil.
 
 ## Why it matters
 

@@ -2,15 +2,15 @@
 
 ## What it is
 
-Joining a new Discord server and instantly getting a role, a nickname color, and access to the right channels — that's DHCP for your network. You plug in a laptop or connect to Wi-Fi, and within seconds it has an IP address, a subnet mask, a default gateway, and DNS servers. You did nothing. A server somewhere handed you the whole starter kit.
+In Madden, you draft a rookie and the game instantly slaps a jersey number, position assignment, depth chart slot, and playbook into his hands before the next snap. That's exactly what DHCP does — you plug in a laptop or hop on Wi-Fi, and within seconds it's been issued an IP address, a subnet mask, a default gateway, and DNS servers. You did nothing. A server somewhere handed you the full equipment bag.
 
-DHCP (Dynamic Host Configuration Protocol) is the service that hands out network identities automatically so humans don't have to manually configure every device. Without it, every phone, laptop, smart fridge, and console joining your network would need a sysadmin holding its hand.
+DHCP (Dynamic Host Configuration Protocol) is the service that hands out network identities automatically so humans don't have to manually configure every device. Without it, every phone, laptop, smart fridge, and console joining your network would need a sysadmin walking it onto the field.
 
-The handshake is called **DORA**, and it's a four-step back-and-forth like matchmaking in Counter-Strike 2:
+The handshake is called **DORA**, and it's a four-step exchange like calling an audible at the line in Madden — both sides have to agree before the snap:
 
 1. **Discover** — Client broadcasts "anyone running a DHCP server out there?" It has no IP yet, so this is a shout into the void (broadcast to 255.255.255.255).
 2. **Offer** — Any DHCP server on the segment replies "yeah, I've got 10.0.0.47 available, want it?"
-3. **Request** — Client formally says "I'll take 10.0.0.47 from you specifically." This is broadcast too, so other DHCP servers know they were ghosted.
+3. **Request** — Client formally says "I'll take 10.0.0.47 from you specifically." This is broadcast too, so other DHCP servers know they were benched.
 4. **Acknowledge** — Server confirms the lease, locks it in, and the client starts using the address.
 
 ## Why it matters

@@ -2,11 +2,11 @@
 
 ## What it is
 
-Waze versus a printed MapQuest sheet from 2003. The printed sheet (static routing) is fine until there's construction on Main Street — you'll happily drive into a closed road because nobody told the paper. Waze (dynamic routing) has every car on the road whispering traffic updates back to a central brain, and your route recalculates before you even notice the jam.
+In Need for Speed, the cops have a live spotter network — every cruiser that sees you radios your position, your heading, your heat level, and the whole pursuit grid updates in real time. Compare that to a single dispatcher reading from a printed map of last week's roadblocks: useless the moment you take a side street. That's exactly what dynamic routing does — routers gossip with their neighbors constantly, so when a road closes the whole network knows within seconds.
 
 Dynamic routing is the process where routers automatically exchange topology information and build their routing tables without an admin manually typing in every path. Routers run a **routing protocol** — a standardized language for chatting with neighbors — that lets them advertise reachable networks, learn what their neighbors can reach, calculate the best paths, and react when something breaks.
 
-Compare that to **static routing**, where an admin hand-configures every single route. If a link dies, only the router directly attached to the dead link knows. Every other router keeps cheerfully forwarding packets to a next-hop that's been gone for an hour — like teammates in Helldivers 2 still calling for resupply at an extraction point that got overrun ten minutes ago.
+Compare that to **static routing**, where an admin hand-configures every single route. If a link dies, only the router directly attached to the dead link knows. Every other router keeps cheerfully forwarding packets to a next-hop that's been gone for an hour — like the rest of the NFS pursuit AI still converging on your last known location while you've already swapped cars at the safehouse and changed plates.
 
 ## Why it matters
 

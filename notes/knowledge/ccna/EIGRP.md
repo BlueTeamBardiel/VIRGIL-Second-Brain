@@ -2,11 +2,11 @@
 
 ## What it is
 
-EIGRP is the routing protocol equivalent of a squad in Helldivers 2 constantly pinging each other with stratagem updates — every router in the squad keeps a live map of who's reachable, who just went down, and what the fastest backup route is when the primary path gets nuked. It's not just shouting "here's my whole world" like link-state protocols, and it's not just whispering "trust me, this path is 5 hops" like old distance-vector protocols. It's a hybrid.
+In DayZ, your squad is spread across Chernarus and you're constantly checking in over the radio — "I'm at Berezino, road's clear," "Elektro's hot, take the inland path," "Kamyshovo's my fallback if NWAF goes sideways." Nobody's broadcasting their entire map every time something changes, and nobody's blindly trusting "just go north, bro." Each squadmate keeps a live picture of who's alive, who's reachable, and which route survives if a sniper takes out the primary path. That's exactly what EIGRP does — every router maintains a working map of its neighbors and pre-plans the backup route before the primary one eats a bullet.
 
 **EIGRP (Enhanced Interior Gateway Routing Protocol)** is a Cisco-proprietary routing protocol that combines distance-vector efficiency (only telling neighbors what changed) with link-state awareness (keeping enough topology info to compute backup paths instantly). It runs the **Diffusing Update Algorithm (DUAL)**, which mathematically guarantees loop-free paths and pre-computes a backup route — called a **feasible successor** — before anything breaks.
 
-Think of DUAL like Elden Ring's stake of Marika system: when your primary path "dies," EIGRP doesn't reload from a save — it respawns instantly at the pre-marked backup, no convergence delay.
+Think of the feasible successor like stashing a loaded second rifle in a tree near your base in DayZ: when your primary weapon jams mid-firefight, you don't run back to the coast to re-gear — you grab the backup that was already zeroed and ready. EIGRP doesn't reconverge; it switches to a route it already trusted.
 
 ## Why it matters
 

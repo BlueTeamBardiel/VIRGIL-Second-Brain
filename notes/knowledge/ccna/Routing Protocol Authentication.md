@@ -2,7 +2,7 @@
 
 ## What it is
 
-In Among Us, the entire game breaks if anyone can claim to be the Captain and start barking orders. The crew needs a way to verify who's actually crew before trusting what they say. Routing protocol authentication is exactly that check — it's the cryptographic handshake routers perform before they'll believe each other's stories about which networks exist where.
+In Death Stranding, when Sam connects a structure to the chiral network, other porters can only contribute to it if they're verified members of the network — random BTs and MULEs can't just walk up and start "helping" build your highway. The handshake happens silently, cryptographically, before any work is accepted. Routing protocol authentication is exactly that check — it's the cryptographic handshake routers perform before they'll believe each other's stories about which networks exist where.
 
 Without it, any device that speaks the right protocol dialect can walk up to your router and say "hey, send all traffic for 8.8.8.0/24 through me." Your router, by default trusting and lonely, will say "sounds great, neighbor." With authentication, the router demands a shared secret or a cryptographic hash before it accepts a single update. No secret, no peering, no route changes.
 

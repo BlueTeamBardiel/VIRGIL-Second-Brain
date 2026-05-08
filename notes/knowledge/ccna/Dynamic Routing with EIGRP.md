@@ -2,11 +2,11 @@
 
 ## What it is
 
-EIGRP behaves like the squad-finder in Helldivers 2 that only pings you when something actually changes — a Helldiver dies, a new objective drops, reinforcements arrive. It doesn't spam you with the entire mission state every 30 seconds. It assumes you remember what you were told last time and just sends the diff.
+In Smash Bros, your opponent doesn't redraw the entire stage every frame to tell you what's happening — you only react to *changes*: Falcon throws a punch, Samus charges a shot, a Smash Ball spawns. The stage geometry stays cached in your head; only deltas matter. That's exactly what EIGRP does — it tells its neighbors the full picture once, then only whispers updates when something actually changes.
 
-EIGRP (Enhanced Interior Gateway Routing Protocol) is Cisco's hybrid routing protocol — hybrid because it borrows the fast convergence and metric-richness of link-state protocols (like OSPF) while keeping the simpler neighbor-based gossip model of distance-vector protocols. Routers running EIGRP form neighbor relationships, exchange their full topology once at startup, and after that only send **partial bounded updates** when something in the topology actually changes.
+EIGRP (Enhanced Interior Gateway Routing Protocol) is Cisco's hybrid routing protocol — hybrid because it borrows the fast convergence and metric-richness of link-state protocols (like [[OSPF]]) while keeping the simpler neighbor-based gossip model of distance-vector protocols. Routers running EIGRP form neighbor relationships, exchange their full topology once at startup, and after that only send **partial bounded updates** when something in the topology actually changes.
 
-The brain behind it is **DUAL** (Diffusing Update Algorithm). DUAL is the strategist that pre-computes not just the best route to every destination (the Successor) but also a backup route that's mathematically guaranteed to be loop-free (the Feasible Successor). When the primary path dies, EIGRP doesn't sit there recalculating like a Dark Souls player staring at the boss screen — it swaps to the Feasible Successor instantly.
+The brain behind it is **DUAL** (Diffusing Update Algorithm). DUAL is the tournament player who already knows their punish before the opponent whiffs — it pre-computes not just the best route to every destination (the **Successor**) but also a backup route that's mathematically guaranteed to be loop-free (the **Feasible Successor**). When the primary path dies, EIGRP doesn't freeze mid-stage like someone who just got shield-broken — it swaps to the Feasible Successor instantly, no recalculation needed.
 
 ## Why it matters
 

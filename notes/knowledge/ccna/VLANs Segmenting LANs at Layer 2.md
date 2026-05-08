@@ -2,9 +2,9 @@
 
 ## What it is
 
-A switch without VLANs is like a public lobby in *Escape from Tarkov* — every player in the queue can hear every other player, regardless of which raid they're loading into. One person yells "anyone got a Bitcoin?" and the whole lobby hears it. That's a broadcast domain: a Layer 2 switch floods broadcast frames (destination MAC `ffff.ffff.ffff`) out every port except the one they came in on. Doesn't matter what subnet you assigned the host — Layer 2 doesn't care about your IP plan.
+In *NBA 2K*, MyPark before instanced courts was chaos — every player on the server stood on the same blacktop, mics hot, hearing every "run it back," every trash-talk, every squad shouting for a fourth. Didn't matter if you were trying to play 3v3 on Rivet or 1v1 on Sunset; the noise hit everyone. That's a broadcast domain: a Layer 2 switch floods broadcast frames (destination MAC `ffff.ffff.ffff`) out every port except the one they came in on. Doesn't matter what subnet you assigned the host — Layer 2 doesn't care about your IP plan.
 
-VLANs (Virtual LANs) carve that single noisy lobby into separate instanced raids. One physical switch becomes multiple virtual switches, each with its own isolated broadcast domain. Hosts in VLAN 10 cannot hear broadcasts from VLAN 20, even if they're plugged into ports right next to each other.
+VLANs (Virtual LANs) are what 2K eventually shipped: instanced courts. One physical park becomes multiple isolated games, each with its own chat, its own players, its own walls. One physical switch becomes multiple virtual switches, each with its own isolated broadcast domain. Hosts in VLAN 10 cannot hear broadcasts from VLAN 20, even if they're plugged into ports right next to each other.
 
 A common beginner trap: "I'll just put them in different subnets, that'll separate them." No. Subnetting is a Layer 3 concept. Broadcasts at Layer 2 don't read IP headers — they flood everywhere on the same switch fabric until a VLAN boundary stops them.
 

@@ -2,20 +2,20 @@
 
 ## What it is
 
-A network is basically a Discord server for machines — a bunch of devices that joined the same space so they can share stuff (files, video calls, game state, memes). Every device that hops into that server is a **node**.
+In Grand Theft Auto Online, a lobby is a session — up to 30 players spawned into the same Los Santos, able to shoot each other, hand off cargo, blow up each other's Oppressors. That's exactly what a network does — it's a shared session for machines so they can pass things back and forth (files, video calls, voice chat, game state). Every device that loads into that session is a **node**.
 
 Formally: a **computer network** is a telecommunications system that lets nodes share resources. A **node** is any device connected to it — your laptop, a printer, a security camera, a switch, your PS5.
 
 The scale of the network gets a name:
-- **LAN (Local Area Network)** — limited geographic area. One office, one building, your apartment. The squad in the same Discord voice channel.
-- **WAN (Wide Area Network)** — spans cities or further. Think of an MMO like Final Fantasy XIV stitching together regional data centers so a player in Tokyo can raid with someone in Frankfurt.
-- **The Internet** — the global public infrastructure. Every public Discord server, every Netflix CDN, every game matchmaking service, all reachable through the same plumbing.
+- **LAN (Local Area Network)** — limited geographic area. One office, one building, your apartment. Like a private GTA invite-only session with just your crew in one warehouse.
+- **WAN (Wide Area Network)** — spans cities or further. Rockstar's matchmaking stitching North American and European data centers together so your heist crew can run the Cayo Perico job from three continents.
+- **The Internet** — the global public infrastructure. Every public lobby, every Netflix CDN, every patch download, all riding the same plumbing.
 
-Inside any network, devices play roles. A **client** requests a service ("hey server, give me this YouTube video"). A **server** provides one. The catch: the same box can be both at once. Your gaming PC is a client when you're streaming Spotify, a server when your friend connects to your Minecraft world hosted on it. Roles are about what the traffic is doing, not what the hardware is.
+Inside any network, devices play roles. A **client** requests a service ("hey server, send me the contents of this Maze Bank account"). A **server** provides one. The catch: the same box can be both at once. Your gaming PC is a client when streaming Spotify, a server when your friend connects to your hosted FiveM roleplay server. Roles describe what the traffic is doing, not what the hardware is.
 
 We also split devices into two camps:
-- **Endpoints** — the consumers. Phones, laptops, IoT bulbs, consoles. They *use* the network.
-- **Infrastructure devices** — the ones that *build* the network. Switches, routers, firewalls. They're the netrunners and access points from Cyberpunk 2077 — invisible to most users, but everything flows through them.
+- **Endpoints** — the consumers. Phones, laptops, IoT bulbs, consoles. They *use* the network. The pedestrians and players walking around Los Santos.
+- **Infrastructure devices** — the ones that *build* the network. Switches, routers, firewalls. They're the road grid, the tunnel system, the traffic lights of Los Santos — you barely notice them, but every car chase, every getaway, every package delivery routes through them.
 
 ## Why it matters
 

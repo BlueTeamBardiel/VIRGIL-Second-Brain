@@ -2,11 +2,11 @@
 
 ## What it is
 
-Static routing is the GPS equivalent of memorizing a route by hand and refusing to ever check traffic again. You tell the router: "To get to 10.0.0.0/24, send packets out this interface to that next hop." The router writes it down, believes you forever, and never asks for a second opinion.
+In Destiny, you've run the Vault of Glass so many times you sprint the route blindfolded — left at the spawn, jump the gap to the Templar's well, sync plates in the same order every time. No callouts, no map, no thinking. That's exactly what static routing does — a human carves the path into the router's brain once, and the router runs it forever without asking questions.
 
-More precisely: static routing is when a network administrator manually configures fixed paths in a router's routing table. No protocol negotiates them. No neighbor advertises them. They sit there, immobile, until a human types the command to remove them. Compare this to dynamic routing protocols (OSPF, EIGRP, RIP) where routers gossip with each other constantly to discover paths — static routing is the lone wolf who doesn't talk to anyone and just follows the orders nailed to the wall.
+More precisely: static routing is when a network administrator manually configures fixed paths in a router's routing table. No protocol negotiates them. No neighbor advertises them. They sit there, immobile, until a human types the command to remove them. Compare this to dynamic routing protocols (OSPF, EIGRP, RIP), where routers gossip with each other constantly to discover paths — static routing is the solo Flawless runner who refuses matchmaking and just follows the route they memorized.
 
-In Elden Ring terms: dynamic routing is summoning help and adapting to what other Tarnished are doing. Static routing is a pre-planned solo run where every step is scripted — fast and predictable until something on the path changes and your script no longer matches reality.
+In Destiny terms: dynamic routing is a fireteam calling out adds and rerouting on the fly when the encounter shifts. Static routing is a speedrun script — every jump, every weapon swap, every grenade pre-planned. Faster than thinking, right up until Bungie patches the geometry and your muscle memory throws you off a cliff.
 
 ## Why it matters
 

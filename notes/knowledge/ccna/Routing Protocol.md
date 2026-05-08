@@ -2,14 +2,14 @@
 
 ## What it is
 
-A guild in an MMO where every player constantly shouts their current location and the fastest known path to every dungeon — that's a routing protocol. Routers don't psychically know where 8.8.8.8 lives. They learn by gossiping with neighbors using a standardized algorithm and message format, then each router builds its own map and picks the best path for every destination.
+In DOTA, your team's minimap pings constantly — supports calling missing mids, allies revealing rune spawns, scans exposing smoke ganks, every hero feeding their vision into a shared map that updates in real time. That's exactly what a routing protocol does — routers gossip with their neighbors about what networks they can reach, and each router builds its own minimap of the entire topology, then picks the fastest lane to every destination.
 
-More precisely: routing protocols are the agreed-upon rules that let routers **dynamically discover** network paths and **calculate the optimal route** to forward packets. Without them, you're stuck manually typing static routes into every router like you're hand-drawing a map of Elden Ring's Lands Between for every NPC.
+More precisely: routing protocols are the agreed-upon rules that let routers **dynamically discover** network paths and **calculate the optimal route** to forward packets. Without them, you're stuck manually typing static routes into every router — the equivalent of playing DOTA with no minimap and no comms, hand-drawing where Roshan spawns on a sticky note.
 
 They split into two leagues:
 
-- **Interior Gateway Protocols (IGPs)** — used *inside* one organization's network. OSPF and EIGRP live here. Like guild chat: only your guildmates hear it.
-- **Exterior Gateway Protocols (EGPs)** — used *between* autonomous systems (the giant networks owned by ISPs, cloud providers, universities). BGP is the only one that matters. Like global chat across every server in the game.
+- **Interior Gateway Protocols (IGPs)** — used *inside* one organization's network. OSPF and EIGRP live here. Like team voice chat: only your four teammates hear the calls.
+- **Exterior Gateway Protocols (EGPs)** — used *between* autonomous systems (the giant networks owned by ISPs, cloud providers, universities). BGP is the only one that matters. Like all-chat: every player on the server sees it, and one bad message can tilt the entire match.
 
 ## Why it matters
 

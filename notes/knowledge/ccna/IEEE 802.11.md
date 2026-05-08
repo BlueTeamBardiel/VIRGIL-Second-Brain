@@ -2,11 +2,11 @@
 
 ## What it is
 
-Wi-Fi is the netrunner's playground from Cyberpunk 2077 made real — every device shouting into the open air, every packet floating around for anyone with the right deck to grab. IEEE 802.11 is the rulebook that says how all that shouting is supposed to work without devolving into chaos.
+In Need for Speed, every street race needs rules — where the start line is, what counts as crossing the finish, how cops track you, how your crew talks over comms while you're all flooring it through the same intersection. That's exactly what IEEE 802.11 does — it's the rulebook that keeps every wireless device from turning the airwaves into a Most Wanted blacklist demolition derby.
 
 It's the family of standards that defines Wireless LAN: how your laptop finds a network, how it proves it's allowed in, how it negotiates encryption keys, and how the actual data frames get encoded onto radio waves across the 2.4 GHz, 5 GHz, and 6 GHz bands. Every time you connect to coffee shop Wi-Fi, your phone is running an 802.11 state machine: scan → authenticate → associate → exchange keys → send data.
 
-The "802.11" part is the base. Letters after it (a/b/g/n/ac/ax) are amendments — each one bolting on faster speeds, new bands, or new features. 802.11ax is what marketing calls Wi-Fi 6.
+The "802.11" part is the base spec — the stock chassis. Letters after it (a/b/g/n/ac/ax) are amendments, the bolt-on upgrades from the parts shop: bigger turbo, more bandwidth, new bands, new features. 802.11ax is what marketing calls Wi-Fi 6.
 
 ## Why it matters
 

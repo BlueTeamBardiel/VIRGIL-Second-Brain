@@ -2,20 +2,20 @@
 
 ## What it is
 
-Security in networking is the same logic as a raid boss in Elden Ring: the boss has weak points (vulnerabilities), you have weapons that hit those weak points (exploits), and *you* — the player with intent and skill — are the threat. Take any of those three away and there's no fight.
+In Far Cry, an outpost has weak points (the alarm box you can disable, the sniper in the tower, the unpatrolled rear fence), you have tools that exploit them (silenced sniper, wingsuit infiltration, a grenade through the window), and *you* — the player choosing to liberate it — are the threat. Remove the weak points, the tools, or the player, and the outpost stands untouched.
 
 The whole field rests on three guarantees, often called the **CIA triad**:
 
-- **Confidentiality** — only authorized eyes see the data. Like your Discord DMs: nobody outside the chat should be reading them.
-- **Integrity** — data isn't tampered with in transit or at rest. Your Venmo says "$20 to Beatrice," not "$2000 to a stranger."
-- **Availability** — the system is up when you need it. NBA 2K26 servers being down on launch night is an availability failure, and the rage is real.
+- **Confidentiality** — only authorized eyes see the data. Like the radio chatter between Pagan Min's lieutenants: meant for them, not for you crouched in the grass with a directional mic.
+- **Integrity** — data isn't tampered with in transit or at rest. The intel marker on your map should say "convoy at 0600," not coordinates that lead you into an ambush.
+- **Availability** — the system is up when you need it. The fast-travel network being knocked offline mid-mission is an availability failure, and the walk back is suffering.
 
 Around that core, four more terms define the threat model:
 
-- **Vulnerability** — a weakness sitting in the code or config (the unpatched window).
-- **Exploit** — the actual tool or technique that abuses the vulnerability (the crowbar).
-- **Threat** — the person or group with both *intent* and *capability* to use the exploit (the actual burglar, not just any rando walking by).
-- **Mitigation** — the control that reduces the risk (deadbolt, alarm, dog).
+- **Vulnerability** — a weakness sitting in the code or config (the alarm box nobody welded shut).
+- **Exploit** — the actual tool or technique that abuses the vulnerability (the wire cutters in your hand).
+- **Threat** — the person or group with both *intent* and *capability* to use the exploit (you, the liberator — not the goat wandering past the fence).
+- **Mitigation** — the control that reduces the risk (extra guards, floodlights, attack dogs on patrol).
 
 And the formula tying it all together: **Risk = Threat × Vulnerability × Impact**. Zero out any factor and risk goes to zero — which is why you patch (kill vulnerability), block attackers (kill threat exposure), or segment networks (limit impact).
 

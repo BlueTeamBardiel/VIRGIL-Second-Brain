@@ -2,11 +2,11 @@
 
 ## What it is
 
-Setting up a router interface is like spawning into a new lobby in Call of Duty — you don't just appear ready to play. You need to load in (Layer 1, the physical link), pick your loadout (Layer 2, the data link), and then get assigned to a team with the right callsign (Layer 3, the IP address). Skip any step and you're stuck on the loading screen.
+In Resident Evil, picking up a key item doesn't mean you can use it. Leon can hold the Spade Key all he wants — until he stands at the right door and actually uses it, that key is dead weight in the inventory. That's exactly what configuring an IPv4 address on a router interface does — the hardware exists, the cable is plugged in, but nothing routes until you assign the address *and* activate the interface.
 
-A router interface is the physical or virtual port where a router connects to a network. Configuring IPv4 on it means assigning a 32-bit logical address that places the interface inside a specific subnet — the same subnet as the hosts it's meant to serve. That address becomes the default gateway for everything on that segment.
+A router interface is the physical or virtual port where a router meets a network. Configuring IPv4 on it means assigning a 32-bit logical address that drops the interface into a specific subnet — the same subnet as the hosts it serves. That address becomes the default gateway for every device on that segment.
 
-On Cisco gear, two things are non-negotiable: you must hand the interface an IP address *and* you must explicitly bring it online with `no shutdown`. Cisco ships interfaces in a disabled state by default — like a Helldivers 2 stratagem you haven't unlocked yet, the hardware is there but it won't fire until you activate it.
+On Cisco gear, two steps are non-negotiable: assign the IP with `ip address`, then explicitly enable the interface with `no shutdown`. Cisco ships interfaces administratively down by default — like the typewriter ribbon sitting on the desk in the RPD save room. The mechanism is right there in front of you, but until you combine it with the typewriter, no save is happening.
 
 ## Why it matters
 

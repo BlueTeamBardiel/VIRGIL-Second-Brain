@@ -2,9 +2,9 @@
 
 ## What it is
 
-Every IPv4 packet wears a shipping label stapled to the front — that label is the IPv4 header. It's 20 to 60 bytes of metadata that tells every router along the path who sent the packet, where it's going, what's inside, and how long it's allowed to keep traveling before getting tossed.
+In Factorio, every item on a logistics network bus has an inserter reading filters, a belt lane assignment, and a destination chest waiting for it. Strip those out and you've just got iron plates flying nowhere. That's exactly what the IPv4 header does — it's the routing metadata bolted to the front of every packet so the network knows where it's going, where it came from, and what to do with it.
 
-Think of the loot crates in Helldivers 2 getting called down from orbit. Each pod has stenciled markings: drop coordinates, contents, what stratagem called it. Strip those off and the pod is just a metal box with no instructions. The IPv4 header is that stenciling — without it, a packet is meaningless bytes. Routers read this label at every hop and decide what to do next.
+Technically: the IPv4 header is 20 to 60 bytes of control information prepended to every IPv4 packet. It carries source and destination addresses, protocol type, fragmentation info, a TTL counter, and a checksum. Routers read it at every hop to make forwarding decisions.
 
 The header is variable length: a baseline 20 bytes, but it can stretch to 60 if optional fields are tacked on. The **IHL (Internet Header Length)** field tells the receiver how long the header actually is, measured in 32-bit words (so IHL=5 means 20 bytes, IHL=15 means 60 bytes — the maximum).
 

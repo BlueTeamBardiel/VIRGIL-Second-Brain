@@ -2,13 +2,13 @@
 
 ## What it is
 
-Loadout slots in Call of Duty have a fixed point budget — you can spend it on a primary, a secondary, perks, or attachments, but the total never changes. Subnetting works the same way with an IP address: you have 32 bits to spend, and you decide how many go to identifying the *network* (the lobby) versus the *host* (the players in it).
+In Destiny, your Guardian's stats run on a fixed pool — Mobility, Resilience, Recovery, Discipline, Intellect, Strength. Boost one tier, another suffers. The total budget never changes; only how you carve it up. Subnetting works the same way with an IP address: you have 32 bits to spend, and you decide how many go to identifying the *network* (the strike) versus the *host* (the Guardians running it).
 
 A **subnet mask** is the rulebook that draws that line. It marks the leftmost bits as "network" and the rest as "host." `255.255.255.0` means the first 24 bits lock in which network you're on, and the last 8 bits identify individual machines inside it.
 
-**CIDR notation** is just shorthand for that mask. Instead of writing `255.255.255.0`, you write `/24` — "the first 24 bits are network." It's the difference between typing out a full Discord invite description versus pasting the link. Same info, faster.
+**CIDR notation** is just shorthand for that mask. Instead of writing `255.255.255.0`, you write `/24` — "the first 24 bits are network." It's the difference between linking a full raid guide versus dropping the LFG code. Same info, faster.
 
-**VLSM (Variable Length Subnet Masking)** is what lets you carve a single network into different-sized chunks. Like dividing a Minecraft server into a massive survival world, a smaller creative plot, and a tiny PvP arena — you don't waste a whole continent on a 1v1 ring.
+**VLSM (Variable Length Subnet Masking)** is what lets you carve a single network into different-sized chunks. Like the Director splitting the system into the sprawling EDZ patrol zone, a mid-sized strike playlist, and a tight 3v3 Trials arena — you don't allocate a whole planet to host a Crucible match.
 
 ## Why it matters
 

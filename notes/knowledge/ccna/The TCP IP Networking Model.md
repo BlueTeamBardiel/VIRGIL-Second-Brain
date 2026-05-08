@@ -2,7 +2,7 @@
 
 ## What it is
 
-A raid team in Helldivers 2 has clear roles: someone calls the strategem, someone clears the trash, someone hauls the objective, someone watches the dropship. Nobody tries to do all four at once — it would be chaos. Networking works the same way: instead of one giant blob of code trying to handle "make the internet work," the job is split into layers, each with one specific responsibility.
+In Tomb Raider, Lara doesn't solve a tomb with one move. She climbs the ledge, then ropes the beam, then swings to the platform, then pries the mechanism — each action a separate, specialized skill, each handing off cleanly to the next. Try to do it all in one chaotic lunge and you fall in the spike pit. Networking works the same way: instead of one monolithic blob of code trying to "make the internet work," the job is split into layers, each with one specific responsibility.
 
 There are two models for slicing up that work:
 
@@ -18,7 +18,7 @@ The TCP/IP layers, top to bottom:
 | Internet | 3 | Routes packets across networks using IP addresses |
 | Link | 1, 2 (Physical, Data Link) | Cables, Wi-Fi radios, MAC addresses, frames |
 
-When you send data, it travels **down** the stack on your machine, each layer slapping on its own header — that's **encapsulation**, like wrapping a Christmas present, then putting that in a box, then putting that box in a shipping crate. On the receiving end, **de-encapsulation** unwraps each layer in reverse.
+When you send data, it travels **down** the stack on your machine, each layer slapping on its own header — that's **encapsulation**, like Lara stashing a relic in a pouch, then in her pack, then in the crate she hauls out of the tomb. On the receiving end, **de-encapsulation** unwraps each layer in reverse.
 
 Each layer also has its own name for the chunk of data it handles:
 - Application: **message** (or just "data")

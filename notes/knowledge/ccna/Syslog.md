@@ -2,9 +2,9 @@
 
 ## What it is
 
-Every kill, death, assist, and objective capture in a match gets recorded somewhere — and if you've ever pulled up the post-game scoreboard in Call of Duty, you've used the same idea Syslog runs on. Syslog is the protocol network devices use to ship log messages to a central server so you can see what happened, when it happened, and how bad it was, all in one place instead of SSH-ing into thirty switches at 3am.
+In Halo, every Spartan laser hit, sniper headshot, sticky grenade, and flag capture gets stamped into the post-match Carnage Report — every event, every player, every timestamp, all collected from across the map into one debrief. That's exactly what Syslog does — it's the protocol network devices use to ship log messages to a central server so you can see what happened, when it happened, and how bad it was, all in one place instead of SSH-ing into thirty switches at 3am.
 
-It's defined in RFC 3164 (the original) and RFC 5424 (the cleaner modern version), and by default it rides UDP port 514. UDP because logs are high-volume and fire-and-forget — like spray-and-pray with an LMG, you'd rather lose a message than slow the whole device down waiting for ACKs.
+It's defined in RFC 3164 (the original) and RFC 5424 (the cleaner modern version), and by default it rides UDP port 514. UDP because logs are high-volume and fire-and-forget — like dumping an MA5B magazine downrange, you'd rather lose a round than slow the whole engagement waiting for confirmation each bullet landed.
 
 A Syslog message is a structured little packet of text containing:
 - **Priority** (severity + facility, encoded as a number)

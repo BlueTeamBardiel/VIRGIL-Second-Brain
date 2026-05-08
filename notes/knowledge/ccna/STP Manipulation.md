@@ -2,11 +2,11 @@
 
 ## What it is
 
-In Among Us, the Imposter wins by getting voted Captain — once they're trusted by the crew, every decision flows through them. STP manipulation is the network version: an attacker convinces every switch in the broadcast domain that *their* rogue device should be the root bridge, the trusted center of the spanning tree. Once elected, traffic reroutes through the attacker's box, and they get a front-row seat to the entire Layer 2 segment.
+In Final Fantasy VI, Kefka poisons the water supply at Doma Castle by impersonating an officer of the Empire — once the guards trust his uniform, they let him walk straight to the well. STP manipulation is the network version: an attacker convinces every switch in the broadcast domain that *their* rogue device should be the root bridge, the trusted center of the spanning tree. Once crowned, traffic reroutes through the attacker's box, and they get a front-row seat to the entire Layer 2 segment.
 
 Spanning Tree Protocol (802.1D) was built to prevent switching loops by electing one root bridge and blocking redundant paths. Switches gossip about who should be root using **Bridge Protocol Data Units (BPDUs)** — small frames that advertise a bridge priority and MAC address. Lowest priority wins. The attacker plugs into an access port, fires off crafted BPDUs claiming a priority of 0 (or anything lower than the current root), and the switches dutifully recalculate the topology with the attacker's device at the top.
 
-The kicker: STP has **zero authentication**. There's no password, no certificate, no signature on a BPDU. Whoever shouts the lowest number wins the election. It's a Discord server with no moderators where anyone can claim to be admin.
+The kicker: STP has **zero authentication**. No password, no certificate, no signature on a BPDU. Whoever shouts the lowest number wins the election. It's the Empire handing out uniforms at the front gate and never checking who's wearing them.
 
 ## Why it matters
 

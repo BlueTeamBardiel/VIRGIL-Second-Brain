@@ -2,7 +2,7 @@
 
 ## What it is
 
-A four-person Helldivers 2 squad pushing one objective — they move as a unit, the game treats them as "the team," and if one player goes down the squad keeps fighting with reduced firepower. EtherChannel does the same thing to switch ports: it bundles multiple physical links between two switches into a single logical link that everything upstream — including Spanning Tree — sees as one port.
+In World of Warcraft, a five-person Mythic+ group counts as one party — the dungeon scales to "the group," loot drops for "the group," and if the rogue dies the run continues with four players doing the work. That's exactly what EtherChannel does to switch ports: it bundles multiple physical links between two switches into a single logical link that everything upstream — including [[Spanning Tree]] — sees as one port.
 
 Without bundling, if you ran four cables between two switches hoping for 4 Gbps of throughput, STP would look at three of them, scream "LOOP!" and shut them down to blocking state. You'd pay for four links and use one. EtherChannel sidesteps this by telling STP "these four ports are actually one port, calm down." All four links forward traffic, no loop forms, and you get the combined bandwidth.
 

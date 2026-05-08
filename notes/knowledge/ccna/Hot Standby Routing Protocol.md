@@ -2,9 +2,9 @@
 
 ## What it is
 
-Co-op revives in Helldivers 2 — when your buddy goes down, another Helldiver picks up the objective and the mission keeps going without the bugs noticing a pause. HSRP does the same thing for routers. A group of routers share one virtual identity (a virtual IP and virtual MAC), and end devices only ever talk to that virtual identity. Behind the scenes, one physical router is "active" and actually forwarding packets. If it dies, a "standby" router silently takes over the virtual IP/MAC, and your laptop never knows the difference — its default gateway is still alive.
+In *Witcher 3*, when Geralt drinks a Swallow potion mid-fight and it runs out, his second potion slot kicks in automatically — the healing keeps flowing, the drowners keep dying, and Geralt never breaks rhythm. HSRP works the same way for routers. A group of routers share one virtual identity (a virtual IP and virtual MAC), and end devices only ever talk to that virtual identity. Behind the scenes, one physical router is "active" and actually forwarding packets. If it dies, a "standby" router silently takes over the virtual IP/MAC, and your laptop never knows the difference — its default gateway is still alive.
 
-It's a Cisco-proprietary First Hop Redundancy Protocol (FHRP), meaning it solves the "what happens when the default gateway router explodes" problem at the very first hop out of your subnet.
+It's a Cisco-proprietary [[First Hop Redundancy Protocol]] (FHRP), meaning it solves the "what happens when the default gateway router explodes" problem at the very first hop out of your subnet.
 
 ## Why it matters
 

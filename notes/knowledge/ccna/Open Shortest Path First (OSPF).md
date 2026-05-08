@@ -2,9 +2,11 @@
 
 ## What it is
 
-OSPF is the GPS app of routing protocols. Instead of each router asking its neighbors "hey, how far is it to the grocery store?" and trusting whatever number they shout back (that's how distance-vector protocols like RIP work — pure gossip), OSPF builds a full topological map of the entire neighborhood. Every router learns the shape of the whole network, then runs Dijkstra's shortest-path-first algorithm locally to compute the best route — like a Tears of the Kingdom map after you've activated every Skyview Tower.
+In Hitman, before 47 strangles anyone with fiber wire, you walk Sapienza or Paris end-to-end — every guard patrol, every camera arc, every disguise rotation, every poison-able spaghetti pot. By the time you act, you hold a complete map of the level in your head, and you compute the optimal route to the target yourself. That's exactly what OSPF does — every router learns the full topology of its area, then independently calculates the shortest path to every destination. No trusting what the neighbor across the courtyard shouted; you scouted it yourself.
 
-OSPF is a **link-state Interior Gateway Protocol (IGP)**. Routers don't trade routing tables; they trade descriptions of links — "I'm router X, I'm connected to subnet Y at cost Z." Every OSPF router stores these descriptions in a **Link State Database (LSDB)**, and every router in the same area must hold an identical copy. Once the LSDB is in sync, each router independently runs Dijkstra against it to figure out the cheapest path to every destination.
+Contrast that with distance-vector protocols like RIP, which play more like an NPC asking the gardener "how far to the target?" and believing the answer. OSPF routers don't pass around finished routing tables — they pass around **link-state advertisements (LSAs)**, which are basically intel reports: "I'm router X, I'm connected to subnet Y, the cost is Z." Every router in the area collects these reports into a shared dossier called the **Link State Database (LSDB)**, and every router in that area must hold a byte-identical copy. Mismatched intel means a botched contract.
+
+Once the LSDB is synchronized, each router runs **Dijkstra's shortest-path-first algorithm** locally against that database to compute the cheapest path to every destination. OSPF is a **link-state Interior Gateway Protocol (IGP)** — "interior" meaning it runs inside a single administrative domain, not between ISPs (that's BGP's job). The map is shared; the planning is private.
 
 ## Why it matters
 

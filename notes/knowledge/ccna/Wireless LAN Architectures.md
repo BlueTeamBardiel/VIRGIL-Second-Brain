@@ -2,9 +2,9 @@
 
 ## What it is
 
-A WLAN architecture is the org chart for your access points. In Helldivers 2, you can either have every Helldiver freelancing their own stratagems, or you can have Super Earth Command coordinating the entire squad from orbit. Wi-Fi works the same way: APs can each be their own boss (autonomous), or they can be dumb terminals taking orders from a central brain called a Wireless LAN Controller (WLC), or they can phone home to a cloud service.
+In Civilization, you choose a government: Despotism, where every city manages itself with no central oversight; Monarchy, where the capital sets policy for every settlement; or Democracy, where decisions ride on something more abstract than a single throne. A WLAN architecture is the same choice for your access points. APs can each be their own boss (autonomous), they can be dumb governors taking orders from a central capital called a Wireless LAN Controller (WLC), or they can report to a cloud overlord.
 
-Underneath every architecture is the same 802.11 frame format — the actual radio packet that carries your TikTok scroll. Unlike Ethernet, which only needs a "from" and "to" address, 802.11 frames can carry up to **four** addresses because wireless frames often hop through an AP before reaching the wired network. Think of it like a Discord DM that has to pass through a moderator bot: the bot is a middleman, so the message needs to track who originally sent it, who's relaying it now, who's receiving it now, and who it's ultimately for.
+Underneath every government is the same 802.11 frame format — the actual radio packet that carries your traffic. Unlike Ethernet, which only needs a "from" and "to" address, 802.11 frames can carry up to **four** addresses because wireless frames usually hop through an AP before reaching the wired network. Think of a trade caravan in Civ that has to pass through a city-state on its way to its real destination: the city-state is a middleman, so the shipment needs to track who originally sent it, who's relaying it now, who's receiving it now, and who it's ultimately for.
 
 ## Why it matters
 

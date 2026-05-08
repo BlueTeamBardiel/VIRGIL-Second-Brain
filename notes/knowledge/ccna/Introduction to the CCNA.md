@@ -2,7 +2,7 @@
 
 ## What it is
 
-The CCNA is the tutorial island of professional networking. Just like Elden Ring drops you in Limgrave before letting you anywhere near Malenia, Cisco drops aspiring network engineers into the CCNA before they can touch enterprise-grade gear like CCNP or CCIE-tier work. It's the entry-level cert that proves you can configure a switch without bricking it.
+In Battlefield, you don't spawn into Operation Metro on day one and lead a 64-player squad assault. You hit basic training first — learn to ADS, throw a grenade without killing your squad, drive a tank in a straight line. That's exactly what the CCNA does. It's the boot camp Cisco makes you clear before they trust you near the enterprise battlefield where [[CCNP]] and [[CCIE]] engineers are calling in airstrikes on production networks.
 
 Officially, CCNA is Cisco's foundational networking certification, validated by passing exam **200-301**. The exam is a 120-minute gauntlet covering everything from how a cable carries bits to how Python scripts can yell at a router. Pass it, and you've got a 3-year shelf life before you need to recertify or move up the ladder.
 

@@ -2,7 +2,7 @@
 
 ## What it is
 
-The skill tree screen in a sprawling RPG — Path of Exile, Elden Ring, Cyberpunk 2077 — where every node you unlock connects to three more, and you slowly realize the build is the entire game. That's this index. CCNA 200-301 is Cisco's associate-level networking certification, and this is the master node graph: 183 notes covering every required concept from "what is a cable" to "why does BGP exist and why is everyone always angry about it."
+In Fortnite, you drop into the map with nothing and the entire match is a tech tree of skills you have to acquire on the fly — building ramps, editing walls, managing materials, reading the storm, knowing which POI has loot worth fighting over. By endgame, the players still alive aren't the ones who memorized one trick; they're the ones who internalized the whole system until it was reflex. That's this index. CCNA 200-301 is Cisco's associate-level networking certification, and this is the master loadout: 183 notes covering every required concept from "what is a cable" to "why does BGP exist and why is everyone always angry about it."
 
 The exam itself is vendor-specific (Cisco IOS, Cisco hardware quirks) but the underlying knowledge is universal — IP, Ethernet, routing, switching, wireless, security, automation. Pass it and you can talk shop with any network engineer regardless of what gear they run.
 

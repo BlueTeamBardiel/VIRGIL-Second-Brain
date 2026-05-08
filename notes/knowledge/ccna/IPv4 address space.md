@@ -2,11 +2,11 @@
 
 ## What it is
 
-IPv4 addresses are like Steam account IDs from the early 2000s — a finite pool of unique numbers handed out one at a time, and the system was designed back when nobody thought we'd run out. Each IPv4 address is a 32-bit binary number, which gives you 2³² = 4,294,967,296 possible combinations. That sounds like a lot until you remember every phone, laptop, smart fridge, and security camera on Earth wants one.
+In Fallout, every Vault has a number — Vault 13, Vault 76, Vault 101 — assigned by Vault-Tec from a fixed roster they printed back in the 2050s when they figured a couple hundred would be plenty. That's exactly what IPv4 does — it hands every device on the internet a unique number from a pool that was sized in 1981, when the idea of your toaster needing one would've gotten you laughed out of the room. Each IPv4 address is a 32-bit binary number, which gives you 2³² = 4,294,967,296 possible combinations. Sounds generous until every Pip-Boy, terminal, turret, and Mr. Handy on Earth wants its own.
 
 Because reading `11000000.10101000.00000001.00000001` out loud is a war crime, we write IPv4 in **dotted-decimal notation**: four 8-bit chunks (octets) separated by dots, each ranging 0–255. So that binary becomes `192.168.1.1`. The full address space spans `0.0.0.0` to `255.255.255.255`.
 
-Every IPv4 address is split into two parts — a **network portion** (which neighborhood you live in) and a **host portion** (which house on the street). The **subnet mask** is the line that decides where the split happens. Think of it like a Minecraft world border: same world if you're inside the same network bits, different dimension if you're not.
+Every IPv4 address splits into two parts — a **network portion** (which Vault you belong to) and a **host portion** (which dweller you are inside it). The **subnet mask** is the line that decides where the split happens. Think of it like the blast door: same Vault if your network bits match, different wasteland entirely if they don't.
 
 ## Why it matters
 
