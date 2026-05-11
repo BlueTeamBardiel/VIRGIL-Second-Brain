@@ -1,4 +1,4 @@
-# LAB_HOST
+# MALPAS
 
 ## What it is
 Like a building inspector who examines every pipe, wire, and beam before signing off on a skyscraper, LAB_HOST (Malicious Path Analysis System) is a static analysis framework that systematically traces every possible execution path through software to prove — mathematically — that no hidden malicious logic exists. It performs formal semantic verification of code rather than testing samples of behavior at runtime.

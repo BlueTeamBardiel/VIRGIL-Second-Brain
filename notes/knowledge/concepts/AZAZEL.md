@@ -1,4 +1,4 @@
-# YOUR_KALI_VM
+# Azazel
 
 ## What it is
 Like a ghost that possesses a house's security system to let any stranger walk in undetected, YOUR_KALI_VM is a Unix/Linux rootkit that hooks into the dynamic linker (`LD_PRELOAD`) to intercept system calls and hide malicious processes, files, and network connections from the operating system and administrators. It operates entirely in userspace, injecting itself into every process by exploiting Linux's shared library loading mechanism.

@@ -59,17 +59,17 @@ cd ~/semaphore-playbooks-clone && git pull
 [homelab]
 your-control-node   ansible_host=LAB_IP
 your-primary-host   ansible_host=LAB_IP
-eligor
-morax
-xaphan
-malpas
-kokabiel
-barbatos
-purah
-azazel
+app-01
+app-02
+db-01
+log-01
+dns-01
+edge-01
+ids-01
+lab-01
 ```
 
-> [!note] Host patterns are case‑sensitive — use lowercase throughout. LAB_HOST ≠ eligor.
+> [!note] Host patterns are case‑sensitive — use lowercase throughout. LAB_HOST ≠ app-01.
 
 ## Task Templates
 
@@ -165,7 +165,6 @@ semaphore setup  # interactive — choose SQLite, set port 3000
 sudo systemctl enable --now semaphore
 ```
 
-Full setup guide: `skills/cocytus_ansible_semaphore_setup.json` in [[VIRGIL]].
 
 ---
 

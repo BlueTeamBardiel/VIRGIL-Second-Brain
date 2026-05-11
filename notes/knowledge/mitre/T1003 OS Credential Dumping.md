@@ -29,7 +29,7 @@ Adversaries dump credentials from OS caches, memory, or structures to obtain acc
 - [[Axiom]] — credential dumping capability
 - [[BlackByte]] — uses [[Cobalt Strike]] and [[Mimikatz]]
 - [[Ember Bear]] — gathers SSH keys and credential material
-- [[Leviathan]] — uses HOMEFRY
+- LEVIATHAN/APT40 (Chinese state-sponsored) — uses HOMEFRY
 - [[Mustang Panda]] — uses Hdump
 - [[Poseidon Group]] — focuses on domain/database credentials
 - [[Storm-0501]] — uses [[Impacket]] SecretsDump

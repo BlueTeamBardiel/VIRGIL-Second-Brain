@@ -99,7 +99,7 @@ Replace vague claims with numbers. Numbers survive ATS keyword filtering and imp
 If you have CompTIA certs, put them in your name header or a visible section above the fold:
 
 ```
-MORPHEUS | IT Support | CompTIA Security+ | CySA+ (in progress)
+ [YOUR NAME] | IT Support | CompTIA Security+ | CySA+ (in progress)
 ```
 
 ### Homelab as Experience

@@ -1,4 +1,4 @@
-# LAB_HOST
+# Xaphan
 
 ## What it is
 Like a janitor who secretly props open fire doors while appearing to do their rounds, Xaphan is a backdoor Trojan that actively disables host-based security tools to maintain persistence. Specifically, it is malware that terminates antivirus processes, disables Windows Security Center, and opens ports for remote access — all while masquerading as legitimate activity.
