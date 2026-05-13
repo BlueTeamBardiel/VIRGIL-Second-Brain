@@ -771,20 +771,19 @@ MEMEOF
     fi
 done
 
-# ── 9. Copy starter notes ─────────────────────────────────────────────────────
-hdr "Step 8 — Starter notes"
+# ── 9. Copy knowledge base ────────────────────────────────────────────────────
+hdr "Step 8 — Knowledge base"
 
-if [[ -d "$INSTALL_SRC/starter-notes" ]]; then
+if [[ -d "$INSTALL_SRC/notes" ]]; then
     NOTE_COUNT=$(find "$VIRGIL_DIR/notes" -name "*.md" 2>/dev/null | wc -l)
     if [[ "$NOTE_COUNT" -lt 10 ]]; then
-        info "Seeding notes vault..."
-        cp -r "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/"
-        [[ -d "$INSTALL_SRC/notes" ]] && cp -rn "$INSTALL_SRC/notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
-        ok "Vault seeded — 1,500+ notes installed"
+        info "Seeding knowledge base..."
+        cp -r "$INSTALL_SRC/notes/." "$VIRGIL_DIR/notes/"
+        SEEDED_COUNT=$(find "$VIRGIL_DIR/notes" -name "*.md" 2>/dev/null | wc -l)
+        ok "Knowledge base seeded — $SEEDED_COUNT cert and CVE notes installed"
     else
-        cp -rn "$INSTALL_SRC/starter-notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
-        [[ -d "$INSTALL_SRC/notes" ]] && cp -rn "$INSTALL_SRC/notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
-        ok "Vault notes synced (skipped existing files)"
+        cp -rn "$INSTALL_SRC/notes/." "$VIRGIL_DIR/notes/" 2>/dev/null || true
+        ok "Knowledge base synced (skipped existing files)"
     fi
 fi
 if [[ -f "$INSTALL_SRC/GETTING-STARTED.md" ]]; then

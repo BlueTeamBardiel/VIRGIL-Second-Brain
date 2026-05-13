@@ -10,25 +10,11 @@ notes/guides/
 daily-logs/
 weekly-summaries/
 
-# Starter notes: daily-logs and memory are exceptions
-!starter-notes/daily-logs/
-!starter-notes/daily-logs/**
-!starter-notes/memory/
-!starter-notes/memory/**
-
-# Memory files (contain personal context)
+# Memory files (user-runtime, contain personal context)
 memory*.md
-!starter-notes/memory/**
 
-# Reviewed and scrubbed: private refs replaced — safe to commit
-# (security-plus, ccna, mitre, knowledge/* now committed after Task 0 scrub)
-
-# Still blocked: personal content and known-private files
-starter-notes/service-account-credentials.md
-starter-notes/knowledge/*/staging/
-starter-notes/inbox/staging/
-starter-notes/mitre/staging/
 *.bak-*
+*.pre-*
 
 # Secrets and local config
 .env
