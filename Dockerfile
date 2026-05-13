@@ -42,7 +42,9 @@ COPY ingest/   /virgil/ingest/
 COPY hooks/    /virgil/hooks/
 COPY skills/   /virgil/skills/
 COPY scripts/  /virgil/scripts/
-COPY starter-notes/ /virgil/starter-notes/
+COPY notes/    /virgil/notes/
+COPY soul.md   /virgil/
+COPY CLAUDE.md /virgil/
 COPY GETTING-STARTED.md /virgil/
 
 RUN find /virgil -name "*.sh" -o -name "*.py" | xargs chmod +x
@@ -53,9 +55,10 @@ VOLUME /vault
 
 # ── Environment ───────────────────────────────────────────────────────────────
 ENV VIRGIL_DIR=/vault
+ENV VIRGIL_BACKEND="anthropic"
 ENV ANTHROPIC_API_KEY=""
-ENV SLACK_WEBHOOK_URL=""
-ENV VIRGIL_TRACK="both"
+ENV OLLAMA_URL="http://host.docker.internal:11434"
+ENV OLLAMA_MODEL=""
 ENV PYTHONUNBUFFERED=1
 
 # ── Cron log directory ────────────────────────────────────────────────────────
