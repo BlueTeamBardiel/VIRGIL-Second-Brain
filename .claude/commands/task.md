@@ -9,8 +9,8 @@ Task input: $ARGUMENTS
 From the input, extract:
 - **Task description** — what needs to be done
 - **Priority** — infer from wording: "urgent"/"critical"/"blocking" → 🔴 High; "should"/"need to"/"eventually" → 🟡 Medium; "low"/"someday"/"when possible" → 🟢 Low. Default to 🟡 Medium if ambiguous.
-- **Category** — one of: Homelab, CySA+, Job Search, VIRGIL, Networking, Security, General
-- **Related hosts/tools** — any [[your-lab]] hosts or tools mentioned or implied
+- **Category** — read the allowed list from `$HOME/virgil-public/CLAUDE.md` (look for a `## Task Categories` section, parse the `task_categories:` YAML-style list beneath it). If `CLAUDE.md` has no such section, fall back to: Study, Notes, Lab, General. Pick the best match from the allowed list; default to the last entry ("General" in the fallback) if nothing fits.
+- **Related topics or concepts** — any technical subjects, tools, or terms mentioned or implied
 
 ## Step 2 — Append to tasks note
 
@@ -39,13 +39,7 @@ Append the new task in this format:
 ---
 ```
 
-Apply [[wiki links]] to any your-lab concepts in the task:
-
-**Hosts:** [[your-control-node]], [[your-workstation]], [[your-laptop]], [[your-lab-node-1]], [[your-lab-node-2]], [[your-lab-node-3]], [[your-dns-server]], [[your-pi-server]], [[your-lab-node-4]], [[your-kali-vm]], [[your-windows-host]], [[your-router]], [[your-switch]], [[your-wifi-device]]
-
-**Tools:** [[Ansible]], [[Semaphore]], [[fail2ban]], [[UFW]], [[Tailscale]], [[Pi-hole]], [[xrdp]], [[VNC]], [[Fastfetch]], [[Claude Code]]
-
-**Projects:** [[VIRGIL]], [[your-lab]], [[CySA+]], [[CCNA]]
+Apply `[[wiki links]]` to any technical subjects, tools, certs, or projects mentioned — anything that already has (or could have) a note in the vault. VIRGIL will reconcile broken links the next time `wikilink-ingest.sh` runs.
 
 ## Step 3 — Update memory.md
 
