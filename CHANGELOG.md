@@ -6,6 +6,68 @@ Format: [Semantic Versioning](https://semver.org/) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.0.0] — 2026-05-12
+
+The scope-defined release. v2.0.0 narrows VIRGIL's public surface to three categories — cert notes, CVE notes, RSS digests — and ships the gate that enforces that scope. Anything previously promised in v1.x that fell outside the scope rule has been cut or moved to private maintainer infrastructure.
+
+### New
+
+- **`soul.md`** — first-class behavioral spec. Dante framing, the Feynman Doctrine, four voice registers (normal / teaching / urgent / uncertain), forbidden outputs. Read this before forking; it shapes everything.
+- **`ARCHITECTURE.md`** — full rewrite. 12 sections covering the scope rule, vault layout, brain, two-backend inference, pipelines, security model, configuration, fork-and-adapt paths, and the day-zero knowledge graph.
+- **Five cert tracks shipped** — A+ (136 notes), CCNA (154), CySA+ (263), Net+ (66), Sec+ (120). 739 notes total, all Feynman-style.
+- **239 audited CVE notes** in `notes/knowledge/cve/` — curated starter corpus with attacker scenario and remediation per note. See `notes/knowledge/cve/README.md` for the committed-vs-runtime split.
+- **`scripts/promote-to-public.py`** — the five-stage promotion gate that produces this repo. Documented as a reference implementation for forkers building their own public/private content splits.
+- **`user.md` profile** — `install.sh` creates an empty template; `/start` and `/diagnose` populate it via guided interview on first run. Carries name, background, certs in progress, and target roles across sessions.
+- **Configurable `/task` categories** — `/task` reads its category list from `CLAUDE.md` instead of a hardcoded list. Edit the list to fit your study and work.
+- **Two-backend support** — `VIRGIL_BACKEND` switches between Ollama (local) and Anthropic API. No fallback chain; pick one.
+- **Walls commands** — `/start`, `/imposter`, `/burnout`, `/absence` for re-entry, returning after time away, and the cognitive walls students hit.
+- **`scripts/homelab/ad-hardening/`** — 11 PowerShell scripts for hardening a Windows Server lab, mapped to Security+ and CySA+ exam objectives.
+- **`hooks/quiz.sh` ChromaDB→grep fallback** — quiz works without RAG infrastructure; the grep path is the default for v2.0.0.
+
+### Changed
+
+- **Memory model** — three layers explicit: `memory-working.md` (cleared weekly), `memory-episodic.md` (append-only history), `memory-semantic.md` (durable facts). Replaces the earlier `memory/facts.md`, `memory/lessons.md`, `memory/decisions.md`, `memory/questions.md` structure.
+- **Scope rule enforced** — content must be cert, CVE, or RSS. The gate's scope check blocks anything else from publishing.
+- **`/diagnose` and `/start` write `user.md`** — previously wrote profile fields to `CLAUDE.md`. `user.md` is now the canonical source of user context.
+- **`CLAUDE.md`** — fleet references removed; `user.md` pointer added; task-categories section added.
+- **`install.sh` knowledge-base copy** — copies from `notes/` instead of the deleted `starter-notes/`.
+- **`Dockerfile`** — copies `notes/`, `soul.md`, and `CLAUDE.md` into the container; adds `VIRGIL_BACKEND` and Ollama env vars; drops `starter-notes/` and `SLACK_WEBHOOK_URL`.
+- **`.env.example`** — rewritten around `VIRGIL_BACKEND` as the primary switch; backend-specific sections clearly delimited.
+- **`README.md`, `GETTING-STARTED.md`, `CONTRIBUTING.md`, `FEEDS.md`, `ingest/README.md`, `scripts/README.md`** — all rewritten for v2.0.0 reality: scope rule called out, current paths and counts, no marketing register, soul.md voice.
+
+### Removed
+
+- **Slack approval bot** — the universal write-gate from v1.x. Claude Code's built-in permission prompts are the gate in v2.0.0.
+- **Telegram capture bot** and **conversation-ingest pipeline** — out of scope per the scope rule.
+- **ChromaDB / RAG / OpenWebUI Pipelines stack** — not shipping in v2.0.0. The vault is browsed via Obsidian and queried via Claude Code's file tools.
+- **MITRE ATT&CK library, NIST control library, attacks/, concepts/, threat-actors/, tools/, malware/, DFIR/, OSINT/, pentest/, ransomware/, blue-team/, blueteam/, ctf/, social-engineering/, splunk/, tryhackme/, virtualization/, web-security/, windows/, wireless/, automation/, cloud/, cryptography/, homelab/, identity/, imaging/, incident-response/, job-search/, linux/, networking/, network-security/, powershell/, sdr/, security/** — 33 out-of-scope `notes/knowledge/` subdirectories cut (-4,022 files). What remains is cert content and the curated CVE corpus.
+- **`starter-notes/`** — replaced by `notes/knowledge/` as the canonical content source.
+- **`/lab` and `/deploy` slash commands** — out of scope (homelab fleet orchestration).
+- **`scripts/deploy-machine.sh`, `scripts/sync-projects.sh`, `scripts/deploy-control-node.sh`** — fleet/SSH tooling for the maintainer's private system.
+- **`COSTS.md`, `CRONTAB.md`, `OBSIDIAN-BRAIN.md`** — private operational tracking and the maintainer's mature-vault snapshot. The public cron schedule is now in `ARCHITECTURE.md` §10.
+- **`ingest/conversation-ingest.py/.service`, `ingest/telegram-bot.py/.service`, `ingest/nist-ingest.sh`, `ingest/personal-ingest.sh`** — out-of-scope ingest scripts.
+- **Three-tier LLM fallback** — collapsed to two backends, pick one. No backup-node tier (that was a private fleet artifact).
+- **Pre-built mature graph** — the aspirational ATT&CK/NIST hub graph from v1.x docs is replaced by an honest v2.0.0 day-zero graph in `ARCHITECTURE.md` §12.
+
+### Fixed
+
+- `cve-ingest.py` — `re.sub` bug that incorrectly stripped characters from CVE descriptions in certain edge cases.
+- `cve-ingest.py` `ANALYSIS_PROMPT` — leakage of a maintainer hostname in the embedded prompt string.
+- `scripts/ad/` → `scripts/homelab/ad-hardening/` — renamed for clarity; the PowerShell scripts are study-adjacent labs, not maintainer fleet tooling.
+- Multiple security scrubs across cert and CVE notes — fleet hostnames, lab IPs, personal identifiers, and filesystem paths removed per the leakage scan.
+
+### Migration notes (v1.x → v2.0.0)
+
+This is a breaking release for users who depended on cut features. If you were using v1.x:
+
+- **Slack bot**: gone. Approve writes via Claude Code's normal permission prompts.
+- **ChromaDB**: gone. Use Obsidian search and Claude Code's file tools; quiz.sh falls back to grep.
+- **MITRE/NIST notes**: gone from the public repo. If you need them, restore from your private vault or build them in a fork.
+- **`memory/*.md`**: replaced by `memory-working.md`, `memory-episodic.md`, `memory-semantic.md` at the vault root.
+- **Inference backend**: must set `VIRGIL_BACKEND` explicitly. No more implicit fallback.
+
+---
+
 ## [1.9.2] — 2026-05-01
 
 - Security hardening: command injection prevention in ingest scripts
