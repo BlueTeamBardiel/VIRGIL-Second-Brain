@@ -771,6 +771,26 @@ MEMEOF
     fi
 done
 
+# user.md — created empty here; /start or /diagnose populates it on first run
+if [[ ! -f "$VIRGIL_DIR/user.md" ]]; then
+    cat > "$VIRGIL_DIR/user.md" <<'USEREOF'
+# About You
+
+This file holds context VIRGIL uses across sessions: your name, your background, what certs you're working toward, and what you're trying to do with this knowledge base.
+
+Run `/start` or `/diagnose` to populate this through a guided interview, or fill it in yourself.
+
+---
+
+name:
+background:
+certs-in-progress:
+target-roles:
+notes:
+USEREOF
+    ok "user.md template created"
+fi
+
 # ── 9. Copy knowledge base ────────────────────────────────────────────────────
 hdr "Step 8 — Knowledge base"
 
