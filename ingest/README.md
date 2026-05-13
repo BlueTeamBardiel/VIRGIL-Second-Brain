@@ -1,137 +1,61 @@
 # ingest/
 
-> [[VIRGIL]] knowledge ingestion pipeline — automated scripts for pulling PDFs, threat feeds, CVEs, and personal logs into Obsidian notes
+Eight scripts that put new material into the vault. Two run nightly on cron. Six run when you tell them to. Output lands in `~/VIRGIL/notes/` under the subdirectory that matches the source — CVEs into `cve/`, daily feed digests into `feeds/`, cert material into `knowledge/<cert>/`, ad-hoc captures wherever you point them.
 
-All scripts write to `notes/` subdirectories and optionally notify Slack. The pipeline runs automatically on [[your-control-node]] via cron; scripts can also be run manually via aliases on [[your-workstation]] or your-control-node.
+For the architectural shape — three layers, what passes through the gate, what stays local — see [ARCHITECTURE.md §8](../ARCHITECTURE.md#8-the-pipelines). This file is the script-by-script reference.
 
----
+## What's here
 
-## Scripts
+| Script | Trigger | What it does | Output |
+|---|---|---|---|
+| `rss-ingest.py` | cron 06:00 daily | Pulls the 22 feeds in `FEEDS.md`, synthesizes a daily digest. | `notes/feeds/YYYY-MM-DD.md` |
+| `cve-ingest.py` | cron 07:00 daily (`--recent`) | Pulls recent NVD CVEs, writes one Feynman-style note per CVE. | `notes/cve/CVE-YYYY-NNNNN.md` |
+| `triage-inbox.sh` | cron 08:00 Monday | Asks the LLM whether each `notes/inbox/` item should merge, stay, or archive. | Moves/merges files in place |
+| `wikilink-ingest.sh` | cron 23:30 daily | Inserts `[[wikilinks]]` where note titles match across the vault. | Edits in place |
+| `orphan-detect.sh` | called by `weekly-rollup.sh` | Finds notes with zero inbound and zero outbound links. | Lines in weekly digest |
+| `url-ingest.sh` | manual / `virgil-url` | Fetches a URL, writes a Feynman-style summary to the vault. | `notes/knowledge/<routed>/<slug>.md` |
+| `pdf-ingest.sh` | manual / `virgil-pdf` | Extracts a local PDF, summarizes it into vault notes. | `notes/knowledge/<routed>/<slug>.md` |
+| `cert-ingest.sh` | manual / `virgil-cert-ingest` | Ingests your own cert study material (PDF/URL/text) into a cert track. | `notes/knowledge/<cert>/<slug>.md` |
 
-### pdf-ingest.sh
-**Purpose:** Convert a PDF to a structured Obsidian knowledge note via [[Claude]] API (claude-haiku). Handles large documents by chunking.
-**Output:** `notes/knowledge/<subdir>/<slug>.md`
+The cron entries above are installed by `scripts/install.sh` if you accept the crontab prompt. Disable any one with `crontab -e` — delete the line, save. Nothing else needs to change.
 
-```bash
-pdf-ingest.sh [--first-pages N] <path-to-pdf> [output-subdir]
+## Two backends
 
-# Examples:
-virgil-pdf ~/Desktop/book.pdf networking
-virgil-pdf --first-pages 50 ~/Desktop/bigbook.pdf ccna
-```
+Every script that calls an LLM routes through `hooks/llm_client.py`. That client respects `VIRGIL_BACKEND` in your `.env`:
 
-**Chunking behaviour:**
-- `< 80k chars` → single API call, max_tokens 4096
-- `≥ 80k chars` → split at 60k-char paragraph boundaries, summarise each chunk (max_tokens 2048), synthesise all summaries into final note (max_tokens 8192)
-- Progress logged per-chunk: `Chunk N/M — X chars`
+- `ollama` — local inference at `http://localhost:11434`. Nothing leaves your machine.
+- `anthropic` — Anthropic API. Requires `ANTHROPIC_API_KEY`.
 
-**Alias:** `virgil-pdf`
-**Log:** `ingest/pdf-ingest.log`
+Swap backends by editing `.env`. No script changes needed.
 
----
+## A note on the manual ingest helpers
 
-### nist-ingest.sh
-**Purpose:** NIST-specialised wrapper over the pdf-ingest pattern. Uses a [[CySA+]]-oriented prompt that extracts control families, exam relevance, and actionable blue team takeaways.
-**Output:** `notes/knowledge/nist/<slug>.md`
+`url-ingest.sh`, `pdf-ingest.sh`, and `cert-ingest.sh` produce derivative content from sources you point them at. The output is rewritten in Feynman style per `soul.md` — it is not a verbatim copy of the source. That said: if the source is copyrighted, the derivative is too. Use these for personal study. Don't push the output to a public repo without confirming the source license permits it.
 
-```bash
-virgil-nist ~/Downloads/nist-sp-800-53.pdf
-```
-
-**Alias:** `virgil-nist`
-
----
-
-### rss-ingest.py
-**Schedule:** `0 6 * * *` — daily at 6:00 AM on [[your-control-node]]
-**Purpose:** Fetch 22 threat intel RSS feeds, filter to items from the past 24 hours, call [[Claude]] API to synthesise a structured digest (Top Stories / Homelab / [[CySA+]] / Quick Hits), write to `notes/feeds/`.
-**Output:** `notes/feeds/YYYY-MM-DD.md`, Slack
-
-```bash
-virgil-rss               # run digest for last 24h
-virgil-rss --hours 48    # extend lookback window
-virgil-rss --dry-run     # fetch feeds, print item count, no API call
-```
-
-**Feeds include:** Krebs on Security, The Hacker News, [[Wazuh]] blog, BleepingComputer, CISA alerts, SANS ISC, Project Zero, r/netsec, r/blueteamsec, and 12 more.
-**Alias:** `virgil-rss`
-**Log:** `ingest/rss-ingest.log`
-
----
-
-### cve-ingest.py
-**Schedule:** `0 7 * * *` — daily at 7:00 AM on [[your-control-node]] (`--recent` mode)
-**Purpose:** Query [[NVD]] API v2 for CVE data. Three modes: specific CVE lookup, recent CVEs by date range, or keyword search. Writes a per-CVE Obsidian note with CVSS score, description, CWE, affected products, and references.
-**Output:** `notes/cve/CVE-YYYY-NNNNN.md` (one file per CVE), Slack summary
-
-```bash
-virgil-cve CVE-2024-1234              # single lookup
-virgil-cve CVE-2024-1234 CVE-2024-5678  # batch lookup
-virgil-cve --recent                   # last 24h from NVD
-virgil-cve --recent --days 7          # last 7 days
-virgil-cve --keyword "openssh"        # keyword search
-```
-
-**Rate limiting:** 0.7s delay between requests (NVD unauthenticated limit).
-**Alias:** `virgil-cve`
-**Log:** `ingest/cve-ingest.log`
-
----
-
-### personal-ingest.sh
-**Purpose:** Personal logging — workouts, meals, goals, and study sessions. No Slack notifications (private data).
-**Output:** Subcommand-dependent (see below)
-
-```bash
-virgil-workout "5x5 squat 185lb, 3x8 RDL 135lb"   # → notes/personal/workouts/YYYY-MM-DD.md
-virgil-meal    "chicken rice broccoli, ~650 cal"    # → notes/personal/nutrition/YYYY-MM-DD.md
-virgil-goal    "finish CCNA Vol 2 chapters 1-3"     # → notes/personal/goals.md (appended)
-virgil-study   "CCNA: VLANs and STP — 2h"          # → notes/personal/study/YYYY-MM-DD.md
-```
-
-If no inline notes are provided, opens `$EDITOR` for longer entries.
-**Aliases:** `virgil-workout`, `virgil-meal`, `virgil-goal`, `virgil-study`
-**Log:** `ingest/personal-ingest.log`
-
----
-
-## Cron Schedule (your-control-node)
-
-| Time | Script | Output |
-|------|--------|--------|
-| Daily 06:00 | `rss-ingest.py` | `notes/feeds/YYYY-MM-DD.md` |
-| Daily 07:00 | `cve-ingest.py --recent` | `notes/cve/*.md` |
-
-PDF and personal ingestion are manual (alias-driven).
-
----
-
-## Output Directory Map
+## Where output lands
 
 ```
-notes/
+~/VIRGIL/notes/
 ├── knowledge/
-│   ├── ccna/          ← virgil-pdf ... ccna
-│   ├── nist/          ← virgil-nist
-│   ├── networking/    ← virgil-pdf ... networking
-│   └── general/       ← virgil-pdf (default)
-├── feeds/             ← virgil-rss (daily digests)
-├── cve/               ← virgil-cve (per-CVE notes)
-└── personal/
-    ├── workouts/      ← virgil-workout
-    ├── nutrition/     ← virgil-meal
-    ├── study/         ← virgil-study
-    └── goals.md       ← virgil-goal
+│   ├── ccna/             ← cert-ingest --cert "CCNA"
+│   ├── security-plus/    ← cert-ingest --cert "Security+"
+│   ├── netplus/          ← cert-ingest --cert "Network+"
+│   ├── aplus/            ← cert-ingest --cert "A+"
+│   ├── cysa/             ← cert-ingest --cert "CySA+"
+│   └── <routed>/         ← url-ingest, pdf-ingest (LLM picks the subdir)
+├── feeds/                ← rss-ingest (one digest per day)
+├── cve/                  ← cve-ingest (one note per CVE)
+└── inbox/                ← drop notes here; triage-inbox files them weekly
 ```
 
----
+The `notes/knowledge/cve/` directory shipped with the public repo is separate — it's the 239 curated starter CVEs. Your nightly runtime CVE feed lives at `notes/cve/`. See `notes/knowledge/cve/README.md`.
 
-## Related
+## Logs
 
-- [[VIRGIL]] — second brain system this pipeline feeds
-- [[your-control-node]] — cron host for automated ingestion
-- [[your-workstation]] — manual ingestion via aliases
-- [[Claude]] — API used for synthesis (claude-haiku-4-5-20251001)
-- [[NVD]] — CVE data source for cve-ingest.py
-- [[CySA+]] — primary study context for nist-ingest and rss digests
-- [[CCNA]] — primary study context for pdf-ingest
+Each script writes to `~/VIRGIL/logs/<script-name>.log` when it runs from cron. Tail those if a job goes silent.
+
+## Adding your own
+
+Each script is self-contained — read one before you write another. The pattern is: pull source data, call `hooks/llm_client.py` for synthesis, write the result into a vault subdirectory. The `cron` jobs use the same pattern as the manual helpers; the only difference is who triggers them.
+
+If you fork and want a different ingest source (a different vendor's threat feed, a different vulnerability database, a different note format), copy the closest existing script and edit. `cve-ingest.py` is the cleanest reference for the "API → per-item note" pattern; `rss-ingest.py` is the cleanest for the "many items → one synthesized digest" pattern.
