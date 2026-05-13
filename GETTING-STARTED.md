@@ -1,472 +1,417 @@
 # Getting Started with VIRGIL
 
-You're 3 commands away from a working second brain.
+You're a handful of commands away from a working cybersecurity study companion. Read this end-to-end before running anything — the consequences of each step are explained before the command.
+
+---
+
+## Glossary — terms you'll see in this guide
+
+If you've never set this kind of system up before, here's what the names refer to in one sentence each.
+
+**Obsidian** — a free note-taking app that reads plain Markdown files from a folder. VIRGIL writes all your notes as Markdown; Obsidian turns them into a connected, searchable graph.
+
+**Claude Code** — Anthropic's terminal AI. You run it inside your vault folder. It reads `CLAUDE.md` and `soul.md` and exposes the slash commands that make VIRGIL a study companion rather than a folder of notes.
+
+**Ollama** — a tool that runs language models on your own hardware. If you have a recent GPU (or patient CPU), you can run VIRGIL fully local with no cloud API.
+
+**Anthropic API** — Anthropic's cloud service for running Claude. Pay-as-you-go, about $3–5 per month at typical study usage. Requires an API key.
+
+**RSS feed** — a machine-readable news format. VIRGIL pulls 22 security feeds every morning and synthesizes them into one digest note.
+
+**CVE** — a public record of a software vulnerability with a unique ID (like CVE-2021-44228). VIRGIL ships 239 curated CVE notes and pulls new ones nightly.
+
+**Vault** — your VIRGIL folder. Default: `~/VIRGIL`. Everything VIRGIL knows about you and the world lives there.
+
+**cron** — the Linux/macOS scheduler that runs commands on a schedule. VIRGIL uses it to pull threat intel and CVEs while you sleep.
+
+---
+
+## The decisions you need to make
+
+### Decision 1 — Which inference backend
+
+VIRGIL needs an LLM to summarize feeds, write CVE notes, run slash commands. You pick one of two:
+
+| Backend | Cost | Network | When to pick it |
+|---|---|---|---|
+| **Ollama** (local) | Free | Nothing leaves your machine | You have a GPU with 8 GB+ VRAM, or you want full privacy. |
+| **Anthropic API** | ~$3–5/month | Prompts go to Anthropic | You don't have a capable GPU, or you just want it to work fast. |
+
+There is no fallback chain. You pick one, set `VIRGIL_BACKEND` in `.env`, and that's what runs.
+
+If you're unsure: start with the Anthropic API. It's faster to set up and is the easier first install. You can switch to Ollama later by editing `.env`.
+
+### Decision 2 — Vault location
+
+The installer defaults to `~/VIRGIL`. Accept the default unless you have a reason to change it. Obsidian will point here. You can override with `VIRGIL_DIR` in `.env` if you want it on an SSD, a NAS mount, or somewhere else.
+
+---
+
+## Step 1 — Install prerequisites
+
+The installer needs Python 3.10+, git, curl, and a Linux/macOS shell. WSL2 on Windows works; see the Windows section at the bottom.
+
+Verify you have them:
 
 ```bash
-# 1. Install Ollama (local AI — no API costs)
-curl -fsSL https://ollama.com/install.sh | sh && ollama pull qwen2.5:14b
-
-# 2. Run the VIRGIL installer
-bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
-
-# 3. Open VIRGIL
-cd ~/VIRGIL && claude
+python3 --version    # 3.10 or higher
+git --version
+curl --version
 ```
 
-That's it. VIRGIL introduces itself and walks you through the rest.
+If any are missing on Linux, install with your package manager (`apt`, `dnf`, `pacman`). On macOS, install Xcode command-line tools (`xcode-select --install`) and Homebrew if you don't have them.
 
 ---
 
-## The two decisions you need to make
+## Step 2 — Optional: install Ollama and pull a model
 
-**Decision 1 — API key (optional)**
+Skip this step if you're using the Anthropic API. Jump to Step 3.
 
-VIRGIL runs fully with local inference via [Ollama](https://ollama.com) — no API key, no cost. An Anthropic API key unlocks cloud fallback (Claude Haiku, ~$3–5/month at typical usage) but is not required.
+### Check your VRAM
 
-- No API key: set `VIRGIL_BACKEND=ollama` in `~/.env`
-- With API key: set `ANTHROPIC_API_KEY=sk-...` in `~/.env`
-
-If you're not sure, start without one. You can add it later.
-
-**Decision 2 — Vault location**
-
-The installer defaults to `~/VIRGIL`. Accept the default unless you have a reason to change it. Obsidian will point here.
-
----
-
-## Glossary — what is all this?
-
-**CVE (Common Vulnerabilities and Exposures)**
-A CVE is a public record of a security vulnerability in software or hardware.
-Every CVE has a unique ID (like CVE-2024-1234), a severity score, and a description
-of what the vulnerability is and how it can be exploited.
-VIRGIL pulls new CVEs daily from the US government's vulnerability database (NVD).
-
-**MITRE ATT&CK**
-A publicly available knowledge base of real-world attacker tactics and techniques.
-Security teams use it to understand how attackers operate and to map defenses.
-VIRGIL includes notes on ATT&CK techniques so you can study them for your cert.
-
-**RSS Feed**
-RSS is a format that lets websites publish updates in a machine-readable way.
-VIRGIL subscribes to security news sites (Bleeping Computer, SANS ISC, etc.)
-and pulls their latest articles into your vault every morning automatically.
-
-**Obsidian**
-A free note-taking app that reads plain markdown files from a folder on your machine.
-VIRGIL writes all your notes as markdown files — Obsidian turns them into a connected
-knowledge graph you can search, browse, and navigate visually.
-
-**Claude Code**
-An AI coding and research assistant that runs in your terminal.
-VIRGIL uses it as the primary interface for study sessions, slash commands,
-and interacting with your vault using natural language.
-
-**Ollama**
-A tool that lets you run AI language models locally on your own hardware.
-VIRGIL can use Ollama instead of an API key if your machine has enough RAM or a GPU.
-See the hardware requirements section before installing.
-
----
-
-## Step 1 — Check your hardware, then install Ollama
-
-### Before you pull a model — check your hardware
-
-`qwen2.5:14b` requires approximately 16 GB of RAM and runs best with a GPU.
-Running it on an underpowered machine will cause it to hang or crash silently.
+The model you can run depends on your GPU's VRAM. Run this to see what you have:
 
 ```bash
-free -h          # RAM — need 16 GB+ for qwen2.5:14b
-nproc            # CPU cores
-lspci | grep -i vga   # GPU (optional but recommended)
+nvidia-smi              # NVIDIA GPUs
+rocm-smi                # AMD GPUs (if rocm is installed)
+free -h                 # If no GPU, system RAM matters
 ```
 
-| Your hardware | Recommended model | RAM needed |
+| VRAM available | Suggested model | Notes |
 |---|---|---|
-| GPU with 16 GB+ VRAM | `qwen2.5:14b` (best quality) | 16 GB RAM |
-| GPU with 8 GB VRAM | `qwen2.5:7b` (good quality) | 8 GB RAM |
-| No GPU / older laptop | Use Anthropic API key instead | Any |
-| Unsure | Use Anthropic API key instead | Any |
+| 8 GB | `llama3.1:8b` | Fast, decent quality. |
+| 16 GB | `qwen2.5:14b` | Better reasoning, comfortable middle ground. |
+| 24 GB+ | `gpt-oss:20b` | Headroom for long context. |
+| CPU only | `llama3.1:8b` | Slow but works on modern CPUs. |
 
-If you're not sure, use an Anthropic API key — it's faster to set up and costs
-roughly $3–5/month at typical usage: https://console.anthropic.com
+Models age quickly. The names above are accurate at v2.0.0 release; check the [Ollama library](https://ollama.com/library) for current best-in-class at your VRAM tier.
 
-### Install Ollama and pull your model
+### Install Ollama
 
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
+```
 
-# Replace qwen2.5:14b with qwen2.5:7b if you have less than 16 GB RAM
+This downloads and installs Ollama. It then runs as a local service on port 11434.
+
+### Pull a model
+
+Pick from the table above and pull:
+
+```bash
 ollama pull qwen2.5:14b
 ```
 
-**Did it work?**
+This downloads several gigabytes. Wait for it to finish.
+
+### Verify Ollama is running
+
 ```bash
 ollama run qwen2.5:14b "Hello"
 ```
-You should see a short response. If Ollama isn't running, see [Troubleshooting](#troubleshooting).
 
-> **Reasoning models (deepseek-r1, deepseek-r1 variants):** Set `num_predict` to at least 3000 — these models use internal thinking tokens and may return empty responses on complex questions if the limit is too low. Add `PARAMETER num_predict 3000` to your Modelfile or pass `--num-predict 3000` when running.
+You should see a short response. If it hangs or errors, see Troubleshooting at the bottom.
+
+> **Note on reasoning models.** If you use a reasoning model like `deepseek-r1`, set `num_predict` to at least 3000 — these models burn tokens on internal thinking before producing visible output, and the default budget is too low. See `ARCHITECTURE.md` §7.3.
 
 ---
 
-## Step 2 — Run the VIRGIL installer
+## Step 3 — Run the VIRGIL installer
+
+Clone the repo and run the installer:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
+git clone https://github.com/BlueTeamBardiel/virgil-public.git
+cd virgil-public
+bash scripts/install.sh
 ```
 
-The installer:
-- Creates `~/VIRGIL/` with the full vault structure
-- Installs scripts to `~/.local/bin/`
-- Sets up crontab for daily ingest, nightly memory distillation, weekly rollup
-- Runs a live CVE demo so you can see it working
+The installer is interactive. It will:
 
-**Did it work?**
+- Create `~/VIRGIL/` with the full vault structure (`notes/`, `logs/`, `memory-*.md`, `user.md`).
+- Copy the 739 cert notes and 239 CVE notes into the vault.
+- Write `.env` and `CLAUDE.md` based on your answers.
+- Optionally install 7 cron jobs that keep the vault current (you can decline; details below).
+- Optionally add `virgil-*` aliases to your shell.
+
+Every prompt explains what saying yes vs. no will do before asking. Read each one. Saying no to optional pieces is always safe.
+
+### About the cron jobs
+
+If you accept the crontab prompt, the installer adds these to your user crontab:
+
+| Time | Job | What it does |
+|---|---|---|
+| 06:00 daily | `rss-ingest.py` | Writes one threat-intel digest from 22 feeds. |
+| 07:00 daily | `cve-ingest.py --recent` | Pulls new CVEs from NVD and writes one note each. |
+| 08:00 Mondays | `triage-inbox.sh` | Routes anything you've dropped into `notes/inbox/`. |
+| 23:30 daily | `wikilink-ingest.sh` | Inserts `[[wikilinks]]` across the vault. |
+| 23:55 daily | `auto-reflect.sh` | Fills empty stub notes via the LLM. |
+| 01:00 Mon–Sat | `promote.sh` | Distills daily logs into memory files. |
+| 01:00 Sundays | `weekly-rollup.sh` | Writes the week's digest. |
+
+You can disable any one of these later with `crontab -e` — delete the line, save. Nothing else needs to change.
+
+### Did it work?
+
 ```bash
 ls ~/VIRGIL/notes/
 ```
-You should see `inbox/`, `mitre/`, `cve/`, `feeds/`, `knowledge/`.
+
+You should see `knowledge/` (the cert notes and curated CVE corpus), `cve/` (your runtime CVE feed, starts empty), `feeds/` (starts empty), and `inbox/`.
+
+```bash
+ls ~/VIRGIL/
+```
+
+You should also see `memory-working.md`, `memory-episodic.md`, `memory-semantic.md`, `user.md`, and `.env`.
 
 ---
 
-## Step 3 — Open the vault in Obsidian
+## Step 4 — Open the vault in Obsidian
 
-Download [Obsidian](https://obsidian.md) (free) if you don't have it.
+Download [Obsidian](https://obsidian.md) if you don't have it. It's free.
 
-1. Open Obsidian → **Open folder as vault**
-2. Navigate to `~/VIRGIL` (default install path)
-3. Click **Open**
+1. Open Obsidian.
+2. Click **Open folder as vault** (not "Create new vault").
+3. Navigate to `~/VIRGIL` (or wherever you pointed `VIRGIL_DIR`).
+4. Click **Open**.
 
-Obsidian indexes all Markdown files. The left sidebar shows your folder structure. Press `Ctrl+G` to open graph view.
+Obsidian indexes the Markdown files. The left sidebar shows the folder tree. Press `Ctrl+G` (Cmd+G on macOS) to open the graph view — you'll see five cert clusters and the CVE corpus connected by shared concepts.
 
-**Did it work?**
+### Did it work?
 
-You should see folders in the left sidebar and notes in `notes/knowledge/`. Press `Ctrl+G` — if notes have wikilinks, you'll see a connected graph.
-
-**Windows (WSL2):** In the folder picker, type `\\wsl.localhost\Ubuntu\home\<your-ubuntu-username>\VIRGIL` directly into the address bar.
+You should see `notes/knowledge/` in the sidebar with subdirectories for each cert. Click into `ccna/` — there should be 154 notes there. Click any note, then `Ctrl+G` to see how it's linked to others.
 
 ---
 
-## Step 4 — Install Claude Code and open VIRGIL
+## Step 5 — Install Claude Code
 
-Claude Code is the AI terminal interface for VIRGIL — it's how you run study sessions,
-use slash commands, and interact with your notes using natural language.
+Claude Code is the terminal AI that loads `soul.md` and gives you the slash commands. It runs on Node.js.
+
+### Install Node.js (if you don't have it)
+
+Ubuntu/Debian:
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+macOS (with Homebrew):
+
+```bash
+brew install node
+```
 
 ### Install Claude Code
 
 ```bash
-# Requires Node.js. Install it first if you don't have it:
-
-# Ubuntu/Debian:
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# macOS (with Homebrew):
-brew install node
-
-# Install Claude Code
 npm install -g @anthropic-ai/claude-code
-
-# Verify
 claude --version
 ```
 
-### Open VIRGIL
-
-```bash
-cd ~/VIRGIL && claude
-```
-
-VIRGIL introduces itself and shows your vault status. From here:
-
-| Command | What it does |
-|---------|-------------|
-| `/secplus` | Security+ SY0-701 Feynman study session |
-| `/cysa` | CySA+ CS0-003 domain-mapped study session |
-| `/ccna` | CCNA routing/switching study session |
-| `/aplus` | A+ Core 1/Core 2 study session |
-| `/virgil-quiz "topic"` | Quiz yourself on any topic from your vault |
-| `/reflect` | End-of-session memory distillation |
-| `/handoff` | Save session context before closing |
-
-**Did it work?**
-
-Type `/secplus` and answer the first question. If you get a Feynman-style prompt back, the system is working. If you get an error, see [Troubleshooting](#troubleshooting).
+If `npm install -g` fails with a permissions error, configure npm to use a user-local prefix (`npm config set prefix ~/.npm-global`) rather than running with `sudo`.
 
 ---
 
-## Your First 5 Minutes
+## Step 6 — Open VIRGIL
 
-You've installed VIRGIL and opened it in Claude Code. Here's what to do right now.
-
-**Day 1 reality:** `quiz-scores.json` doesn't exist yet. The study commands work, but they'll pull random topics instead of weak ones — because you have no quiz history yet. That's fine. Fix it in 5 minutes.
-
-### 1. Seed your quiz history
+From your vault:
 
 ```bash
-virgil-quiz
+cd ~/VIRGIL
+claude
 ```
 
-This runs a 5-question quiz on a random topic and creates `logs/quiz-scores.json`. Answer honestly — this is how VIRGIL learns what you know.
+Claude Code starts, loads `CLAUDE.md`, loads `soul.md`, and waits for input. Your first session, run:
 
-### 2. Check your baseline
-
-```bash
-virgil-progress
+```
+/start
 ```
 
-Everything will show 0% or "no data" on day 1. That's expected. Bookmark this output — check it again in a week.
+VIRGIL conducts a brief guided interview — your name, background, certs in progress, target roles — and writes the answers to `user.md`. Every subsequent session reads `user.md` silently. You don't have to do this again.
 
-### 3. Start a study session
+After the interview, pick a cert and start:
 
-Open Claude Code, then:
 ```
-/secplus
+/secplus     ← Security+ session
+/ccna        ← CCNA session
+/cysa        ← CySA+ session
+/aplus       ← A+ session
+/netplus     ← Network+ session
 ```
-or `/cysa` if that's your cert. VIRGIL pulls your weakest topics and starts drilling with Feynman analogies and exam questions.
 
-### Did it work?
+Or jump into open-ended teaching:
 
-- [ ] `virgil-quiz` ran and asked 5 questions
-- [ ] `logs/quiz-scores.json` now exists
-- [ ] `virgil-progress` printed your cert dashboard
-- [ ] `/secplus` gave you a Feynman explanation + exam question
-
-**Your vault is pre-loaded.** You have 1,500+ notes installed — Security+, CySA+, CCNA, ATT&CK techniques, and CVEs. The ingest pipelines will continue adding live threat intel each morning. By day 3, the vault is actively updating itself.
+```
+/teach VLANs
+/teach "how does SMB relay actually work"
+```
 
 ---
 
-## Step 5 — Run your first ingest
-
-```bash
-# Pull today's threat intel feeds
-virgil-rss
-
-# Ingest a MITRE ATT&CK technique
-virgil-url https://attack.mitre.org/techniques/T1059/
-
-# Pull recent CVEs
-virgil-cve --recent
-```
-
-Open Obsidian. You'll see new notes in `notes/feeds/`, `notes/mitre/`, and `notes/cve/`. Click into them and follow the `[[wiki links]]`.
-
----
-
-## Step 6 — The daily habit
-
-VIRGIL runs mostly on autopilot once crontab is configured.
-
-1. **Morning**: Check `notes/feeds/YYYY-MM-DD.md` for overnight threat intel digest
-2. **During study**: Use `virgil-pdf` and `virgil-url` to capture anything interesting
-3. **After a quiz**: Run `virgil-review` — this is the most important 5 minutes you'll spend
-4. **After a session**: Run `/reflect` to distill your session into permanent memory
-5. **Sunday**: Check `weekly-summaries/YYYY-WNN.md` for the week's synthesis
-
-### virgil-review — your daily spaced repetition session
-
-After any quiz, run:
-
-```bash
-virgil-review
-```
-
-This surfaces your weakest topics using the SM-2 spaced repetition algorithm — the same algorithm behind Anki. Topics you struggle with come back sooner; topics you've mastered drift further out. Without review, quiz scores don't compound. With it, you build durable knowledge instead of short-term recall.
-
-`virgil-review` shows what's due today, what's coming up, and lets you jump straight into a quiz on the top overdue topic. It takes 5–10 minutes.
-
----
-
-## Your first week with VIRGIL
+## Your first week
 
 | Day | What to do | Command |
-|-----|-----------|---------|
-| 1 | Set up your profile and find your starting point | `/start` then `/diagnose` |
-| 2 | First teaching session — learn from your vault | `/teach` |
-| 3 | First quiz + spaced repetition review | `virgil-quiz [topic]` then `virgil-review` |
-| 4 | Check your progress by domain | `virgil-progress` |
-| 7 | Weekly synthesis — what you covered this week | `/week` |
+|---|---|---|
+| 1 | Onboarding interview + first cert session | `/start` then `/secplus` (or your cert) |
+| 2 | First teaching session on a weak topic | `/teach <topic>` |
+| 3 | First quiz | `virgil-quiz <topic>` (shell alias) |
+| 4 | Spaced-repetition review of what you've quizzed | `virgil-review` |
+| 5 | A diagnostic to find weak areas | `/diagnose` |
+| 7 | Weekly digest | `/week` |
 
-After day 7, the system runs itself. The cron jobs pull threat intel, your quiz scores track what you know, and `virgil-review` tells you what to study next.
-
----
-
-## Slack integration (optional)
-
-If you want to approve/deny pipeline actions from your phone, VIRGIL has a Slack bot. This is completely optional and not required for any core functionality.
-
-See [ARCHITECTURE.md](ARCHITECTURE.md) for setup instructions. Skip this entirely if you just want the knowledge base.
+By the end of week one, the ingest pipelines have written seven daily feed digests and any new CVEs that disclosed during the week. Your vault is alive.
 
 ---
 
-## Optional — Local RAG setup
+## What's in the box
 
-RAG (Retrieval-Augmented Generation) lets VIRGIL query your actual vault notes during every conversation instead of relying only on the model's training data.
-
-Without RAG, VIRGIL knows what it was trained on. With RAG, VIRGIL knows what *you* know — your notes, your CVEs, your lab configs.
-
-**What you need:**
-```bash
-pip install chromadb --break-system-packages
-ollama pull nomic-embed-text
-```
-
-**Set up the embedding pipeline:**
-```bash
-python3 ~/VIRGIL/ingest/chroma-ingest.py  # embeds notes into ChromaDB
-```
-
-**Wire into OpenWebUI:**
-1. Install the Pipelines service:
-   ```bash
-   docker run -d --name pipelines --network host \
-     -v ~/pipelines:/app/pipelines \
-     --restart always \
-     ghcr.io/open-webui/pipelines:main
-   ```
-2. Copy the pipeline file:
-   ```bash
-   cp ~/VIRGIL/ingest/virgil_rag_pipeline.py ~/pipelines/virgil_rag.py
-   docker restart pipelines
-   ```
-3. In OpenWebUI → Admin Settings → Connections → add URL: `http://localhost:9099`, API Key: `0p3n-w3bu!`
-4. Select **VIRGIL RAG** from the model dropdown.
-
-**Make ingest persistent:**
-```bash
-# Add to crontab — re-embed vault nightly so new notes are searchable
-python3 ~/VIRGIL/ingest/chroma-ingest.py  # embeds notes into ChromaDB
-```
+- **Cert notes**: A+ (136), CCNA (154), CySA+ (263), Net+ (66), Sec+ (120). All Feynman-style per `soul.md`.
+- **CVE corpus**: 239 audited starter notes plus a runtime feed that grows nightly.
+- **23 slash commands**: cert sessions, teaching, diagnosis, planning, the four meta-cognition "wall" commands, session management. Full list in `ARCHITECTURE.md` §6.3.
+- **soul.md**: the behavioral spec. The most important file in the repo. Edit it to retune VIRGIL's voice.
+- **The gate**: `scripts/promote-to-public.py`, the security boundary that produced this repo. Read it if you fork.
 
 ---
 
-## Windows (WSL2) setup
+## Memory and context
+
+VIRGIL keeps three memory files in your vault root:
+
+| File | Role | Lifespan |
+|---|---|---|
+| `memory-working.md` | Active tasks, open threads | Cleared weekly |
+| `memory-episodic.md` | Dated session history | Append-only |
+| `memory-semantic.md` | Permanent facts about you, your certs, your decisions | Append-only |
+
+Plus `user.md` — your name, background, certs in progress, target roles. `/start` and `/diagnose` populate it via guided interview.
+
+These four files are gitignored. They're yours and they stay on your machine.
+
+---
+
+## Common shell aliases (added by the installer)
+
+| Alias | What it does |
+|---|---|
+| `virgil-quiz <topic>` | 5-question quiz on a vault topic |
+| `virgil-review` | Spaced-repetition dashboard (SM-2 over quiz scores) |
+| `virgil-rss` | Run the RSS pipeline manually |
+| `virgil-cve --recent` | Run the CVE pipeline manually |
+| `virgil-url <url>` | Ingest a URL into the vault |
+| `virgil-pdf <path>` | Ingest a PDF into the vault |
+| `virgil-cert-ingest <type> <source> "<cert>"` | Ingest your own cert study material |
+| `virgil-triage` | Manually triage `notes/inbox/` |
+
+---
+
+## Windows (via WSL2)
 
 VIRGIL's scripts and vault run inside WSL2. Obsidian and Claude Code run natively on Windows. They connect through a network path.
 
-### Step 1 — Enable WSL2
+### 1. Enable WSL2
 
 Open PowerShell **as Administrator**:
+
 ```powershell
 wsl --install
 ```
-Reboot when prompted. Ubuntu will finish setting up — create a username and password when asked.
 
-### Step 2 — Install Windows-side tools
+Reboot when prompted. Ubuntu finishes setting up — create a username and password when asked.
 
-- **[Obsidian](https://obsidian.md)** — native Windows app
-- **[Claude Code](https://claude.ai/code)** — run the installer from inside the Ubuntu terminal
+### 2. Install Windows-side tools
 
-### Step 3 — Run the VIRGIL installer inside WSL2
+- [Obsidian](https://obsidian.md) — native Windows app.
+- Claude Code — installed inside Ubuntu (see Step 5 above), not on Windows.
 
-Open your Ubuntu terminal (search "Ubuntu" in the Start menu):
+### 3. Run the VIRGIL installer inside WSL2
+
+Open Ubuntu (search "Ubuntu" in Start menu):
+
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
+git clone https://github.com/BlueTeamBardiel/virgil-public.git
+cd virgil-public
+bash scripts/install.sh
 ```
 
-### Step 4 — Connect Obsidian to the vault
+### 4. Point Obsidian at the WSL vault
 
-1. Open Obsidian → **Open folder as vault**
-2. Type this path directly into the address bar:
+1. Open Obsidian → **Open folder as vault**.
+2. Type into the path bar:
    ```
    \\wsl.localhost\Ubuntu\home\<your-ubuntu-username>\VIRGIL
    ```
-3. Click **Open**
+3. Click **Open**.
 
-### Step 5 — Fix cron (WSL2 doesn't autostart it)
+### 5. Make cron run on WSL2
+
+WSL2 doesn't autostart cron. Add this once and restart WSL:
 
 ```bash
 echo -e "[boot]\ncommand=service cron start" | sudo tee -a /etc/wsl.conf
 ```
-Restart WSL (`wsl --shutdown` in PowerShell, then reopen Ubuntu). Verify: `service cron status`
+
+Then in PowerShell: `wsl --shutdown`, reopen Ubuntu. Verify with `service cron status`.
 
 ---
 
 ## Troubleshooting
 
-### Ollama not running
+### Ollama not responding
 
 ```bash
-# Check if Ollama is running
 curl http://localhost:11434/api/tags
+```
 
-# Start it if not
+If this returns "connection refused," Ollama isn't running. Start it:
+
+```bash
 ollama serve &
-
-# Or as a service
+# or as a system service
 sudo systemctl start ollama
 ```
 
-If `curl` returns connection refused, Ollama isn't started. Run `ollama serve` in a separate terminal.
-
-### Claude Code not authenticated
+### Claude Code says "ANTHROPIC_API_KEY not set"
 
 ```bash
-# Verify your API key is set
 echo $ANTHROPIC_API_KEY
-
-# If empty, source your env file
-source ~/.env
-
-# Or set it directly
-export ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-If you're using local-only mode (Ollama), set `VIRGIL_BACKEND=ollama` in `~/.env` — this skips the API key check entirely.
+If empty, your shell didn't pick up `.env`. Source it: `source ~/VIRGIL/.env`. To make it permanent, add `source ~/VIRGIL/.env` to your `~/.bashrc` or `~/.zshrc`.
 
-### Vault not found in Obsidian
+If you're using Ollama, set `VIRGIL_BACKEND=ollama` in `.env` — this skips the API key requirement.
 
-1. Verify the vault was created: `ls ~/VIRGIL/notes/`
-2. In Obsidian, use **Open folder as vault** — do not use **Create new vault**
-3. On WSL2: make sure Ubuntu is running before opening Obsidian; the network path `\\wsl.localhost\...` only appears when WSL is active
+### Vault not visible in Obsidian
 
----
+Make sure:
 
-## Vault structure
+1. The vault was created: `ls ~/VIRGIL/notes/`.
+2. You used **Open folder as vault**, not **Create new vault**.
+3. On WSL2: Ubuntu must be running before you open Obsidian — the network path only appears when WSL is active.
 
-```
-notes/
-├── inbox/        ← Drop anything here; triage routes it nightly
-├── mitre/        ← ATT&CK techniques (auto-ingested)
-├── cve/          ← CVE notes (auto-generated daily from NVD)
-├── feeds/        ← Daily threat intel digests (6am)
-├── knowledge/    ← Study library
-│   ├── security/
-│   ├── networking/
-│   └── nist/
-└── personal/     ← Your notes (gitignored)
+### Cron jobs aren't running
+
+```bash
+crontab -l
 ```
 
----
+If you see the VIRGIL section, cron has the jobs. Check the logs:
 
-## Memory system
+```bash
+tail ~/VIRGIL/logs/rss.log
+tail ~/VIRGIL/logs/cve.log
+```
 
-Three files track your persistent context (gitignored — they stay on your machine):
-
-| File | What it holds |
-|------|--------------|
-| `memory-working.md` | Active tasks and current sprint. Cleared weekly by `promote.sh`. |
-| `memory-episodic.md` | Dated history of what you've done. Append-only. |
-| `memory-semantic.md` | Permanent facts: your lab setup, certs in progress, key decisions. |
-
-When you run `/reflect`, VIRGIL reads these files to give you context-aware responses. Update `memory-semantic.md` with facts you want VIRGIL to always know about your setup.
+On macOS, you may need to grant cron full disk access in System Preferences → Security & Privacy → Privacy → Full Disk Access.
 
 ---
 
-## Common Obsidian shortcuts
+## Where to go next
 
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl+Shift+F` | Search all note content |
-| `Ctrl+O` | Quick switcher — jump to any note by name |
-| `Ctrl+G` | Graph view |
-| `Ctrl+[` | Back in history |
-
-The wikilink-ingest script (runs nightly at 11:30pm) automatically injects `[[wiki links]]` for any mention of a known note title. You don't have to manually link everything.
-
----
-
-Full architecture details: [`ARCHITECTURE.md`](ARCHITECTURE.md)
-
+- [`ARCHITECTURE.md`](ARCHITECTURE.md) — full architectural breakdown. Read this before forking.
+- [`soul.md`](soul.md) — the behavioral spec. Read this to understand VIRGIL's voice.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to fork and contribute.
+- [`FEEDS.md`](FEEDS.md) — the 22 RSS feeds.
+- [`ROADMAP.md`](ROADMAP.md) — what's planned for v2.1.0.
