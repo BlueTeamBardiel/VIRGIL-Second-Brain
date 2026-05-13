@@ -20,8 +20,8 @@ If the file doesn't exist, create it:
 ```markdown
 # Task Capture
 
-> [[VIRGIL]] quick-capture task log | For full pending list see [[memory.md]]
-> Tasks here flow into memory.md on next review.
+> [[VIRGIL]] quick-capture task log | For full pending list see [[memory-working.md]]
+> Tasks here flow into memory-working.md on next review.
 
 ---
 ```
@@ -41,9 +41,9 @@ Append the new task in this format:
 
 Apply `[[wiki links]]` to any technical subjects, tools, certs, or projects mentioned — anything that already has (or could have) a note in the vault. VIRGIL will reconcile broken links the next time `wikilink-ingest.sh` runs.
 
-## Step 3 — Update memory.md
+## Step 3 — Update memory-working.md
 
-Read `$HOME/VIRGIL/memory.md`.
+Read `$HOME/VIRGIL/memory-working.md`.
 
 Add the task to the appropriate priority section (🔴/🟡/🟢) in the pending tasks list. Match the existing bullet format exactly:
 
@@ -57,5 +57,5 @@ Do not reorder or reformat any existing bullets. Append the new one at the end o
 
 Print:
 - The exact task text as filed
-- Which priority section it was added to in memory.md
+- Which priority section it was added to in memory-working.md
 - The path of the tasks note appended to
