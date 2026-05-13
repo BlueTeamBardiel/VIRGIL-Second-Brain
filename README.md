@@ -1,254 +1,158 @@
-# VIRGIL — AI-Powered Second Brain for Cybersecurity Learners
+# VIRGIL
 
-> Your personal knowledge base that studies with you, not for you.
-> Local. Private. Free.
+![Version](https://img.shields.io/badge/version-v2.0.0-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
 
-![Version](https://img.shields.io/badge/version-v1.9.2-blue) ![Platform Linux](https://img.shields.io/badge/platform-Linux-informational) ![Platform macOS](https://img.shields.io/badge/platform-macOS-informational) ![Platform Windows WSL2](https://img.shields.io/badge/platform-Windows%20WSL2-informational) ![License MIT](https://img.shields.io/badge/license-MIT-green)
+A cybersecurity study companion built on three things you already understand: a folder of Markdown notes (the vault), a terminal AI that loads a behavioral spec, and two ingest pipelines that keep the vault current while you sleep. Local-first. Forkable. No telemetry. No subscription.
 
-## What it does
+## The scope rule
 
-VIRGIL ingests threat intel daily, lets you quiz yourself on weak topics, tracks what you know and what you don't, and compounds knowledge automatically over time. Runs on your own hardware via [Ollama](https://ollama.com). No subscription. No data leaving your machine.
+The public repo holds three categories of content and nothing else:
 
-## What you get on day one
+1. **Certification notes** — A+, Net+, Sec+, CCNA, CySA+. Feynman-style, grounded in real-world consequence.
+2. **CVE notes** — vulnerabilities translated from raw NVD data into plain-English impact statements.
+3. **RSS digests** — a daily digest synthesized from 22 curated security feeds.
 
-- **1,500+ knowledge notes** — Security+, CySA+, CCNA, MITRE ATT&CK, 350+ CVEs with Feynman explanations
-- **Daily threat intel** — 22 RSS feeds + NVD CVE pipeline, automated every morning
-- **Study commands** — `/cysa`, `/ccna`, `/secplus`, `/aplus` — domain-mapped Feynman sessions
-- **Spaced repetition** — `virgil-review` surfaces what's due based on your quiz scores
-- **Conversation capture** — save any Claude.ai session to your vault in one click
+Anything else you may have seen VIRGIL do — homelab orchestration, MITRE/NIST libraries, conversation ingest, mobile capture — lives in the maintainer's private downstream system. Fork the repo if you want any of it; the architecture supports it.
 
-## Install
+## What ships in v2.0.0
+
+- **739 cert notes** — A+ (136), CCNA (154), CySA+ (263), Net+ (66), Sec+ (120). All Feynman-style per `soul.md`.
+- **239 audited CVE notes** in `notes/knowledge/cve/` plus a nightly runtime pipeline that adds more.
+- **23 slash commands** — cert sessions, teaching, diagnosis, the four meta-cognition "wall" commands, session management.
+- **`soul.md`** — the behavioral spec. Voice, teaching method, what VIRGIL never says. The most important file in the repo.
+- **`scripts/promote-to-public.py`** — the gate that produced this repo. Five hard-fail checks before any note publishes. Useful as a reference if you fork.
+- **Two backends** — Ollama (local) or Anthropic API. Pick one at install time.
+
+## Quickstart
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/BlueTeamBardiel/VIRGIL-Second-Brain/main/scripts/install.sh)
+git clone https://github.com/BlueTeamBardiel/virgil-public.git
+cd virgil-public
+bash scripts/install.sh
 ```
 
-**Requires:** Linux / macOS / WSL2 · [Ollama](https://ollama.com) · [Obsidian](https://obsidian.md) · [Claude Code](https://claude.ai/code)
+The installer is interactive. Every prompt explains what saying yes vs. no will do. Decline anything you don't want — saying no is always safe.
 
-### Which setup is right for you?
+Then:
 
-| Situation | Recommended path |
-|-----------|-----------------|
-| Have an API key | Set `ANTHROPIC_API_KEY` in `.env` — fastest setup |
-| GPU with 8 GB+ VRAM | Install Ollama, pull `qwen2.5:14b` |
-| Laptop / no GPU | Use API key — Ollama will be too slow |
-| Just want to try it | Use API key, free tier works fine |
+```bash
+cd ~/VIRGIL && claude
+```
 
-No API key required. Twenty-minute setup.
+In Claude Code, run `/start`. VIRGIL conducts a brief onboarding interview and writes the answers to `user.md`. After that, pick a cert:
 
-## Quick start
+```
+/secplus    /ccna    /cysa    /aplus    /netplus
+```
 
-After install:
-
-1. Open Obsidian → point it at `~/VIRGIL/notes`
-2. Run `claude` in `~/VIRGIL` — VIRGIL introduces itself
-3. Type `/cysa` or `/secplus` to start a study session
-4. Type `/virgil-quiz "topic"` to quiz yourself on any topic
-5. Type `/handoff` when ending a session to save context
+Full setup walkthrough: [`GETTING-STARTED.md`](GETTING-STARTED.md).
 
 ## What it looks like
 
-### Study session (type `/cysa` in Claude Code)
+### A cert study session (`/secplus` in Claude Code)
+
 ```
-VIRGIL Session — 2026-04-29
-Weakest topics: Kerberoasting, Lateral Movement, SIEM Architecture
+Topic: Kerberoasting
 
-Topic 1: Kerberoasting
-─────────────────────────────────────────────────────
-Analogy: Imagine a bouncer who hands out wristbands (tickets)
-to prove you're allowed in. Kerberoasting is when an attacker
-steals those wristband templates and forges their own offline,
-without ever needing to talk to the bouncer again.
+Think of Kerberos like a club's coat check. You hand over your ticket
+(your password), the bouncer hands you a wristband. You show the wristband
+to anyone inside, and they trust it. Kerberoasting is when someone steals
+the template the bouncer uses to make wristbands, takes it home, and
+brute-forces their way to making their own.
 
-In a real attack: attacker requests a Kerberos service ticket
-for any SPN, extracts the ticket, and cracks it offline with
-hashcat to recover the service account password.
+Service accounts get this attack because their wristband templates use
+the account's password as the secret. Crack the wristband offline, you
+have the password.
 
 Q: What makes a service account vulnerable to Kerberoasting?
-   A) It uses NTLM authentication
-   B) Its password hash is embedded in the Kerberos ticket
-   C) It has local admin rights
-   D) It uses LDAP for authentication
+   A) NTLM authentication enabled
+   B) Password hash embedded in the Kerberos ticket
+   C) Local admin rights
+   D) LDAP fallback
 
-Your answer: _
+Your answer:
 ```
 
-### Vault health check (run `virgil-review`)
+### A spaced-repetition review (`virgil-review`)
+
 ```
 ══════════════════════════════════════════
-  VIRGIL Review Session — 2026-04-29
+  VIRGIL Review Session — 2026-05-12
 ══════════════════════════════════════════
-  Due today (3 topics):
-  1. kerberoasting      last: 2/5  overdue: 8 days
-  2. lateral movement   last: 3/5  overdue: 3 days
-  3. SIEM Architecture  last: 4/5  due: today
+  Due today (3):
+    1. kerberoasting       last 2/5   overdue 8 days
+    2. lateral movement    last 3/5   overdue 3 days
+    3. SIEM architecture   last 4/5   due today
 
   Coming up:
-  4. SQL Injection       due in: 2 days
-  5. Active Directory    due in: 5 days
+    4. SQL injection       due in 2 days
+    5. Active Directory    due in 5 days
 ══════════════════════════════════════════
 Quiz the top overdue topic now? (y/N):
 ```
 
-### System status (runs at every session start)
-```
-══════════════════════════════════════════
-  VIRGIL Status — 2026-04-29 09:00
-══════════════════════════════════════════
-  Bridge (ChromaDB):     ✅ running — 7868 chunks
-  Ollama:                ✅ running — llama3.2
-  OpenWebUI:             ✅ running (port 3000)
-  Conversation ingest:   ✅ running (port 5002)
-  Promote.sh:            ✅ ran today
-  Vault:                 ✅ 5030 notes
-  Ghost-fill:            ✅ complete (4664/4664)
-  Health check:          ✅ today
-══════════════════════════════════════════
-```
+## How it's organized
 
----
+VIRGIL is three layers:
 
-## Slash Commands
+| Layer | What it is |
+|---|---|
+| **Content** | The vault at `~/VIRGIL/`. Markdown files. Obsidian view. |
+| **Brain** | Claude Code loading `CLAUDE.md` + `soul.md` + 23 slash commands. |
+| **Pipelines** | Two cron jobs that pull threat intel and CVEs nightly. |
 
-Run these inside Claude Code (`claude` in your VIRGIL directory).
+Pick a backend (Ollama or Anthropic API) at install time. Set it in `.env`. No fallback chain — one or the other.
 
-| Command | What it does |
-|---------|-------------|
-| `/cysa` | CySA+ CS0-003 study session — Feynman prompts, weak topic bias from quiz-scores.json |
-| `/secplus` | Security+ SY0-701 study session — domain-mapped Feynman prompts per SY0-701 objective |
-| `/aplus` | A+ Core 1/Core 2 study session — maps topics to 220-1101/1102 exam domains |
-| `/ccna` | CCNA study session — topic explainer, lab generator, or quiz mode |
-| `/reflect` | End-of-session memory distillation — fills daily log summary, marks completed tasks |
-| `/handoff` | Save session context to vault before closing — lets you resume in a new chat |
-| `/research` | Structured research on any topic → formatted Obsidian note in the vault |
-| `/challenge` | Challenge a proposed decision or architecture — plays devil's advocate |
-| `/day` | Brain dump processor — log loose notes, create topic stubs from what you mention |
-| `/week` | Synthesize last 7 daily logs into a weekly digest note |
-| `/task` | Capture and file a task to the appropriate memory section |
-| `/job` | Job search tracker — add posting, draft cover letter, log followups |
-| `/lab` | Generate a live fleet status snapshot |
-| `/focus` | Load context for a specific mode: `lab`, `study [cert]`, or `jobsearch` |
-| `/sync` | Sync external project progress into the vault — updates daily log and memory |
-| `/enrich` | Run the enrichment pipeline — fills stub notes via LLM |
-| `/ingest-chat` | Ingest a Claude.ai conversation export to the vault |
-| `/deploy` | Deploy VIRGIL to a fleet machine via SSH |
-| `/start` | Welcome a new or returning student — builds context, surfaces where you left off |
-| `/diagnose` | Student intake: records your why, background, and learning style, runs a diagnostic quiz to find your starting chapter. Run `/diagnose update` to refresh your profile |
-| `/plan` | Builds a week-by-week study roadmap with chapter checkboxes and a realistic exam timeline |
-| `/teach` | Chapter-by-chapter teaching from vault content — Feynman analogies tuned to your background, won't advance until you understand it |
-| `/burnout` | Burnout recovery: real talk, one question, smallest possible re-entry point |
-| `/imposter` | Imposter syndrome: breaks down your specific wall, runs a gentle quiz to show you what you already know |
-| `/absence` | Return-after-gap: tiered response based on how long you've been away |
+Full architectural breakdown: [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
----
+## The operating-system framing
 
-## The Learning Engine
+VIRGIL is not a course you buy or a product you subscribe to. It's a small operating system for studying — bring your own content, retune the voice, swap the inference backend, fork the gate. The shape is generic; only the cybersecurity flavor is opinionated.
 
-VIRGIL isn't just a note vault — it's a study companion that knows who you are and teaches accordingly.
+Five places to retune it for your own use:
 
-### Getting started
+1. **Add a cert.** Create `notes/knowledge/<cert>/`, write notes per `soul.md`, add a slash command. ARCHITECTURE.md §11.1.
+2. **Retune the voice.** Edit `soul.md`. The Dante framing is one metaphor — pick another. §11.2.
+3. **Swap a backend.** Point `hooks/llm_client.py` at any OpenAI-compatible endpoint. §11.3.
+4. **Add a feed.** Edit `FEEDS.md`. §11.4.
+5. **Bring your own content pipeline.** `scripts/promote-to-public.py` is a reference implementation for public/private content splits. §11.5.
 
-```
-/diagnose    — Tell VIRGIL who you are and where you're going.
-               Builds your profile, runs a diagnostic quiz,
-               finds your starting point.
+The point: depth over bloat. The shipped surface is small on purpose so the fork-and-adapt path is short.
 
-/plan        — Generates your week-by-week study roadmap.
-               Realistic timelines, chapter checkboxes,
-               exam day prep.
+## Why "VIRGIL"
 
-/teach       — Chapter-by-chapter teaching from vault content.
-               Feynman analogies tuned to your background.
-               Won't move on until you understand it.
-```
+Named for Publius Vergilius Maro — Roman poet, author of the Aeneid, guide to Dante through Inferno and Purgatorio. He lives in Limbo among the virtuous pagans: not in torment, but permanently outside Paradise. He does the work anyway.
 
-### The cert path
+That's the model. The dark wood is the field you're entering. VIRGIL navigates it ahead of you, points at what each thing is, and tells you what to fear and what is just decoration. It will not lift you. But it walks in front of you.
 
-```
-A+ → Network+ → Security+ → CCNA → CySA+
-```
+The full framing is in [`soul.md`](soul.md). Read it before forking — that file is the soul of the project.
 
-Each cert builds on the last. VIRGIL has pre-built content for all four. You don't need the textbook — the vault has everything.
+## Status and roadmap
 
-### Bring your own material
+v2.0.0 is the current shipped release. Planning for v2.1.0 lives in [`ROADMAP.md`](ROADMAP.md). Release notes for what landed in v2.0.0: [`CHANGELOG.md`](CHANGELOG.md).
 
-```bash
-# Ingest a PDF textbook
-virgil-cert-ingest pdf ~/books/ccna-guide.pdf "CCNA"
+## Contributing
 
-# Ingest a video transcript
-virgil-cert-ingest transcript ~/transcripts/sec-plus.txt "Security+"
-
-# Ingest a study guide URL
-virgil-cert-ingest url https://example.com/ccna-notes "CCNA"
-```
-
-VIRGIL rewrites source material in Feynman style — it doesn't reproduce the original text verbatim. Your notes, your vault, your words.
-
----
-
-## How it works
-
-![VIRGIL knowledge graph](assets/virgil-graph.gif)
-
-**VIRGIL is an Obsidian vault + automation system.**
-
-The core loop:
-
-1. **Ingest** — threat intel feeds, CVEs, ATT&CK techniques arrive every morning
-2. **Connect** — wikilink script runs nightly, linking CVEs → ATT&CK → NIST controls
-3. **Study** — Feynman-style sessions push back, find gaps, and record what you got wrong
-4. **Distill** — session logs → permanent memory facts via nightly AI distillation
-5. **Repeat** — quiz scores surface weak topics; the system knows what to drill
-
-After six months of real use: not 500 disconnected files, but a knowledge graph — CVEs linked to ATT&CK techniques linked to NIST controls linked to the lab config where you saw it in practice.
-
-### Architecture
-
-| Layer | What it does |
-|-------|-------------|
-| Obsidian vault | Markdown notes, graph view, search |
-| Claude Code | AI sessions, study commands, memory |
-| Ingest pipelines | RSS, CVE, URL, PDF → notes |
-| Ollama | Local inference, no API costs |
-| ChromaDB (optional) | Vector search over your vault |
-| OpenWebUI (optional) | Browser and mobile access |
-
-Full details: [`ARCHITECTURE.md`](ARCHITECTURE.md)
-
----
-
-## Philosophy
-
-*Nel mezzo del cammin di nostra vita — midway through the journey of our life, I came to myself in a dark wood, for the straight way was lost.*
-
-Dante wrote that in 1308. Virgil — the Roman poet — was sent to guide him through what came next. Not to skip it. Not to make it comfortable. To make it survivable. To show him the structure of what he was walking through so he could stop being afraid of the wrong things.
-
-This project is named for him. The field is the dark wood. VIRGIL is the guide.
-
----
-
-You're studying for a cert. Or building a homelab. Or trying to absorb threat intel that drops faster than you can process it.
-
-The advice online is everywhere and contradictory. Every roadmap has an affiliate link. You're studying in the gaps between applications, and nothing is sticking — because there's no system holding it together.
-
-That's a structural problem, not a personal one. VIRGIL is what fixes it.
-
-Built during exactly this grind — not by someone who packaged lessons into a course after making it — but live, under pressure, while studying for CySA+, running a homelab, and navigating a tough job market. You don't have to build it from scratch. Use what's here.
-
-VIRGIL does not congratulate you for showing up. The work is the work. VIRGIL is how you make it compound.
-
----
+See [`CONTRIBUTING.md`](CONTRIBUTING.md). The scope rule applies — PRs that re-add cut features (Slack bot, ChromaDB, MITRE library) will be closed with a pointer to the gate.
 
 ## Security
 
-Community audits and contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md)
+- All inference, all notes, all memory stays on your machine unless `VIRGIL_BACKEND=anthropic`.
+- No telemetry. No analytics. No update pings.
+- `gitleaks` runs pre-commit on this repo. Set it up locally if you fork — `pip install pre-commit && pre-commit install`.
+- The gate (`scripts/promote-to-public.py`) runs a leakage scan, scope check, placeholder check, hallucination check, and H1 check before any note publishes. ARCHITECTURE.md §9.2.
 
-Known mitigations in this release: input sanitization in ingest scripts, SSRF protection on url-ingest, API keys sourced from `.env` only (never embedded in crontab or code).
+## Further reading
+
+- [`soul.md`](soul.md) — the behavioral spec
+- [`ARCHITECTURE.md`](ARCHITECTURE.md) — full architectural breakdown
+- [`GETTING-STARTED.md`](GETTING-STARTED.md) — install walkthrough
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — fork-and-contribute guide
+- [`FEEDS.md`](FEEDS.md) — the 22 RSS feeds
+- [`ROADMAP.md`](ROADMAP.md) — what's planned for v2.1.0
 
 ---
 
-*"I have come to lead you to the other shore; into eternal darkness; into fire and into ice."*
-*— Virgil, Inferno Canto III*
+*"I have come to lead you to the other shore; into eternal darkness; into fire and into ice."* — Inferno Canto III
 
-The path is real. It is not comfortable, and it does not get easier. You get more capable — which is a different thing.
+The path is real. It does not get easier. You get more capable — a different thing.
