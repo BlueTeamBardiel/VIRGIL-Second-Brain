@@ -3,12 +3,12 @@
 rss-ingest.py — Pull security/homelab/SDR RSS feeds, filter last 24h, generate digest via Claude.
 Usage: rss-ingest.py [--hours N] [--dry-run]
 Output: notes/feeds/YYYY-MM-DD.md  +  Slack notification
-Deps: feedparser, requests
+Deps: feedparser, requests (requests is used for Slack notification only;
+      LLM calls go through hooks/llm_client.py)
 Feeds: 27 (22 security/homelab + 5 SDR/RF/hardware)
 """
 
 import argparse
-import json
 import os
 import sys
 import time
@@ -39,6 +39,14 @@ if not os.environ.get("ANTHROPIC_API_KEY"):
 VIRGIL_DIR = Path(os.environ.get("VIRGIL_DIR", str(Path.home() / "VIRGIL")))
 FEEDS_DIR = VIRGIL_DIR / "notes" / "feeds"
 LOGFILE = VIRGIL_DIR / "ingest" / "rss-ingest.log"
+
+# llm_client lives in hooks/ — sibling directory in the installed vault
+sys.path.insert(0, str(VIRGIL_DIR / "hooks"))
+try:
+    from llm_client import ask, LLMError
+except ImportError:
+    print("ERROR: Could not import llm_client from hooks/. Is VIRGIL installed correctly? Check hooks/llm_client.py exists.", file=sys.stderr)
+    sys.exit(1)
 
 FEEDS = [
     # Threat Intel / News
@@ -160,11 +168,20 @@ def _read_claude_md_profile() -> tuple[str, str]:
 
 
 def build_digest(items_by_source: dict, date_str: str) -> str:
-    """Call Claude haiku to synthesize feed items into a digest."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise RuntimeError("ANTHROPIC_API_KEY not set")
+    """Synthesize feed items into a digest via the LLM abstraction layer.
 
+    Routes through hooks/llm_client.py — respects backend selection,
+    circuit breaker, and the Ollama→Anthropic fallback chain.
+
+    TODO(v2.1.0): the env var llm_client.py reads (VIRGIL_LLM_BACKEND) and
+    the backend value names (primary/secondary/anthropic) don't yet match
+    what ARCHITECTURE.md §7.1 documents (VIRGIL_BACKEND, ollama/anthropic,
+    no fallback chain). Backend abstraction alignment is a v2.1.0 item —
+    see ROADMAP.md.
+
+    Raises LLMError if all backends fail; caller decides whether to fall
+    back to raw digest.
+    """
     user_name, current_cert = _read_claude_md_profile()
 
     # Build compact feed text
@@ -197,32 +214,7 @@ def build_digest(items_by_source: dict, date_str: str) -> str:
         f"Feed items ({total} total):\n{feed_text[:12000]}"
     )
 
-    payload = {
-        "model": "claude-haiku-4-5-20251001",
-        "max_tokens": 3000,
-        "messages": [{"role": "user", "content": prompt}]
-    }
-
-    for attempt in range(2):
-        resp = requests.post(
-            "https://api.anthropic.com/v1/messages",
-            headers={
-                "x-api-key": api_key,
-                "anthropic-version": "2023-06-01",
-                "content-type": "application/json",
-            },
-            json=payload,
-            timeout=60,
-        )
-        if resp.status_code == 429 and attempt == 0:
-            log("Rate limited (429) — waiting 60s before retry")
-            time.sleep(60)
-            continue
-        resp.raise_for_status()
-        return resp.json()["content"][0]["text"]
-
-    resp.raise_for_status()
-    return ""
+    return ask(prompt, max_tokens=3000)
 
 
 def slack_notify(message: str) -> None:
@@ -271,20 +263,25 @@ def main() -> None:
         log("Dry run — skipping Claude call and file write.")
         return
 
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print(f"[rss-ingest] No API key — skipping AI synthesis. Raw items saved to notes/feeds/")
+    log("Calling LLM for digest synthesis (via hooks/llm_client.py)")
+    try:
+        digest = build_digest(items_by_source, date_str)
+    except LLMError as e:
+        log(f"All LLM backends failed: {e}")
+        log("Falling back to raw digest (no AI synthesis)")
         digest = build_raw_digest(items_by_source, date_str)
         output_file.write_text(
-            f"{digest}\n\n---\n_Generated: {now.strftime('%Y-%m-%d %H:%M UTC')} | {total_items} items from {len(FEEDS)} feeds (raw, no AI synthesis)_\n"
+            f"{digest}\n\n---\n_Generated: {now.strftime('%Y-%m-%d %H:%M UTC')} | {total_items} items from {len(FEEDS)} feeds (raw, no AI synthesis — all LLM backends failed)_\n"
         )
         log(f"Written raw digest to {output_file}")
-        sys.exit(0)
-
-    log("Calling Claude for digest synthesis")
-    digest = build_digest(items_by_source, date_str)
+        slack_notify(
+            f"⚠ VIRGIL RSS digest — {date_str} (raw fallback, {total_items} items)\n"
+            f"All LLM backends failed. Raw items saved to `notes/feeds/{date_str}.md` — no AI synthesis."
+        )
+        return
 
     if not digest:
-        log("Claude returned empty digest. Exiting.")
+        log("LLM returned empty digest. Exiting.")
         return
 
     output_file.write_text(
