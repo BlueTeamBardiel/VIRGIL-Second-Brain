@@ -6,6 +6,27 @@ Format: [Semantic Versioning](https://semver.org/) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.0.1] — 2026-05-13
+
+A correctness release. Six commits clearing GitHub Copilot's audit of v2.0.0 — three documentation lies, one missing LICENSE file, one ingest script that bypassed the LLM abstraction layer, and a stale version string in the installer. No new features; no scope changes.
+
+### Fixed
+
+- **Documentation no longer claims `scripts/promote-to-public.py` ships in this repo.** Across seven files (`ARCHITECTURE.md`, `README.md`, `CONTRIBUTING.md`, `GETTING-STARTED.md`, `scripts/README.md`, `CHANGELOG.md`, `ROADMAP.md`) the gate was described as a readable file shipped here. It isn't — it runs in the maintainer's private system. The references have been rewritten to say so. A sanitized reference implementation is planned for v2.1.0 (`ROADMAP.md`).
+- **`scripts/install.sh` no longer carries a stale `VIRGIL_VERSION="1.9.2"`.** Bumped to `2.0.1` directly — the intermediate `2.0.0` never appeared in any released installer.
+- **`LICENSE` file added.** The MIT badge in `README.md` had no LICENSE file backing it. Standard MIT text, copyright 2026 BlueTeamBardiel.
+- **`ingest/rss-ingest.py` now routes LLM calls through `hooks/llm_client.py`** instead of hardcoding the Anthropic endpoint, model, and retry logic. The raw-digest fallback trigger changed from "no `ANTHROPIC_API_KEY` set" to "all LLM backends failed" — the old trigger meant Ollama-only users always got raw digests, the new trigger means the raw fallback only fires when configured backends actually fail. Slack notifications now also ping on raw-fallback so degraded runs surface in cron.
+
+### Removed
+
+- **`scripts/deploy-machine.sh` and `scripts/deploy-control-node.sh`.** The v2.0.0 `CHANGELOG.md` listed these as removed but they were never actually deleted. They reference private-fleet patterns (`your-lab`, `your-control-node`) that have no place in the public repo.
+
+### Changed
+
+- **`ROADMAP.md`:** added two new v2.1.0 items. "Sanitized promotion gate" (publish a sanitized reference implementation of the gate) and "Backend abstraction alignment" (reconcile `hooks/llm_client.py` with the v2.0.0 docs — the env var name, backend value names, and fallback chain don't currently match what the docs describe).
+
+---
+
 ## [2.0.0] — 2026-05-12
 
 The scope-defined release. v2.0.0 narrows VIRGIL's public surface to three categories — cert notes, CVE notes, RSS digests — and ships the gate that enforces that scope. Anything previously promised in v1.x that fell outside the scope rule has been cut or moved to private maintainer infrastructure.
