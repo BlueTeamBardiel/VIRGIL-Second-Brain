@@ -1,337 +1,82 @@
 # VIRGIL — Public Roadmap
 
-*Built in public. Sequenced by what real users actually need.*
+The public roadmap. Item lists only what the maintainer has actually committed to working on next. Maybe items live in "open questions" — those are decisions waiting for evidence, not plans.
+
+The maintainer's private operational TODOs do not live here.
 
 ---
 
-## Audit Status — v1.9.2
-Community and self-audits ongoing. See [CONTRIBUTING.md](CONTRIBUTING.md) to report issues.
+## v2.0.0 — shipped
 
-**Fixed this release:**
-- Sanitization leak (private lab name in public scripts)
-- Python dependency pinning
-- url-ingest.sh URL validation + SSRF protection
-- README rewritten — story-first, 2-minute QuickStart
+The current release. See [`CHANGELOG.md`](CHANGELOG.md) for the full set of changes.
 
-**Top pending items from audit:**
-- curl|bash → checksum-verified installer
-- virgil status command
-- Starter knowledge base (50-100 notes)
-- Spaced repetition (highest ROI feature)
-- Mobile capture bridge
+Highlights:
 
----
-
-## What's shipped — v1.3.0
-
-**Install it and use it today.**
-
-- One-line curl installer — Linux, macOS, Windows via WSL2
-- 5,000+ starter knowledge notes — Security+, CySA+, CCNA, MITRE ATT&CK,
-  350+ CVEs with Feynman-style explanations
-- Automated ingest pipelines — 22 threat intel feeds daily, NVD CVE feed
-  daily, URL and PDF ingest
-- Nightly memory distillation — session logs → permanent facts and lessons
-- Local AI inference via Ollama — runs on your hardware, no API costs
-- Three-tier fallback — local GPU → backup node → Anthropic API
-- OpenWebUI frontend — browser and mobile access to your local VIRGIL
-- Slack integration — approve/deny pipeline actions from your phone
-- Pre-commit secret scanning — gitleaks on all repos
-- Post-install guided wizard — walks you through first steps after install
-- ✅ /secplus slash command — SY0-701 domain-mapped study session:
-  - Pulls weak Security+ topics from quiz-scores.json
-  - Feynman prompts per domain
-  - Ships in .claude/commands/secplus.md
-- ✅ /aplus slash command — Core 1/Core 2 domain-mapped study session:
-  - Pulls weak A+ topics from quiz-scores.json
-  - Feynman prompts per domain
-  - Ships in .claude/commands/aplus.md
-- ✅ virgil-progress — cert domain mastery tracker (Security+, CySA+, CCNA)
-  - Reads quiz-scores.json, maps topics to exam domains by keyword
-  - Shows % mastery per domain, weakest domain, review queue, ETA to 70%
-  - Ships in hooks/virgil-progress.py, alias added by installer
+- [x] Scope rule established and enforced by the promotion gate (cert / CVE / RSS only).
+- [x] 739 cert notes across five tracks (A+, CCNA, CySA+, Net+, Sec+).
+- [x] 239 audited CVE notes in `notes/knowledge/cve/`.
+- [x] `soul.md` as a first-class component — voice, registers, Feynman Doctrine.
+- [x] 23 slash commands across cert study, study support, walls, session management, system.
+- [x] Two-backend support (Ollama or Anthropic API) via `VIRGIL_BACKEND`.
+- [x] Memory model: working / episodic / semantic, plus `user.md` profile.
+- [x] `scripts/promote-to-public.py` — the public-private gate as a reference implementation.
+- [x] Removed: Slack approval bot, Telegram capture bot, ChromaDB/RAG stack, conversation ingest, MITRE/NIST libraries, 33 out-of-scope `notes/knowledge/` subdirectories.
 
 ---
 
-## What's next — v1.2.0
+## v2.1.0 — planned
 
-**Make VIRGIL actually think with your notes, not around them.**
+Next on the path. Order is rough; what's first depends on which lands cleanly.
 
-### RAG — Retrieval-Augmented Generation
-*This is the most important thing on this roadmap.*
-
-Right now VIRGIL has 900+ notes but can't query them in conversation.
-This fixes that.
-
-- ChromaDB vector database running locally
-- All vault notes embedded with a local model
-- Every Feynman session, quiz, and explanation grounded in your vault
-- Ask "what do my notes say about lateral movement" — get an answer from
-  your actual notes, not the internet
-- No manual setup per chat — it just works on every query
-
-### The VIRGIL Session
-*One command. One ritual. Every day.*
-
-The core loop VIRGIL is built around:
-
-virgil session
-
-What it does:
-- Pulls today's CVE and threat intel digest
-- Surfaces your 3–5 weakest topics based on quiz history and session logs
-- Generates Feynman-style prompts for each weak topic
-- Writes results back into your vault
-- Gives you one clear next step
-
-If you do nothing else with VIRGIL, do this. Once a day. It compounds.
-
-### Quiz System
-- Generate a quiz on any topic from your own notes — not generic internet
-  questions
-- Tracks scores per topic
-- Surfaces lowest-scoring topics in your daily session
-- Feynman-style feedback: not just right/wrong, but "here's why you got
-  that wrong and here's the note that explains it"
-
-### Trust and Transparency
-For a cybersecurity tool, trust is not optional.
-
-- **Threat model** — what data is stored, what is transmitted, what never
-  leaves your machine
-- **Local-only mode** — disable all outbound calls, verify with a script
-- **Hardening guide** — file permissions, Docker isolation, secrets
-  handling, running VIRGIL air-gapped
-- **SBOM** — software bill of materials for every release
-- **Signed releases** — verify your install is what we shipped
+- [ ] **Cert content backfill.** The track densities at v2.0.0 are uneven — Net+ at 66 notes is the thinnest. Bring the lighter tracks closer to parity with CySA+.
+- [ ] **CVE corpus expansion.** Curate another batch through the audit gate. Target +200 notes weighted toward currently-exploited classes.
+- [ ] **Reproducible installer.** Move from `git clone && bash install.sh` to a checksum-verified release tarball. Removes the implicit "trust the latest main" model.
+- [ ] **`virgil status` command.** A single command that reports backend health, last-ingest run, vault size, and any cron failures. Today this is scattered across `tail logs/*`.
+- [ ] **Cert objective files.** Ship the per-cert exam-objective files the gate's hallucination check uses. Without them, forkers can't run the gate against their own content.
+- [ ] **Diagnostic quiz coverage.** `/diagnose` currently runs a generic 10-question quiz per cert. Build per-domain question banks so the diagnostic actually maps to where someone's weakest.
 
 ---
 
-## What's planned — v1.3.0
+## Open questions (waiting for evidence)
 
-**Turn VIRGIL into a study partner with a memory.**
+These are not commitments. They're decisions the maintainer is undecided on. Forkers tracking the project may want to follow them; PRs that move the conversation forward (data, prototypes, links to relevant prior art) are welcome.
 
-### Enrichment Pipeline
-- Every note in your vault gets a Feynman-style plain-English explanation
-  written by your local model
-- Staged mode — writes to staging/ first, you approve before it patches
-  the original
-- Prevents semantic drift, enables rollback
+- **RAG / ChromaDB.** v2.0.0 deliberately ships without a vector store — Obsidian search and Claude Code's file tools cover most uses. Whether to ship an opt-in RAG layer in a later version depends on whether users hit the wall where grep stops being enough. Open question: at what vault size does grep stop scaling for the typical user?
 
-### Interview Mode
-- Generate Q&A from your own notes
-- Simulate interviewer follow-ups
-- Score your answers against your vault — not generic answers
-- "You said X. Your notes say Y. Here's the gap."
+- **Additional certs.** CISSP, CCNP, OSCP, AZ-500, AWS Security Specialty have all been suggested. Each adds maintenance load. Question: which adds the most value relative to the audience already studying with VIRGIL?
 
-### Job Gap Analysis
-- Paste a job posting
-- VIRGIL maps requirements to your vault
-- Returns: what you know, what you're missing, what to study first
+- **Spaced-repetition algorithm.** `hooks/review.sh` uses SM-2 over `logs/quiz-scores.json`. FSRS is the modern Anki default. Question: does SM-2 underperform enough on this corpus shape to justify the swap?
 
-### Knowledge Health Dashboard
-- Orphaned notes, stale notes, thin notes
-- Topic clusters with no connections to other clusters
-- Surfaces in Obsidian as a weekly digest note
+- **soul.md localization.** The Dante framing reads as Western-canon-coded. Question: is there appetite for parallel soul files in other framings (a Mahabharata guide, a Cosmos-style Sagan voice, a Confucian Analects framing) — and would those be community-maintained or forked?
 
-### Progress Tracking
-🔜 virgil-progress domain definitions — extract domain keyword lists from
-   course materials instead of hardcoded keyword lists
-   - Parse Security+ SY0-701 objectives PDF for domain/topic mapping
-   - Parse CySA+ CS0-003 objectives for domain mapping
-   - Parse CCNA 200-301 objectives for domain mapping
-   - Removes the manual maintenance burden as exams update
+- **Mobile capture.** Capture-on-the-go was useful in the private system. Question: is there a generic public version that doesn't require everyone running their own server?
+
+- **Browser-extension URL ingest.** `url-ingest.sh` works from the terminal. A right-click "send to VIRGIL" extension would lower friction. Question: is the extension-store hassle worth the friction reduction?
 
 ---
 
-## What's coming — v2.0.0
+## What this roadmap doesn't include
 
-**The platform. For people who want to go deep.**
+Out of scope for the public repo per the scope rule (see [`ARCHITECTURE.md` §2](ARCHITECTURE.md#2-the-scope-rule)):
 
-### Guided Setup Wizard
-- Interactive installer that walks through every decision
-- No more reading a README to figure out what order to do things
-- First VIRGIL Session runs automatically at the end of setup
+- Homelab fleet orchestration, Ansible/Semaphore integration.
+- MITRE ATT&CK library, NIST control library, threat-actor profiles.
+- Conversation-ingest pipelines for Claude.ai or other transcripts.
+- Job-search scaffolding beyond the generic `/job` command.
+- Hosted/SaaS offerings.
 
-### Pre-Built Knowledge Packs
-Structured note collections ready to drop into your vault.
-Markdown-only — no scripts required.
-
-- **CySA+ Pack** — All five domains, practice questions, weak-area
-  tracking, exam checklist
-- **Security+ Pack** — All six domains, Feynman explanations, exam traps
-  flagged
-- **CCNA Pack** — OSI/TCP-IP, subnetting, routing, switching, ACLs
-- **Homelab Foundations Pack** — Linux hardening, Docker, firewall,
-  monitoring, AD basics
-- **Blue Team Pack** — SIEM, log analysis, incident response, detection
-  engineering
-
-### Community Feed Registry
-- Community-maintained list of high-quality RSS feeds by category
-- Every feed reviewed before merge
+If you want any of these, fork the repo and add them — the architecture supports it. The fork-and-adapt path is documented in [`ARCHITECTURE.md` §11](ARCHITECTURE.md#11-forking-virgil).
 
 ---
 
-## The product track
+## How items move
 
-*VIRGIL will always have a free open-source core.*
+- An item moves from **Open questions** to **v2.1.0 — planned** when the maintainer commits to it. Until then, no timeline.
+- An item moves from **v2.1.0 — planned** to **v2.1.0 — shipped** when it lands in main and clears the gate.
+- Anything still in "Open questions" at the next release rolls forward unless explicitly retired.
 
-### Hosted tier — 2026
-For people who want VIRGIL without the hardware.
-
-- Managed inference — no GPU, no Ollama, no cron
-- Pre-loaded cert packs included
-- Vault sync across machines
-- Your notes stay yours — exportable any time
-- Pricing: join the mailing list below
-
-### Enterprise — by request
-For security teams, MSSPs, and organizations with a knowledge problem.
-
-- Air-gapped deployment — nothing leaves your network
-- Custom knowledge base with your runbooks, threat landscape, tools
-- Compliance mapping — NIST, SOC2, ISO 27001, CMMC
-- Human-in-the-loop approval gate for every AI action
-- Full audit log of every AI decision
-- SOC analyst copilot — answers from your documentation, not the internet
-- New hire onboarding — from zero to productive in days, not months
-
-*Inquiries: open an issue tagged `enterprise` on GitHub.*
+Tracking issues for individual roadmap items live in GitHub Issues. Tag: `roadmap`.
 
 ---
 
-## What we will not build
-
-- A cloud product that owns your data
-- A subscription to someone else's model running your notes
-- Gamification, streaks, or engagement mechanics
-- Anything that makes money by keeping you dependent
-
----
-
-## User testing program
-
-We're looking for 10–20 people to run VIRGIL daily for 14 days and tell
-us what works, what doesn't, and what breaks.
-
-**Who we want:**
-- Studying for Sec+, CySA+, or CCNA
-- Applying to SOC, IT, or security roles
-- Frustrated with scattered notes and no system
-
-**What you do:**
-- Install VIRGIL
-- Run `virgil session` once a day
-- Answer 3 questions every 3 days: what did you use, what felt pointless,
-  what broke
-
-**What you get:**
-- Direct input into what gets built next
-- Early access to v1.2 features as they ship
-- A knowledge base that's actually useful after 14 days
-
-Open an issue tagged `user-testing` to join.
-
----
-
-## Mailing list
-
-Early access to hosted tier, knowledge packs, and enterprise beta.
-
-Open an issue tagged `mailing-list` to register interest.
-
----
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-Feature requests and feed suggestions welcome via GitHub Issues.
-
-## External Audit Findings — April 2026
-
-Key verdict from Claude Opus 4.6:
-"The work itself is impressive. The Bash and Python are competent,
-the architecture is coherent, and the security-domain focus is a
-real differentiator. You've built something that actually works."
-
-Positioning recommendation:
-"VIRGIL is the second brain I built while transitioning from service
-desk to security. It's automated, AI-powered, and free. Clone it,
-adapt it, make it yours."
-
----
-
-## The Guide Experience
-
-### Shipped in v1.5.0
-- ✅ /start — first session onboarding with personalized study plan and Virgil's welcome
-- ✅ /burnout — burnout recovery with real talk, one question, low-stakes re-entry
-- ✅ /imposter — imposter syndrome response with Feynman breakdown and gentle quiz
-- ✅ /absence — return-after-gap with tiered response (3d / 2w / 30d / 60d)
-- ✅ /reflect — emotional awareness layer, Virgil's voice, student name from CLAUDE.md
-- ✅ Virgil voice guidelines — Feynman + Bill Nye + earned humor across all study commands
-
-### Shipped in v1.6.0
-- ✅ /diagnose — student intake: why, background, learning style, diagnostic quiz,
-      hands off to /plan with starting chapter from quiz results
-- ✅ /plan — personalized week-by-week study schedule, realistic timeline check,
-      chapter checkboxes, multi-cert roadmap, writes to notes/study-plans/
-- ✅ /teach — chapter-by-chapter content delivery from vault, Feynman analogies
-      tuned to student profile, understanding checks before advancing,
-      updates quiz-scores.json and current_chapter after each chapter
-- ✅ cert-ingest pipeline — ingest PDFs/transcripts/URLs into VIRGIL-format notes,
-      rewrites content in Feynman style (no plagiarism), chapter index generated,
-      virgil-cert-ingest alias installed
-- ✅ Student profile in CLAUDE.md — why, background, analogies, pace, cert goals,
-      current_chapter tracking — read by /teach, /diagnose, /plan, /reflect
-
-### Pending
-- 🔜 Proactive absence detection — check last quiz date in session-start.sh,
-      auto-surface /absence if gap > 7 days
-- 🔜 cert-ingest: Net+ N10-009 notes (87 Professor Messer videos)
-- 🔜 cert-ingest: Security+ SY0-701 notes (121 Professor Messer videos)
-- 🔜 cert-ingest: SDR hobbyist series (28 videos, RTL-SDR/GNU Radio focus)
-- 🔜 cert-ingest: CCNA Vol 1+2 pre-ingested notes (sanitized from private vault)
-- 🔜 cert-ingest: Security+ pre-ingested notes
-- 🔜 cert-ingest: CySA+ pre-ingested notes
-- 🔜 cert-ingest: A+ Core 1+2 pre-ingested notes
-- 🔜 /teach: lab exercise generator — after each chapter, generate a hands-on lab
-      the student can do in their homelab or a free simulator
-- 🔜 /teach: progress checkpoint — after every 5 chapters, comprehensive review
-      quiz, update study plan if behind
-- 🔜 /diagnose: re-run option — student can update their profile as they grow
-- 🔜 Study streak tracking — consecutive study days, milestone acknowledgment
-      in Virgil's voice
-- 🔜 Virgil personality calibration — adapts tone over time based on student
-      preferences
-- 🔜 /handoff improvement — context capsule for seamless session continuity
-      after absence
-- 🔜 Cert roadmap note — auto-generated Obsidian note showing full
-      A+ → Sec+ → CCNA → CySA+ path with current position marked
-
----
-
-## Roadmap — v1.4.0
-
-**Theme: Knowledge Quality**
-
-- [ ] Naming convention standardization — Title Case with acronym
-      preservation across all 5,000+ notes
-- [ ] Semantic deduplication — fuzzy title matching finds duplicate
-      notes, merge tool with human approval
-- [ ] Contradiction detection — find two notes that disagree,
-      flag for human review
-- [ ] /secplus exam simulator — full 90-question timed mock exam
-      drawn from vault content
-- [ ] /aplus exam simulator — full mock exam for Core 1 and Core 2
-- [ ] Demo video — 2-minute walkthrough of install → first study
-      session
-- [ ] Discord community launch after 10 confirmed public installs
-
----
-
-*Last updated: April 2026*
-*Current version: v1.3.0 tagged | Repo visibility: public*
-*Next milestone: v1.4.0 — naming conventions, README rewrite, secret scanning*
-*Vault: 5,000+ notes | 3 repos | local GPU inference | one approval gate*
+*Last updated alongside the v2.0.0 release. Current version: v2.0.0.*
