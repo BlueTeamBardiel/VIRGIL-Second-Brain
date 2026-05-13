@@ -16,7 +16,7 @@ The scope-defined release. v2.0.0 narrows VIRGIL's public surface to three categ
 - **`ARCHITECTURE.md`** — full rewrite. 12 sections covering the scope rule, vault layout, brain, two-backend inference, pipelines, security model, configuration, fork-and-adapt paths, and the day-zero knowledge graph.
 - **Five cert tracks shipped** — A+ (136 notes), CCNA (154), CySA+ (263), Net+ (66), Sec+ (120). 739 notes total, all Feynman-style.
 - **239 audited CVE notes** in `notes/knowledge/cve/` — curated starter corpus with attacker scenario and remediation per note. See `notes/knowledge/cve/README.md` for the committed-vs-runtime split.
-- **`scripts/promote-to-public.py`** — the five-stage promotion gate that produces this repo. Documented as a reference implementation for forkers building their own public/private content splits.
+- **The five-stage promotion gate** — produces this repo from the maintainer's private content. The gate runs in the maintainer's private system; a sanitized reference implementation is planned for v2.1.0. Documented in `ARCHITECTURE.md §11.5`.
 - **`user.md` profile** — `install.sh` creates an empty template; `/start` and `/diagnose` populate it via guided interview on first run. Carries name, background, certs in progress, and target roles across sessions.
 - **Configurable `/task` categories** — `/task` reads its category list from `CLAUDE.md` instead of a hardcoded list. Edit the list to fit your study and work.
 - **Two-backend support** — `VIRGIL_BACKEND` switches between Ollama (local) and Anthropic API. No fallback chain; pick one.

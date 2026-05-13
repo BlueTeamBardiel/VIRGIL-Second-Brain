@@ -43,7 +43,7 @@ You get:
 - **23 slash commands** turning the vault into a study companion. Full list in §6.3.
 - **`soul.md`** — the behavioral spec for VIRGIL's voice. Treat this as the most important file in the repo.
 - **`install.sh`** — sets up the runtime vault, Ollama (optional), cron jobs, environment.
-- **`scripts/promote-to-public.py`** — the gate that produces this repo. Useful as a reference if you fork and add your own content pipeline. Documented in §11.5, not as a runtime feature.
+- **The promotion gate** — produces this repo from the maintainer's private system. Runs five hard-fail checks before any note ships. The gate itself lives in the maintainer's private system; a sanitized reference implementation is planned for v2.1.0. Documented in §11.5.
 
 You do not get:
 
@@ -125,7 +125,6 @@ virgil-public/
 │   ├── uninstall.sh
 │   ├── check-deps.sh
 │   ├── docker-entrypoint.sh
-│   ├── promote-to-public.py  ← the gate, see §11.5
 │   └── homelab/
 │       └── ad-hardening/     ← AD lab scripts, see §11.6
 ├── .claude/
@@ -386,7 +385,7 @@ If `VIRGIL_BACKEND=anthropic`, prompts you generate also go to the Anthropic API
 
 ### 9.2 The gate as a security boundary
 
-The public repo is downstream of a gate the maintainer can't easily bypass. `scripts/promote-to-public.py` runs five hard-fail checks before any note can move from the maintainer's private system to this repo:
+The public repo is downstream of a gate the maintainer can't easily bypass. The gate runs in the maintainer's private system and applies five hard-fail checks before any note can move to this repo:
 
 1. **Scope check** — content must fit cert, CVE, or RSS. Anything else is rejected.
 2. **Leakage scan** — strings matching the private-infrastructure blocklist (fleet hostnames, lab IPs, personal identifiers, filesystem paths, API keys) block the note from publishing.
@@ -396,7 +395,7 @@ The public repo is downstream of a gate the maintainer can't easily bypass. `scr
 
 A note that passes all five is what you read here. Notes that fail any check stay private and the gate explains which check fired. The leakage scan is the most security-relevant of the five — it's why the public repo has no maintainer hostnames, no lab subnet ranges, no personal paths or identifiers, even though those exist across the maintainer's source notes.
 
-If you fork and run your own promotion pipeline, `promote-to-public.py` is a reference implementation worth reading. See §11.5.
+A sanitized reference implementation of the gate is planned for v2.1.0. If you fork and want to run your own promotion pipeline before then, §11.5 documents the checks the gate enforces.
 
 ### 9.3 gitleaks
 
@@ -472,7 +471,7 @@ Edit `FEEDS.md`. `rss-ingest.py` reads the feed list from there. The format is a
 
 This is the part of the architecture least visible to runtime users and most useful to forkers.
 
-VIRGIL's public repo is the output of a five-stage pipeline that runs on the maintainer's private system. The gate at the end is what produces this repo. If you fork and want to maintain your own public/private split — say, publishing curated material from a larger private vault — `scripts/promote-to-public.py` is the reference implementation.
+VIRGIL's public repo is the output of a five-stage pipeline that runs on the maintainer's private system. The gate at the end is what produces this repo. The gate itself runs in the maintainer's private system and is not shipped in this repo. A sanitized reference implementation is planned for v2.1.0 — tracked in `ROADMAP.md`.
 
 ```
    1. Generate   →  notes/drafts/<topic>/         (private, raw)
@@ -482,7 +481,7 @@ VIRGIL's public repo is the output of a five-stage pipeline that runs on the mai
    5. Publish    →  your-public-repo/notes/...    (this repo, in our case)
 ```
 
-The five hard-fail checks at the gate are listed in §9.2. The script is self-contained Python; read it before adapting. Roadmap items relevant to the gate are tracked in `ROADMAP.md`.
+The five hard-fail checks at the gate are listed in §9.2. Until the reference implementation ships, §9.2 plus this pipeline shape is what you have to work from if you fork and want your own public/private split.
 
 This is a tool for maintainers and forkers. A runtime user of VIRGIL never invokes it. It's documented here because the architectural shape of the public repo doesn't make sense without it.
 

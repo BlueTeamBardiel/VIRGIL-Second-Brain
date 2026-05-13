@@ -20,7 +20,7 @@ Anything else you may have seen VIRGIL do — homelab orchestration, MITRE/NIST 
 - **239 audited CVE notes** in `notes/knowledge/cve/` plus a nightly runtime pipeline that adds more.
 - **23 slash commands** — cert sessions, teaching, diagnosis, the four meta-cognition "wall" commands, session management.
 - **`soul.md`** — the behavioral spec. Voice, teaching method, what VIRGIL never says. The most important file in the repo.
-- **`scripts/promote-to-public.py`** — the gate that produced this repo. Five hard-fail checks before any note publishes. Useful as a reference if you fork.
+- **The promotion gate** — produces this repo from the maintainer's private system. Five hard-fail checks before any note publishes. Runs in the maintainer's private system, not shipped here; a sanitized reference implementation is planned for v2.1.0.
 - **Two backends** — Ollama (local) or Anthropic API. Pick one at install time.
 
 ## Quickstart
@@ -115,7 +115,7 @@ Five places to retune it for your own use:
 2. **Retune the voice.** Edit `soul.md`. The Dante framing is one metaphor — pick another. §11.2.
 3. **Swap a backend.** Point `hooks/llm_client.py` at any OpenAI-compatible endpoint. §11.3.
 4. **Add a feed.** Edit `FEEDS.md`. §11.4.
-5. **Bring your own content pipeline.** `scripts/promote-to-public.py` is a reference implementation for public/private content splits. §11.5.
+5. **Bring your own content pipeline.** A sanitized reference implementation is planned for v2.1.0. Until then, §11.5 documents the five checks the gate enforces so you can build your own.
 
 The point: depth over bloat. The shipped surface is small on purpose so the fork-and-adapt path is short.
 
@@ -140,7 +140,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md). The scope rule applies — PRs that re
 - All inference, all notes, all memory stays on your machine unless `VIRGIL_BACKEND=anthropic`.
 - No telemetry. No analytics. No update pings.
 - `gitleaks` runs pre-commit on this repo. Set it up locally if you fork — `pip install pre-commit && pre-commit install`.
-- The gate (`scripts/promote-to-public.py`) runs a leakage scan, scope check, placeholder check, hallucination check, and H1 check before any note publishes. ARCHITECTURE.md §9.2.
+- The gate runs a leakage scan, scope check, placeholder check, hallucination check, and H1 check before any note publishes. The gate runs in the maintainer's private system. ARCHITECTURE.md §9.2.
 
 ## Further reading
 

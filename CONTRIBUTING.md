@@ -14,7 +14,7 @@ The public repo holds three categories of content and nothing else:
 
 If your contribution doesn't fit one of those three, it likely belongs in your own fork. See [ARCHITECTURE.md §2](ARCHITECTURE.md#2-the-scope-rule) for the scope rule and [§11](ARCHITECTURE.md#11-forking-virgil) for how to fork-and-adapt cleanly.
 
-The maintainer's full system runs many things this repo doesn't ship — homelab orchestration, fleet automation, conversation capture, MITRE/NIST libraries. Those stay private. The public repo is downstream of a gate (`scripts/promote-to-public.py`) that enforces this. PRs that re-add cut features will be closed with a pointer to the gate.
+The maintainer's full system runs many things this repo doesn't ship — homelab orchestration, fleet automation, conversation capture, MITRE/NIST libraries. Those stay private. The public repo is downstream of a gate that runs in the maintainer's private system and enforces this. PRs that re-add cut features will be closed with a pointer to ARCHITECTURE.md §9.2.
 
 ---
 
@@ -121,7 +121,7 @@ One logical change per PR. In the description, answer:
 - Does it add new dependencies?
 - Does it stay inside the scope rule?
 
-PRs that touch the gate (`scripts/promote-to-public.py`) or `soul.md` get extra scrutiny — those files shape what the repo is.
+PRs that touch `soul.md` get extra scrutiny — that file shapes what the repo is.
 
 ---
 

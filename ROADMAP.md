@@ -19,7 +19,6 @@ Highlights:
 - [x] 23 slash commands across cert study, study support, walls, session management, system.
 - [x] Two-backend support (Ollama or Anthropic API) via `VIRGIL_BACKEND`.
 - [x] Memory model: working / episodic / semantic, plus `user.md` profile.
-- [x] `scripts/promote-to-public.py` — the public-private gate as a reference implementation.
 - [x] Removed: Slack approval bot, Telegram capture bot, ChromaDB/RAG stack, conversation ingest, MITRE/NIST libraries, 33 out-of-scope `notes/knowledge/` subdirectories.
 
 ---
@@ -28,11 +27,12 @@ Highlights:
 
 Next on the path. Order is rough; what's first depends on which lands cleanly.
 
+- [ ] **Sanitized promotion gate.** Publish a sanitized reference implementation of the gate the maintainer uses to produce this repo. Five checks (scope, leakage, placeholder, hallucination, H1) per ARCHITECTURE.md §9.2.
 - [ ] **Cert content backfill.** The track densities at v2.0.0 are uneven — Net+ at 66 notes is the thinnest. Bring the lighter tracks closer to parity with CySA+.
 - [ ] **CVE corpus expansion.** Curate another batch through the audit gate. Target +200 notes weighted toward currently-exploited classes.
 - [ ] **Reproducible installer.** Move from `git clone && bash install.sh` to a checksum-verified release tarball. Removes the implicit "trust the latest main" model.
 - [ ] **`virgil status` command.** A single command that reports backend health, last-ingest run, vault size, and any cron failures. Today this is scattered across `tail logs/*`.
-- [ ] **Cert objective files.** Ship the per-cert exam-objective files the gate's hallucination check uses. Without them, forkers can't run the gate against their own content.
+- [ ] **Cert objective files.** Ship the per-cert exam-objective files the gate's hallucination check uses. Depends on the sanitized promotion gate landing first.
 - [ ] **Diagnostic quiz coverage.** `/diagnose` currently runs a generic 10-question quiz per cert. Build per-domain question banks so the diagnostic actually maps to where someone's weakest.
 
 ---

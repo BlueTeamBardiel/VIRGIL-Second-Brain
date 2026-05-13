@@ -272,7 +272,7 @@ By the end of week one, the ingest pipelines have written seven daily feed diges
 - **CVE corpus**: 239 audited starter notes plus a runtime feed that grows nightly.
 - **23 slash commands**: cert sessions, teaching, diagnosis, planning, the four meta-cognition "wall" commands, session management. Full list in `ARCHITECTURE.md` §6.3.
 - **soul.md**: the behavioral spec. The most important file in the repo. Edit it to retune VIRGIL's voice.
-- **The gate**: `scripts/promote-to-public.py`, the security boundary that produced this repo. Read it if you fork.
+- **The promotion gate**: the security boundary that produced this repo. Runs in the maintainer's private system, not shipped here; a sanitized reference implementation is planned for v2.1.0. See ARCHITECTURE.md §9.2.
 
 ---
 
