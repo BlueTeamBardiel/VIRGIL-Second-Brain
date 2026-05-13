@@ -28,6 +28,7 @@ Highlights:
 Next on the path. Order is rough; what's first depends on which lands cleanly.
 
 - [ ] **Sanitized promotion gate.** Publish a sanitized reference implementation of the gate the maintainer uses to produce this repo. Five checks (scope, leakage, placeholder, hallucination, H1) per ARCHITECTURE.md §9.2.
+- [ ] **Backend abstraction alignment.** Reconcile `hooks/llm_client.py` with the v2.0.0 docs. Today the env var is `VIRGIL_LLM_BACKEND` (docs say `VIRGIL_BACKEND`), backend values are `primary | secondary | anthropic` (docs say `ollama | anthropic`), and there's an implicit Ollama→Anthropic fallback chain (docs say no fallback). Either fix the code or rewrite the docs — and propagate consistently across ARCHITECTURE.md §7.1 and §10, README, GETTING-STARTED, and `ingest/README.md`.
 - [ ] **Cert content backfill.** The track densities at v2.0.0 are uneven — Net+ at 66 notes is the thinnest. Bring the lighter tracks closer to parity with CySA+.
 - [ ] **CVE corpus expansion.** Curate another batch through the audit gate. Target +200 notes weighted toward currently-exploited classes.
 - [ ] **Reproducible installer.** Move from `git clone && bash install.sh` to a checksum-verified release tarball. Removes the implicit "trust the latest main" model.
