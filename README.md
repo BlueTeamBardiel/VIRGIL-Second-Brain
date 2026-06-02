@@ -26,8 +26,8 @@ Anything else you may have seen VIRGIL do — homelab orchestration, MITRE/NIST 
 ## Quickstart
 
 ```bash
-git clone https://github.com/BlueTeamBardiel/virgil-public.git
-cd virgil-public
+git clone https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain.git
+cd VIRGIL-Second-Brain
 bash scripts/install.sh
 ```
 

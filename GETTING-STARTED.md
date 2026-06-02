@@ -121,8 +121,8 @@ You should see a short response. If it hangs or errors, see Troubleshooting at t
 Clone the repo and run the installer:
 
 ```bash
-git clone https://github.com/BlueTeamBardiel/virgil-public.git
-cd virgil-public
+git clone https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain.git
+cd VIRGIL-Second-Brain
 bash scripts/install.sh
 ```
 
@@ -331,8 +331,8 @@ Reboot when prompted. Ubuntu finishes setting up — create a username and passw
 Open Ubuntu (search "Ubuntu" in Start menu):
 
 ```bash
-git clone https://github.com/BlueTeamBardiel/virgil-public.git
-cd virgil-public
+git clone https://github.com/BlueTeamBardiel/VIRGIL-Second-Brain.git
+cd VIRGIL-Second-Brain
 bash scripts/install.sh
 ```
 
