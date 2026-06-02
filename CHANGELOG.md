@@ -6,6 +6,23 @@ Format: [Semantic Versioning](https://semver.org/) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.0.1.1] — 2026-06-01
+
+A hotfix release. Two root-cause bugs identified via fresh-machine stress test on Parrot OS — both blocked new users from installing VIRGIL at all.
+
+### Fixed
+
+- **Clone URL corrected in onboarding docs.** `GETTING-STARTED.md` (lines 124–125, 334–335) and `README.md` (lines 29–30) referenced `github.com/BlueTeamBardiel/virgil-public.git` — a local directory name that was never the GitHub repo. Every user who copy-pasted Step 3 received `fatal: repository not found`. Corrected to `VIRGIL-Second-Brain` across all six occurrences.
+- **`checksums.sha256` regenerated.** The manifest referenced five files deleted during v2.0.0/v2.0.1 cleanup (`scripts/deploy-machine.sh`, `scripts/deploy-control-node.sh`, `ingest/conversation-ingest.py`, `ingest/personal-ingest.sh`, `ingest/telegram-bot.py`). The checksum verification step in `install.sh` would fail on any machine that cloned successfully. Regenerated against actual repo contents; all 28 files now verify clean.
+
+### Verified
+
+- Full end-to-end install confirmed on fresh Parrot OS (Debian-family) machine — clone, checksum verification, vault creation, knowledge base sync, crontab install, demo CVE fetch all passed with zero errors.
+
+---
+
+
+
 ## [2.0.1] — 2026-05-13
 
 A correctness release. Six commits clearing GitHub Copilot's audit of v2.0.0 — three documentation lies, one missing LICENSE file, one ingest script that bypassed the LLM abstraction layer, and a stale version string in the installer. No new features; no scope changes.
@@ -26,6 +43,7 @@ A correctness release. Six commits clearing GitHub Copilot's audit of v2.0.0 —
 - **`ROADMAP.md`:** added two new v2.1.0 items. "Sanitized promotion gate" (publish a sanitized reference implementation of the gate) and "Backend abstraction alignment" (reconcile `hooks/llm_client.py` with the v2.0.0 docs — the env var name, backend value names, and fallback chain don't currently match what the docs describe).
 
 ---
+
 
 ## [2.0.0] — 2026-05-12
 
@@ -89,6 +107,7 @@ This is a breaking release for users who depended on cut features. If you were u
 
 ---
 
+
 ## [1.9.2] — 2026-05-01
 
 - Security hardening: command injection prevention in ingest scripts
@@ -100,6 +119,7 @@ This is a breaking release for users who depended on cut features. If you were u
 - False independent audit reference removed from README
 
 ---
+
 
 ## [1.9.1] — 2026-05-01
 
@@ -121,6 +141,7 @@ This is a breaking release for users who depended on cut features. If you were u
 
 ---
 
+
 ## [1.9.0] — 2026-05-01
 
 - Net+ N10-009 starter notes (87 Professor Messer videos ingested)
@@ -133,12 +154,14 @@ This is a breaking release for users who depended on cut features. If you were u
 
 ---
 
+
 ## [1.8.1] — 2026-04-30
 
 - A+ Core 1+2 starter notes: 137 notes from Professor Messer transcripts
 - `run-aplus-ingest.sh`: overnight VTT → Obsidian pipeline for Core 1 and Core 2
 
 ---
+
 
 ## [1.8.0] — 2026-04-30
 
@@ -147,6 +170,7 @@ This is a breaking release for users who depended on cut features. If you were u
 - `hooks/llm_client.py`: Anthropic backend moved to first in fallback order
 
 ---
+
 
 ## [1.7.0] — 2026-04-30
 
@@ -159,6 +183,7 @@ This is a breaking release for users who depended on cut features. If you were u
 
 ---
 
+
 ## [1.6.0] — 2026-04-29
 
 - Learning engine: `/diagnose`, `/plan`, `/teach` slash commands
@@ -169,6 +194,7 @@ This is a breaking release for users who depended on cut features. If you were u
 
 ---
 
+
 ## [1.5.0] — 2026-04-29
 
 - Guide experience: `/start`, `/burnout`, `/imposter`, `/absence` slash commands
@@ -177,6 +203,7 @@ This is a breaking release for users who depended on cut features. If you were u
 - Tiered absence response (3d / 2w / 30d / 60d) in `/absence`
 
 ---
+
 
 ## [1.0.0] — 2026-04-10
 
@@ -228,6 +255,7 @@ This is a breaking release for users who depended on cut features. If you were u
 - `.env.example` with all required and optional variables documented
 
 ---
+
 
 ## Roadmap
 
