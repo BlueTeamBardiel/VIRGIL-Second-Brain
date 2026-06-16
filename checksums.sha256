@@ -17,12 +17,12 @@ b1ed97e5ced4eb0652c8edc7772790bb63acfe4d88ac4e558f1a68e92f103ea0  ./hooks/weekly
 ace9aa09a67dc912e429a10e10915ba3d0a51b593bfce07634f35508bd48ef75  ./ingest/cve-ingest.py
 18789de75e9be54b8010de53b19e3c0f5d23ea8e3426bff7e53d6148fce5cfc7  ./ingest/orphan-detect.sh
 a5c95e4bde788c44ae89dfeec35490e13e84f6f29607beea1e4bdb9785137ee3  ./ingest/pdf-ingest.sh
+09bcb270383b7c85839a18e503170d6d2b59d08b482286164e8afe969e714c18  ./ingest/rss-ingest.py
 fda48bb6dac5ce9504840c4506f34dc75a528e00b60bdfaea348181de812ab61  ./ingest/triage-inbox.sh
 84b0c02acf320804b9f0a1cd744f8a687864445eb64b3ec3c408d0ef644d5cfc  ./ingest/url-ingest.sh
 a58f9a8198669d74872e491ad457739cf0ccffb2c09c454e0e4f793b1dbf3333  ./ingest/wikilink-ingest.sh
-09bcb270383b7c85839a18e503170d6d2b59d08b482286164e8afe969e714c18  ./ingest/rss-ingest.py
 815c9a8385e516d6b61675acc5050047d2cef897547662d5fe782a831eb975d3  ./scripts/check-deps.sh
 2763d2328eff46978b51aa23c3846b5d0b1500460ad135676ee7c12516cd66a5  ./scripts/docker-entrypoint.sh
+8b91c40b216f83ecc107f998aa3eef7ca0bfd5b2d1dfdd44b05382329426f77b  ./scripts/install.sh
 ab4ffb431ebaa41f3228a7bea489252f0dba2d1af7c2be6bb0e3834624943c34  ./scripts/sync-projects.sh
 f018ecd65baff69a647458f6cdb1047f630d2bc756e6a23da9f81eebc8acc3d6  ./scripts/uninstall.sh
-6ea67691f256c318a6dea7c1b19de9b58bba5c5e1f2b63b4db1eaece1edbb795  ./scripts/install.sh
